@@ -1,0 +1,477 @@
+---
+title: 'MATH 427: Statistical Machine Learning'
+author: Eric Friedlander <br> [Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University]{.smaller}
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+# logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+```{r setup}
+#| include: false
+
+library(tidyverse)
+library(ISLR2)
+library(kableExtra)
+library(countdown)
+```
+
+# Welcome!
+
+## Meet Prof. Friedlander! {.midi}
+
+::: incremental
+-   Education and career journey
+    -   Grew up outside New York City
+    -   BS in Math & Statistics from Rice University (Houston, TX)
+    -   Business Analyst at Capital One (Plano, TX)
+    -   MS and PhD in Statistics & Operations Research from UNC-Chapel Hill
+    -   Postdoc in Population Genetics at University of Chicago
+    -   Assistant Professor of Math at St. Norbert College (Green Bay, WI)
+-   Work focuses on statistics education, queuing theory, and population genetics
+-   Big sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels
+-   Dad of three cute dogs: Allie, Miriam, Tony
+:::
+
+## Meet Prof. Friedlander! {.midi}
+
+![](images/01/IMG_3400.JPG)
+
+## Tell me about yourself {.smaller}
+
+Send me an email with answers to the following questions:
+
+1. What would you like me to call you?
+2. Why are you taking this class?
+3. How are you feeling about taking this class? Be honest... you won't hurt my feelings.
+4. How much experience with R, if any, do you have?
+5. Is there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc...
+
+In the class discussion forum, please recommend at least one song for the class playlist... Feel free to suggest as many songs as you like.
+
+# Machine Learning
+
+## What is Machine Learning?
+
+-   Machine Learning is the study of tools/techniques for extracting
+    information and making predictions from complex datasets
+-   The name machine learning was coined in 1959 by Arthur Samuel
+    -   "Field of study that gives computers the ability to learn
+        without being explicitly programmed"
+
+## What is Machine Learning?
+
+Tom M. Mitchell (1998):
+
+> A computer program is said to learn from experience **E** with respect
+> to some class of tasks **T** and performance measure **P** if its
+> performance at tasks in **T**, as measured by **P**, improves with
+> experience **E**.
+
+## What is Machine Learning?
+
+![MNIST handwritten digits (from ISLR, James et
+al.)](images/01/MNIST-0000000001-2e09631a_09liOmx.jpg)
+
+## [Question!!!]{style="color:blue"}
+
+Suppose your email program watches which emails you do or do not mark as
+spam, and based on that learns how to better filter spam. According to
+Tom Mitchell's definition, which of the following is the task **T**,
+experience **E**, and performance measure **P** in this setting?
+
+-   [**P**]{.fragment .fade-in fragment-index="1"} The number (or
+    fraction) of emails correctly classified as spam/ham (not spam)
+-   [**T**]{.fragment .fade-in fragment-index="1"} Classifying emails as
+    spam or ham
+-   [**E**]{.fragment .fade-in fragment-index="1"} Watching you label
+    emails as spam or ham
+    
+```{r}
+#| echo: false
+countdown::countdown(minutes  = 1L)
+```
+
+## Statistical Learning vs Machine Learning vs Data Science
+
+-   Machine learning arose as a sub-field of Artificial Intelligence
+    which is a sub-fields of Computer Science
+-   Statistical learning arose as a sub-field of Statistics
+-   There is much overlap, a great deal of "cross-fertilization"
+-   "Data Science" - Reflects the fact that both statistical and machine
+    learning are about data
+-   "Machine Learning" or "Data Science" are "fancier" terms
+
+## Statistics vs Machine Learning
+
+-   Statistics: more concerned with answering why and how things work,
+    making inferences
+-   Machine/Statistical learning: more concerned with making predictions
+
+## Terminology/Notation {.smaller}
+
+**Ames Housing dataset** - Contains data on 881 houses in Ames, IA. We
+are interested in predicting sale price.
+
+The first ten **observations** are shown below.
+
+```{r}
+#| echo: false
+
+ames <- readRDS("../data/AmesHousing.rds")
+# ames <- ames %>% select(c(1,2,3,5,8,9))
+head(ames, 10) |>
+  select(1:9) |> 
+  kable("html") |> 
+  kable_styling(font_size = 12)
+```
+
+## Terminologies/Notations {.smaller}
+
+**Default dataset** - Contains credit card default data on 10,000
+individuals. We are interested in predicting whether somebody will
+default or not.
+
+Ten **observations** are shown below.
+
+```{r}
+#| echo: false
+set.seed(1)
+data("Default")
+Default |> 
+  slice_sample(n=10) |> 
+  kable("html") |> 
+  kable_styling(font_size=12)
+```
+
+## Terminologies/Notations
+
+-   **Response/Target/Outcome** - variable we are interested in
+    predicting, denoted as $Y$
+-   **Features/Inputs/Predictors** - variables used to predict the
+    response, denoted as $X$
+-   **Feature Matrix** - all features taken together, denoted as
+    $\mathbf{X}$
+-   Number of data points/observations denoted as $n$
+-   Number of features/inputs/predictors denotes as $p$
+-   Missing entries in R are denoted as `NA`
+
+## [Question!!!]{style="color:blue"} {.smaller}
+
+For the **Ames Housing** and **Default** datasets:
+
+::: panel-tabset
+## Questions
+
+-   What are the corresponding values of $n$ and $p$?
+-   What will be the dimension of the corresponding response vector $Y$?
+-   What is the value of the 3rd feature for the 2nd observation?
+
+## Answers
+
+-   What are the corresponding values of $n$ and $p$?
+    -   Ames: $n = 881$ and $p = 9$
+    -   Default: $n = 10000$ and $p = 4$
+-   What will be the dimension of the corresponding response vector $Y$?
+    -   Ames: $881\times 1$
+    -   Default: $10000\times 1$
+-   What is the value of the 3rd feature for the 2nd observation?
+    -   Ames: `Attchd`
+    -   Default: `397.5425`
+:::
+
+## [Question!!!]{style="color:blue"} {.smaller}
+
+Suppose you have information about 867 cancer patients on their [age,
+tumor size, clump thickness of the tumor, uniformity of cell size, and
+whether the tumor is malignant or benign]{.fragment .highlight-red
+fragment-index="2"}. Based on these data, you are interested in building
+a model to predict the type of tumor (malignant or benign) for future
+cancer patients.
+
+-   What are the values of $n$ and $p$ in this dataset?
+    [$n = 867, p = 5$]{.fragment .fade-in fragment-index="1"}
+-   What are the inputs/features?
+
+## Supervised vs Unsupervised Learning
+
+![Machine Learning Tasks (from Bunker and Fayez,
+2017)](images/01/Supervised-Learning-versus-Unsupervised-Learning-Mathworks-nd.png){.r-stretch}
+
+## Supervised Learning
+
+-   We have access to **labeled** data
+-   Objective: learn overall pattern of relationship between the inputs
+    ($\mathbf{X}$) and response ($Y$) in order to
+    -   Investigate the relationship between inputs and response
+    -   Predict for potential unseen **test** cases
+    -   Assess the quality of predictions
+
+## Types of Supervised Learning
+
+Supervised Learning problems can be categorized into:
+
+-   **Regression** problems (response is quantitative, continuous)
+-   **Classification** problems (response is qualitative, categorical)
+
+## Unsupervised Learning
+
+-   No response/outcome variable, just $\mathbf{X}$
+-   Understand structure within data
+    -   find similar groups of observations based on features
+        (**clustering**)
+    -   find a smaller subset of features with the most variation
+        (**dimensionality reduction**)
+-   No gold-standard
+-   Easier to collect unlabeled data
+-   Useful pre-processing step for supervised learning
+
+## Unsupervised Learning {.smaller}
+
+**US Arrests dataset** - Data on arrests for 50 US states.
+
+The first ten observations are shown below.
+
+```{r}
+#| echo: false
+
+data("USArrests")
+head(USArrests, 10) |> 
+  kable("html") |> 
+  kable_styling(font_size = 16)
+```
+
+## [Question!!!]{style="color:blue"}
+
+::: {style="font-size: 60%;"}
+For each of the following, identify whether the problem belongs to the
+supervised or unsupervised learning paradigm
+
+-   Examine the statistics of two football teams, and predict which team
+    will win tomorrow's match (given historical data of teams'
+    wins/losses to learn from) [**supervised**]{.fragment .fade-in}
+-   Given genetic (DNA) data from a person, predict the probability of
+    the person developing diabetes over the next 10 years
+    [**supervised**]{.fragment .fade-in}
+-   Take a collection of 1000 essays written on the US economy, and find
+    a way to automatically group these essays into a small number of
+    groups of essays that are somehow "similar" or "related"
+    [**unsupervised**]{.fragment .fade-in}
+-   Examine data on the income and years of education of adults in a
+    neighborhood and build a model to predict the income from years of
+    education [**supervised**]{.fragment .fade-in}
+:::
+
+
+
+# MAT 427
+
+## Course FAQ
+
+**Q - What background is assumed for the course?**
+
+A - Familiarity with concepts from statistical inference, linear regression, and logistic regression. A solid grounding in R, including the `tidyverse` and `ggplot`.
+
+## Course FAQ
+
+**Q - Will we be doing computing?**
+
+A - Yes. We will use the computing language R for analysis, Quarto for writing up results, and GitHub for version control and collaboration
+
+## Course FAQ
+
+**Q - Will we learn the mathematical theory?**
+
+A - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally.
+
+## Course FAQ
+
+**Q - What distinguishes this from a 300-level course?**
+
+A - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if you tell you about an R function, I expect that you will be able to figure out how to use it yourself.
+
+## Course FAQ
+
+**Q - Is there anything else I should know?**
+
+A - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have *intentionally* designed to not give you enough information to solve on your own.
+
+
+## Course learning objectives {.midi}
+
+By the end of the semester, you will be able to...
+
+-   tackle predictive modeling problems arising from real data.
+
+-   use R to fit and evaluate machine learning models.
+
+-   assess whether a proposed model is appropriate and describe its limitations.
+
+-   use Quarto to write reproducible reports and GitHub for version control and collaboration.
+
+-   effectively communicate results results through writing and oral presentations.
+
+# Course overview
+
+## Course toolkit {.midi}
+
+-   [Course website](https://mat427sp25.netlify.app)
+    -   Central hub for the course!
+    -   **Tour of the website**
+-   [Canvas](https://cofi.instructure.com/courses/17021)
+    -   Gradebook
+    -   Announcements
+-   [GitHub](github.com/sta210-fa23)
+    -   Distribute assignments
+    -   Platform for version control and collaboration
+
+## Computing toolkit {.midi}
+
+::: columns
+::: {.column width="50%"}
+::: {.fragment fragment-index="1"}
+![](images/01/rstudio.png){fig-alt="RStudio logo" fig-align="center" width="5.61in" height="1.6in"}
+:::
+
+::: {.fragment fragment-index="2"}
+-   All analyses using R, a statistical programming language
+
+-   Write reproducible reports in Quarto
+
+-   Access RStudio through [RStudio Server](https://rstudio.collegeofidaho.edu/)
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment fragment-index="1"}
+![](images/01/github.png){fig-alt="GitHub logo" fig-align="center" width="5.61in" height="1.6in"}
+:::
+
+::: {.fragment fragment-index="3"}
+-   Access assignments
+
+-   Facilitates version control and collaboration
+
+-   All work in [STA 210 course organization](https://github.com/sta210-fa23)
+:::
+:::
+:::
+
+# Activities + assessments
+
+## Prepare, Participate, Practice, Perform
+
+::: small
+::: incremental
+-   **Prepare:** Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)
+
+-   **Participate:** Attend and actively participate in lectures, office hours, team meetings
+
+-   **Practice:** Practice applying statistical concepts and computing with team-based homework graded for completion
+
+-   **Perform:** Put together what you've learned to analyze real-world data
+
+    -   Two Job Applications/Portfolios (individual)
+
+    -   Two Job Interviews (individual)
+    
+    -   One Hack-a-thon/Presentation (team)
+    
+    -   One Project & Presentation (team)
+:::
+:::
+
+## Grading
+
+| Category                   | Percentage |
+|----------------------------|------------|
+| Homework                   | 10%        |
+| Job Application 1          | 15%        |
+| Job Application 2          | 15%        |
+| Job Interview 1            | 15%        |
+| Job Interview 2            | 15%        |
+| Hack-a-thon & Presentation | 15%        |
+| Final Project              | 15%        |
+
+See the [syllabus](https://mat427sp25.netlify.app/syllabus.html) for details on how the final letter grade will be calculated.
+
+## Support
+
+-   Attend office hours
+    -   Prof. Friedlander office hours are TBD
+-   Use email for questions regarding personal matters and/or grades
+-   See the [Course Support](https://mat427sp25.netlify.app/support.html) page for more details
+
+# Course policies
+
+## Late Homework
+
+-   Late homework will be accepted without penalty for up to week after it is due. However, late homework will not receive any feedback if it is received one I've started grading it. Your homework will serve as the foundation for your portfolio's.
+
+
+## School-Sponsored Events
+
+If an assignment must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If you must miss an assignment due to illness, you must let me know as soon as possible and, if practicable, before the assignment is due. Unless there are exigent circumstances, failure to adhere to this policy will result in a 35% penalty on the corresponding assignment.  
+
+## Academic integrity {.smaller}
+
+> The College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the [Student Judicial Board](https://collegeofidaho.smartcatalogiq.com/en/current/Undergraduate-Catalog/Policies-and-Procedures/Academic-Misconduct).
+
+By participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.
+
+## Collaboration & sharing code
+
+-   I have policies! 
+
+-   Let's read about them in the [Academic honesty](/syllabus.qmd#academic-honesty) section of the syllabus
+
+## Use of artificial intelligence (AI) {.midi}
+
+-   You should treat AI tools, such as ChatGPT, the same as other online resources.
+-   There are two guiding principles that govern how you can use AI in this course:[^1]
+    -   \(1\) *Cognitive dimension:* Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate---rather than hinder---learning.
+    -   \(2\) *Ethical dimension***:** Students using AI should be transparent about their use and make sure it aligns with academic integrity.
+
+[^1]: These guiding principles are based on [*Course Policies related to ChatGPT and other AI Tools*](https://docs.google.com/document/d/1WpCeTyiWCPQ9MNCsFeKMDQLSTsg1oKfNIH6MzoSFXqQ/preview) developed by Joel Gladd, Ph.D.[↩︎](https://sta101-f23.github.io/course-syllabus.html#fnref1)
+
+## Use of artificial intelligence (AI) {.midi}
+
+✅ **AI tools for code:** You may make use of the technology for coding examples on assignments or to fix bugs in your code. However, if you do so, you must explicitly cite where you obtained the code and AI should serve as a learning aid, not a replacement for thinking.
+
+❌ **No AI tools for narrative:** Unless instructed otherwise, AI is [**not**]{.underline} permitted for writing narrative on assignments.
+
+::: callout-important
+In general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. **Any code or content from your homework is eligible for inclusion during your job interview.**
+:::
+
+
+# Having a successful semester in MAT 427
+
+## Five tips for success
+
+1.  Complete all the preparation work (readings and videos) before class.
+
+2.  Ask questions.
+
+3.  Do the homework; get started on homework early when possible.
+
+4.  Don't procrastinate and don't let a week pass by with lingering questions.
+
+5.  Stay up-to-date on announcements on Canvas and sent via email.
+
+# Questions?
+
+Raise your hand or email me.
