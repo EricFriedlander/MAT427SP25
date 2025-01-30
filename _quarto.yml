@@ -37,8 +37,8 @@ website:
     style: "docked"
     search: true
     collapse-level: 1
-    # contents:
-    #   - schedule.qmd
+    contents:
+      - schedule.qmd
     #   - syllabus.qmd
     #   - support.qmd
     #   - links.qmd

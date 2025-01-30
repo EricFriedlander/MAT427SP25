@@ -2,9 +2,23 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "MAT427SP25",
+    "title": "MAT 427: Statistical Machine Learning",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project."
+  },
+  {
+    "objectID": "index.html#catalog-description",
+    "href": "index.html#catalog-description",
+    "title": "MAT 427: Statistical Machine Learning",
+    "section": "",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project."
+  },
+  {
+    "objectID": "index.html#instructor",
+    "href": "index.html#instructor",
+    "title": "MAT 427: Statistical Machine Learning",
+    "section": "Instructor",
+    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam."
   },
   {
     "objectID": "about.html",
@@ -12,5 +26,15 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\nNA\n\n\n1\n1\nNA\n\n\n\n\n\n\n\n\n\n\n\n\nNA",
+    "crumbs": [
+      "Schedule"
+    ]
   }
 ]
