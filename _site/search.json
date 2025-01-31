@@ -21,6 +21,23 @@
     "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam."
   },
   {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
     "objectID": "slides/01-welcome.html#meet-prof.-friedlander",
     "href": "slides/01-welcome.html#meet-prof.-friedlander",
     "title": "MATH 427: Statistical Machine Learning",
@@ -35,11 +52,11 @@
     "text": "Meet Prof. Friedlander!"
   },
   {
-    "objectID": "slides/01-welcome.html#tell-me-about-yourself",
-    "href": "slides/01-welcome.html#tell-me-about-yourself",
+    "objectID": "slides/01-welcome.html#tell-me-about-yourself-github",
+    "href": "slides/01-welcome.html#tell-me-about-yourself-github",
     "title": "MATH 427: Statistical Machine Learning",
-    "section": "Tell me about yourself",
-    "text": "Tell me about yourself\nSend me an email with answers to the following questions:\n\nWhat would you like me to call you?\nWhy are you taking this class?\nHow are you feeling about taking this class? Be honest… you won’t hurt my feelings.\nHow much experience with R, if any, do you have?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\n\nIn the class discussion forum, please recommend at least one song for the class playlist… Feel free to suggest as many songs as you like."
+    "section": "Tell me about yourself + GitHub",
+    "text": "Tell me about yourself + GitHub\nCreate a Create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me an email with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
   },
   {
     "objectID": "slides/01-welcome.html#what-is-machine-learning",
@@ -214,14 +231,14 @@
     "href": "slides/01-welcome.html#computing-toolkit",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Computing toolkit",
-    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using R, a statistical programming language\nWrite reproducible reports in Quarto\nAccess RStudio through RStudio Server\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in STA 210 course organization"
+    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using R, a statistical programming language\nWrite reproducible reports in Quarto\nAccess RStudio through your personal computer (preferred) or the RStudio Server (email me ASAP if you are doing this)\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in MAT 427 course classroom"
   },
   {
     "objectID": "slides/01-welcome.html#prepare-participate-practice-perform",
     "href": "slides/01-welcome.html#prepare-participate-practice-perform",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Prepare, Participate, Practice, Perform",
-    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded for completion\nPerform: Put together what you’ve learned to analyze real-world data\n\nTwo Job Applications/Portfolios (individual)\nTwo Job Interviews (individual)\nOne Hack-a-thon/Presentation (team)\nOne Project & Presentation (team)"
+    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded for completion\nPerform: Put together what you’ve learned to analyze real-world data\n\nTwo Job Applications/Portfolios (individual)\nTwo Job Interviews (individual)\nOne Hack-a-thon/Presentation (individual-ish)\nOne Project & Presentation (team)"
   },
   {
     "objectID": "slides/01-welcome.html#grading",
@@ -235,21 +252,21 @@
     "href": "slides/01-welcome.html#support",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Support",
-    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours are TBD\n\nUse email for questions regarding personal matters and/or grades\nSee the Course Support page for more details"
+    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours are TBD\n\nDedicated homework help session\n\nLocation and hours TBD\n\nUse email for questions regarding personal matters and/or grades\nSee the Course Support page for more details"
   },
   {
     "objectID": "slides/01-welcome.html#late-homework",
     "href": "slides/01-welcome.html#late-homework",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Late Homework",
-    "text": "Late Homework\n\nLate homework will be accepted without penalty for up to week after it is due. However, late homework will not receive any feedback if it is received one I’ve started grading it. Your homework will serve as the foundation for your portfolio’s."
+    "text": "Late Homework\n\nOne week late (no grade penalty)\nAfter I start grading (no feedback)\nWhy should I care about feedback?\n\nIt’s how you learn… duh\nYou will be repurposing your homeworks for your job applications"
   },
   {
     "objectID": "slides/01-welcome.html#school-sponsored-events",
     "href": "slides/01-welcome.html#school-sponsored-events",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "School-Sponsored Events",
-    "text": "School-Sponsored Events\nIf an assignment must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If you must miss an assignment due to illness, you must let me know as soon as possible and, if practicable, before the assignment is due. Unless there are exigent circumstances, failure to adhere to this policy will result in a 35% penalty on the corresponding assignment."
+    "text": "School-Sponsored Events\n\nExcused absences for event? Email me at least a week in advance\nSick or injured? Email me as soon as it is safe to do so.\n\nDon’t get me sick…\n\nFailure to adhere to this policy gets you a 35% point reduction"
   },
   {
     "objectID": "slides/01-welcome.html#academic-integrity",
@@ -263,7 +280,7 @@
     "href": "slides/01-welcome.html#collaboration-sharing-code",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Collaboration & sharing code",
-    "text": "Collaboration & sharing code\n\nI have policies!\nLet’s read about them in the Academic honesty section of the syllabus"
+    "text": "Collaboration & sharing code\n\nI have policies!"
   },
   {
     "objectID": "slides/01-welcome.html#use-of-artificial-intelligence-ai",
@@ -277,51 +294,76 @@
     "href": "slides/01-welcome.html#use-of-artificial-intelligence-ai-1",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)\n✅ AI tools for code: You may make use of the technology for coding examples on assignments or to fix bugs in your code. However, if you do so, you must explicitly cite where you obtained the code and AI should serve as a learning aid, not a replacement for thinking.\n❌ No AI tools for narrative: Unless instructed otherwise, AI is not permitted for writing narrative on assignments.\n\n\n\n\n\n\nImportant\n\n\nIn general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. Any code or content from your homework is eligible for inclusion during your job interview."
+    "text": "Use of artificial intelligence (AI)\n\nUnderstand everything you write down\nTell me where you got it from\nDon’t lie about it\n\n\n\n\n\n\n\nImportant\n\n\nIn general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. Any code or content from your homework is eligible for inclusion during your job interview."
   },
   {
     "objectID": "slides/01-welcome.html#five-tips-for-success",
     "href": "slides/01-welcome.html#five-tips-for-success",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Five tips for success",
-    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
-    "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1",
-    "crumbs": [
-      "Schedule"
-    ]
+    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours and help session.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
   },
   {
     "objectID": "hw/01-hw-eda.html",
     "href": "hw/01-hw-eda.html",
     "title": "Homework 1: Exploratory Data Analysis",
     "section": "",
-    "text": "Adapted from “Start teaching with R,” created by R Pruim, N J Horton, and D Kaplan, 2013, “Interactive and Dynamic Graphics for Data Analysis,” by Dianne Cook and Deborah F. Swayne, and Colby Long’s DATA 325 Course at Wooster College."
+    "text": "Adapted from “Start teaching with R,” created by R Pruim, N J Horton, and D Kaplan, 2013, “Interactive and Dynamic Graphics for Data Analysis,” by Dianne Cook and Deborah F. Swayne, Colby Long’s DATA 325 Course at Wooster College and Maria Tackett’s STA-210 course at Duke University."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#introduction",
+    "href": "hw/01-hw-eda.html#introduction",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Introduction",
+    "text": "Introduction\nIn this homework we will familiarize ourselves with the tools that we’ll use throughout the course and refresh ourselves on topic related to exploratory data analysis."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#course-toolkit",
+    "href": "hw/01-hw-eda.html#course-toolkit",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Course Toolkit",
+    "text": "Course Toolkit\nThe primary tools we’ll be using in this course are R, RStudio, git, and GitHub. We will be using them throughout the course both to learn the concepts discussed in the course and to analyze real data and come to informed conclusions.\n\n\n\n\n\n\nNote\n\n\n\nR is the name of the programming language itself and RStudio is a convenient interface.\n\n\n\n\n\n\n\n\nNote\n\n\n\nGit is a version control system (like “Track Changes” features from Microsoft Word but more powerful) and GitHub is the home for your Git-based projects on the internet (like Dropbox but much better for code).\n\n\nTo make versioning simpler, this homework will be completed individually. In the future, you’ll learn about collaborating on GitHub and producing a single homework for your team, but for now, concentrate on getting the basics down."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#exploratory-data-analysis",
+    "href": "hw/01-hw-eda.html#exploratory-data-analysis",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis\nOne of the most important components of data science is exploratory data analysis. I really like the following definition, which comes from this article (though it’s probably not the original source).\n\nExploratory Data Analysis refers to the critical process of performing initial investigations on data so as to discover patterns, spot anomalies, to test hypotheses and to check assumptions with the help of summary statistics and graphical representations.\n\nBefore you begin your exploratory analysis, you may already have a particular question in mind. For example, you might work for an online retailer and want to develop a model to predict which purchased items will be returned. Or, you may not have a particular question in mind. Instead, you might just be asked to look at browsing data for several customers and figure out some way to increase purchases. In either case, before you construct a fancy model, you need to explore and understand your data. This is how you gain new insights and determine if an idea is worth pursuing."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#learning-goals",
+    "href": "hw/01-hw-eda.html#learning-goals",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Learning goals",
+    "text": "Learning goals\nBy the end of the homework, you will…\n\nBe familiar with the workflow using RStudio and GitHub\nGain practice writing a reproducible report using Quarto\nPractice version control using GitHub\nBe able to create numerical and visual summaries of data\nUse those summaries"
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#clone-the-repo-start-new-rstudio-project",
+    "href": "hw/01-hw-eda.html#clone-the-repo-start-new-rstudio-project",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Clone the repo & start new RStudio project",
+    "text": "Clone the repo & start new RStudio project\n\nGo to the course organization at github.com/mat427sp25 organization on GitHub. Click on the repo with the prefix hw-01-. It contains the starter documents you need to complete the lab.\n\nIf you do not see your hw-01 repo, click here to create your repo.\n\nClick on the green CODE button, select Use SSH (this might already be selected by default, and if it is, you’ll see the text Clone with SSH). Click on the clipboard icon to copy the repo URL.\nIn RStudio, go to File \\(\\rightarrow\\) New Project \\(\\rightarrow\\) Version Control \\(\\rightarrow\\) Git.\nCopy and paste the URL of your assignment repo into the dialog box Repository URL. Again, please make sure to have SSH highlighted under Clone when you copy the address.\nClick Create Project, and the files from your GitHub repo will be displayed in the Files pane in RStudio.\nClick 01-hw-eda.qmd to open the template Quarto file. This is where you will write up your code and narrative for the lab."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#r-and-r-studio",
+    "href": "hw/01-hw-eda.html#r-and-r-studio",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "R and R Studio",
+    "text": "R and R Studio\nBelow are the components of the RStudio IDE.\n\nBelow are the components of a Quarto (.qmd) file.\n\n\n\n\n\n\nYAML\nThe top portion of your Quarto file (between the three dashed lines) is called YAML. It is rumored that it stood for “Yet Another Markup Language” but it officially stands for “YAML Ain’t Markup Language”. It is a human friendly data serialization standard for all programming languages. All you need to know is that this area is called the YAML (we will refer to it as such) and that it contains meta information about your document.\n\n\n\n\n\n\nImportant\n\n\n\nOpen the Quarto (.qmd) file in your project, change the author name to your name, and render the document. Examine the rendered document.\n\n\n\n\nCommitting changes\nNow, go to the Git pane in your RStudio instance. This will be in the top right hand corner in a separate tab.\nIf you have made changes to your Quarto (.qmd) file, you should see it listed here. Click on it to select it in this list and then click on Diff. This shows you the difference between the last committed state of the document and its current state including changes. You should see deletions in red and additions in green.\nIf you’re happy with these changes, we’ll prepare the changes to be pushed to your remote repository. First, stage your changes by checking the appropriate box on the files you want to prepare. Next, write a meaningful commit message (for instance, “updated author name”) in the Commit message box. Finally, click Commit. Note that every commit needs to have a commit message associated with it.\nYou don’t have to commit after every change, as this would get quite tedious. You should commit states that are meaningful to you for inspection, comparison, or restoration.\nIn the first few assignments I will nudge you when to commit and in some cases, what commit message to use. As the semester progresses we will let you make these decisions.\nNow let’s make sure all the changes went to GitHub. Go to your GitHub repo and refresh the page. You should see your commit message next to the updated files. If you see this, all your changes are on GitHub and you’re good to go!\n\n\nPush changes\nNow that you have made an update and committed this change, it’s time to push these changes to your repo on GitHub.\nIn order to push your changes to GitHub, you must have staged your commit to be pushed. click on Push."
   },
   {
     "objectID": "hw/01-hw-eda.html#understanding-your-data",
     "href": "hw/01-hw-eda.html#understanding-your-data",
     "title": "Homework 1: Exploratory Data Analysis",
     "section": "Understanding your data",
-    "text": "Understanding your data\nToday we will be working with the TIPS data set which is in the regclass package. The data in the TIPS dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, “What factors affect tipping behavior?”\n\nExercise 1\nInstall the regclass package by either typing install.packages(\"regclass\") in the console or by clicking “Tools &gt; Install Packages” and selecting the package. Once you have done this, the code chunk below will load the package and data set. Notice that a bunch of unnecessary output is included when you knit the document. Change the Quarto chunk options so that this is not displayed.\n\nlibrary(regclass)\n\nLoading required package: bestglm\n\n\nLoading required package: leaps\n\n\nLoading required package: VGAM\n\n\nLoading required package: stats4\n\n\nLoading required package: splines\n\n\nLoading required package: rpart\n\n\nLoading required package: randomForest\n\n\nrandomForest 4.7-1.2\n\n\nType rfNews() to see new features/changes/bug fixes.\n\n\n\nAttaching package: 'randomForest'\n\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\n\nThe following object is masked from 'package:ggplot2':\n\n    margin\n\n\nImportant regclass change from 1.3:\nAll functions that had a . in the name now have an _\nall.correlations -&gt; all_correlations, cor.demo -&gt; cor_demo, etc.\n\ndata(\"TIPS\")\n\nWhen exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?\n\n\nExercise 2\nIn R, data sets are usually stored in a 2-dimensional structure called a data frame. The tidyverse provides a lot of useful functions for a variety of applications including data exploration and the particular flavor of data frame that the tidyverse uses is called a tibble. After loading the tidyverse library, you can get an idea of the structure of a data set using the syntax str(dataset) or glimpse(data), and you can peak at the first few rows and columns with head(dataset). Create a code chunk below, and use these functions (and others) in the R chunk below to better understand the data. How many tips are recorded in this data set? Which days of the week did the waiter work?\nOften, a data set will come with a code book which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.\n\n\n\nVariable\nDescription\n\n\n\n\nTipPercentage\nthe gratuity, as a percentage of the bill\n\n\nBill\nthe cost of the meal in US dollars\n\n\nTip\nthe tip in US dollars\n\n\nGender\ngender of the bill payer\n\n\nSmoker\nwhether the party included smokers\n\n\nWeekday\nday of the week\n\n\nTime\ntime the bill was paid\n\n\nPartySize\nsize of the party\n\n\n\n\n\nExercise 3\nEven though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at “Day” or “Night.” State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?"
+    "text": "Understanding your data\nToday we will be working with the TIPS data set which is in the regclass package. The data in the TIPS dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, “What factors affect tipping behavior?”\n\nExercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nInstall the regclass package by either typing install.packages(\"regclass\") in the console or by clicking “Tools &gt; Install Packages” and selecting the package. Once you have done this, the code chunk below will load the package and data set. Notice that a bunch of unnecessary output is included when you knit the document. Change the Quarto chunk options so that this is not displayed.\n\n\n\nlibrary(regclass)\n\nLoading required package: bestglm\n\n\nLoading required package: leaps\n\n\nLoading required package: VGAM\n\n\nLoading required package: stats4\n\n\nLoading required package: splines\n\n\nLoading required package: rpart\n\n\nLoading required package: randomForest\n\n\nrandomForest 4.7-1.2\n\n\nType rfNews() to see new features/changes/bug fixes.\n\n\n\nAttaching package: 'randomForest'\n\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\n\nThe following object is masked from 'package:ggplot2':\n\n    margin\n\n\nImportant regclass change from 1.3:\nAll functions that had a . in the name now have an _\nall.correlations -&gt; all_correlations, cor.demo -&gt; cor_demo, etc.\n\ndata(\"TIPS\")\n\nWhen exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?\n\n\nExercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nIn R, data sets are usually stored in a 2-dimensional structure called a data frame. The tidyverse provides a lot of useful functions for a variety of applications including data exploration and the particular flavor of data frame that the tidyverse uses is called a tibble. After loading the tidyverse library, you can get an idea of the structure of a data set using the syntax str(dataset) or glimpse(data), and you can peak at the first few rows and columns with head(dataset). Create a code chunk below, and use these functions (and others) in the R chunk below to better understand the data. How many tips are recorded in this data set? Which days of the week did the waiter work?\n\n\nOften, a data set will come with a code book which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.\n\n\n\nVariable\nDescription\n\n\n\n\nTipPercentage\nthe gratuity, as a percentage of the bill\n\n\nBill\nthe cost of the meal in US dollars\n\n\nTip\nthe tip in US dollars\n\n\nGender\ngender of the bill payer\n\n\nSmoker\nwhether the party included smokers\n\n\nWeekday\nday of the week\n\n\nTime\ntime the bill was paid\n\n\nPartySize\nsize of the party\n\n\n\n\n\nExercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nEven though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at “Day” or “Night.” State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 1 - 3”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty."
   },
   {
     "objectID": "hw/01-hw-eda.html#graphical-summaries",
     "href": "hw/01-hw-eda.html#graphical-summaries",
     "title": "Homework 1: Exploratory Data Analysis",
     "section": "Graphical Summaries",
-    "text": "Graphical Summaries\nGraphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.\n\nTIPS |&gt; \n  ggplot(aes(x = PartySize)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nOr we could explore the question about the percentage of tables that are smokers on different days of the week visually.\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar()\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nWe might summarize a numerical variable with a histogram. For example, here is a histogram of all of the tips in the data set.\n\nTIPS |&gt; \n  ggplot(aes(x = Tip)) +\n    geom_histogram(bins = 100)\n\n\n\n\n\n\n\n\n\nExercise 7\nNotice that there are a few “spikes” in the histogram above. What do you think is causing this?\nWe can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the ggforce package.\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  geom_jitter() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_violin() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nlibrary(ggforce)\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_sina() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\n\nOr we can visualize the relationship between a lot of our numerical variables at once.\n\n# Using pairs (only numerical allowed)\npairs(~ Bill + TipPercentage + Tip\n    , data = TIPS\n    , main=\"Scatterplot Matrix for TIPS\")\n\n\n\n\n\n\n\n# Using ggpairs from GGally package (preferable even though more syntax)\nlibrary(GGally)\nTIPS |&gt; \n  select(Bill, TipPercentage, Tip, Weekday) |&gt; \n  ggpairs()\n\n\n\n\n\n\n\n\n\n\nExercise 8\nAre there any clear linear relationships in the scatterplots above? What do you think is the explanation for these relationships?\nThere are lots of other interesting graphical summaries available for interpreting and displaying data. In addition, there are lots of R packages that allow you to draw these graphics and to further customize some of the ones we discussed here. In your projects, you are welcome to use any of these that you think are appropriate.\n\n\nExercise 9\nState a reasonable conjecture about tipping behavior that you would like to explore in the data set. For example, you might think that people on dates tip more or that the waiter gets smaller tips when he has too many tables. Give at least one numerical and one graphical summary to explore this conjecture. Is there any evidence to support your conjecture?\nIt’s okay if your conjecture is not supported or if you are just wrong–that’s often the case in exploratory data analysis."
+    "text": "Graphical Summaries\nGraphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.\n\nTIPS |&gt; \n  ggplot(aes(x = PartySize)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nOr we could explore the question about the percentage of tables that are smokers on different days of the week visually.\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar()\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nWe might summarize a numerical variable with a histogram. For example, here is a histogram of all of the tips in the data set.\n\nTIPS |&gt; \n  ggplot(aes(x = Tip)) +\n    geom_histogram(bins = 100)\n\n\n\n\n\n\n\n\n\nExercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that there are a few “spikes” in the histogram above. What do you think is causing this?\n\n\nWe can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the ggforce package.\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  geom_jitter() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_violin() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nlibrary(ggforce)\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_sina() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\n\nOr we can visualize the relationship between a lot of our numerical variables at once.\n\n# Using pairs (only numerical allowed)\npairs(~ Bill + TipPercentage + Tip\n    , data = TIPS\n    , main=\"Scatterplot Matrix for TIPS\")\n\n\n\n\n\n\n\n# Using ggpairs from GGally package (preferable even though more syntax)\nlibrary(GGally)\nTIPS |&gt; \n  select(Bill, TipPercentage, Tip, Weekday) |&gt; \n  ggpairs()\n\n\n\n\n\n\n\n\n\n\nExercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nAre there any clear linear relationships in the scatterplots above? What do you think is the explanation for these relationships?\n\n\nThere are lots of other interesting graphical summaries available for interpreting and displaying data. In addition, there are lots of R packages that allow you to draw these graphics and to further customize some of the ones we discussed here. In your projects, you are welcome to use any of these that you think are appropriate.\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 7 - 8”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\nExercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nState a reasonable conjecture about tipping behavior that you would like to explore in the data set. For example, you might think that people on dates tip more or that the waiter gets smaller tips when he has too many tables. Give at least one numerical and one graphical summary to explore this conjecture. Is there any evidence to support your conjecture?\nIt’s okay if your conjecture is not supported or if you are just wrong–that’s often the case in exploratory data analysis.\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 9”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nBefore you’re done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I can’t tell you how often students turn in work and their output doesn’t match their prose or the output definitely doesn’t look the way they wanted it to."
   }
 ]

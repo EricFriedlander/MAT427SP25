@@ -50,17 +50,18 @@ library(countdown)
 
 ![](images/01/IMG_3400.JPG)
 
-## Tell me about yourself {.smaller}
+## Tell me about yourself + GitHub {.smaller}
+
+Create a Create a [GitHub](https://github.com/) account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.
 
 Send me an email with answers to the following questions:
 
-1. What would you like me to call you?
-2. Why are you taking this class?
-3. How are you feeling about taking this class? Be honest... you won't hurt my feelings.
-4. How much experience with R, if any, do you have?
+1. What is the GitHub username you just created?
+2. What would you like me to call you?
+3. Why are you taking this class?
+4. What are your career goals?
 5. Is there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc...
-
-In the class discussion forum, please recommend at least one song for the class playlist... Feel free to suggest as many songs as you like.
+6. Please recommend at least one and up to infinity songs for the class playlist.
 
 # Machine Learning
 
@@ -334,7 +335,7 @@ By the end of the semester, you will be able to...
 -   [Canvas](https://cofi.instructure.com/courses/17021)
     -   Gradebook
     -   Announcements
--   [GitHub](github.com/sta210-fa23)
+-   [GitHub](https://classroom.github.com/classrooms/197280685-mat427sp25)
     -   Distribute assignments
     -   Platform for version control and collaboration
 
@@ -351,7 +352,7 @@ By the end of the semester, you will be able to...
 
 -   Write reproducible reports in Quarto
 
--   Access RStudio through [RStudio Server](https://rstudio.collegeofidaho.edu/)
+-   Access RStudio through your personal computer (preferred) or the [RStudio Server](https://rstudio.collegeofidaho.edu/) (email me ASAP if you are doing this)
 :::
 :::
 
@@ -365,7 +366,7 @@ By the end of the semester, you will be able to...
 
 -   Facilitates version control and collaboration
 
--   All work in [STA 210 course organization](https://github.com/sta210-fa23)
+-   All work in [MAT 427 course classroom](https://classroom.github.com/classrooms/197280685-mat427sp25)
 :::
 :::
 :::
@@ -388,7 +389,7 @@ By the end of the semester, you will be able to...
 
     -   Two Job Interviews (individual)
     
-    -   One Hack-a-thon/Presentation (team)
+    -   One Hack-a-thon/Presentation (individual-ish)
     
     -   One Project & Presentation (team)
 :::
@@ -406,25 +407,33 @@ By the end of the semester, you will be able to...
 | Hack-a-thon & Presentation | 15%        |
 | Final Project              | 15%        |
 
-See the [syllabus](https://mat427sp25.netlify.app/syllabus.html) for details on how the final letter grade will be calculated.
+See the [syllabus](syllabus.qmd) for details on how the final letter grade will be calculated.
 
 ## Support
 
 -   Attend office hours
     -   Prof. Friedlander office hours are TBD
+-   Dedicated homework help session
+    -   Location and hours TBD
 -   Use email for questions regarding personal matters and/or grades
--   See the [Course Support](https://mat427sp25.netlify.app/support.html) page for more details
+-   See the [Course Support](support.qmd) page for more details
 
 # Course policies
 
 ## Late Homework
 
--   Late homework will be accepted without penalty for up to week after it is due. However, late homework will not receive any feedback if it is received one I've started grading it. Your homework will serve as the foundation for your portfolio's.
-
+-   One week late (no grade penalty)
+-   After I start grading (no feedback)
+-   Why should I care about feedback?
+    -   It's how you learn... duh
+    -   You will be repurposing your homeworks for your job applications
 
 ## School-Sponsored Events
 
-If an assignment must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If you must miss an assignment due to illness, you must let me know as soon as possible and, if practicable, before the assignment is due. Unless there are exigent circumstances, failure to adhere to this policy will result in a 35% penalty on the corresponding assignment.  
+-   Excused absences for event? Email me at least a week in advance
+-   Sick or injured? Email me as soon as it is safe to do so.
+    -   Don't get me sick...
+-   Failure to adhere to this policy gets you a 35% point reduction
 
 ## Academic integrity {.smaller}
 
@@ -435,8 +444,6 @@ By participating in this course, you are agreeing that all your work and conduct
 ## Collaboration & sharing code
 
 -   I have policies! 
-
--   Let's read about them in the [Academic honesty](/syllabus.qmd#academic-honesty) section of the syllabus
 
 ## Use of artificial intelligence (AI) {.midi}
 
@@ -449,9 +456,11 @@ By participating in this course, you are agreeing that all your work and conduct
 
 ## Use of artificial intelligence (AI) {.midi}
 
-✅ **AI tools for code:** You may make use of the technology for coding examples on assignments or to fix bugs in your code. However, if you do so, you must explicitly cite where you obtained the code and AI should serve as a learning aid, not a replacement for thinking.
+-   Understand everything you write down
 
-❌ **No AI tools for narrative:** Unless instructed otherwise, AI is [**not**]{.underline} permitted for writing narrative on assignments.
+-   Tell me where you got it from
+
+-   Don't lie about it
 
 ::: callout-important
 In general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. **Any code or content from your homework is eligible for inclusion during your job interview.**
@@ -464,7 +473,7 @@ In general, you may use AI as a resource as you complete assignments but not to 
 
 1.  Complete all the preparation work (readings and videos) before class.
 
-2.  Ask questions.
+2.  Ask questions, come to office hours and help session.
 
 3.  Do the homework; get started on homework early when possible.
 

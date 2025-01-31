@@ -22,17 +22,17 @@ website:
       
   sidebar:
     background: "#bbbbbb"
-    # logo: "images/logo.png"
+    logo: "images/logo.png"
     align: center
     tools: 
-      # - icon: github
-      #   href: https://github.com/sta210-fa23
-      #   text: "GitHub organization"
+      - icon: github
+        href: https://classroom.github.com/classrooms/197280685-mat427sp25
+        text: "GitHub classroom"
       - icon: code-square
         href: https://rstudio.collegeofidaho.edu/
         text: "RStudio"
       - icon: person
-        href: https://cofi.instructure.com/courses/17093
+        href: https://cofi.instructure.com/courses/17021
         text: "Canvas"
     style: "docked"
     search: true
