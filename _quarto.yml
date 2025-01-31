@@ -39,7 +39,7 @@ website:
     collapse-level: 1
     contents:
       - schedule.qmd
-    #   - syllabus.qmd
+      - syllabus.qmd
     #   - support.qmd
     #   - links.qmd
     #   - section: Computing

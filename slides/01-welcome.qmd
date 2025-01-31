@@ -466,6 +466,11 @@ By participating in this course, you are agreeing that all your work and conduct
 In general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. **Any code or content from your homework is eligible for inclusion during your job interview.**
 :::
 
+## In class agreements
+
+If we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.
+
+
 
 # Having a successful semester in MAT 427
 
@@ -480,6 +485,10 @@ In general, you may use AI as a resource as you complete assignments but not to 
 4.  Don't procrastinate and don't let a week pass by with lingering questions.
 
 5.  Stay up-to-date on announcements on Canvas and sent via email.
+
+## Emails for help
+
+If you email me about an error please include a screenshot of the error and the code causing the error.
 
 # Questions?
 
