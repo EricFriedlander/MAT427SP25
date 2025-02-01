@@ -160,7 +160,7 @@ What's the difference between these two statements:
 Broadly speaking, we have two approaches.
 
 1.  Parametric methods
-2.  Non-parametrics methods
+2.  Non-parametric methods
 
 ## Parametric Methods
 
@@ -339,7 +339,7 @@ $$\underbrace{E\left[Y-\hat{Y}\right]^2}_{Error}=E\left[f(\mathbf{X})+\epsilon -
 -   Model fit on training data $\hat{f}(x)$
 -   "True" relationship: $Y=f(x)+\epsilon$
 -   $(x_0^{test}, y_0^{test})$: test observation
--   Bias-Variance Trade-Off (Theorical)
+-   Bias-Variance Trade-Off (Theoretical)
     $$\underbrace{E\left(y_0^{test}-\hat{f}(x_0^{test})\right)^2}_{total \ error}=\underbrace{Var\left(\hat{f}(x_0^{test})\right)}_{source \ 1} + \underbrace{\left[Bias\left(\hat{f}(x_0^{test})\right)\right]^2}_{source \ 2}+\underbrace{Var(\epsilon)}_{source \ 3}$$
     where
     $Bias\left(\hat{f}(x_0)\right)=E\left(\hat{f}(x_0)\right)-f(x_0)$

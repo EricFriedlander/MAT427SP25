@@ -85,7 +85,7 @@ d |>
   sub_missing(columns = c(date, topic, notes), missing_text = "") |>
   cols_align(
     align = "center", 
-    columns = c(lecture, dow, prepare, slides, hw,project)
+    columns = c(lecture, dow, week, prepare, slides, hw,project)
     ) |>
   cols_align(
     align = "left", 
@@ -98,7 +98,7 @@ d |>
       style = "solid"
     ),
     locations = cells_body(
-      columns = c(date, topic, prepare,project)
+      columns = c(week, topic, slides, project)
     )
   )
 ```
