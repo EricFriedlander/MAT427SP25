@@ -148,7 +148,6 @@ Now that you have made an update and committed this change, it's time to push th
 
 In order to push your changes to GitHub, you must have **staged** your **commit** to be pushed. click on **Push**.
 
-
 ## Understanding your data
 
 Today we will be working with the `TIPS` data set which is in the `regclass` package. The data in the `TIPS` dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, *"What factors affect tipping behavior?"*
@@ -194,7 +193,6 @@ Even though the column names are self-explanatory, we might have more questions 
 ::: {.callout-warning title="Render-Commit-Push"}
 This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. "Completed exercises 1 - 3"), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.
 :::
-
 
 # Numerical Summaries
 
@@ -392,8 +390,6 @@ It's okay if your conjecture is not supported or if you are just wrong--that's o
 This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. "Completed exercises 9"), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.
 :::
 
-
-::: {.callout-caution}
+::: callout-caution
 Before you're done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I can't tell you how often students turn in work and their output doesn't match their prose or the output definitely doesn't look the way they wanted it to.
 :::
-

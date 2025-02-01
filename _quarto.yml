@@ -40,14 +40,12 @@ website:
     contents:
       - schedule.qmd
       - syllabus.qmd
-    #   - support.qmd
-    #   - links.qmd
-    #   - section: Computing
-    #     contents: 
-    #     - href: computing-access.qmd
-    #     - href: computing-inferencesummary.qmd
-    #     - href: computing-r-resources.qmd
-    #       text: R resources
+      - support.qmd
+      - section: Computing
+        contents:
+        - href: computing-access.qmd
+        - href: computing-r-resources.qmd
+          text: R resources
     #   - section: Project
     #     contents:
     #     - href: project/project-instructions.qmd

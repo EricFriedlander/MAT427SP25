@@ -1,48 +1,100 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MAT 427: Statistical Machine Learning",
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus",
     "section": "",
-    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project."
-  },
-  {
-    "objectID": "index.html#catalog-description",
-    "href": "index.html#catalog-description",
-    "title": "MAT 427: Statistical Machine Learning",
-    "section": "",
-    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project."
-  },
-  {
-    "objectID": "index.html#instructor",
-    "href": "index.html#instructor",
-    "title": "MAT 427: Statistical Machine Learning",
-    "section": "Instructor",
-    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam."
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
-    "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture",
+    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\nHomework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\n\n\n\n\nOffice hours (Boone 126B)\n\n\n\n\n\nTBD\nTBD\n\n\nor by appointment.\n\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Professor Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
-      "Schedule"
+      "Syllabus"
     ]
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "syllabus.html#course-info",
+    "href": "syllabus.html#course-info",
+    "title": "Syllabus",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\nHomework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\n\n\n\n\nOffice hours (Boone 126B)\n\n\n\n\n\nTBD\nTBD\n\n\nor by appointment.\n\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Professor Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#course-learning-objectives",
+    "href": "syllabus.html#course-learning-objectives",
+    "title": "Syllabus",
+    "section": "Course Learning Objectives",
+    "text": "Course Learning Objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse R to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results results through writing and oral presentations.",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#course-community",
+    "href": "syllabus.html#course-community",
+    "title": "Syllabus",
+    "section": "Course community",
+    "text": "Course community\n\nCollege of Idaho Honor Code\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.\n\n\nDisability Accommodation Statement\nThe College of Idaho seeks to provide an educational environment that is accessible to the needs of students with disabilities. The College provides reasonable services to enrolled students who have a documented permanent or temporary physical, psychological, learning, intellectual, or sensory disability that qualifies the student for accommodations under the Americans with Disabilities Act or section 504 of the Rehabilitation Act of 1973. If you have, or think you may have, a disability that impacts your performance as a student in this class, you are encouraged to arrange support services and/or accommodations through the Department of Accessibility and Learning Excellence located in McCain 201B and available via email at accessibility@collegeofidaho.edu. Reasonable academic accommodations may be provided to students who submit appropriate and current documentation of their disability. Accommodations can be arranged only through this process and are not retroactively applied. More information can be found on the DALE webpage (https://www.collegeofidaho.edu/accessibility).\n\n\nCommunication\nAll lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the course website, mat427fa25.netlify.app.\nPeriodic announcements will be sent via email and will also be available through Canvas and grades will be stored in the Canvas gradebook. Please check your email regularly to ensure you have the latest announcements for the course.\n\n\nIn class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.\n\n\nGetting help in the course\n\nIf you have a question during lecture or lab, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.\nI am here to help you be successful in the course. You are encouraged to attend office hours and the homework lab to ask questions about the course content and assignments. Many questions are most effectively answered as you discuss them with others, so office hours are a valuable resource. You are encouraged to use them!\nOutside of class and office hours, any general questions about course content or assignments can be emailed to me.\n\n\n\nEmail\nIf you have questions about assignment extensions or accommodations, please email efriedlander@collegeofidaho.edu. Please see Late work policy for more information. If you email me about an error please include a screenshot of the error and the code causing the error. Barring extenuating circumstances, I will respond to MAT 427 emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.\nCheck out the Support page for more resources.",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#textbook",
+    "href": "syllabus.html#textbook",
+    "title": "Syllabus",
+    "section": "Textbook",
+    "text": "Textbook\nThe official textbook for this course is:\n\nAn Introduction to Statistical Learning with Applications in R by Gareth James, Daniela Witten, Trevor Hatie, and Robert Tibshirani\n\nColloquiually referred to as “ISLR”, it is considered one of the bibles of machine learning\nIt’s free!",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#assignments",
+    "href": "syllabus.html#assignments",
+    "title": "Syllabus",
+    "section": "Assignments",
+    "text": "Assignments\nYou will be assessed based on five components: homework, job applications, job interviews, a hack-a-thon, and project.\n\nHomework\nIn homework, you will apply what you’ve learned during lecture to complete data analysis tasks. Homework will completed in teams of three, must be typed up using Quarto, and submitted as .qmd and .pdf files in via GitHub.\n\n\nJob Applications & Job Interviews\nDuring this course you will apply to two “jobs”. I will generate the job advertisements including real companies and base the job description on the course content and similar job advertisements that I get from online or professional collaborators. Each job application will have three components:\n\nA cover letter.\nA resume.\nA portfolio.\n\nAll three of these should be tailored to the job description and the company to which you are applying. Your portfolio will consist of self-contained data analyses of your choosing. The most straight forward method of creating th to repurpose your homeworks, converting them from a format in which you are responding to exercises to something where you are telling a narrative and demonstrating that you meet the job criteria. To create your portfolio, you will be required to create a website. More details on this will be given during the semester, however the idea of this project is that you will be able to use the things you general when you are applying for jobs.\nAfter you submit your job applications, you will be invited to schedule a one-hour long job interview. It is your job to schedule your job interview with Dr. Friedlander. Each job interview will have three portions. The first, lasting 10-15 minutes, will include typical questions that apply to almost any job interview (e.g. “What are your biggest strengths and weaknesses”). The second, lasting 20-30 minutes, will include questions about the portfolio you submitted and your understanding of the required skills described in the job advertising. The third section will mimic what is called a “case interview”. Case interviews are extremely common for many jobs, especially those requiring quantitative or computational skills, and can be intimidating. During the case interview portion, you will be presented with a “case study” and asked questions on how you would go about approaching it. The cases themselves will be designed so that they can be solved using the content from class. The goal of this whole exercise is to assess your knowledge of the course content in a way that is authentic while also preparing you to get a job.\n\n\nHack-a-thon\nAt some point in the semester we will participate in a “Hack-a-thon” as a class. Namely, you will be given a short period of time (1-3 days) to build a model and make a set of predictions. After the competition is over, you will be required to present on your model. Part of your score will be determine by how well your model performs and extra credit will be given to the top scoring individuals.\n\n\nProject\nDuring the latter portion of the course, you will complete a final project that involves a deep exploration of a problem. More details for the final project will be provided later in the course.",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#grading",
+    "href": "syllabus.html#grading",
+    "title": "Syllabus",
+    "section": "Grading",
+    "text": "Grading\nThe final course grade will be calculated as follows:\n\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nJob Application 1\n15%\n\n\nJob Application 2\n15%\n\n\nJob Interview 1\n15%\n\n\nJob Interview 2\n15%\n\n\nHack-a-thon & Presentation\n15%\n\n\nFinal Project\n15%\n\n\n\n\n\nThe final letter grade will be determined based on the following thresholds:\n\n\n\n\nLetter Grade\nFinal Course Grade\n\n\n\n\nA\n&gt;= 93\n\n\nA-\n90 - 92.99\n\n\nB+\n87 - 89.99\n\n\nB\n83 - 86.99\n\n\nB-\n80 - 82.99\n\n\nC+\n77 - 79.99\n\n\nC\n73 - 76.99\n\n\nC-\n70 - 72.99\n\n\nD+\n67 - 69.99\n\n\nD\n63 - 66.99\n\n\nD-\n60 - 62.99\n\n\nF\n&lt; 60",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#course-policies",
+    "href": "syllabus.html#course-policies",
+    "title": "Syllabus",
+    "section": "Course policies",
+    "text": "Course policies\n\nAcademic honesty\nTL;DR: Don’t cheat!\n\nThe job application assignments must be completed individually but you are welcome to discuss the assignment with classmates (e.g., discuss what’s the best way for approaching a problem, what functions are useful for accomplishing a particular task, etc.). However you may not directly share (i.e. via copy/paste or copying) any code or prose with anyone other than myself.\nFor the hack-a-thon, everyone will submit their predictions and give their own presentations. However, you are encouraged to work together. You are allowed to share code with one another. However, everyone should be able to explain what they did and everyone’s projects should be unique in some way. Point reductions will be given if two individuals submit the exact same predictions.\nFor the projects, collaboration within teams is not only allowed, but expected. Communication between teams at a high level is also allowed however you may not share code or components of the project across teams.\nReusing code: Unless explicitly stated otherwise, you may make use of online resources (e.g. StackOverflow) for coding examples on assignments. If you directly use code from an outside source (or use it as inspiration), you must explicitly cite where you obtained the code. Any recycled code that is discovered and is not explicitly cited will be treated as plagiarism.\nUse of artificial intelligence (AI): You should treat AI tools, such as ChatGPT, the same as other online resources. There are two guiding principles that govern how you can use AI in this course:1 (1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning. (2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity. In general if the following two things are not true, you are cheating:\n\nYou understand and can explain all of the code you have written down or you don’t and you have cited the source of that code.\nAll of your prose and narrative were written by yourself.\n\n\nIf you are unsure if the use of a particular resource complies with the academic honesty policy, just ask.\nRegardless of course delivery format, it is the responsibility of all students to understand and follow all College of Idaho policies, including academic integrity (e.g., completing one’s own work, following proper citation of sources, adhering to guidance around group work projects, and more). Ignoring these requirements is a violation of the Honor Code.\n\n\nLate work policy\nThe due dates for assignments are there to help you keep up with the course material and to ensure the teaching team can provide feedback within a timely manner. I understand that things come up periodically that could make it difficult to submit an assignment by the deadline.\n\nLate Homework: Homework is completion based and well be accepted without penalty for a week. However, if your homework is turned in after I begin grading it, you will not receive any feedback.\nSchool-Sponsored Events/Illness: If an assignment or meeting must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If an assignment or meeting must be missed due to illness, you must let me know as soon as it is safe for you to do so and before the assignment or meeting if possible. Failure to adhere to this policy will result in a 35% penalty on the corresponding assignment.",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "syllabus.html#footnotes",
+    "href": "syllabus.html#footnotes",
+    "title": "Syllabus",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎↩︎",
+    "crumbs": [
+      "Syllabus"
+    ]
   },
   {
     "objectID": "slides/01-welcome.html#meet-prof.-friedlander",
     "href": "slides/01-welcome.html#meet-prof.-friedlander",
     "title": "MATH 427: Statistical Machine Learning",
-    "section": "",
-    "text": "Education and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!\n\n\nEducation and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
   },
   {
     "objectID": "slides/01-welcome.html#meet-prof.-friedlander-1",
@@ -55,8 +107,8 @@
     "objectID": "slides/01-welcome.html#tell-me-about-yourself-github",
     "href": "slides/01-welcome.html#tell-me-about-yourself-github",
     "title": "MATH 427: Statistical Machine Learning",
-    "section": "",
-    "text": "Create a Create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me an email with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
+    "section": "Tell me about yourself + GitHub",
+    "text": "Tell me about yourself + GitHub\nCreate a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me an email with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
   },
   {
     "objectID": "slides/01-welcome.html#what-is-machine-learning",
@@ -77,7 +129,7 @@
     "href": "slides/01-welcome.html#what-is-machine-learning-2",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "What is Machine Learning?",
-    "text": "What is Machine Learning?\n\n\n\nMNIST handwritten digits (from ISLR, James et al.)"
+    "text": "What is Machine Learning?\n\nMNIST handwritten digits (from ISLR, James et al.)"
   },
   {
     "objectID": "slides/01-welcome.html#question",
@@ -140,7 +192,7 @@
     "href": "slides/01-welcome.html#supervised-vs-unsupervised-learning",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Supervised vs Unsupervised Learning",
-    "text": "Supervised vs Unsupervised Learning\n\n\n\nMachine Learning Tasks (from Bunker and Fayez, 2017)"
+    "text": "Supervised vs Unsupervised Learning\n\nMachine Learning Tasks (from Bunker and Fayez, 2017)"
   },
   {
     "objectID": "slides/01-welcome.html#supervised-learning",
@@ -287,14 +339,21 @@
     "href": "slides/01-welcome.html#use-of-artificial-intelligence-ai",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)\n\nYou should treat AI tools, such as ChatGPT, the same as other online resources.\nThere are two guiding principles that govern how you can use AI in this course:1\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity."
+    "text": "Use of artificial intelligence (AI)\n\nYou should treat AI tools, such as ChatGPT, the same as other online resources.\nThere are two guiding principles that govern how you can use AI in this course:1\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎"
   },
   {
     "objectID": "slides/01-welcome.html#use-of-artificial-intelligence-ai-1",
     "href": "slides/01-welcome.html#use-of-artificial-intelligence-ai-1",
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)\n\nUnderstand everything you write down\nTell me where you got it from\nDon’t lie about it\n\n\n\n\n\n\n\nImportant\n\n\n\nIn general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. Any code or content from your homework is eligible for inclusion during your job interview."
+    "text": "Use of artificial intelligence (AI)\n\nUnderstand everything you write down\nTell me where you got it from\nDon’t lie about it\n\n\n\n\n\n\n\nImportant\n\n\nIn general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. Any code or content from your homework is eligible for inclusion during your job interview."
+  },
+  {
+    "objectID": "slides/01-welcome.html#in-class-agreements",
+    "href": "slides/01-welcome.html#in-class-agreements",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "In class agreements",
+    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
   },
   {
     "objectID": "slides/01-welcome.html#five-tips-for-success",
@@ -302,6 +361,111 @@
     "title": "MATH 427: Statistical Machine Learning",
     "section": "Five tips for success",
     "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours and help session.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
+  },
+  {
+    "objectID": "slides/01-welcome.html#emails-for-help",
+    "href": "slides/01-welcome.html#emails-for-help",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Emails for help",
+    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MAT 427: Statistical Machine Learning",
+    "section": "",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project."
+  },
+  {
+    "objectID": "index.html#catalog-description",
+    "href": "index.html#catalog-description",
+    "title": "MAT 427: Statistical Machine Learning",
+    "section": "",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project."
+  },
+  {
+    "objectID": "index.html#instructor",
+    "href": "index.html#instructor",
+    "title": "MAT 427: Statistical Machine Learning",
+    "section": "Instructor",
+    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam."
+  },
+  {
+    "objectID": "computing-r-resources.html",
+    "href": "computing-r-resources.html",
+    "title": "Resources for learning R",
+    "section": "",
+    "text": "R for Data Science by Hadley Wickham & Garrett Grolemund\nTidy Modeling with R by Max Kuhn & Julia Silge",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-r-resources.html#books-free-online",
+    "href": "computing-r-resources.html#books-free-online",
+    "title": "Resources for learning R",
+    "section": "",
+    "text": "R for Data Science by Hadley Wickham & Garrett Grolemund\nTidy Modeling with R by Max Kuhn & Julia Silge",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-r-resources.html#rstudio-primers",
+    "href": "computing-r-resources.html#rstudio-primers",
+    "title": "Resources for learning R",
+    "section": "RStudio Primers",
+    "text": "RStudio Primers\n\nInteractive LearnR Tutorial\nAnother set of tutorials\nR Primers for full list of tutorials. Note that we will be using a simplified version of ggplot2 in this course.",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-r-resources.html#additional-resources",
+    "href": "computing-r-resources.html#additional-resources",
+    "title": "Resources for learning R",
+    "section": "Additional resources",
+    "text": "Additional resources\n\nRStudio Cheatsheets\nR Fun workshops and videos by Duke Center for Data and Visualization Sciences.",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-access.html",
+    "href": "computing-access.html",
+    "title": "Computing access",
+    "section": "",
+    "text": "Not that we will go through this as a call and on your first homework. Feel free to revisit it here if you need to.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "computing-access.html#r-rstudio",
+    "href": "computing-access.html#r-rstudio",
+    "title": "Computing access",
+    "section": "R & RStudio",
+    "text": "R & RStudio\nIt is highly recommended that you install R and RStudio on your own personal computer. Follow the directions here to install R and RStudio on your computer\nIf, for some reason, you are unable to use R or RStudio on your personal computer, you may use the College of Idaho’s RStudio Server. However, I do not recommend you do this as I want you to practice installing packages in this course and you do not have the permissions to do that on the server. If you must use the RStudio Server, please notify Dr. Friedlander immediately.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "computing-access.html#git-github",
+    "href": "computing-access.html#git-github",
+    "title": "Computing access",
+    "section": "Git & Github",
+    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH. Below are an outline of the authentication steps.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n\nStep 0: Type install.packages(\"credentials\") into your console.\nStep 1: Type credentials::ssh_setup_github() into your console.\nStep 2: R will ask “No SSH key found. Generate one now?” Click 1 for yes.\nStep 3: You will generate a key. It will begin with “ssh-rsa….” R will then ask “Would you like to open a browser now?” Click 1 for yes.\nStep 4: You may be asked to provide your username and password to log into GitHub. This would be the ones associated with your account that you set up. After entering this information, paste the key in and give it a name. You might name it in a way that indicates where the key will be used, e.g., mat427)\n\nYou can find more detailed instructions here if you’re interested.\n\n\nConfigure git\nThere is one more thing we need to do before getting started on the assignment. Specifically, we need to configure your git so that RStudio can communicate with GitHub. This requires two pieces of information: your name and email address.\nTo do so, you will use the use_git_config() function from the usethis package. You will need to install the usethis package in the same way you installed the credentials packages above.\nType the following lines of code in the console in RStudio filling in your name and the email address associated with your GitHub account.\n\nusethis::use_git_config(\n  user.name = \"Your name\", \n  user.email = \"Email associated with your GitHub account\")\n\nFor example, mine would be\n\nusethis::use_git_config(\n  user.name = \"EricFriedlander\",\n  user.email = \"efriedlander@collegeofidaho.edu\")\n\nYou are now ready interact between GitHub and RStudio!",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
   },
   {
     "objectID": "hw/01-hw-eda.html",
@@ -357,131 +521,63 @@
     "href": "hw/01-hw-eda.html#understanding-your-data",
     "title": "Homework 1: Exploratory Data Analysis",
     "section": "Understanding your data",
-    "text": "Understanding your data\nToday we will be working with the TIPS data set which is in the regclass package. The data in the TIPS dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, “What factors affect tipping behavior?”\n\nExercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nInstall the regclass package by either typing install.packages(\"regclass\") in the console or by clicking “Tools &gt; Install Packages” and selecting the package. Once you have done this, the code chunk below will load the package and data set. Notice that a bunch of unnecessary output is included when you knit the document. Change the Quarto chunk options so that this is not displayed.\n\n\n\nlibrary(regclass)\n\nLoading required package: bestglm\n\n\nLoading required package: leaps\n\n\nLoading required package: VGAM\n\n\nLoading required package: stats4\n\n\nLoading required package: splines\n\n\nLoading required package: rpart\n\n\nLoading required package: randomForest\n\n\nrandomForest 4.7-1.2\n\n\nType rfNews() to see new features/changes/bug fixes.\n\n\n\nAttaching package: 'randomForest'\n\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\n\nThe following object is masked from 'package:ggplot2':\n\n    margin\n\n\nImportant regclass change from 1.3:\nAll functions that had a . in the name now have an _\nall.correlations -&gt; all_correlations, cor.demo -&gt; cor_demo, etc.\n\ndata(\"TIPS\")\n\nWhen exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?\n\n\nExercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nIn R, data sets are usually stored in a 2-dimensional structure called a data frame. The tidyverse provides a lot of useful functions for a variety of applications including data exploration and the particular flavor of data frame that the tidyverse uses is called a tibble. After loading the tidyverse library, you can get an idea of the structure of a data set using the syntax str(dataset) or glimpse(data), and you can peak at the first few rows and columns with head(dataset). Create a code chunk below, and use these functions (and others) in the R chunk below to better understand the data. How many tips are recorded in this data set? Which days of the week did the waiter work?\n\n\nOften, a data set will come with a code book which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.\n\n\n\nVariable\nDescription\n\n\n\n\nTipPercentage\nthe gratuity, as a percentage of the bill\n\n\nBill\nthe cost of the meal in US dollars\n\n\nTip\nthe tip in US dollars\n\n\nGender\ngender of the bill payer\n\n\nSmoker\nwhether the party included smokers\n\n\nWeekday\nday of the week\n\n\nTime\ntime the bill was paid\n\n\nPartySize\nsize of the party\n\n\n\n\n\nExercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nEven though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at “Day” or “Night.” State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 1 - 3”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty."
+    "text": "Understanding your data\nToday we will be working with the TIPS data set which is in the regclass package. The data in the TIPS dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, “What factors affect tipping behavior?”\n\nExercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nInstall the regclass package by either typing install.packages(\"regclass\") in the console or by clicking “Tools &gt; Install Packages” and selecting the package. Once you have done this, the code chunk below will load the package and data set. Notice that a bunch of unnecessary output is included when you knit the document. Change the Quarto chunk options so that this is not displayed.\n\n\n\nlibrary(regclass)\n\nLoading required package: bestglm\n\n\nLoading required package: leaps\n\n\nLoading required package: VGAM\n\n\nLoading required package: stats4\n\n\nLoading required package: splines\n\n\nLoading required package: rpart\n\n\nLoading required package: randomForest\n\n\nrandomForest 4.7-1.1\n\n\nType rfNews() to see new features/changes/bug fixes.\n\n\n\nAttaching package: 'randomForest'\n\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\n\nThe following object is masked from 'package:ggplot2':\n\n    margin\n\n\nImportant regclass change from 1.3:\nAll functions that had a . in the name now have an _\nall.correlations -&gt; all_correlations, cor.demo -&gt; cor_demo, etc.\n\ndata(\"TIPS\")\n\nWhen exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?\n\n\nExercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nIn R, data sets are usually stored in a 2-dimensional structure called a data frame. The tidyverse provides a lot of useful functions for a variety of applications including data exploration and the particular flavor of data frame that the tidyverse uses is called a tibble. After loading the tidyverse library, you can get an idea of the structure of a data set using the syntax str(dataset) or glimpse(data), and you can peak at the first few rows and columns with head(dataset). Create a code chunk below, and use these functions (and others) in the R chunk below to better understand the data. How many tips are recorded in this data set? Which days of the week did the waiter work?\n\n\nOften, a data set will come with a code book which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.\n\n\n\nVariable\nDescription\n\n\n\n\nTipPercentage\nthe gratuity, as a percentage of the bill\n\n\nBill\nthe cost of the meal in US dollars\n\n\nTip\nthe tip in US dollars\n\n\nGender\ngender of the bill payer\n\n\nSmoker\nwhether the party included smokers\n\n\nWeekday\nday of the week\n\n\nTime\ntime the bill was paid\n\n\nPartySize\nsize of the party\n\n\n\n\n\nExercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nEven though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at “Day” or “Night.” State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 1 - 3”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty."
   },
   {
     "objectID": "hw/01-hw-eda.html#graphical-summaries",
     "href": "hw/01-hw-eda.html#graphical-summaries",
     "title": "Homework 1: Exploratory Data Analysis",
     "section": "Graphical Summaries",
-    "text": "Graphical Summaries\nGraphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.\n\nTIPS |&gt; \n  ggplot(aes(x = PartySize)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nOr we could explore the question about the percentage of tables that are smokers on different days of the week visually.\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar()\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nWe might summarize a numerical variable with a histogram. For example, here is a histogram of all of the tips in the data set.\n\nTIPS |&gt; \n  ggplot(aes(x = Tip)) +\n    geom_histogram(bins = 100)\n\n\n\n\n\n\n\n\n\nExercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that there are a few “spikes” in the histogram above. What do you think is causing this?\n\n\nWe can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the ggforce package.\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  geom_jitter() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_violin() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nlibrary(ggforce)\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_sina() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\n\nOr we can visualize the relationship between a lot of our numerical variables at once.\n\n# Using pairs (only numerical allowed)\npairs(~ Bill + TipPercentage + Tip\n    , data = TIPS\n    , main=\"Scatterplot Matrix for TIPS\")\n\n\n\n\n\n\n\n# Using ggpairs from GGally package (preferable even though more syntax)\nlibrary(GGally)\nTIPS |&gt; \n  select(Bill, TipPercentage, Tip, Weekday) |&gt; \n  ggpairs()\n\n\n\n\n\n\n\n\n\n\nExercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nAre there any clear linear relationships in the scatterplots above? What do you think is the explanation for these relationships?\n\n\nThere are lots of other interesting graphical summaries available for interpreting and displaying data. In addition, there are lots of R packages that allow you to draw these graphics and to further customize some of the ones we discussed here. In your projects, you are welcome to use any of these that you think are appropriate.\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 7 - 8”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\nExercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nState a reasonable conjecture about tipping behavior that you would like to explore in the data set. For example, you might think that people on dates tip more or that the waiter gets smaller tips when he has too many tables. Give at least one numerical and one graphical summary to explore this conjecture. Is there any evidence to support your conjecture?\nIt’s okay if your conjecture is not supported or if you are just wrong–that’s often the case in exploratory data analysis.\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 9”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nBefore you’re done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I can’t tell you how often students turn in work and their output doesn’t match their prose or the output definitely doesn’t look the way they wanted it to."
+    "text": "Graphical Summaries\nGraphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.\n\nTIPS |&gt; \n  ggplot(aes(x = PartySize)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nOr we could explore the question about the percentage of tables that are smokers on different days of the week visually.\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar()\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nWe might summarize a numerical variable with a histogram. For example, here is a histogram of all of the tips in the data set.\n\nTIPS |&gt; \n  ggplot(aes(x = Tip)) +\n    geom_histogram(bins = 100)\n\n\n\n\n\n\n\n\n\nExercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that there are a few “spikes” in the histogram above. What do you think is causing this?\n\n\nWe can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the ggforce package.\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  geom_jitter() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_violin() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nlibrary(ggforce)\n\nWarning: package 'ggforce' was built under R version 4.4.2\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_sina() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\n\nOr we can visualize the relationship between a lot of our numerical variables at once.\n\n# Using pairs (only numerical allowed)\npairs(~ Bill + TipPercentage + Tip\n    , data = TIPS\n    , main=\"Scatterplot Matrix for TIPS\")\n\n\n\n\n\n\n\n# Using ggpairs from GGally package (preferable even though more syntax)\nlibrary(GGally)\nTIPS |&gt; \n  select(Bill, TipPercentage, Tip, Weekday) |&gt; \n  ggpairs()\n\n\n\n\n\n\n\n\n\n\nExercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nAre there any clear linear relationships in the scatterplots above? What do you think is the explanation for these relationships?\n\n\nThere are lots of other interesting graphical summaries available for interpreting and displaying data. In addition, there are lots of R packages that allow you to draw these graphics and to further customize some of the ones we discussed here. In your projects, you are welcome to use any of these that you think are appropriate.\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 7 - 8”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\nExercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nState a reasonable conjecture about tipping behavior that you would like to explore in the data set. For example, you might think that people on dates tip more or that the waiter gets smaller tips when he has too many tables. Give at least one numerical and one graphical summary to explore this conjecture. Is there any evidence to support your conjecture?\nIt’s okay if your conjecture is not supported or if you are just wrong–that’s often the case in exploratory data analysis.\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 9”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nBefore you’re done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I can’t tell you how often students turn in work and their output doesn’t match their prose or the output definitely doesn’t look the way they wanted it to."
   },
   {
-    "objectID": "syllabus.html",
-    "href": "syllabus.html",
-    "title": "Syllabus",
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
     "section": "",
-    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\nHomework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\n\n\n\n\nOffice hours (Boone 126B)\n\n\n\n\n\nTBD\nTBD\n\n\nor by appointment.\n\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Professor Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture",
     "crumbs": [
-      "Syllabus"
+      "Schedule"
     ]
   },
   {
-    "objectID": "syllabus.html#course-info",
-    "href": "syllabus.html#course-info",
-    "title": "Syllabus",
+    "objectID": "support.html",
+    "href": "support.html",
+    "title": "Course support",
     "section": "",
-    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\nHomework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\n\n\n\n\nOffice hours (Boone 126B)\n\n\n\n\n\nTBD\nTBD\n\n\nor by appointment.\n\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Professor Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "We expect everyone will have questions at some point in the semester, so we want to make sure you can identify when that is and feel comfortable seeking help.",
     "crumbs": [
-      "Syllabus"
+      "Course support"
     ]
   },
   {
-    "objectID": "syllabus.html#course-learning-objectives",
-    "href": "syllabus.html#course-learning-objectives",
-    "title": "Syllabus",
-    "section": "Course Learning Objectives",
-    "text": "Course Learning Objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse R to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results results through writing and oral presentations.",
+    "objectID": "support.html#lectures",
+    "href": "support.html#lectures",
+    "title": "Course support",
+    "section": "Lectures",
+    "text": "Lectures\nIf you have a question during lecture, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.",
     "crumbs": [
-      "Syllabus"
+      "Course support"
     ]
   },
   {
-    "objectID": "syllabus.html#course-community",
-    "href": "syllabus.html#course-community",
-    "title": "Syllabus",
-    "section": "Course community",
-    "text": "Course community\n\nCollege of Idaho Honor Code\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.\n\n\nDisability Accommodation Statement\nThe College of Idaho seeks to provide an educational environment that is accessible to the needs of students with disabilities. The College provides reasonable services to enrolled students who have a documented permanent or temporary physical, psychological, learning, intellectual, or sensory disability that qualifies the student for accommodations under the Americans with Disabilities Act or section 504 of the Rehabilitation Act of 1973. If you have, or think you may have, a disability that impacts your performance as a student in this class, you are encouraged to arrange support services and/or accommodations through the Department of Accessibility and Learning Excellence located in McCain 201B and available via email at accessibility@collegeofidaho.edu. Reasonable academic accommodations may be provided to students who submit appropriate and current documentation of their disability. Accommodations can be arranged only through this process and are not retroactively applied. More information can be found on the DALE webpage (https://www.collegeofidaho.edu/accessibility).\n\n\nCommunication\nAll lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the course website, mat427fa25.netlify.app.\nPeriodic announcements will be sent via email and will also be available through Canvas and grades will be stored in the Canvas gradebook. Please check your email regularly to ensure you have the latest announcements for the course.\n\n\nIn class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.\n\n\nGetting help in the course\n\nIf you have a question during lecture or lab, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.\nI am here to help you be successful in the course. You are encouraged to attend office hours and the homework lab to ask questions about the course content and assignments. Many questions are most effectively answered as you discuss them with others, so office hours are a valuable resource. You are encouraged to use them!\nOutside of class and office hours, any general questions about course content or assignments can be emailed to me.\n\n\n\nEmail\nIf you have questions about assignment extensions or accommodations, please email efriedlander@collegeofidaho.edu. Please see Late work policy for more information. If you email me about an error please include a screenshot of the error and the code causing the error. Barring extenuating circumstances, I will respond to MAT 427 emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.\nCheck out the Support page for more resources.",
+    "objectID": "support.html#office-hours-homework-lab",
+    "href": "support.html#office-hours-homework-lab",
+    "title": "Course support",
+    "section": "Office hours + Homework Lab",
+    "text": "Office hours + Homework Lab\nDr. Friedlander is here to help you be successful in the course. You are encouraged to attend office hours and the homework lab during the times posted on the home page to ask questions about the course content and assignments. A lot of questions are most effectively answered in-person, so office hours are a valuable resource. I encourage you to take advantage of them!",
     "crumbs": [
-      "Syllabus"
+      "Course support"
     ]
   },
   {
-    "objectID": "syllabus.html#textbook",
-    "href": "syllabus.html#textbook",
-    "title": "Syllabus",
-    "section": "Textbook",
-    "text": "Textbook\nThe official textbook for this course is:\n\nAn Introduction to Statistical Learning with Applications in R by Gareth James, Daniela Witten, Trevor Hatie, and Robert Tibshirani\n\nColloquiually referred to as “ISLR”, it is considered one of the bibles of machine learning\nIt’s free!",
+    "objectID": "support.html#email",
+    "href": "support.html#email",
+    "title": "Course support",
+    "section": "Email",
+    "text": "Email\nIf you have questions about personal matters or course content, you may email Dr. Friedlander at efriedlander@collegeofidaho.edu. If you email me about an error please include a screenshot of the error and the code causing the error. Barring extenuating circumstances, I will respond to MAT 427 emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.",
     "crumbs": [
-      "Syllabus"
+      "Course support"
     ]
-  },
-  {
-    "objectID": "syllabus.html#assignments",
-    "href": "syllabus.html#assignments",
-    "title": "Syllabus",
-    "section": "Assignments",
-    "text": "Assignments\nYou will be assessed based on five components: homework, job applications, job interviews, a hack-a-thon, and project.\n\nHomework\nIn homework, you will apply what you’ve learned during lecture to complete data analysis tasks. Homework will completed in teams of three, must be typed up using Quarto, and submitted as .qmd and .pdf files in via GitHub.\n\n\nJob Applications & Job Interviews\nDuring this course you will apply to two “jobs”. I will generate the job advertisements including real companies and base the job description on the course content and similar job advertisements that I get from online or professional collaborators. Each job application will have three components:\n\nA cover letter.\nA resume.\nA portfolio.\n\nAll three of these should be tailored to the job description and the company to which you are applying. Your portfolio will consist of self-contained data analyses of your choosing. The most straight forward method of creating th to repurpose your homeworks, converting them from a format in which you are responding to exercises to something where you are telling a narrative and demonstrating that you meet the job criteria. To create your portfolio, you will be required to create a website. More details on this will be given during the semester, however the idea of this project is that you will be able to use the things you general when you are applying for jobs.\nAfter you submit your job applications, you will be invited to schedule a one-hour long job interview. It is your job to schedule your job interview with Dr. Friedlander. Each job interview will have three portions. The first, lasting 10-15 minutes, will include typical questions that apply to almost any job interview (e.g. “What are your biggest strengths and weaknesses”). The second, lasting 20-30 minutes, will include questions about the portfolio you submitted and your understanding of the required skills described in the job advertising. The third section will mimic what is called a “case interview”. Case interviews are extremely common for many jobs, especially those requiring quantitative or computational skills, and can be intimidating. During the case interview portion, you will be presented with a “case study” and asked questions on how you would go about approaching it. The cases themselves will be designed so that they can be solved using the content from class. The goal of this whole exercise is to assess your knowledge of the course content in a way that is authentic while also preparing you to get a job.\n\n\nHack-a-thon\nAt some point in the semester we will participate in a “Hack-a-thon” as a class. Namely, you will be given a short period of time (1-3 days) to build a model and make a set of predictions. After the competition is over, you will be required to present on your model. Part of your score will be determine by how well your model performs and extra credit will be given to the top scoring individuals.\n\n\nProject\nDuring the latter portion of the course, you will complete a final project that involves a deep exploration of a problem. More details for the final project will be provided later in the course.",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "syllabus.html#grading",
-    "href": "syllabus.html#grading",
-    "title": "Syllabus",
-    "section": "Grading",
-    "text": "Grading\nThe final course grade will be calculated as follows:\n\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nJob Application 1\n15%\n\n\nJob Application 2\n15%\n\n\nJob Interview 1\n15%\n\n\nJob Interview 2\n15%\n\n\nHack-a-thon & Presentation\n15%\n\n\nFinal Project\n15%\n\n\n\n\n\nThe final letter grade will be determined based on the following thresholds:\n\n\n\n\nLetter Grade\nFinal Course Grade\n\n\n\n\nA\n&gt;= 93\n\n\nA-\n90 - 92.99\n\n\nB+\n87 - 89.99\n\n\nB\n83 - 86.99\n\n\nB-\n80 - 82.99\n\n\nC+\n77 - 79.99\n\n\nC\n73 - 76.99\n\n\nC-\n70 - 72.99\n\n\nD+\n67 - 69.99\n\n\nD\n63 - 66.99\n\n\nD-\n60 - 62.99\n\n\nF\n&lt; 60",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "syllabus.html#course-policies",
-    "href": "syllabus.html#course-policies",
-    "title": "Syllabus",
-    "section": "Course policies",
-    "text": "Course policies\n\nAcademic honesty\nTL;DR: Don’t cheat!\n\nThe job application assignments must be completed individually but you are welcome to discuss the assignment with classmates (e.g., discuss what’s the best way for approaching a problem, what functions are useful for accomplishing a particular task, etc.). However you may not directly share (i.e. via copy/paste or copying) any code or prose with anyone other than myself.\nFor the hack-a-thon, everyone will submit their predictions and give their own presentations. However, you are encouraged to work together. You are allowed to share code with one another. However, everyone should be able to explain what they did and everyone’s projects should be unique in some way. Point reductions will be given if two individuals submit the exact same predictions.\nFor the projects, collaboration within teams is not only allowed, but expected. Communication between teams at a high level is also allowed however you may not share code or components of the project across teams.\nReusing code: Unless explicitly stated otherwise, you may make use of online resources (e.g. StackOverflow) for coding examples on assignments. If you directly use code from an outside source (or use it as inspiration), you must explicitly cite where you obtained the code. Any recycled code that is discovered and is not explicitly cited will be treated as plagiarism.\nUse of artificial intelligence (AI): You should treat AI tools, such as ChatGPT, the same as other online resources. There are two guiding principles that govern how you can use AI in this course:1 (1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning. (2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity. In general if the following two things are not true, you are cheating:\n\nYou understand and can explain all of the code you have written down or you don’t and you have cited the source of that code.\nAll of your prose and narrative were written by yourself.\n\n\nIf you are unsure if the use of a particular resource complies with the academic honesty policy, just ask.\nRegardless of course delivery format, it is the responsibility of all students to understand and follow all College of Idaho policies, including academic integrity (e.g., completing one’s own work, following proper citation of sources, adhering to guidance around group work projects, and more). Ignoring these requirements is a violation of the Honor Code.\n\n\nLate work policy\nThe due dates for assignments are there to help you keep up with the course material and to ensure the teaching team can provide feedback within a timely manner. I understand that things come up periodically that could make it difficult to submit an assignment by the deadline.\n\nLate Homework: Homework is completion based and well be accepted without penalty for a week. However, if your homework is turned in after I begin grading it, you will not receive any feedback.\nSchool-Sponsored Events/Illness: If an assignment or meeting must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If an assignment or meeting must be missed due to illness, you must let me know as soon as it is safe for you to do so and before the assignment or meeting if possible. Failure to adhere to this policy will result in a 35% penalty on the corresponding assignment.",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "syllabus.html#footnotes",
-    "href": "syllabus.html#footnotes",
-    "title": "Syllabus",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎↩︎",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "slides/01-welcome.html",
-    "href": "slides/01-welcome.html",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "",
-    "text": "Education and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony\n\n\n\n\n\n\n\n\n\nCreate a Create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me an email with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
-  },
-  {
-    "objectID": "slides/01-welcome.html#in-class-agreements",
-    "href": "slides/01-welcome.html#in-class-agreements",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "In class agreements",
-    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
-  },
-  {
-    "objectID": "slides/01-welcome.html#emails-for-help",
-    "href": "slides/01-welcome.html#emails-for-help",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Emails for help",
-    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
-  },
-  {
-    "objectID": "slides/01-welcome.html#footnotes",
-    "href": "slides/01-welcome.html#footnotes",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎↩︎"
   }
 ]

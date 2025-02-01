@@ -52,7 +52,7 @@ library(countdown)
 
 ## Tell me about yourself + GitHub {.smaller}
 
-Create a Create a [GitHub](https://github.com/) account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.
+Create a [GitHub](https://github.com/) account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.
 
 Send me an email with answers to the following questions:
 
@@ -407,7 +407,7 @@ By the end of the semester, you will be able to...
 | Hack-a-thon & Presentation | 15%        |
 | Final Project              | 15%        |
 
-See the [syllabus](syllabus.qmd) for details on how the final letter grade will be calculated.
+See the [syllabus](/syllabus.qmd) for details on how the final letter grade will be calculated.
 
 ## Support
 
@@ -416,7 +416,7 @@ See the [syllabus](syllabus.qmd) for details on how the final letter grade will 
 -   Dedicated homework help session
     -   Location and hours TBD
 -   Use email for questions regarding personal matters and/or grades
--   See the [Course Support](support.qmd) page for more details
+-   See the [Course Support](/support.qmd) page for more details
 
 # Course policies
 
