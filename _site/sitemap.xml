@@ -2,34 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mat427sp25.netlify.app/syllabus.html</loc>
-    <lastmod>2025-02-01T20:19:27.273Z</lastmod>
+    <lastmod>2025-02-01T20:49:38.382Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/01-welcome.html</loc>
-    <lastmod>2025-02-01T20:37:00.483Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/03-Regression.html</loc>
+    <lastmod>2025-02-01T21:40:14.783Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
+    <lastmod>2025-02-01T21:52:49.751Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
+    <lastmod>2025-02-01T22:03:58.725Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/index.html</loc>
-    <lastmod>2025-02-01T20:19:27.247Z</lastmod>
+    <lastmod>2025-02-01T20:49:38.379Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>
-    <lastmod>2025-02-01T20:34:28.089Z</lastmod>
+    <lastmod>2025-02-01T20:49:46.398Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
-    <lastmod>2025-02-01T20:41:06.374Z</lastmod>
+    <lastmod>2025-02-01T20:49:46.398Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/hw/01-hw-eda.html</loc>
-    <lastmod>2025-02-01T20:38:30.835Z</lastmod>
+    <lastmod>2025-02-01T20:49:46.399Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
+    <lastmod>2025-02-01T21:56:12.545Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/schedule.html</loc>
-    <lastmod>2025-02-01T20:19:27.247Z</lastmod>
+    <lastmod>2025-02-01T20:49:38.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
+    <lastmod>2025-02-01T21:58:11.972Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/support.html</loc>
-    <lastmod>2025-02-01T20:28:21.272Z</lastmod>
+    <lastmod>2025-02-01T20:49:46.399Z</lastmod>
   </url>
 </urlset>
