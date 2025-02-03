@@ -1,55 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mat427sp25.netlify.app/index.html</loc>
-    <lastmod>2025-02-03T17:57:06.523Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/syllabus.html</loc>
-    <lastmod>2025-02-03T17:52:13.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/hw/01-hw-eda.html</loc>
-    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>
-    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
-    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/03-Regression.html</loc>
-    <lastmod>2025-02-03T17:52:13.331Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
-    <lastmod>2025-02-03T17:52:13.331Z</lastmod>
-  </url>
-  <url>
     <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
-    <lastmod>2025-02-03T18:04:03.068Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
-    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
-    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/schedule.html</loc>
-    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/support.html</loc>
-    <lastmod>2025-02-03T17:52:13.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
-    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
+    <lastmod>2025-02-03T18:04:35.108Z</lastmod>
   </url>
 </urlset>

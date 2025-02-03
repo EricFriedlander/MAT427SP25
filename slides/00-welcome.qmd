@@ -227,7 +227,11 @@ By participating in this course, you are agreeing that all your work and conduct
 
 ## Collaboration & sharing code
 
+<<<<<<< HEAD
 -   [I have policies!](/syllabus.qmd)
+=======
+-   [I have policies!](/syllabus.qmd) 
+>>>>>>> dev
 
 ## Use of artificial intelligence (AI) {.midi}
 
