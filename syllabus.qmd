@@ -7,24 +7,23 @@ format:
 
 ## Course info
 
-### Class meetings
+### Class meetings & Office Hours
 
 |             |                             |                     |
-|-------------|-----------------------------|---------------------|
+|----------------------------|-----------------------------|---------------------------------|
 | **Lecture** | MWF 3:00 - 3:50pm | Cruzen-Murray Library (CML) 208 |
-| **Homework Lab** | W 4:00 - 4:50pm (Tentative) | Cruzen-Murray Library (CML) 208 |
-
-| Office hours (Boone 126B) | |
-|----------------------|---------------|
-| TBD | TBD |
-| *or by appointment.* |               |
+| **(Optional) Homework Lab** | W 4:00 - 4:50pm (Tentative) | Cruzen-Murray Library (CML) 208 |
+| **Office Hours** | M 9:30 - 10:30am | Boone 126B |
+| **Office Hours** | T 9:00 - 10:00am | Boone 126B |
+| **Office Hours** | W 1:30 - 2:30pm | Boone 126B |
+| **Office Hours** | TH 10:00 - 11:00am | Boone 126B |
 
 Office hours are also available by appointment, just email me!
 
 
 ### Instructor Information
 
--   **Instructor**: Professor Eric Friedlander
+-   **Instructor**: Dr. Eric Friedlander
 -   **Office**: Boone 126B
 -   **Email**: <efriedlander@collegeofidaho.edu>
 
