@@ -227,7 +227,7 @@ By participating in this course, you are agreeing that all your work and conduct
 
 ## Collaboration & sharing code
 
--   I have policies! 
+-   [I have policies!](/syllabus.qmd)
 
 ## Use of artificial intelligence (AI) {.midi}
 
@@ -253,8 +253,6 @@ In general, you may use AI as a resource as you complete assignments but not to 
 ## In class agreements
 
 If we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.
-
-
 
 # Having a successful semester in MAT 427
 
