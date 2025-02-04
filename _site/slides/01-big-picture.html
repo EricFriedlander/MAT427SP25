@@ -10,8 +10,8 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Eric Friedlander   Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University">
-  <title>MAT 427 - Spring 2025 – MATH 427: Statistical Machine Learning</title>
+  <meta name="author" content="Eric Friedlander">
+  <title>MAT 427 - Spring 2025 – MATH 427: The Big Picture</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -322,320 +322,27 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
+  <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 427: Statistical Machine Learning</h1>
+  <h1 class="title">MATH 427: The Big Picture</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Eric Friedlander <br> <span class="smaller">Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University</span> 
+Eric Friedlander 
 </div>
 </div>
 </div>
 
 </section>
-<section>
-<section id="welcome" class="title-slide slide level1 center">
-<h1>Welcome!</h1>
-
-</section>
-<section id="meet-prof.-friedlander" class="slide level2 midi">
-<h2>Meet Prof.&nbsp;Friedlander!</h2>
-<div>
-<ul>
-<li class="fragment">Education and career journey
-<ul>
-<li class="fragment">Grew up outside New York City</li>
-<li class="fragment">BS in Math &amp; Statistics from Rice University (Houston, TX)</li>
-<li class="fragment">Business Analyst at Capital One (Plano, TX)</li>
-<li class="fragment">MS and PhD in Statistics &amp; Operations Research from UNC-Chapel Hill</li>
-<li class="fragment">Postdoc in Population Genetics at University of Chicago</li>
-<li class="fragment">Assistant Professor of Math at St.&nbsp;Norbert College (Green Bay, WI)</li>
-</ul></li>
-<li class="fragment">Work focuses on statistics education, queuing theory, and population genetics</li>
-<li class="fragment">Big sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels</li>
-<li class="fragment">Dad of three cute dogs: Allie, Miriam, Tony</li>
-</ul>
-</div>
-</section>
-<section id="meet-prof.-friedlander-1" class="slide level2 midi">
-<h2>Meet Prof.&nbsp;Friedlander!</h2>
-
-<img data-src="images/01/IMG_3400.JPG" class="r-stretch"></section>
-<section id="tell-me-about-yourself-github" class="slide level2 smaller">
-<h2>Tell me about yourself + GitHub</h2>
-<p>Create a <a href="https://github.com/">GitHub</a> account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.</p>
-<p>Send me an email with answers to the following questions:</p>
-<ol type="1">
-<li>What is the GitHub username you just created?</li>
-<li>What would you like me to call you?</li>
-<li>Why are you taking this class?</li>
-<li>What are your career goals?</li>
-<li>Is there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…</li>
-<li>Please recommend at least one and up to infinity songs for the class playlist.</li>
-</ol>
-</section></section>
-<section>
-<section id="mat-427" class="title-slide slide level1 center">
-<h1>MAT 427</h1>
-
-</section>
-<section id="course-faq" class="slide level2">
-<h2>Course FAQ</h2>
-<p><strong>Q - What background is assumed for the course?</strong></p>
-<p>A - Familiarity with concepts from statistical inference, linear regression, and logistic regression. A solid grounding in R, including the <code>tidyverse</code> and <code>ggplot</code>.</p>
-</section>
-<section id="course-faq-1" class="slide level2">
-<h2>Course FAQ</h2>
-<p><strong>Q - Will we be doing computing?</strong></p>
-<p>A - Yes. We will use the computing language R for analysis, Quarto for writing up results, and GitHub for version control and collaboration</p>
-</section>
-<section id="course-faq-2" class="slide level2">
-<h2>Course FAQ</h2>
-<p><strong>Q - Will we learn the mathematical theory?</strong></p>
-<p>A - Yes and No.&nbsp;The course is primarily focused on application; however, we will discuss some of the mathematics occasionally.</p>
-</section>
-<section id="course-faq-3" class="slide level2">
-<h2>Course FAQ</h2>
-<p><strong>Q - What distinguishes this from a 300-level course?</strong></p>
-<p>A - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if you tell you about an R function, I expect that you will be able to figure out how to use it yourself.</p>
-</section>
-<section id="course-faq-4" class="slide level2">
-<h2>Course FAQ</h2>
-<p><strong>Q - Is there anything else I should know?</strong></p>
-<p>A - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have <em>intentionally</em> designed to not give you enough information to solve on your own.</p>
-</section>
-<section id="course-learning-objectives" class="slide level2 midi">
-<h2>Course learning objectives</h2>
-<p>By the end of the semester, you will be able to…</p>
-<ul>
-<li><p>tackle predictive modeling problems arising from real data.</p></li>
-<li><p>use R to fit and evaluate machine learning models.</p></li>
-<li><p>assess whether a proposed model is appropriate and describe its limitations.</p></li>
-<li><p>use Quarto to write reproducible reports and GitHub for version control and collaboration.</p></li>
-<li><p>effectively communicate results results through writing and oral presentations.</p></li>
-</ul>
-</section></section>
-<section>
-<section id="course-overview" class="title-slide slide level1 center">
-<h1>Course overview</h1>
-
-</section>
-<section id="course-toolkit" class="slide level2 midi">
-<h2>Course toolkit</h2>
-<ul>
-<li><a href="https://mat427sp25.netlify.app">Course website</a>
-<ul>
-<li>Central hub for the course!</li>
-<li><strong>Tour of the website</strong></li>
-</ul></li>
-<li><a href="https://cofi.instructure.com/courses/17021">Canvas</a>
-<ul>
-<li>Gradebook</li>
-<li>Announcements</li>
-</ul></li>
-<li><a href="https://classroom.github.com/classrooms/197280685-mat427sp25">GitHub</a>
-<ul>
-<li>Distribute assignments</li>
-<li>Platform for version control and collaboration</li>
-</ul></li>
-</ul>
-</section>
-<section id="computing-toolkit" class="slide level2 midi">
-<h2>Computing toolkit</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="fragment" data-fragment-index="1">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/01/rstudio.png" class="quarto-figure quarto-figure-center" style="width:5.61in;height:1.6in" alt="RStudio logo"></p>
-</figure>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<ul>
-<li><p>All analyses using R, a statistical programming language</p></li>
-<li><p>Write reproducible reports in Quarto</p></li>
-<li><p>Access RStudio through your personal computer (preferred) or the <a href="https://rstudio.collegeofidaho.edu/">RStudio Server</a> (email me ASAP if you are doing this)</p></li>
-</ul>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="fragment" data-fragment-index="1">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/01/github.png" class="quarto-figure quarto-figure-center" style="width:5.61in;height:1.6in" alt="GitHub logo"></p>
-</figure>
-</div>
-</div>
-<div class="fragment" data-fragment-index="3">
-<ul>
-<li><p>Access assignments</p></li>
-<li><p>Facilitates version control and collaboration</p></li>
-<li><p>All work in <a href="https://classroom.github.com/classrooms/197280685-mat427sp25">MAT 427 course classroom</a></p></li>
-</ul>
-</div>
-</div></div>
-</section></section>
-<section>
-<section id="activities-assessments" class="title-slide slide level1 center">
-<h1>Activities + assessments</h1>
-
-</section>
-<section id="prepare-participate-practice-perform" class="slide level2">
-<h2>Prepare, Participate, Practice, Perform</h2>
-<div class="small">
-<div>
-<ul>
-<li class="fragment"><p><strong>Prepare:</strong> Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)</p></li>
-<li class="fragment"><p><strong>Participate:</strong> Attend and actively participate in lectures, office hours, team meetings</p></li>
-<li class="fragment"><p><strong>Practice:</strong> Practice applying statistical concepts and computing with team-based homework graded for completion</p></li>
-<li class="fragment"><p><strong>Perform:</strong> Put together what you’ve learned to analyze real-world data</p>
-<ul>
-<li class="fragment"><p>Two Job Applications/Portfolios (individual)</p></li>
-<li class="fragment"><p>Two Job Interviews (individual)</p></li>
-<li class="fragment"><p>One Hack-a-thon/Presentation (individual-ish)</p></li>
-<li class="fragment"><p>One Project &amp; Presentation (team)</p></li>
-</ul></li>
-</ul>
-</div>
-</div>
-</section>
-<section id="grading" class="slide level2">
-<h2>Grading</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Category</th>
-<th>Percentage</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Homework</td>
-<td>10%</td>
-</tr>
-<tr class="even">
-<td>Job Application 1</td>
-<td>15%</td>
-</tr>
-<tr class="odd">
-<td>Job Application 2</td>
-<td>15%</td>
-</tr>
-<tr class="even">
-<td>Job Interview 1</td>
-<td>15%</td>
-</tr>
-<tr class="odd">
-<td>Job Interview 2</td>
-<td>15%</td>
-</tr>
-<tr class="even">
-<td>Hack-a-thon &amp; Presentation</td>
-<td>15%</td>
-</tr>
-<tr class="odd">
-<td>Final Project</td>
-<td>15%</td>
-</tr>
-</tbody>
-</table>
-<p>See the <a href="../syllabus.html">syllabus</a> for details on how the final letter grade will be calculated.</p>
-</section>
-<section id="support" class="slide level2">
-<h2>Support</h2>
-<ul>
-<li>Attend office hours
-<ul>
-<li><a href="../syllabus.html#class-meetings-office-hours">Prof.&nbsp;Friedlander office hours</a></li>
-</ul></li>
-<li><a href="../syllabus.html#class-meetings-office-hours">Dedicated homework help session</a></li>
-<li>Use email for questions regarding personal matters and/or grades</li>
-<li>See the <a href="../support.html">Course Support</a> page for more details</li>
-</ul>
-</section></section>
-<section>
-<section id="course-policies" class="title-slide slide level1 center">
-<h1>Course policies</h1>
-
-</section>
-<section id="late-homework" class="slide level2">
-<h2>Late Homework</h2>
-<ul>
-<li>One week late (no grade penalty)</li>
-<li>After I start grading (no feedback)</li>
-<li>Why should I care about feedback?
-<ul>
-<li>It’s how you learn… duh</li>
-<li>You will be repurposing your homeworks for your job applications</li>
-</ul></li>
-</ul>
-</section>
-<section id="school-sponsored-events" class="slide level2">
-<h2>School-Sponsored Events</h2>
-<ul>
-<li>Excused absences for event? Email me at least a week in advance</li>
-<li>Sick or injured? Email me as soon as it is safe to do so.
-<ul>
-<li>Don’t get me sick…</li>
-</ul></li>
-<li>Failure to adhere to this policy gets you a 35% point reduction</li>
-</ul>
-</section>
-<section id="academic-integrity" class="slide level2 smaller">
-<h2>Academic integrity</h2>
-<blockquote>
-<p>The College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the <a href="https://collegeofidaho.smartcatalogiq.com/en/current/Undergraduate-Catalog/Policies-and-Procedures/Academic-Misconduct">Student Judicial Board</a>.</p>
-</blockquote>
-<p>By participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.</p>
-</section>
-<section id="collaboration-sharing-code" class="slide level2">
-<h2>Collaboration &amp; sharing code</h2>
-<ul>
-<li><a href="../syllabus.html">I have policies!</a></li>
-</ul>
-</section>
-<section id="use-of-artificial-intelligence-ai" class="slide level2 midi">
-<h2>Use of artificial intelligence (AI)</h2>
-<ul>
-<li>You should treat AI tools, such as ChatGPT, the same as other online resources.</li>
-<li>There are two guiding principles that govern how you can use AI in this course:<sup>1</sup>
-<ul>
-<li>(1) <em>Cognitive dimension:</em> Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.</li>
-<li>(2) <em>Ethical dimension</em><strong>:</strong> Students using AI should be transparent about their use and make sure it aligns with academic integrity.</li>
-</ul></li>
-</ul>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>These guiding principles are based on <a href="https://docs.google.com/document/d/1WpCeTyiWCPQ9MNCsFeKMDQLSTsg1oKfNIH6MzoSFXqQ/preview"><em>Course Policies related to ChatGPT and other AI Tools</em></a> developed by Joel Gladd, Ph.D.<a href="https://sta101-f23.github.io/course-syllabus.html#fnref1">↩︎</a></p></li></ol></aside></section>
-<section id="use-of-artificial-intelligence-ai-1" class="slide level2 midi">
-<h2>Use of artificial intelligence (AI)</h2>
-<ul>
-<li><p>Understand everything you write down</p></li>
-<li><p>Tell me where you got it from</p></li>
-<li><p>Don’t lie about it</p></li>
-</ul>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Important</strong></p>
-</div>
-<div class="callout-content">
-<p>In general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. <strong>Any code or content from your homework is eligible for inclusion during your job interview.</strong></p>
-</div>
-</div>
-</div>
-</section>
-<section id="in-class-agreements" class="slide level2">
-<h2>In class agreements</h2>
-<p>If we discuss/agree to something in class or office hours which requires action from me (e.g.&nbsp;“you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.</p>
-</section></section>
 <section>
 <section id="having-a-successful-semester-in-mat-427" class="title-slide slide level1 center">
 <h1>Having a successful semester in MAT 427</h1>
@@ -658,6 +365,528 @@ Eric Friedlander <br> <span class="smaller">Much of the content in these slides 
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
 <p>Raise your hand or email me.</p>
+</section>
+
+<section>
+<section id="machine-learning" class="title-slide slide level1 center">
+<h1>Machine Learning</h1>
+
+</section>
+<section id="what-is-machine-learning" class="slide level2">
+<h2>What is Machine Learning?</h2>
+<ul>
+<li>Machine Learning is the study of tools/techniques for extracting information and making predictions from complex datasets</li>
+<li>The name machine learning was coined in 1959 by Arthur Samuel
+<ul>
+<li>“Field of study that gives computers the ability to learn without being explicitly programmed”</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-is-machine-learning-1" class="slide level2">
+<h2>What is Machine Learning?</h2>
+<p>Tom M. Mitchell (1998):</p>
+<blockquote>
+<p>A computer program is said to learn from experience <strong>E</strong> with respect to some class of tasks <strong>T</strong> and performance measure <strong>P</strong> if its performance at tasks in <strong>T</strong>, as measured by <strong>P</strong>, improves with experience <strong>E</strong>.</p>
+</blockquote>
+</section>
+<section id="what-is-machine-learning-2" class="slide level2">
+<h2>What is Machine Learning?</h2>
+
+<img data-src="images/01/MNIST-0000000001-2e09631a_09liOmx.jpg" class="r-stretch quarto-figure-center"><p class="caption">MNIST handwritten digits (from ISLR, James et al.)</p></section>
+<section id="question" class="slide level2">
+<h2><span style="color:blue">Question!!!</span></h2>
+<p>Suppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, which of the following is the task <strong>T</strong>, experience <strong>E</strong>, and performance measure <strong>P</strong> in this setting?</p>
+<ul>
+<li><span class="fragment fade-in" data-fragment-index="1"><strong>P</strong></span> The number (or fraction) of emails correctly classified as spam/ham (not spam)</li>
+<li><span class="fragment fade-in" data-fragment-index="1"><strong>T</strong></span> Classifying emails as spam or ham</li>
+<li><span class="fragment fade-in" data-fragment-index="1"><strong>E</strong></span> Watching you label emails as spam or ham</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_e65acc03" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-learning-vs-machine-learning-vs-data-science" class="slide level2">
+<h2>Statistical Learning vs Machine Learning vs Data Science</h2>
+<ul>
+<li>Machine learning arose as a sub-field of Artificial Intelligence which is a sub-fields of Computer Science</li>
+<li>Statistical learning arose as a sub-field of Statistics</li>
+<li>There is much overlap, a great deal of “cross-fertilization”</li>
+<li>“Data Science” - Reflects the fact that both statistical and machine learning are about data</li>
+<li>“Machine Learning” or “Data Science” are “fancier” terms</li>
+</ul>
+</section>
+<section id="statistics-vs-machine-learning" class="slide level2">
+<h2>Statistics vs Machine Learning</h2>
+<ul>
+<li>Statistics: more concerned with answering why and how things work, making inferences</li>
+<li>Machine/Statistical learning: more concerned with making predictions</li>
+</ul>
+</section>
+<section id="terminologynotation" class="slide level2 smaller">
+<h2>Terminology/Notation</h2>
+<p><strong>Ames Housing dataset</strong> - Contains data on 881 houses in Ames, IA. We are interested in predicting sale price.</p>
+<p>The first ten <strong>observations</strong> are shown below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sale_Price</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Gr_Liv_Area</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Garage_Type</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Garage_Cars</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Garage_Area</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Street</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Utilities</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Pool_Area</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Neighborhood</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">244000</td>
+<td style="text-align: right;">2110</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">522</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">North_Ames</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">213500</td>
+<td style="text-align: right;">1338</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">582</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Stone_Brook</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">185000</td>
+<td style="text-align: right;">1187</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">420</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Gilbert</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">394432</td>
+<td style="text-align: right;">1856</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">834</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Stone_Brook</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">190000</td>
+<td style="text-align: right;">1844</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">546</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Northwest_Ames</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">149000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">480</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">North_Ames</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">149900</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">North_Ames</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">127500</td>
+<td style="text-align: right;">1069</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Northpark_Villa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">395192</td>
+<td style="text-align: right;">1940</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">606</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Northridge_Heights</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">290941</td>
+<td style="text-align: right;">1544</td>
+<td style="text-align: left;">Attchd</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">868</td>
+<td style="text-align: left;">Pave</td>
+<td style="text-align: left;">AllPub</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Northridge_Heights</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="terminologynotation-1" class="slide level2 smaller">
+<h2>Terminology/Notation</h2>
+<p><strong>Default dataset</strong> - Contains credit card default data on 10,000 individuals. We are interested in predicting whether somebody will default or not.</p>
+<p>Ten <strong>observations</strong> are shown below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">default</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">student</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">balance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">939.0985</td>
+<td style="text-align: right;">45519.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">397.5425</td>
+<td style="text-align: right;">22710.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1511.6110</td>
+<td style="text-align: right;">53506.94</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">301.3194</td>
+<td style="text-align: right;">51539.95</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">878.4461</td>
+<td style="text-align: right;">29561.78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1673.4863</td>
+<td style="text-align: right;">49310.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">310.1302</td>
+<td style="text-align: right;">37697.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1272.0539</td>
+<td style="text-align: right;">44895.59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">887.2014</td>
+<td style="text-align: right;">41641.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">230.8689</td>
+<td style="text-align: right;">32798.78</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="terminologynotation-2" class="slide level2">
+<h2>Terminology/Notation</h2>
+<ul>
+<li><strong>Response/Target/Outcome</strong> - variable we are interested in predicting, denoted as <span class="math inline">\(Y\)</span></li>
+<li><strong>Features/Inputs/Predictors</strong> - variables used to predict the response, denoted as <span class="math inline">\(X\)</span></li>
+<li><strong>Feature Matrix</strong> - all features taken together, denoted as <span class="math inline">\(\mathbf{X}\)</span></li>
+<li>Number of data points/observations denoted as <span class="math inline">\(n\)</span></li>
+<li>Number of features/inputs/predictors denotes as <span class="math inline">\(p\)</span></li>
+<li>Missing entries in R are denoted as <code>NA</code></li>
+</ul>
+</section>
+<section id="question-1" class="slide level2 smaller">
+<h2><span style="color:blue">Question!!!</span></h2>
+<p>For the <strong>Ames Housing</strong> and <strong>Default</strong> datasets:</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Questions</a></li><li><a href="#tabset-1-2">Answers</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<ul>
+<li>What are the corresponding values of <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>?</li>
+<li>What will be the dimension of the corresponding response vector <span class="math inline">\(Y\)</span>?</li>
+<li>What is the value of the 3rd feature for the 2nd observation?</li>
+</ul>
+</div>
+<div id="tabset-1-2">
+<ul>
+<li>What are the corresponding values of <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>?
+<ul>
+<li>Ames: <span class="math inline">\(n = 881\)</span> and <span class="math inline">\(p = 9\)</span></li>
+<li>Default: <span class="math inline">\(n = 10000\)</span> and <span class="math inline">\(p = 4\)</span></li>
+</ul></li>
+<li>What will be the dimension of the corresponding response vector <span class="math inline">\(Y\)</span>?
+<ul>
+<li>Ames: <span class="math inline">\(881\times 1\)</span></li>
+<li>Default: <span class="math inline">\(10000\times 1\)</span></li>
+</ul></li>
+<li>What is the value of the 3rd feature for the 2nd observation?
+<ul>
+<li>Ames: <code>Attchd</code></li>
+<li>Default: <code>397.5425</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2" class="slide level2 smaller">
+<h2><span style="color:blue">Question!!!</span></h2>
+<p>Suppose you have information about 867 cancer patients on their <span class="fragment highlight-red" data-fragment-index="2">age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign</span>. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.</p>
+<ul>
+<li>What are the values of <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> in this dataset? <span class="fragment fade-in" data-fragment-index="1"><span class="math inline">\(n = 867, p = 5\)</span></span></li>
+<li>What are the inputs/features?</li>
+</ul>
+</section>
+<section id="supervised-vs-unsupervised-learning" class="slide level2">
+<h2>Supervised vs Unsupervised Learning</h2>
+
+<img data-src="images/01/Supervised-Learning-versus-Unsupervised-Learning-Mathworks-nd.png" class="r-stretch quarto-figure-center"><p class="caption">Machine Learning Tasks (from Bunker and Fayez, 2017)</p></section>
+<section id="supervised-learning" class="slide level2">
+<h2>Supervised Learning</h2>
+<ul>
+<li>We have access to <strong>labeled</strong> data</li>
+<li>Objective: learn overall pattern of relationship between the inputs (<span class="math inline">\(\mathbf{X}\)</span>) and response (<span class="math inline">\(Y\)</span>) in order to
+<ul>
+<li>Investigate the relationship between inputs and response</li>
+<li>Predict for potential unseen <strong>test</strong> cases</li>
+<li>Assess the quality of predictions</li>
+</ul></li>
+</ul>
+</section>
+<section id="types-of-supervised-learning" class="slide level2">
+<h2>Types of Supervised Learning</h2>
+<p>Supervised Learning problems can be categorized into:</p>
+<div>
+<ul>
+<li class="fragment"><strong>Regression</strong> problems (response is quantitative, continuous)</li>
+<li class="fragment"><strong>Classification</strong> problems (response is qualitative, categorical)</li>
+<li class="fragment">What if I have <strong>discrete</strong> quantitative data (e.g.&nbsp;counts)?
+<ul>
+<li class="fragment">Can use either but one is probably better…</li>
+<li class="fragment">How many discrete values are there?
+<ul>
+<li class="fragment">Enough we can think of the response as continuous?</li>
+</ul></li>
+<li class="fragment">What is our goal?
+<ul>
+<li class="fragment">How important is being <em>exactly</em> correct?</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="unsupervised-learning" class="slide level2">
+<h2>Unsupervised Learning</h2>
+<ul>
+<li>No response/outcome variable, just <span class="math inline">\(\mathbf{X}\)</span></li>
+<li>Understand structure within data
+<ul>
+<li>find similar groups of observations based on features (<strong>clustering</strong>)</li>
+<li>find a smaller subset of features with the most variation (<strong>dimensionality reduction</strong>)</li>
+</ul></li>
+<li>No gold-standard</li>
+<li>Easier to collect unlabeled data</li>
+<li>Useful pre-processing step for supervised learning</li>
+</ul>
+</section>
+<section id="unsupervised-learning-1" class="slide level2 smaller">
+<h2>Unsupervised Learning</h2>
+<p><strong>US Arrests dataset</strong> - Data on arrests for 50 US states.</p>
+<p>The first ten observations are shown below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Murder</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Assault</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">UrbanPop</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alabama</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">21.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alaska</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">44.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arizona</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">294</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">31.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arkansas</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">19.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">40.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colorado</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">38.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Connecticut</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">11.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Delaware</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">15.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florida</td>
+<td style="text-align: right;">15.4</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">31.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Georgia</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">25.8</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="question-3" class="slide level2">
+<h2><span style="color:blue">Question!!!</span></h2>
+<div style="font-size: 60%;">
+<p>For each of the following, identify whether the problem belongs to the supervised or unsupervised learning paradigm</p>
+<ul>
+<li>Examine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from) <span class="fragment fade-in"><strong>supervised</strong></span></li>
+<li>Given genetic (DNA) data from a person, predict the probability of the person developing diabetes over the next 10 years <span class="fragment fade-in"><strong>supervised</strong></span></li>
+<li>Take a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related” <span class="fragment fade-in"><strong>unsupervised</strong></span></li>
+<li>Examine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education <span class="fragment fade-in"><strong>supervised</strong></span></li>
+</ul>
+</div>
+</section>
+<section id="recap" class="slide level2 smaller">
+<h2>Recap</h2>
+<ul>
+<li>What is a Machine Learning algorithm?
+<ul>
+<li>T: has task</li>
+<li>P: performance is measured</li>
+<li>E: improves with experience</li>
+</ul></li>
+<li>Terminology:
+<ul>
+<li>Features
+<ul>
+<li><span class="math inline">\(p\)</span></li>
+</ul></li>
+<li>Target</li>
+<li>Observations
+<ul>
+<li><span class="math inline">\(n\)</span></li>
+</ul></li>
+</ul></li>
+<li>Supervised vs.&nbsp;unsupervised learning
+<ul>
+<li>Supervised: data is labeled</li>
+<li>Unsupervised: data is unlabeled</li>
+</ul></li>
+</ul>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
@@ -665,9 +894,7 @@ Eric Friedlander <br> <span class="smaller">Much of the content in these slides 
 <p><a href="https://mat427sp25.netlify.app/schedule">🔗 MAT 427 - Spring 2025 - Schedule</a></p>
 </div>
 </div>
-</section>
-
-
+</section></section>
     </div>
   </div>
 
