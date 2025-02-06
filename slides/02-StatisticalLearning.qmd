@@ -1,6 +1,6 @@
 ---
 title: 'MATH 427: Intro to Machine Learning'
-author: Eric Friedlander <br> [Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University]{.smaller}
+author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
 format: 
@@ -31,6 +31,12 @@ library(gridExtra)
 library(kableExtra)
 library(plotly)
 ```
+
+## Pre-Survey
+
+Take 10 minute and fill our [this survey](https://forms.office.com/Pages/ResponsePage.aspx?id=221GfoWP4U6xMj_yZFxlSQJyt-ruO2lEkG4nYFtEh4RUNE80TE85UlZVQ0FGRjVZNVE1S1kwWVM4WiQlQCNjPTEu).
+
+If you chose to opt-out please read as much of [this article](https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm) as you an in 8 minutes and then fill out [this survey](https://forms.office.com/r/E7nresw72K). 
 
 ## Data Generating Process
 
@@ -292,7 +298,7 @@ ISLR2)](images/02/2_7-1-01.png)
 
 -   When we estimate $f(\mathbf{X})$ using $\hat{f}(\mathbf{X})$, then,
 
-$$\underbrace{E\left[Y-\hat{Y}\right]^2}_{Error}=E\left[f(\mathbf{X})+\epsilon - \hat{f}(\mathbf{X})\right]^2=\underbrace{\left[f(\mathbf{X})-\hat{f}(\mathbf{X})\right]^2}_{Reducible} + \underbrace{Var(\epsilon)}_{Irreducible}$$
+$$\underbrace{E\left[Y-\hat{Y}\right]^2}_{Error}=E\left[f(\mathbf{X})+\epsilon - \hat{f}(\mathbf{X})\right]^2=\underbrace{E\left[f(\mathbf{X})-\hat{f}(\mathbf{X})\right]^2}_{Reducible} + \underbrace{Var(\epsilon)}_{Irreducible}$$
 
 -   $E\left[Y-\hat{Y}\right]^2$: Expected (average) squared difference
     between predicted and actual (observed) response, **Mean Squared Error (MSE)**
@@ -358,10 +364,6 @@ $$\underbrace{E\left[Y-\hat{Y}\right]^2}_{Error}=E\left[f(\mathbf{X})+\epsilon -
 -   Irreducible Error:
     -   Source 3: how $y$ differs from "true" $f(x)$
 
-## Supervised Learning: Comparing Bias and Variance
-
-Insert App Stuff Here
-
 ## Bias-Variance Trade-off: Example {.smaller}
 
 -   For now: focus on regression problems (ideas extend to
@@ -394,7 +396,7 @@ Insert App Stuff Here
 
 ## [Question!!!]{style="color:blue"}
 
-As flexibility increases,
+As flexibility increases:
 
 ::: panel-tabset
 

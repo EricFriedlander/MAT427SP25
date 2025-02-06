@@ -365,6 +365,13 @@
     "text": "Linear Regression in R: Prediction\n\npredict(outlets_model, newdata = data.frame(population = 17))\n\n       1 \n16.38579 \n\n\nNote: New data must be a data frame with the same columns names as the training data\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
+    "objectID": "slides/02-StatisticalLearning.html#pre-survey",
+    "href": "slides/02-StatisticalLearning.html#pre-survey",
+    "title": "MATH 427: Intro to Machine Learning",
+    "section": "Pre-Survey",
+    "text": "Pre-Survey\nTake 10 minute and fill our this survey.\nIf you chose to opt-out please read as much of this article as you an in 8 minutes and then fill out this survey."
+  },
+  {
     "objectID": "slides/02-StatisticalLearning.html#data-generating-process",
     "href": "slides/02-StatisticalLearning.html#data-generating-process",
     "title": "MATH 427: Intro to Machine Learning",
@@ -460,7 +467,7 @@
     "href": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
     "title": "MATH 427: Intro to Machine Learning",
     "section": "Supervised Learning: Flexibility of Models",
-    "text": "Supervised Learning: Flexibility of Models\n\nFlexibility: smoothness of functions\nMore theoretically: how many parameters are there to estimate?\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n`geom_smooth()` using method = 'loess'\n\n\nWarning: Removed 2 rows containing missing values or values outside the scale range\n(`geom_smooth()`).\n\n\n\n[More flexible \\(\\implies\\) More complex \\(\\implies\\) Less Smooth \\(\\implies\\) Less Restrictive \\(\\implies\\) Less Interpretable"
+    "text": "Supervised Learning: Flexibility of Models\n\nFlexibility: smoothness of functions\nMore theoretically: how many parameters are there to estimate?\n\n\n[More flexible \\(\\implies\\) More complex \\(\\implies\\) Less Smooth \\(\\implies\\) Less Restrictive \\(\\implies\\) Less Interpretable"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
@@ -481,7 +488,7 @@
     "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
     "title": "MATH 427: Intro to Machine Learning",
     "section": "Supervised Learning: Assessing Model Performance",
-    "text": "Supervised Learning: Assessing Model Performance\n\nWhen we estimate \\(f(\\mathbf{X})\\) using \\(\\hat{f}(\\mathbf{X})\\), then,\n\n\\[\\underbrace{E\\left[Y-\\hat{Y}\\right]^2}_{Error}=E\\left[f(\\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\\right]^2=\\underbrace{\\left[f(\\mathbf{X})-\\hat{f}(\\mathbf{X})\\right]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}\\]\n\n\\(E\\left[Y-\\hat{Y}\\right]^2\\): Expected (average) squared difference between predicted and actual (observed) response, Mean Squared Error (MSE)\nGoal: find an estimate of \\(f(\\mathbf{X})\\) to minimize the reducible error"
+    "text": "Supervised Learning: Assessing Model Performance\n\nWhen we estimate \\(f(\\mathbf{X})\\) using \\(\\hat{f}(\\mathbf{X})\\), then,\n\n\\[\\underbrace{E\\left[Y-\\hat{Y}\\right]^2}_{Error}=E\\left[f(\\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\\right]^2=\\underbrace{E\\left[f(\\mathbf{X})-\\hat{f}(\\mathbf{X})\\right]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}\\]\n\n\\(E\\left[Y-\\hat{Y}\\right]^2\\): Expected (average) squared difference between predicted and actual (observed) response, Mean Squared Error (MSE)\nGoal: find an estimate of \\(f(\\mathbf{X})\\) to minimize the reducible error"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
@@ -510,13 +517,6 @@
     "title": "MATH 427: Intro to Machine Learning",
     "section": "Supervised Learning: Bias-Variance Trade-off",
     "text": "Supervised Learning: Bias-Variance Trade-off\n\nReducible Error:\n\nSource 1: how \\(\\hat{f}(x)\\) varies among different randomly selected possible training data (Variance)\nSource 2: how \\(\\hat{f}(x)\\) (when predicting the test data) differs from its target \\(f(x)\\) (Bias)\n\nIrreducible Error:\n\nSource 3: how \\(y\\) differs from “true” \\(f(x)\\)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-comparing-bias-and-variance",
-    "href": "slides/02-StatisticalLearning.html#supervised-learning-comparing-bias-and-variance",
-    "title": "MATH 427: Intro to Machine Learning",
-    "section": "Supervised Learning: Comparing Bias and Variance",
-    "text": "Supervised Learning: Comparing Bias and Variance\nInsert App Stuff Here"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#bias-variance-trade-off-example",
@@ -558,7 +558,7 @@
     "href": "slides/02-StatisticalLearning.html#question-1",
     "title": "MATH 427: Intro to Machine Learning",
     "section": "Question!!!",
-    "text": "Question!!!\nAs flexibility increases,\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
+    "text": "Question!!!\nAs flexibility increases:\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#recap",
