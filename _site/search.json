@@ -218,151 +218,193 @@
     ]
   },
   {
-    "objectID": "prepare/prep-01.html",
-    "href": "prepare/prep-01.html",
-    "title": "Preparation for Big Picture Discussion",
+    "objectID": "prepare/prep-02.html",
+    "href": "prepare/prep-02.html",
+    "title": "Preparation for Introduction to Statistical Learning",
     "section": "",
-    "text": "Review Syllabus\nRead Chapter 1 from ISLR2"
+    "text": "Read Chapter 2 from ISLR2"
   },
   {
-    "objectID": "prepare/prep-01.html#assigned-reading",
-    "href": "prepare/prep-01.html#assigned-reading",
-    "title": "Preparation for Big Picture Discussion",
+    "objectID": "prepare/prep-02.html#assigned-reading",
+    "href": "prepare/prep-02.html#assigned-reading",
+    "title": "Preparation for Introduction to Statistical Learning",
     "section": "",
-    "text": "Review Syllabus\nRead Chapter 1 from ISLR2"
+    "text": "Read Chapter 2 from ISLR2"
   },
   {
-    "objectID": "slides/03-Regression.html#concept-check",
-    "href": "slides/03-Regression.html#concept-check",
-    "title": "MATH 427: Linear Regression",
-    "section": "Concept Check",
-    "text": "Concept Check\nWhat do we call these:\n\n\\(\\mathbf{X}\\)\n\\(Y\\)\n\nWhat is our goal?"
+    "objectID": "prepare/prep-03.html",
+    "href": "prepare/prep-03.html",
+    "title": "Preparation for Linear Regression & Gradient Descent",
+    "section": "",
+    "text": "Read Chapter 3.1 from ISLR2\nIf you haven’t taken Multivariable Calculus or don’t remember what a partial derivative or gradient is watch this\nRead this article on gradient descent"
   },
   {
-    "objectID": "slides/03-Regression.html#concept-check-1",
-    "href": "slides/03-Regression.html#concept-check-1",
-    "title": "MATH 427: Linear Regression",
-    "section": "Concept Check",
-    "text": "Concept Check\n\nFeatures: \\(\\mathbf{X}\\)\nTarget: \\(Y\\)\nGoal: Predict \\(Y\\) using \\(\\mathbf{X}\\)\n\n\n\nWhat do we call this process if \\(Y\\) is numerical? What about categorical?"
+    "objectID": "prepare/prep-03.html#assigned-readings-videos",
+    "href": "prepare/prep-03.html#assigned-readings-videos",
+    "title": "Preparation for Linear Regression & Gradient Descent",
+    "section": "",
+    "text": "Read Chapter 3.1 from ISLR2\nIf you haven’t taken Multivariable Calculus or don’t remember what a partial derivative or gradient is watch this\nRead this article on gradient descent"
   },
   {
-    "objectID": "slides/03-Regression.html#concept-check-2",
-    "href": "slides/03-Regression.html#concept-check-2",
-    "title": "MATH 427: Linear Regression",
-    "section": "Concept Check",
-    "text": "Concept Check\n\nWhat do we call this process if \\(Y\\) is numerical? What about categorical?\n\nNumerical: regression\nCategorical: classification\n\n\n\n\nWhat is the difference between a training and a test set?\nHow do we evaluate the performance of a regression model?"
+    "objectID": "slides/00-welcome.html#meet-prof.-friedlander",
+    "href": "slides/00-welcome.html#meet-prof.-friedlander",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!\n\n\nEducation and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
   },
   {
-    "objectID": "slides/03-Regression.html#a-familiar-supervised-learning-model",
-    "href": "slides/03-Regression.html#a-familiar-supervised-learning-model",
-    "title": "MATH 427: Linear Regression",
-    "section": "A Familiar Supervised Learning Model",
-    "text": "A Familiar Supervised Learning Model\n\nAssume relationship between \\(\\mathbf{X}\\) and \\(Y\\) is: \\[Y=f(\\mathbf{X}) + \\epsilon\\] where \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\nObjective: To approximate/estimate \\(f(\\mathbf{X})\\)\nLinear Regression: assume that \\(f(\\mathbf{X})\\) is a linear function of \\(\\mathbf{X}\\)\n\nFor \\(p=1\\): \\(f(\\mathbf{X}) = \\beta_0 + \\beta_1 X_1\\)\nFor \\(p &gt; 1\\): \\(f(\\mathbf{X}) = \\beta_0 + \\beta_1 X_1 + \\cdots + \\beta_p X_p\\)"
+    "objectID": "slides/00-welcome.html#meet-prof.-friedlander-1",
+    "href": "slides/00-welcome.html#meet-prof.-friedlander-1",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!"
   },
   {
-    "objectID": "slides/03-Regression.html#linear-regression",
-    "href": "slides/03-Regression.html#linear-regression",
-    "title": "MATH 427: Linear Regression",
-    "section": "Linear Regression",
-    "text": "Linear Regression\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.\n\noutlets &lt;- readRDS(\"../data/outlets.rds\")   # load dataset\nhead(outlets) |&gt; kable() # first six observations of the dataset\n\n\n\n\npopulation\nprofit\n\n\n\n\n6.1101\n17.5920\n\n\n5.5277\n9.1302\n\n\n8.5186\n13.6620\n\n\n7.0032\n11.8540\n\n\n5.8598\n6.8233\n\n\n8.3829\n11.8860"
+    "objectID": "slides/00-welcome.html#tell-me-about-yourself-github",
+    "href": "slides/00-welcome.html#tell-me-about-yourself-github",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Tell me about yourself + GitHub",
+    "text": "Tell me about yourself + GitHub\nCreate a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me an email with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
   },
   {
-    "objectID": "slides/03-Regression.html#linear-regression-1",
-    "href": "slides/03-Regression.html#linear-regression-1",
-    "title": "MATH 427: Linear Regression",
-    "section": "Linear Regression",
-    "text": "Linear Regression\n\nObjective: choose “best” \\(\\beta_0\\) and \\(\\beta_1\\) if we assume \\[\\text{profit} = \\beta_0 + \\beta_1\\times\\text{population}\\]\nOnce this is done, we can:\n\npredict the profit for a new city with a given population\nunderstand the relationship between population and profit better"
+    "objectID": "slides/00-welcome.html#course-faq",
+    "href": "slides/00-welcome.html#course-faq",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - What background is assumed for the course?\nA - Familiarity with concepts from statistical inference, linear regression, and logistic regression. A solid grounding in R, including the tidyverse and ggplot."
   },
   {
-    "objectID": "slides/03-Regression.html#outlet-eda",
-    "href": "slides/03-Regression.html#outlet-eda",
-    "title": "MATH 427: Linear Regression",
-    "section": "Outlet EDA",
-    "text": "Outlet EDA\n\noutlets |&gt; ggpairs()"
+    "objectID": "slides/00-welcome.html#course-faq-1",
+    "href": "slides/00-welcome.html#course-faq-1",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Will we be doing computing?\nA - Yes. We will use the computing language R for analysis, Quarto for writing up results, and GitHub for version control and collaboration"
   },
   {
-    "objectID": "slides/03-Regression.html#linear-regression-estimating-parameters",
-    "href": "slides/03-Regression.html#linear-regression-estimating-parameters",
-    "title": "MATH 427: Linear Regression",
-    "section": "Linear Regression: Estimating Parameters",
-    "text": "Linear Regression: Estimating Parameters\n\n\nSuppose we have \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\)\nObserved response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nPredicted response: \\(\\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nResidual: \\(e_i = \\hat{y}_i - y_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\) also known as the loss/cost function\nGOAL: Find \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) which minimizes \\(MSE\\)"
+    "objectID": "slides/00-welcome.html#course-faq-2",
+    "href": "slides/00-welcome.html#course-faq-2",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Will we learn the mathematical theory?\nA - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally."
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-algorithm",
-    "href": "slides/03-Regression.html#gradient-descent-algorithm",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\nHow do we minimize the \\(MSE\\)?\n\nCan be done “analytically” but most ML algorithms can’t be fit that way\n\nToday: popular optimization algorithm called gradient descent.\nNOTE: Gradient Descent is not a machine learning technique. It is an optimization technique that helps to fit machine learning models."
+    "objectID": "slides/00-welcome.html#course-faq-3",
+    "href": "slides/00-welcome.html#course-faq-3",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - What distinguishes this from a 300-level course?\nA - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if you tell you about an R function, I expect that you will be able to figure out how to use it yourself."
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-algorithm-1",
-    "href": "slides/03-Regression.html#gradient-descent-algorithm-1",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\nThink of the MSE as a function of \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\)\n\n\\(\\text{MSE} = \\frac{\\sum (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1)}{n}\\)"
+    "objectID": "slides/00-welcome.html#course-faq-4",
+    "href": "slides/00-welcome.html#course-faq-4",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Is there anything else I should know?\nA - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have intentionally designed to not give you enough information to solve on your own."
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-algorithm-2",
-    "href": "slides/03-Regression.html#gradient-descent-algorithm-2",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\nUpdates to the variable: \\[\n\\begin{aligned}\n\\text{new value of variable} &= \\text{old value of variable}\\\\\n&\\qquad- \\text{step size} \\times \\text{gradient of function with respect to variable}\n\\end{aligned}\n\\]"
+    "objectID": "slides/00-welcome.html#course-learning-objectives",
+    "href": "slides/00-welcome.html#course-learning-objectives",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course learning objectives",
+    "text": "Course learning objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse R to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results results through writing and oral presentations."
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-algorithm-3",
-    "href": "slides/03-Regression.html#gradient-descent-algorithm-3",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm"
+    "objectID": "slides/00-welcome.html#course-toolkit",
+    "href": "slides/00-welcome.html#course-toolkit",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Course toolkit",
+    "text": "Course toolkit\n\nCourse website\n\nCentral hub for the course!\nTour of the website\n\nCanvas\n\nGradebook\nAnnouncements\n\nGitHub\n\nDistribute assignments\nPlatform for version control and collaboration"
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-algorithm-4",
-    "href": "slides/03-Regression.html#gradient-descent-algorithm-4",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\n\n\n\n\n\n\n\n\nStep size too big\n\n\n\n\n\n\n\nStep size too small"
+    "objectID": "slides/00-welcome.html#computing-toolkit",
+    "href": "slides/00-welcome.html#computing-toolkit",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Computing toolkit",
+    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using R, a statistical programming language\nWrite reproducible reports in Quarto\nAccess RStudio through your personal computer (preferred) or the RStudio Server (email me ASAP if you are doing this)\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in MAT 427 course classroom"
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-for-linear-regression",
-    "href": "slides/03-Regression.html#gradient-descent-for-linear-regression",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent for Linear Regression",
-    "text": "Gradient Descent for Linear Regression\n\nObjective: We want to find \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) which minimizes\n\\[MSE = \\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n} = \\dfrac{(\\hat{y}_1 - y_1)^2 +  (\\hat{y}_2 - y_2)^2 + \\ldots + (\\hat{y}_n - y_n)^2}{n}\\]\n\\[MSE = \\dfrac{(\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_1 - y_1)^2 +  (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_2 - y_2)^2 + \\ldots + (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_n - y_n)^2}{n}\\]\n\\[MSE = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (e_i)^2\\]"
+    "objectID": "slides/00-welcome.html#prepare-participate-practice-perform",
+    "href": "slides/00-welcome.html#prepare-participate-practice-perform",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Prepare, Participate, Practice, Perform",
+    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded for completion\nPerform: Put together what you’ve learned to analyze real-world data\n\nTwo Job Applications/Portfolios (individual)\nTwo Job Interviews (individual)\nOne Hack-a-thon/Presentation (individual-ish)\nOne Project & Presentation (team)"
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-for-linear-regression-1",
-    "href": "slides/03-Regression.html#gradient-descent-for-linear-regression-1",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent for Linear Regression",
-    "text": "Gradient Descent for Linear Regression\n\nTo compute gradient, need partial derivatives of \\(MSE\\) with respect to \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\n\\[\\text{gradient of MSE with respect to} \\ \\hat{\\beta}_0 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\]\n\\[\\text{gradient of MSE with respect to} \\ \\hat{\\beta}_1 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\]"
+    "objectID": "slides/00-welcome.html#grading",
+    "href": "slides/00-welcome.html#grading",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Grading",
+    "text": "Grading\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nJob Application 1\n15%\n\n\nJob Application 2\n15%\n\n\nJob Interview 1\n15%\n\n\nJob Interview 2\n15%\n\n\nHack-a-thon & Presentation\n15%\n\n\nFinal Project\n15%\n\n\n\nSee the syllabus for details on how the final letter grade will be calculated."
   },
   {
-    "objectID": "slides/03-Regression.html#gradient-descent-for-linear-regression-2",
-    "href": "slides/03-Regression.html#gradient-descent-for-linear-regression-2",
-    "title": "MATH 427: Linear Regression",
-    "section": "Gradient Descent for Linear Regression",
-    "text": "Gradient Descent for Linear Regression\n\nGradient descent update:\n\nFor \\(\\hat{\\beta}_0\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_0 \\ \\text{(new)}\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_0\\bigg)\\\\\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]\nFor \\(\\hat{\\beta}_1\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_1  \\ \\text{(new)} &= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_1 \\bigg)\\\\\n&= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]"
+    "objectID": "slides/00-welcome.html#support",
+    "href": "slides/00-welcome.html#support",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Support",
+    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours\n\nDedicated homework help session\nUse email for questions regarding personal matters and/or grades\nSee the Course Support page for more details"
   },
   {
-    "objectID": "slides/03-Regression.html#linear-regression-in-r",
-    "href": "slides/03-Regression.html#linear-regression-in-r",
-    "title": "MATH 427: Linear Regression",
-    "section": "Linear Regression in R",
-    "text": "Linear Regression in R\n\n\n\noutlets_model &lt;- lm(profit ~ population, data = outlets)\noutlets_model\n\n\nCall:\nlm(formula = profit ~ population, data = outlets)\n\nCoefficients:\n(Intercept)   population  \n     -3.896        1.193  \n\n\n\nThis corresponds to the model:\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\] i.e. \\(\\hat{\\beta}_0 = -3.90\\) and \\(\\hat{\\beta}_1 = 1.19\\)"
+    "objectID": "slides/00-welcome.html#late-homework",
+    "href": "slides/00-welcome.html#late-homework",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Late Homework",
+    "text": "Late Homework\n\nOne week late (no grade penalty)\nAfter I start grading (no feedback)\nWhy should I care about feedback?\n\nIt’s how you learn… duh\nYou will be repurposing your homeworks for your job applications"
   },
   {
-    "objectID": "slides/03-Regression.html#linear-regression-in-r-1",
-    "href": "slides/03-Regression.html#linear-regression-in-r-1",
-    "title": "MATH 427: Linear Regression",
-    "section": "Linear Regression in R",
-    "text": "Linear Regression in R\n\nggplot(data = outlets) +\n  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot\n  geom_smooth(mapping = aes(x = population, y = profit), \n              method = \"lm\", se = FALSE)   # add the regression line"
+    "objectID": "slides/00-welcome.html#school-sponsored-events",
+    "href": "slides/00-welcome.html#school-sponsored-events",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "School-Sponsored Events",
+    "text": "School-Sponsored Events\n\nExcused absences for event? Email me at least a week in advance\nSick or injured? Email me as soon as it is safe to do so.\n\nDon’t get me sick…\n\nFailure to adhere to this policy gets you a 35% point reduction"
   },
   {
-    "objectID": "slides/03-Regression.html#linear-regression-in-r-prediction",
-    "href": "slides/03-Regression.html#linear-regression-in-r-prediction",
-    "title": "MATH 427: Linear Regression",
-    "section": "Linear Regression in R: Prediction",
-    "text": "Linear Regression in R: Prediction\n\npredict(outlets_model, newdata = data.frame(population = 17))\n\n       1 \n16.38579 \n\n\nNote: New data must be a data frame with the same columns names as the training data\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "objectID": "slides/00-welcome.html#academic-integrity",
+    "href": "slides/00-welcome.html#academic-integrity",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Academic integrity",
+    "text": "Academic integrity\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code."
+  },
+  {
+    "objectID": "slides/00-welcome.html#collaboration-sharing-code",
+    "href": "slides/00-welcome.html#collaboration-sharing-code",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Collaboration & sharing code",
+    "text": "Collaboration & sharing code\n\nI have policies!"
+  },
+  {
+    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
+    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Use of artificial intelligence (AI)",
+    "text": "Use of artificial intelligence (AI)\n\nYou should treat AI tools, such as ChatGPT, the same as other online resources.\nThere are two guiding principles that govern how you can use AI in this course:1\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎"
+  },
+  {
+    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
+    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Use of artificial intelligence (AI)",
+    "text": "Use of artificial intelligence (AI)\n\nUnderstand everything you write down\nTell me where you got it from\nDon’t lie about it\n\n\n\n\n\n\n\nImportant\n\n\nIn general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. Any code or content from your homework is eligible for inclusion during your job interview."
+  },
+  {
+    "objectID": "slides/00-welcome.html#in-class-agreements",
+    "href": "slides/00-welcome.html#in-class-agreements",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "In class agreements",
+    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
+  },
+  {
+    "objectID": "slides/00-welcome.html#five-tips-for-success",
+    "href": "slides/00-welcome.html#five-tips-for-success",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Five tips for success",
+    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours and help session.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
+  },
+  {
+    "objectID": "slides/00-welcome.html#emails-for-help",
+    "href": "slides/00-welcome.html#emails-for-help",
+    "title": "MATH 427: Statistical Machine Learning",
+    "section": "Emails for help",
+    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#pre-survey",
@@ -708,200 +750,347 @@
     "text": "Recap\n\nWhat is a Machine Learning algorithm?\n\nT: has task\nP: performance is measured\nE: improves with experience\n\nTerminology:\n\nFeatures\n\n\\(p\\)\n\nTarget\nObservations\n\n\\(n\\)\n\n\nSupervised vs. unsupervised learning\n\nSupervised: data is labeled\nUnsupervised: data is unlabeled\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
-    "objectID": "slides/00-welcome.html#meet-prof.-friedlander",
-    "href": "slides/00-welcome.html#meet-prof.-friedlander",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Meet Prof. Friedlander!",
-    "text": "Meet Prof. Friedlander!\n\n\nEducation and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression",
+    "text": "Multiple Linear Regression\n\nResponse: \\(Y\\)\nPredictor Variables: \\(X_1, X_2, \\ldots, X_p\\)\nAssume true relationship:\n\n\\[\n\\begin{aligned}\nY&=f(\\mathbf{X}) + \\epsilon\\\\\n&=\\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_p X_p + \\epsilon\n\\end{aligned}\n\\] where \\(\\beta_j\\) quantifies the association between the \\(j^{th}\\) predictor and the response."
   },
   {
-    "objectID": "slides/00-welcome.html#meet-prof.-friedlander-1",
-    "href": "slides/00-welcome.html#meet-prof.-friedlander-1",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Meet Prof. Friedlander!",
-    "text": "Meet Prof. Friedlander!"
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression: Estimating Parameters",
+    "text": "Multiple Linear Regression: Estimating Parameters\n\nSuppose \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) are estimates of \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\)\nTraining Data:\n\nObserved response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nObserved predictors: \\(x_{1i}, x_{2i}, \\ldots x_{pi}\\) for \\(i=1,\\ldots, n\\)\n\nPredicted response: \\[\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1x_{1i} + \\ldots + \\hat{\\beta}_px_{pi} \\text{ for } i=1, \\ldots, n\\]\nResiduals: \\(e_i = \\hat{y}_i - y_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\)"
   },
   {
-    "objectID": "slides/00-welcome.html#tell-me-about-yourself-github",
-    "href": "slides/00-welcome.html#tell-me-about-yourself-github",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Tell me about yourself + GitHub",
-    "text": "Tell me about yourself + GitHub\nCreate a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me an email with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression: Estimating Parameters",
+    "text": "Multiple Linear Regression: Estimating Parameters\n\nGoal: Use training data to find \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) that minimizes MSE\n\n\\(\\hat{\\beta}_i\\)’s called least-squares estimators\nSince minimizing MSE \\(\\implies\\) MSE is called cost/loss function\n\nCan use calculus or gradient descent to find \\(\\hat{\\beta}_i\\)’s"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq",
-    "href": "slides/00-welcome.html#course-faq",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - What background is assumed for the course?\nA - Familiarity with concepts from statistical inference, linear regression, and logistic regression. A solid grounding in R, including the tidyverse and ggplot."
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression",
+    "text": "Multiple Linear Regression\n\nHouse Prices dataset:\n\nsize is in square feet\nnum_bedrooms is a count\nprice is in $1,000’s\n\n\n\nhouse_prices &lt;- readRDS(\"../data/house_prices.rds\")   # load dataset\nhead(house_prices, 6)   # print first 6 observations\n\n  size num_bedrooms price\n1 2104            3 399.9\n2 1600            3 329.9\n3 2400            3 369.0\n4 1416            2 232.0\n5 3000            4 539.9\n6 1985            4 299.9"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-1",
-    "href": "slides/00-welcome.html#course-faq-1",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - Will we be doing computing?\nA - Yes. We will use the computing language R for analysis, Quarto for writing up results, and GitHub for version control and collaboration"
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-2",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-2",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression",
+    "text": "Multiple Linear Regression\nSome Exploratory Data Analysis (EDA)\n\nlibrary(GGally)\nggpairs(data = house_prices)   # correlation plot"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-2",
-    "href": "slides/00-welcome.html#course-faq-2",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - Will we learn the mathematical theory?\nA - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally."
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-in-r",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-in-r",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression in R",
+    "text": "Multiple Linear Regression in R\n\nmlr_model &lt;- lm(price ~ size + num_bedrooms, data = house_prices)   # fit the model\nsummary(mlr_model)   # produce result summaries of the model\n\n\nCall:\nlm(formula = price ~ size + num_bedrooms, data = house_prices)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-130.58  -43.64  -10.83   43.70  198.15 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   89.5978    41.7674   2.145   0.0375 *  \nsize           0.1392     0.0148   9.409 4.22e-12 ***\nnum_bedrooms  -8.7379    15.4507  -0.566   0.5746    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 66.07 on 44 degrees of freedom\nMultiple R-squared:  0.7329,    Adjusted R-squared:  0.7208 \nF-statistic: 60.38 on 2 and 44 DF,  p-value: 2.428e-13"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-3",
-    "href": "slides/00-welcome.html#course-faq-3",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - What distinguishes this from a 300-level course?\nA - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if you tell you about an R function, I expect that you will be able to figure out how to use it yourself."
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression: Interpreting Parameters",
+    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\\(\\hat{\\beta}_0=89.5978\\): The intercept \\(\\implies\\) a house with 0 square feet and 0 bedrooms would cost approximately $89,598.80. Is this meaningful in context? Not really\n\\(\\hat{\\beta}_1=0.1392\\): With num_bedrooms remaining fixed, an additional 1 square foot of size leads to an increase in price by approximately $139.20.\n\\(\\hat{\\beta}_2=-8.7379\\): With size remaining fixed, an additional bedroom leads to an decrease in price of approximately $8,737.90.\n\n\n\nHmm…. that’s a little weird…\nSimpson’s Paradox: when relationship between two variables disappears or reverses when controlling for a third, confounding variable"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-4",
-    "href": "slides/00-welcome.html#course-faq-4",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - Is there anything else I should know?\nA - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have intentionally designed to not give you enough information to solve on your own."
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression: Interpreting Parameters",
+    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\nWrite down our model in mathematical notation\n\\(\\text{sales} = 89.5978 + 0.1392\\times\\text{size} - 8.7379\\times\\text{num_bedrooms}\\)\n\\(Y = 89.5978 + 0.1392X_1 - 8.7379X_2\\)"
   },
   {
-    "objectID": "slides/00-welcome.html#course-learning-objectives",
-    "href": "slides/00-welcome.html#course-learning-objectives",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course learning objectives",
-    "text": "Course learning objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse R to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results results through writing and oral presentations."
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Multiple Linear Regression: Prediction",
+    "text": "Multiple Linear Regression: Prediction\n\nPrediction of price when size is 2000 square feet for a house with 3 bedrooms\n\\(\\text{sales} = 89.5978 + 0.1392\\times2000 - 8.7379\\times3 = 341.7841\\)\n\n\n\npredict(mlr_model, newdata = data.frame(size = 2000, num_bedrooms = 3))   # obtain prediction\n\n       1 \n341.8053 \n\n\n\nWhy don’t these match exactly? rounding"
   },
   {
-    "objectID": "slides/00-welcome.html#course-toolkit",
-    "href": "slides/00-welcome.html#course-toolkit",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Course toolkit",
-    "text": "Course toolkit\n\nCourse website\n\nCentral hub for the course!\nTour of the website\n\nCanvas\n\nGradebook\nAnnouncements\n\nGitHub\n\nDistribute assignments\nPlatform for version control and collaboration"
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-comparing-models",
+    "href": "slides/04-MultipleRegression.html#linear-regression-comparing-models",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Linear Regression: Comparing Models",
+    "text": "Linear Regression: Comparing Models\n\n\n\nMany methods for comparing regression models from your regression course\nToday: Data splitting\nFirst: New Data\n\n\n\n\n\names housing data\n\nMany variables\nFocus on:\n\nSale_Price: in dollars\nGr_Liv_Area: size in square feet\nBedroom_AbvGr: number of bedrooms above grade"
   },
   {
-    "objectID": "slides/00-welcome.html#computing-toolkit",
-    "href": "slides/00-welcome.html#computing-toolkit",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Computing toolkit",
-    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using R, a statistical programming language\nWrite reproducible reports in Quarto\nAccess RStudio through your personal computer (preferred) or the RStudio Server (email me ASAP if you are doing this)\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in MAT 427 course classroom"
+    "objectID": "slides/04-MultipleRegression.html#comparing-models-data-splitting",
+    "href": "slides/04-MultipleRegression.html#comparing-models-data-splitting",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Comparing Models: Data Splitting",
+    "text": "Comparing Models: Data Splitting\n\nSplit ames data set into two parts\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nTest set: randomly selected proportion \\(1-p\\) of data used for estimating prediction error\n\nIf comparing A LOT of models, split into three parts to prevent information leakage\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nValidation set: randomly selected proportion \\(q\\) (typically 20-30%) of data used to choosing tuning parameters\nTest set: randomly selected proportion \\(1-p-q\\) of data used for estimating prediction error\n\nIdea: use data your model hasn’t seen to get more accurate estimate of error and prevent overfitting"
   },
   {
-    "objectID": "slides/00-welcome.html#prepare-participate-practice-perform",
-    "href": "slides/00-welcome.html#prepare-participate-practice-perform",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Prepare, Participate, Practice, Perform",
-    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded for completion\nPerform: Put together what you’ve learned to analyze real-world data\n\nTwo Job Applications/Portfolios (individual)\nTwo Job Interviews (individual)\nOne Hack-a-thon/Presentation (individual-ish)\nOne Project & Presentation (team)"
+    "objectID": "slides/04-MultipleRegression.html#comparing-models-data-splitting-with-r",
+    "href": "slides/04-MultipleRegression.html#comparing-models-data-splitting-with-r",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Comparing Models: Data Splitting with R",
+    "text": "Comparing Models: Data Splitting with R\n\nlibrary(splitTools) # Load data splitting package\nindicies &lt;- partition(ames$Sale_Price, p = c(train = 0.7, test = 0.3)) # get indices of partitions\ntrain_ames &lt;- ames[indicies$train, ] # names will mimic above\ntest_ames &lt;- ames[indicies$test, ]\n\n\npartition will actually stratify based on it’s first argument (Sales_Price in this case)"
   },
   {
-    "objectID": "slides/00-welcome.html#grading",
-    "href": "slides/00-welcome.html#grading",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Grading",
-    "text": "Grading\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nJob Application 1\n15%\n\n\nJob Application 2\n15%\n\n\nJob Interview 1\n15%\n\n\nJob Interview 2\n15%\n\n\nHack-a-thon & Presentation\n15%\n\n\nFinal Project\n15%\n\n\n\nSee the syllabus for details on how the final letter grade will be calculated."
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-comparing-models-1",
+    "href": "slides/04-MultipleRegression.html#linear-regression-comparing-models-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Linear Regression: Comparing Models",
+    "text": "Linear Regression: Comparing Models\n\nLet’s create three models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_AbvGr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nmlr_model (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_AbvGr as predictors\n\n\n\nfit1 &lt;- lm(Sale_Price ~ Bedroom_AbvGr, data=train_ames) # Use only training set\nfit2 &lt;- lm(Sale_Price ~ Gr_Liv_Area, data = train_ames) \nmlr_model &lt;- lm(Sale_Price ~ Gr_Liv_Area + Bedroom_AbvGr, data = train_ames)"
   },
   {
-    "objectID": "slides/00-welcome.html#support",
-    "href": "slides/00-welcome.html#support",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Support",
-    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours\n\nDedicated homework help session\nUse email for questions regarding personal matters and/or grades\nSee the Course Support page for more details"
+    "objectID": "slides/04-MultipleRegression.html#computing-error-metrics",
+    "href": "slides/04-MultipleRegression.html#computing-error-metrics",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Computing Error Metrics",
+    "text": "Computing Error Metrics\n\n# Fit 1\nfit1_train_mse &lt;- mean((train_ames$Sale_Price - predict(fit1))^2)\nfit1_test_mse &lt;- mean((test_ames$Sale_Price - predict(fit1, newdata = test_ames))^2)\n\n# Fit 2\nfit2_train_mse &lt;- mean((train_ames$Sale_Price - predict(fit2))^2)\nfit2_test_mse &lt;- mean((test_ames$Sale_Price - predict(fit2, newdata = test_ames))^2)\n\n# Fit 1\nmlr_train_mse &lt;- mean((train_ames$Sale_Price - predict(mlr_model))^2)\nmlr_test_mse &lt;- mean((test_ames$Sale_Price - predict(mlr_model, new_data = testames))^2)"
   },
   {
-    "objectID": "slides/00-welcome.html#late-homework",
-    "href": "slides/00-welcome.html#late-homework",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Late Homework",
-    "text": "Late Homework\n\nOne week late (no grade penalty)\nAfter I start grading (no feedback)\nWhy should I care about feedback?\n\nIt’s how you learn… duh\nYou will be repurposing your homeworks for your job applications"
+    "objectID": "slides/04-MultipleRegression.html#question",
+    "href": "slides/04-MultipleRegression.html#question",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Question",
+    "text": "Question\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, mlr_train_mse? Yes, mlr_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, mlr_test_mse? No"
   },
   {
-    "objectID": "slides/00-welcome.html#school-sponsored-events",
-    "href": "slides/00-welcome.html#school-sponsored-events",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "School-Sponsored Events",
-    "text": "School-Sponsored Events\n\nExcused absences for event? Email me at least a week in advance\nSick or injured? Email me as soon as it is safe to do so.\n\nDon’t get me sick…\n\nFailure to adhere to this policy gets you a 35% point reduction"
+    "objectID": "slides/04-MultipleRegression.html#choosing-a-model",
+    "href": "slides/04-MultipleRegression.html#choosing-a-model",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Choosing a Model",
+    "text": "Choosing a Model\n\n\n\n# Training Errors\nfit1_train_mse\n\n[1] 6130313692\n\nfit2_train_mse\n\n[1] 3174284112\n\nmlr_train_mse\n\n[1] 2756716299\n\nwhich.min(c(fit1_train_mse, fit2_train_mse, mlr_train_mse))\n\n[1] 3\n\n# test Errors\nfit1_test_mse\n\n[1] 6520779039\n\nfit2_test_mse\n\n[1] 3238693457\n\nmlr_test_mse\n\n[1] 9922647922\n\nwhich.min(c(fit1_test_mse, fit2_test_mse, mlr_test_mse))\n\n[1] 2\n\n\n\n\nmlr_model has the lowest training MSE (to be expected)\nfit2 has the lowest test MSE\n\nWe would choose fit2\n\nAnything else interesting we seee?"
   },
   {
-    "objectID": "slides/00-welcome.html#academic-integrity",
-    "href": "slides/00-welcome.html#academic-integrity",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Academic integrity",
-    "text": "Academic integrity\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code."
+    "objectID": "slides/04-MultipleRegression.html#regression-conditional-averaging",
+    "href": "slides/04-MultipleRegression.html#regression-conditional-averaging",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Regression: Conditional Averaging",
+    "text": "Regression: Conditional Averaging\nRestaurant Outlets Profit dataset\n\nWhat is a good value of \\(\\hat{f}(x)\\) (expected profit), say at \\(x=6\\)?\nA possible choice is the average of the observed responses at \\(x=6\\). But we may not observe responses for certain \\(x\\) values."
   },
   {
-    "objectID": "slides/00-welcome.html#collaboration-sharing-code",
-    "href": "slides/00-welcome.html#collaboration-sharing-code",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Collaboration & sharing code",
-    "text": "Collaboration & sharing code\n\nI have policies!"
+    "objectID": "slides/04-MultipleRegression.html#k-nearest-neighbors-knn-regression",
+    "href": "slides/04-MultipleRegression.html#k-nearest-neighbors-knn-regression",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "K-Nearest Neighbors (KNN) Regression",
+    "text": "K-Nearest Neighbors (KNN) Regression\n\nNon-parametric approach\nFormally: Given a value for \\(K\\) and a test data point \\(x_0\\), \\[\\hat{f}(x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} y_i=\\text{Average} \\ \\left(y_i \\ \\text{for all} \\ i:\\ x_i \\in \\mathcal{N}_0\\right) \\] where \\(\\mathcal{N}_0\\) is the set of the \\(K\\) training observations closest to \\(x_0\\).\nInformally, average together the \\(K\\) “closest” observations in your training set\n“Closeness”: usually use the Euclidean metric to measure distance\nEuclidean distance between \\(\\mathbf{X}_i=(x_{i1}, x_{i2}, \\ldots, x_{ip})\\) and \\(\\mathbf{x}_j=(x_{j1}, x_{j2}, \\ldots, x_{jp})\\): \\[||\\mathbf{x}_i-\\mathbf{x}_j||_2 = \\sqrt{(x_{i1}-x_{j1})^2 + (x_{i2}-x_{j2})^2 + \\ldots + (x_{ip}-x_{jp    })^2}\\]"
   },
   {
-    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
-    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)\n\nYou should treat AI tools, such as ChatGPT, the same as other online resources.\nThere are two guiding principles that govern how you can use AI in this course:1\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎"
+    "objectID": "slides/04-MultipleRegression.html#knn-regression-single-predictor-fit",
+    "href": "slides/04-MultipleRegression.html#knn-regression-single-predictor-fit",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "KNN Regression (single predictor): Fit",
+    "text": "KNN Regression (single predictor): Fit\n\n\n\\(K=1\\)\n\nlibrary(caret)   # load the caret package\nknnfit1 &lt;- knnreg(profit ~ population, data = outlets, k = 1)   # 1-nn regression\npredict(knnfit1, newdata = data.frame(population = 6))  # 1-nn prediction\n\n[1] 0.92695\n\n\n\n\n\n\n\n\n\n\n\n\n\\(K=5\\)\n\nknnfit5 &lt;- knnreg(profit ~ population, data = outlets, k = 5)   # 5-nn regression\npredict(knnfit5, newdata = data.frame(population = 6))  # 5-nn prediction\n\n[1] 5.76995"
   },
   {
-    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
-    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)\n\nUnderstand everything you write down\nTell me where you got it from\nDon’t lie about it\n\n\n\n\n\n\n\nImportant\n\n\nIn general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. Any code or content from your homework is eligible for inclusion during your job interview."
+    "objectID": "slides/04-MultipleRegression.html#regression-methods-comparison",
+    "href": "slides/04-MultipleRegression.html#regression-methods-comparison",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Regression Methods: Comparison",
+    "text": "Regression Methods: Comparison"
   },
   {
-    "objectID": "slides/00-welcome.html#in-class-agreements",
-    "href": "slides/00-welcome.html#in-class-agreements",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "In class agreements",
-    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
+    "objectID": "slides/04-MultipleRegression.html#question-1",
+    "href": "slides/04-MultipleRegression.html#question-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Question!!!",
+    "text": "Question!!!\nAs \\(K\\) in KNN regression increases:\n\nthe flexibility of the fit \\(\\underline{\\hspace{5cm}}\\) (increases /decreases)\nthe bias of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases )\nthe variance of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)"
   },
   {
-    "objectID": "slides/00-welcome.html#five-tips-for-success",
-    "href": "slides/00-welcome.html#five-tips-for-success",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Five tips for success",
-    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours and help session.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
+    "objectID": "slides/04-MultipleRegression.html#k-nearest-neighbors-regression-multiple-predictors",
+    "href": "slides/04-MultipleRegression.html#k-nearest-neighbors-regression-multiple-predictors",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "K-Nearest Neighbors Regression (multiple predictors)",
+    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nLet’s look at the house_prices data\n\n\n\n# A tibble: 6 × 3\n  Sale_Price Gr_Liv_Area Bedroom_AbvGr\n       &lt;int&gt;       &lt;int&gt;         &lt;int&gt;\n1     215000        1656             3\n2     105000         896             2\n3     172000        1329             3\n4     244000        2110             3\n5     189900        1629             3\n6     195500        1604             3\n\n\n\n\n\nShould 1 square foot count the same as 1 bedroom?\nNeed to center and scale (freq. just say scale)\n\nsubtract mean from each predictor\ndivide by standard deviation of each predictor\ncompares apples-to-apples"
   },
   {
-    "objectID": "slides/00-welcome.html#emails-for-help",
-    "href": "slides/00-welcome.html#emails-for-help",
-    "title": "MATH 427: Statistical Machine Learning",
-    "section": "Emails for help",
-    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
+    "objectID": "slides/04-MultipleRegression.html#scaling-in-r",
+    "href": "slides/04-MultipleRegression.html#scaling-in-r",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Scaling in R",
+    "text": "Scaling in R\n\n# scale predictors\names_scaled &lt;- tibble(size_scaled = scale(ames$Gr_Liv_Area),\n                                  num_bedrooms_scaled = scale(ames$Bedroom_AbvGr),\n                                  price = ames$Sale_Price)\n\nhead(ames_scaled)   # first six observations\n\n# A tibble: 6 × 3\n  size_scaled[,1] num_bedrooms_scaled[,1]  price\n            &lt;dbl&gt;                   &lt;dbl&gt;  &lt;int&gt;\n1           0.309                   0.176 215000\n2          -1.19                   -1.03  105000\n3          -0.338                   0.176 172000\n4           1.21                    0.176 244000\n5           0.256                   0.176 189900\n6           0.206                   0.176 195500"
   },
   {
-    "objectID": "prepare/prep-03.html",
-    "href": "prepare/prep-03.html",
-    "title": "Preparation for Linear Regression & Gradient Descent",
+    "objectID": "slides/04-MultipleRegression.html#k-nearest-neighbors-regression-multiple-predictors-1",
+    "href": "slides/04-MultipleRegression.html#k-nearest-neighbors-regression-multiple-predictors-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "K-Nearest Neighbors Regression (multiple predictors)",
+    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nknnfit10 &lt;- knnreg(price ~ size_scaled + num_bedrooms_scaled, data = ames_scaled, k = 10)   # 10-nn regression\n\n\nMust also scale test data points using mean and sd from training set!!!!\nTest Point: size = 2000 square feet, and num_bedrooms = 3, then\n\n\n# obtain 10-nn prediction\n\npredict(knnfit10, newdata = tibble(size_scaled = (2000 - mean(ames$Gr_Liv_Area))/sd(ames$Gr_Liv_Area),\n                                     num_bedrooms_scaled = (3 - mean(ames$Bedroom_AbvGr))/sd(ames$Bedroom_AbvGr)))\n\n[1] 259490"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-vs-k-nearest-neighbors",
+    "href": "slides/04-MultipleRegression.html#linear-regression-vs-k-nearest-neighbors",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Linear Regression vs K-Nearest Neighbors",
+    "text": "Linear Regression vs K-Nearest Neighbors\n\nLinear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.\nLinear regression works for regression problems (\\(Y\\) numerical), KNN can be used for both regression and classification - i.e. \\(Y\\) qualitative (next lesson)\nLinear regression is interpretable, KNN is not.\nLinear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors\nPerformance: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#concept-check",
+    "href": "slides/03-SLR-Gradient_Desc.html#concept-check",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Concept Check",
+    "text": "Concept Check\nWhat do we call these:\n\n\\(\\mathbf{X}\\)\n\\(Y\\)\n\nWhat is our goal in supervised learning?"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#concept-check-1",
+    "href": "slides/03-SLR-Gradient_Desc.html#concept-check-1",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Concept Check",
+    "text": "Concept Check\n\nFeatures: \\(\\mathbf{X}\\)\nTarget: \\(Y\\)\nGoal: Predict \\(Y\\) using \\(\\mathbf{X}\\)\n\n\n\nWhat do we call this process if \\(Y\\) is numerical? What about categorical?"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#concept-check-2",
+    "href": "slides/03-SLR-Gradient_Desc.html#concept-check-2",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Concept Check",
+    "text": "Concept Check\n\nWhat do we call this process if \\(Y\\) is numerical? What about categorical?\n\nNumerical: regression\nCategorical: classification\n\n\n\n\nWhat is the difference between a training and a test set?\nHow do we evaluate the performance of a regression model?"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#a-familiar-supervised-learning-model",
+    "href": "slides/03-SLR-Gradient_Desc.html#a-familiar-supervised-learning-model",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "A Familiar Supervised Learning Model",
+    "text": "A Familiar Supervised Learning Model\n\nAssume relationship between \\(\\mathbf{X}\\) and \\(Y\\) is: \\[Y=f(\\mathbf{X}) + \\epsilon\\] where \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\nObjective: To approximate/estimate \\(f(\\mathbf{X})\\)\nLinear Regression: assume that \\(f(\\mathbf{X})\\) is a linear function of \\(\\mathbf{X}\\)\n\nFor \\(p=1\\): \\(f(\\mathbf{X}) = \\beta_0 + \\beta_1 X_1\\)\nFor \\(p &gt; 1\\): \\(f(\\mathbf{X}) = \\beta_0 + \\beta_1 X_1 + \\cdots + \\beta_p X_p\\)"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression",
+    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Linear Regression",
+    "text": "Linear Regression\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.\n\noutlets &lt;- readRDS(\"../data/outlets.rds\")   # load dataset\nhead(outlets) |&gt; kable() # first six observations of the dataset\n\n\n\n\npopulation\nprofit\n\n\n\n\n6.1101\n17.5920\n\n\n5.5277\n9.1302\n\n\n8.5186\n13.6620\n\n\n7.0032\n11.8540\n\n\n5.8598\n6.8233\n\n\n8.3829\n11.8860"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-1",
+    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-1",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Linear Regression",
+    "text": "Linear Regression\n\nObjective: choose “best” \\(\\beta_0\\) and \\(\\beta_1\\) if we assume \\[\\text{profit} = \\beta_0 + \\beta_1\\times\\text{population}\\]\nOnce this is done, we can:\n\npredict the profit for a new city with a given population\nunderstand the relationship between population and profit better"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#outlet-eda",
+    "href": "slides/03-SLR-Gradient_Desc.html#outlet-eda",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Outlet EDA",
+    "text": "Outlet EDA\n\noutlets |&gt; ggpairs() # ggpairs is from GGAlley package"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-estimating-parameters",
+    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-estimating-parameters",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Linear Regression: Estimating Parameters",
+    "text": "Linear Regression: Estimating Parameters\n\n\nSuppose we have \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\)\nObserved response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nPredicted response: \\(\\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nResidual: \\(e_i = \\hat{y}_i - y_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\) also known as the loss/cost function\nGOAL: Find \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) which minimizes \\(MSE\\)"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent Algorithm",
+    "text": "Gradient Descent Algorithm\n\nHow do we minimize the \\(MSE\\)?\n\nCan be done “analytically” but most ML models can’t be fit that way\n\nToday: popular optimization algorithm called gradient descent.\nNOTE: Gradient Descent is not a machine learning model/algorithm. It is an optimization technique that helps to fit machine learning models."
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-1",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-1",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent Algorithm",
+    "text": "Gradient Descent Algorithm\n\nThink of the MSE as a function of \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\)\n\n\\(\\text{MSE} = \\frac{\\sum (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1)^2}{n}\\)"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-2",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-2",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent Algorithm",
+    "text": "Gradient Descent Algorithm\n\nUpdates to the parameter: \\[\n\\begin{aligned}\n\\text{new value of parameters} &= \\text{old value of parameters}\\\\\n&\\qquad- \\text{step size} \\times \\text{gradient of function w.r.t. parameters}\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-3",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-3",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent Algorithm",
+    "text": "Gradient Descent Algorithm"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-4",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-algorithm-4",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent Algorithm",
+    "text": "Gradient Descent Algorithm\n\n\n\n\n\n\n\n\n\nStep size too small\n\n\n\n\n\n\n\nStep size too too big"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent for Linear Regression",
+    "text": "Gradient Descent for Linear Regression\n\nObjective: We want to find \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) which minimizes\n\\[\\begin{aligned}\nMSE &= \\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\\\\n&= \\dfrac{(\\hat{y}_1 - y_1)^2 +  (\\hat{y}_2 - y_2)^2 + \\ldots + (\\hat{y}_n - y_n)^2}{n}\n\\end{aligned}\\]\n\\[MSE = \\dfrac{(\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_1 - y_1)^2 +  (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_2 - y_2)^2 + \\ldots + (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_n - y_n)^2}{n}\\]\n\\[MSE = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (e_i)^2\\]"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression-1",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression-1",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent for Linear Regression",
+    "text": "Gradient Descent for Linear Regression\n\nTo compute gradient, need partial derivatives of \\(MSE\\) with respect to \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\n\\[\\text{gradient of MSE with respect to} \\ \\hat{\\beta}_0 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\]\n\\[\\text{gradient of MSE with respect to} \\ \\hat{\\beta}_1 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\]"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression-2",
+    "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression-2",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Gradient Descent for Linear Regression",
+    "text": "Gradient Descent for Linear Regression\n\nGradient descent update:\n\nFor \\(\\hat{\\beta}_0\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_0 \\ \\text{(new)}\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_0\\bigg)\\\\\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]\nFor \\(\\hat{\\beta}_1\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_1  \\ \\text{(new)} &= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_1 \\bigg)\\\\\n&= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r",
+    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Linear Regression in R",
+    "text": "Linear Regression in R\n\n\n\noutlets_model &lt;- lm(profit ~ population, data = outlets)\noutlets_model\n\n\nCall:\nlm(formula = profit ~ population, data = outlets)\n\nCoefficients:\n(Intercept)   population  \n     -3.896        1.193  \n\n\n\nThis corresponds to the model:\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\] i.e. \\(\\hat{\\beta}_0 = -3.90\\) and \\(\\hat{\\beta}_1 = 1.19\\)"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r-1",
+    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r-1",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Linear Regression in R",
+    "text": "Linear Regression in R\n\nggplot(data = outlets) +\n  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot\n  geom_smooth(mapping = aes(x = population, y = profit), \n              method = \"lm\", se = FALSE)   # add the regression line"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r-prediction",
+    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r-prediction",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Linear Regression in R: Prediction",
+    "text": "Linear Regression in R: Prediction\n\npredict(outlets_model, newdata = data.frame(population = 17))\n\n       1 \n16.38579 \n\n\nNote: New data must be a data frame with the same columns names as the training data\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "prepare/prep-01.html",
+    "href": "prepare/prep-01.html",
+    "title": "Preparation for Big Picture Discussion",
     "section": "",
-    "text": "Read Chapter 3.1 from ISLR2\nIf you haven’t taken Multivariable Calculus or don’t remember what a partial derivative or gradient is watch this\nRead this article on gradient descent"
+    "text": "Review Syllabus\nRead Chapter 1 from ISLR2"
   },
   {
-    "objectID": "prepare/prep-03.html#assigned-readings-videos",
-    "href": "prepare/prep-03.html#assigned-readings-videos",
-    "title": "Preparation for Linear Regression & Gradient Descent",
+    "objectID": "prepare/prep-01.html#assigned-reading",
+    "href": "prepare/prep-01.html#assigned-reading",
+    "title": "Preparation for Big Picture Discussion",
     "section": "",
-    "text": "Read Chapter 3.1 from ISLR2\nIf you haven’t taken Multivariable Calculus or don’t remember what a partial derivative or gradient is watch this\nRead this article on gradient descent"
+    "text": "Review Syllabus\nRead Chapter 1 from ISLR2"
   },
   {
-    "objectID": "prepare/prep-02.html",
-    "href": "prepare/prep-02.html",
-    "title": "Preparation for Introduction to Statistical Learning",
+    "objectID": "prepare/prep-04.html",
+    "href": "prepare/prep-04.html",
+    "title": "Preparation for Multiple Linear Regression &",
     "section": "",
-    "text": "Read Chapter 2 from ISLR2"
+    "text": "Read Chapter 3.2, 3.3, and (optionally) 3.4 from ISLR2\nIf you you don’t have experience with the tidyverse please ready Chapter 2 of TMWR\nRead Chapters 3-6 of TMWR"
   },
   {
-    "objectID": "prepare/prep-02.html#assigned-reading",
-    "href": "prepare/prep-02.html#assigned-reading",
-    "title": "Preparation for Introduction to Statistical Learning",
+    "objectID": "prepare/prep-04.html#assigned-readings-videos",
+    "href": "prepare/prep-04.html#assigned-readings-videos",
+    "title": "Preparation for Multiple Linear Regression &",
     "section": "",
-    "text": "Read Chapter 2 from ISLR2"
+    "text": "Read Chapter 3.2, 3.3, and (optionally) 3.4 from ISLR2\nIf you you don’t have experience with the tidyverse please ready Chapter 2 of TMWR\nRead Chapters 3-6 of TMWR"
   },
   {
     "objectID": "schedule.html",
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 1 Assigned\n\n\n2\nF\nFeb 7\n1\nWhat is Statistical Learning\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3\nM\nFeb 10\n2\nIntro to Linear Regression and Gradient Descent",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 1 Assigned\n\n\n2\nF\nFeb 7\n1\nWhat is Statistical Learning\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3\nM\nFeb 10\n2\nIntro to Linear Regression and Gradient Descent\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4\nW\nFeb 12\n2\nMultiple Linear Regression and Data Splitting",
     "crumbs": [
       "Schedule"
     ]

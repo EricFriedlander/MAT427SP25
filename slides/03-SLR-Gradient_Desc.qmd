@@ -1,5 +1,5 @@
 ---
-title: 'MATH 427: Linear Regression'
+title: 'MATH 427: Simple Linear Regression + Gradient Descent'
 author: Eric Friedlander <br> [Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University]{.smaller}
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
