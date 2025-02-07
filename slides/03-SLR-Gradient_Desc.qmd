@@ -1,6 +1,6 @@
 ---
 title: 'MATH 427: Simple Linear Regression + Gradient Descent'
-author: Eric Friedlander <br> [Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University]{.smaller}
+author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
 format: 
@@ -384,8 +384,43 @@ MSE &= \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}\\
   \end{aligned}
   $$
 
+# Modeling in R
 
-## Linear Regression in R {.smaller}
+## R as an open-source language
+
+- R is an open source language
+  + Advantages:
+    + Packages for almost anything you want
+    + "Cutting edge" methods rolled out quickly and early
+  + Disadvantages
+    + Many packages (especially new ones) may  have bugs
+    + Lots of syntactical diversity
+    + Syntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created
+    
+## Enter `tidyverse`
+
+> The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+- `tidyverse` is for manipulating and visualizing data
+- the `tidyverse` is a *meta-package* meaning it is a collection of a bunch of other packages
+
+## Enter `tidymodels`
+
+>The tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.
+
+- `tidymodels` creates a unified framework for building models in R
+- Eric's opinion: similar idea to `scikit-learn` in Python
+
+## Back to linear regression
+
+```{r}
+ggplot(data = outlets) +
+  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot
+  geom_smooth(mapping = aes(x = population, y = profit), 
+              method = "lm", se = FALSE)   # add the regression line
+```
+
+## Classic Linear Regression in R {.smaller}
 
 ::::{.columns}
 :::{.column}
@@ -409,14 +444,10 @@ i.e. $\hat{\beta}_0 = -3.90$ and $\hat{\beta}_1 = 1.19$
 :::
 ::::
 
-## Linear Regression in R
+## Linear Regression with `tidymodels`
 
 ```{r}
-
-ggplot(data = outlets) +
-  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot
-  geom_smooth(mapping = aes(x = population, y = profit), 
-              method = "lm", se = FALSE)   # add the regression line
+library(tidymodels)
 ```
 
 ## Linear Regression in R: Prediction
@@ -426,3 +457,5 @@ predict(outlets_model, newdata = data.frame(population = 17))
 ```
 
 Note: New data must be a data frame with the same columns names as the training data
+
+

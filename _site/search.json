@@ -1167,5 +1167,26 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#r-as-an-open-source-language",
+    "href": "slides/03-SLR-Gradient_Desc.html#r-as-an-open-source-language",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "R as an open-source language",
+    "text": "R as an open-source language\n\nR is an open source language\n\nAdvantages:\n\nPackages for almost anything you want\n“Cutting edge” methods rolled out quickly and early\n\nDisadvantages\n\nMany packages (especially new ones) may have bugs\nLots of syntactical diversity\nSyntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#enter-tidyverse",
+    "href": "slides/03-SLR-Gradient_Desc.html#enter-tidyverse",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Enter tidyverse",
+    "text": "Enter tidyverse\n\nThe tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.\n\n\ntidyverse is for manipulating and visualizing data"
+  },
+  {
+    "objectID": "slides/03-SLR-Gradient_Desc.html#enter-tidymodels",
+    "href": "slides/03-SLR-Gradient_Desc.html#enter-tidymodels",
+    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
+    "section": "Enter tidymodels",
+    "text": "Enter tidymodels\n\nThe tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.\n\n\ntidymodels creates a unified framework for building models in R\nEric’s opinion: similar idea to scikit-learn in Python"
   }
 ]
