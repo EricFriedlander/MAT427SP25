@@ -236,7 +236,7 @@
     "href": "slides/03-Regression.html#concept-check",
     "title": "MATH 427: Linear Regression",
     "section": "Concept Check",
-    "text": "Concept Check\nWhat do we call these:\n\n\\(\\mathbf{X}\\)\n\\(Y\\)\n\nWhat is our goal in supervised learning?"
+    "text": "Concept Check\nWhat do we call these:\n\n\\(\\mathbf{X}\\)\n\\(Y\\)\n\nWhat is our goal?"
   },
   {
     "objectID": "slides/03-Regression.html#concept-check-1",
@@ -278,7 +278,7 @@
     "href": "slides/03-Regression.html#outlet-eda",
     "title": "MATH 427: Linear Regression",
     "section": "Outlet EDA",
-    "text": "Outlet EDA\n\noutlets |&gt; ggpairs() # ggpairs is from GGAlley package"
+    "text": "Outlet EDA\n\noutlets |&gt; ggpairs()"
   },
   {
     "objectID": "slides/03-Regression.html#linear-regression-estimating-parameters",
@@ -292,21 +292,21 @@
     "href": "slides/03-Regression.html#gradient-descent-algorithm",
     "title": "MATH 427: Linear Regression",
     "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\nHow do we minimize the \\(MSE\\)?\n\nCan be done “analytically” but most ML models can’t be fit that way\n\nToday: popular optimization algorithm called gradient descent.\nNOTE: Gradient Descent is not a machine learning model/algorithm. It is an optimization technique that helps to fit machine learning models."
+    "text": "Gradient Descent Algorithm\n\nHow do we minimize the \\(MSE\\)?\n\nCan be done “analytically” but most ML algorithms can’t be fit that way\n\nToday: popular optimization algorithm called gradient descent.\nNOTE: Gradient Descent is not a machine learning technique. It is an optimization technique that helps to fit machine learning models."
   },
   {
     "objectID": "slides/03-Regression.html#gradient-descent-algorithm-1",
     "href": "slides/03-Regression.html#gradient-descent-algorithm-1",
     "title": "MATH 427: Linear Regression",
     "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\nThink of the MSE as a function of \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\)\n\n\\(\\text{MSE} = \\frac{\\sum (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1)^2}{n}\\)"
+    "text": "Gradient Descent Algorithm\n\nThink of the MSE as a function of \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\)\n\n\\(\\text{MSE} = \\frac{\\sum (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1)}{n}\\)"
   },
   {
     "objectID": "slides/03-Regression.html#gradient-descent-algorithm-2",
     "href": "slides/03-Regression.html#gradient-descent-algorithm-2",
     "title": "MATH 427: Linear Regression",
     "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\nUpdates to the parameter: \\[\n\\begin{aligned}\n\\text{new value of parameters} &= \\text{old value of parameters}\\\\\n&\\qquad- \\text{step size} \\times \\text{gradient of function w.r.t. parameters}\n\\end{aligned}\n\\]"
+    "text": "Gradient Descent Algorithm\n\nUpdates to the variable: \\[\n\\begin{aligned}\n\\text{new value of variable} &= \\text{old value of variable}\\\\\n&\\qquad- \\text{step size} \\times \\text{gradient of function with respect to variable}\n\\end{aligned}\n\\]"
   },
   {
     "objectID": "slides/03-Regression.html#gradient-descent-algorithm-3",
@@ -320,14 +320,14 @@
     "href": "slides/03-Regression.html#gradient-descent-algorithm-4",
     "title": "MATH 427: Linear Regression",
     "section": "Gradient Descent Algorithm",
-    "text": "Gradient Descent Algorithm\n\n\n\n\n\n\n\n\n\nStep size too small\n\n\n\n\n\n\n\nStep size too too big"
+    "text": "Gradient Descent Algorithm\n\n\n\n\n\n\n\n\n\nStep size too big\n\n\n\n\n\n\n\nStep size too small"
   },
   {
     "objectID": "slides/03-Regression.html#gradient-descent-for-linear-regression",
     "href": "slides/03-Regression.html#gradient-descent-for-linear-regression",
     "title": "MATH 427: Linear Regression",
     "section": "Gradient Descent for Linear Regression",
-    "text": "Gradient Descent for Linear Regression\n\nObjective: We want to find \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) which minimizes\n\\[\\begin{aligned}\nMSE &= \\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\\\\n&= \\dfrac{(\\hat{y}_1 - y_1)^2 +  (\\hat{y}_2 - y_2)^2 + \\ldots + (\\hat{y}_n - y_n)^2}{n}\n\\end{aligned}\\]\n\\[MSE = \\dfrac{(\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_1 - y_1)^2 +  (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_2 - y_2)^2 + \\ldots + (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_n - y_n)^2}{n}\\]\n\\[MSE = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (e_i)^2\\]"
+    "text": "Gradient Descent for Linear Regression\n\nObjective: We want to find \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) which minimizes\n\\[MSE = \\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n} = \\dfrac{(\\hat{y}_1 - y_1)^2 +  (\\hat{y}_2 - y_2)^2 + \\ldots + (\\hat{y}_n - y_n)^2}{n}\\]\n\\[MSE = \\dfrac{(\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_1 - y_1)^2 +  (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_2 - y_2)^2 + \\ldots + (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_n - y_n)^2}{n}\\]\n\\[MSE = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{\\beta}_0 + \\hat{\\beta}_1 \\ x_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (e_i)^2\\]"
   },
   {
     "objectID": "slides/03-Regression.html#gradient-descent-for-linear-regression-1",
