@@ -37,7 +37,7 @@ What do we call these:
 -   $\mathbf{X}$
 -   $Y$
 
-What is our goal?
+What is our goal in supervised learning?
 
 ## Concept Check
 
@@ -93,7 +93,7 @@ $$\text{profit} = \beta_0 + \beta_1\times\text{population}$$
 ## Outlet EDA
 
 ```{r}
-outlets |> ggpairs()
+outlets |> ggpairs() # ggpairs is from GGAlley package
 ```
 
 ## Linear Regression: Estimating Parameters {.smaller}
@@ -111,14 +111,14 @@ outlets |> ggpairs()
 ## Gradient Descent Algorithm
 
 - How do we minimize the $MSE$?
-  + Can be done "analytically" but most ML algorithms can't be fit that way
+  + Can be done "analytically" but most ML models can't be fit that way
 - **Today**: popular optimization algorithm called **gradient descent**.
-- **NOTE**: Gradient Descent is not a machine learning technique. It is an optimization technique that helps to fit machine learning models.
+- **NOTE**: Gradient Descent is not a machine learning model/algorithm. It is an optimization technique that helps to fit machine learning models.
 
 ## Gradient Descent Algorithm {.smaller}
 
 - Think of the MSE as a function of $\hat{\beta}_0$ and $\hat{\beta}_1$
-  + $\text{MSE} = \frac{\sum (y_i - \hat{\beta}_0 - \hat{\beta}_1)}{n}$
+  + $\text{MSE} = \frac{\sum (y_i - \hat{\beta}_0 - \hat{\beta}_1)^2}{n}$
 
 ```{r}
 #| echo: FALSE
@@ -207,11 +207,11 @@ ggplot(df, aes(x, y)) +
 
 ```
 
-Updates to the variable:
+Updates to the parameter:
 $$
 \begin{aligned}
-\text{new value of variable} &= \text{old value of variable}\\
-&\qquad- \text{step size} \times \text{gradient of function with respect to variable}
+\text{new value of parameters} &= \text{old value of parameters}\\
+&\qquad- \text{step size} \times \text{gradient of function w.r.t. parameters}
 \end{aligned}
 $$
 
@@ -262,8 +262,8 @@ ggplot(df, aes(x, y)) +
 #| echo: FALSE
 #| layout-ncol: 2
 #| fig-subcap: 
-#|   - "Step size too big"
 #|   - "Step size too small"
+#|   - "Step size too too big"
 
 
 # create too small of a learning rate
@@ -352,7 +352,10 @@ ggplot(df, aes(x, y)) +
 ## Gradient Descent for Linear Regression {.smaller}
 
 - **Objective**: We want to find $\hat{\beta}_0$ and $\hat{\beta}_1$ which minimizes
-- $$MSE = \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n} = \dfrac{(\hat{y}_1 - y_1)^2 +  (\hat{y}_2 - y_2)^2 + \ldots + (\hat{y}_n - y_n)^2}{n}$$
+- $$\begin{aligned}
+MSE &= \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}\\ 
+&= \dfrac{(\hat{y}_1 - y_1)^2 +  (\hat{y}_2 - y_2)^2 + \ldots + (\hat{y}_n - y_n)^2}{n}
+\end{aligned}$$
 - $$MSE = \dfrac{(\hat{\beta}_0 + \hat{\beta}_1 \ x_1 - y_1)^2 +  (\hat{\beta}_0 + \hat{\beta}_1 \ x_2 - y_2)^2 + \ldots + (\hat{\beta}_0 + \hat{\beta}_1 \ x_n - y_n)^2}{n}$$
 - $$MSE = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (\hat{\beta}_0 + \hat{\beta}_1 \ x_i - y_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (\hat{y}_i - y_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (e_i)^2$$
 
