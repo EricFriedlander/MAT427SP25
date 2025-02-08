@@ -328,92 +328,92 @@ $$\underbrace{E\left[Y-\hat{Y}\right]^2}_{Error}=E\left[f(\mathbf{X})+\epsilon -
         $$
 :::
 
-## Supervised Learning: Assessing Model Performance {.smaller}
+<!-- ## Supervised Learning: Assessing Model Performance {.smaller} -->
 
--   In general, not interested in performance on training data
--   Want: performance on unseen test data... why?
--   Fresh test data:
-    $(x_1^{test},y_1^{test}), (x_2^{test},y_2^{test}), \ldots, (x_m^{test},y_m^{test})$.
--   Compute test error:
-    -   **Regression**
-        $$\text{Test MSE}=\text{Average}_{Test} \left(y-\hat{f}(x)\right)^2 = \frac{1}{m} \displaystyle \sum_{i=1}^{m} \left(y_i^{test}-\hat{f}(x_i^{test})\right)^2$$
-    -   **Classification**
-        $$\text{Test Error Rate}=\text{Average}_{Test} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{m} \displaystyle \sum_{i=1}^{m} \ I\left(y_i^{test} \ne \hat{C}(x_i^{test})\right)$$
+<!-- -   In general, not interested in performance on training data -->
+<!-- -   Want: performance on unseen test data... why? -->
+<!-- -   Fresh test data: -->
+<!--     $(x_1^{test},y_1^{test}), (x_2^{test},y_2^{test}), \ldots, (x_m^{test},y_m^{test})$. -->
+<!-- -   Compute test error: -->
+<!--     -   **Regression** -->
+<!--         $$\text{Test MSE}=\text{Average}_{Test} \left(y-\hat{f}(x)\right)^2 = \frac{1}{m} \displaystyle \sum_{i=1}^{m} \left(y_i^{test}-\hat{f}(x_i^{test})\right)^2$$ -->
+<!--     -   **Classification** -->
+<!--         $$\text{Test Error Rate}=\text{Average}_{Test} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{m} \displaystyle \sum_{i=1}^{m} \ I\left(y_i^{test} \ne \hat{C}(x_i^{test})\right)$$ -->
 
-## Supervised Learning: Bias-Variance Trade-off {.smaller}
+<!-- ## Supervised Learning: Bias-Variance Trade-off {.smaller} -->
 
--   Model fit on training data $\hat{f}(x)$
--   "True" relationship: $Y=f(x)+\epsilon$
--   $(x_0^{test}, y_0^{test})$: test observation
--   Bias-Variance Trade-Off (Theoretical)
-    $$\underbrace{E\left(y_0^{test}-\hat{f}(x_0^{test})\right)^2}_{total \ error}=\underbrace{Var\left(\hat{f}(x_0^{test})\right)}_{source \ 1} + \underbrace{\left[Bias\left(\hat{f}(x_0^{test})\right)\right]^2}_{source \ 2}+\underbrace{Var(\epsilon)}_{source \ 3}$$
-    where
-    $Bias\left(\hat{f}(x_0)\right)=E\left(\hat{f}(x_0)\right)-f(x_0)$
+<!-- -   Model fit on training data $\hat{f}(x)$ -->
+<!-- -   "True" relationship: $Y=f(x)+\epsilon$ -->
+<!-- -   $(x_0^{test}, y_0^{test})$: test observation -->
+<!-- -   Bias-Variance Trade-Off (Theoretical) -->
+<!--     $$\underbrace{E\left(y_0^{test}-\hat{f}(x_0^{test})\right)^2}_{total \ error}=\underbrace{Var\left(\hat{f}(x_0^{test})\right)}_{source \ 1} + \underbrace{\left[Bias\left(\hat{f}(x_0^{test})\right)\right]^2}_{source \ 2}+\underbrace{Var(\epsilon)}_{source \ 3}$$ -->
+<!--     where -->
+<!--     $Bias\left(\hat{f}(x_0)\right)=E\left(\hat{f}(x_0)\right)-f(x_0)$ -->
 
-. . .
+<!-- . . . -->
 
--   Question: Where is $\hat{y}_0^{test}$?
+<!-- -   Question: Where is $\hat{y}_0^{test}$? -->
 
-## Supervised Learning: Bias-Variance Trade-off
+<!-- ## Supervised Learning: Bias-Variance Trade-off -->
 
--   Reducible Error:
-    -   Source 1: how $\hat{f}(x)$ varies among different randomly
-        selected possible training data (**Variance**)
-    -   Source 2: how $\hat{f}(x)$ (when predicting the test data)
-        differs from its target $f(x)$ (**Bias**)
--   Irreducible Error:
-    -   Source 3: how $y$ differs from "true" $f(x)$
+<!-- -   Reducible Error: -->
+<!--     -   Source 1: how $\hat{f}(x)$ varies among different randomly -->
+<!--         selected possible training data (**Variance**) -->
+<!--     -   Source 2: how $\hat{f}(x)$ (when predicting the test data) -->
+<!--         differs from its target $f(x)$ (**Bias**) -->
+<!-- -   Irreducible Error: -->
+<!--     -   Source 3: how $y$ differs from "true" $f(x)$ -->
 
-## Bias-Variance Trade-off: Example {.smaller}
+<!-- ## Bias-Variance Trade-off: Example {.smaller} -->
 
--   For now: focus on regression problems (ideas extend to
-    classification)
--   Consider: three different examples of simulated "toy" datasets and
-    three types of models ($\hat{f}_i(.)$)
-    +   Linear Regression [**orange**]{style="color:orange"}
-    +   Smoothing Spline 1 [**blue**]{style="color:cornflowerblue"}
-    +   More flexible Smoothing Spline 2
-        [**green**]{style="color:green"}
--   "True" (simulated) function $f(.)$ [**black**]{style="color:black"}
--   [**Training Error**]{style="color:grey"}
--   [**Test Error**]{style="color:red"}
+<!-- -   For now: focus on regression problems (ideas extend to -->
+<!--     classification) -->
+<!-- -   Consider: three different examples of simulated "toy" datasets and -->
+<!--     three types of models ($\hat{f}_i(.)$) -->
+<!--     +   Linear Regression [**orange**]{style="color:orange"} -->
+<!--     +   Smoothing Spline 1 [**blue**]{style="color:cornflowerblue"} -->
+<!--     +   More flexible Smoothing Spline 2 -->
+<!--         [**green**]{style="color:green"} -->
+<!-- -   "True" (simulated) function $f(.)$ [**black**]{style="color:black"} -->
+<!-- -   [**Training Error**]{style="color:grey"} -->
+<!-- -   [**Test Error**]{style="color:red"} -->
 
-## Bias-Variance Trade-off: Example
+<!-- ## Bias-Variance Trade-off: Example -->
 
-![From ISLR2](images/02/2_9-1.png)
+<!-- ![From ISLR2](images/02/2_9-1.png) -->
 
-## Bias-Variance Trade-off: Example
+<!-- ## Bias-Variance Trade-off: Example -->
 
-![From ISLR2](images/02/2_10-1.png)
+<!-- ![From ISLR2](images/02/2_10-1.png) -->
 
-## Bias-Variance Trade-off: Example
+<!-- ## Bias-Variance Trade-off: Example -->
 
-![From ISLR2](images/02/2_11-1.png)
+<!-- ![From ISLR2](images/02/2_11-1.png) -->
 
-## Bias-Variance Trade-off: Example
+<!-- ## Bias-Variance Trade-off: Example -->
 
-![From ISLR2](images/02/2_12-1.png)
+<!-- ![From ISLR2](images/02/2_12-1.png) -->
 
-## [Question!!!]{style="color:blue"}
+<!-- ## [Question!!!]{style="color:blue"} -->
 
-As flexibility increases:
+<!-- As flexibility increases: -->
 
-::: panel-tabset
+<!-- ::: panel-tabset -->
 
-## Questions
+<!-- ## Questions -->
 
-1. its variance (increases/decreases)
-2. its bias  (increases/decreases)
-3. its training MSE  (increases/decreases)
-4. its test MSE  (describe)
+<!-- 1. its variance (increases/decreases) -->
+<!-- 2. its bias  (increases/decreases) -->
+<!-- 3. its training MSE  (increases/decreases) -->
+<!-- 4. its test MSE  (describe) -->
 
-## Answers
-1. its variance  (**increases**)
-2. its bias  (**decreases**)
-3. its training MSE  (**decreases**)
-4. its test MSE  (**decreases at first, then increases and the model starts to overfit, U-shaped**)
+<!-- ## Answers -->
+<!-- 1. its variance  (**increases**) -->
+<!-- 2. its bias  (**decreases**) -->
+<!-- 3. its training MSE  (**decreases**) -->
+<!-- 4. its test MSE  (**decreases at first, then increases and the model starts to overfit, U-shaped**) -->
 
-:::
+<!-- ::: -->
 
 ## Recap
 

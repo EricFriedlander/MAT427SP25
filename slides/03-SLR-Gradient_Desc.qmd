@@ -60,6 +60,130 @@ What is our goal in supervised learning?
 -   What is the difference between a training and a test set?
 -   How do we evaluate the performance of a regression model?
 
+# Bias-Variance Trade-Off
+
+## Supervised Learning: Assessing Model Performance {.smaller}
+
+::: {style="font-size: 75%;"}
+-   Labeled training data $(x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)$
+    -   i.e. $n$ training observations
+-   Fit/train a model from training data
+    -   $\hat{y}=\hat{f}(x)$, regression
+    -   $\hat{y}=\hat{C}(x)$, classification\
+-   Obtain estimates $\hat{f}(x_1), \hat{f}(x_2), \ldots, \hat{f}(x_n)$
+    (or, $\hat{C}(x_1), \hat{C}(x_2), \ldots, \hat{C}(x_n)$) of training
+    data
+-   Compute error:
+    -   **Regression**
+        $$\text{Training MSE}=\text{Average}_{Training} \left(y-\hat{f}(x)\right)^2 = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \left(y_i-\hat{f}(x_i)\right)^2$$
+    -   **Classification** $$
+        \begin{aligned}
+        \text{Training Error Rate}
+        &=\text{Average}_{Training} \ \left[I \left(y\ne\hat{C}(x)\right) \right]\\
+        &= \frac{1}{n} \displaystyle \sum_{i=1}^{n} \ I\left(y_i \ne \hat{C}(x_i)\right)
+        \end{aligned}
+        $$
+:::
+
+## Supervised Learning: Assessing Model Performance {.smaller}
+
+-   In general, not interested in performance on training data
+-   Want: performance on unseen test data... why?
+-   Fresh test data:
+    $(x_1^{test},y_1^{test}), (x_2^{test},y_2^{test}), \ldots, (x_m^{test},y_m^{test})$.
+-   Compute test error:
+    -   **Regression**
+        $$\text{Test MSE}=\text{Average}_{Test} \left(y-\hat{f}(x)\right)^2 = \frac{1}{m} \displaystyle \sum_{i=1}^{m} \left(y_i^{test}-\hat{f}(x_i^{test})\right)^2$$
+    -   **Classification**
+        $$\text{Test Error Rate}=\text{Average}_{Test} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{m} \displaystyle \sum_{i=1}^{m} \ I\left(y_i^{test} \ne \hat{C}(x_i^{test})\right)$$
+
+## Supervised Learning: Bias-Variance Trade-off {.smaller}
+
+-   Model fit on training data $\hat{f}(x)$
+-   "True" relationship: $Y=f(x)+\epsilon$
+-   $(x_0^{test}, y_0^{test})$: test observation
+-   Bias-Variance Trade-Off (Theoretical)
+    $$\underbrace{E\left(y_0^{test}-\hat{f}(x_0^{test})\right)^2}_{total \ error}=\underbrace{Var\left(\hat{f}(x_0^{test})\right)}_{source \ 1} + \underbrace{\left[Bias\left(\hat{f}(x_0^{test})\right)\right]^2}_{source \ 2}+\underbrace{Var(\epsilon)}_{source \ 3}$$
+    where
+    $Bias\left(\hat{f}(x_0)\right)=E\left(\hat{f}(x_0)\right)-f(x_0)$
+
+. . .
+
+-   Question: Where is $\hat{y}_0^{test}$?
+
+## Supervised Learning: Bias-Variance Trade-off
+
+-   Reducible Error:
+    -   Source 1: how $\hat{f}(x)$ varies among different randomly
+        selected possible training data (**Variance**)
+    -   Source 2: how $\hat{f}(x)$ (when predicting the test data)
+        differs from its target $f(x)$ (**Bias**)
+-   Irreducible Error:
+    -   Source 3: how $y$ differs from "true" $f(x)$
+
+## Bias-Variance Trade-off: Example {.smaller}
+
+-   For now: focus on regression problems (ideas extend to
+    classification)
+-   Consider: three different examples of simulated "toy" datasets and
+    three types of models ($\hat{f}_i(.)$)
+    +   Linear Regression [**orange**]{style="color:orange"}
+    +   Smoothing Spline 1 [**blue**]{style="color:cornflowerblue"}
+    +   More flexible Smoothing Spline 2
+        [**green**]{style="color:green"}
+-   "True" (simulated) function $f(.)$ [**black**]{style="color:black"}
+-   [**Training Error**]{style="color:grey"}
+-   [**Test Error**]{style="color:red"}
+
+## Bias-Variance Trade-off: Example
+
+![From ISLR2](images/02/2_9-1.png)
+
+## Bias-Variance Trade-off: Example
+
+![From ISLR2](images/02/2_10-1.png)
+
+## Bias-Variance Trade-off: Example
+
+![From ISLR2](images/02/2_11-1.png)
+
+## Bias-Variance Trade-off: Example
+
+![From ISLR2](images/02/2_12-1.png)
+
+## Bias-Variance Trade-Off App {.smaller}
+
+When Dr. F tell you, navigate to [this app](https://efriedlander.shinyapps.io/BVTappRegression/)
+
+-   Select your assigned data set and look at the second row of plots
+  +   Which order polynomials have the lowest Bias, Variance, training MSE, and test MSE
+      +   Which order polynomial would you say is best?
+  +   Scroll down to the last row of plots and discuss how these images support your answers
+  +   Repeat this process for different amounts of noise?
+  +   Return to the first row of plots and select three different order polynomials based on your answers above... is the bias variance trade-off visible in this plot?
+
+## [Question!!!]{style="color:blue"}
+
+As a model's flexibility increases:
+
+::: panel-tabset
+
+## Questions
+
+1. its variance (increases/decreases)
+2. its bias  (increases/decreases)
+3. its training MSE  (increases/decreases)
+4. its test MSE  (describe)
+
+## Answers
+1. its variance  (**increases**)
+2. its bias  (**decreases**)
+3. its training MSE  (**decreases**)
+4. its test MSE  (**decreases at first, then increases and the model starts to overfit, U-shaped**)
+
+:::
+
+# Linear Regression
 
 ## A Familiar Supervised Learning Model {.smaller}
 
@@ -444,16 +568,66 @@ i.e. $\hat{\beta}_0 = -3.90$ and $\hat{\beta}_1 = 1.19$
 :::
 ::::
 
+## Modeling with `tidymodels`
+
+1. Specify mathematical structure of model (e.g. linear regression, logistic regression)
+
+2. Specify the *engine* for fitting the model. (e.g. `lm`, `stan`, `glmnet`).
+
+3. When required, declare the mode of the model (i.e. regression or classification). 
+
 ## Linear Regression with `tidymodels`
 
 ```{r}
-library(tidymodels)
+#| code-line-numbers: "|2|3|5|6|11,12"
+
+# Usually put these at the top
+library(tidymodels) # load tidymodels package
+tidymodels_prefer() # avoid common conflicts
+
+lm_model <- linear_reg() |> # Step 1
+  set_engine("lm") # Step 2
+
+# Step 3 not requires since linear regression can't be used for classification
+
+# Fit the model
+lm_model_fit <- lm_model |> 
+  fit(profit ~ population, data = outlets)
 ```
+
+## Linear Regression with `tidymodels`
+
+```{r}
+lm_model_fit |> 
+  tidy() |> 
+  kable()
+```
+
+Same model as before:
+
+$$
+\begin{aligned}
+\text{Profit}  &= -3.90 + 1.19\times\text{Population}\\
+\hat{Y}_i &= -3.90 + 1.19X_i
+\end{aligned}
+$$
 
 ## Linear Regression in R: Prediction
 
 ```{r}
-predict(outlets_model, newdata = data.frame(population = 17))
+new_cities <- tibble(population = rnorm(100, 7, 3))
+
+lm_model_fit |> 
+predict(new_data = new_cities) |> 
+  kable()
+```
+
+```{r}
+new_cities <- tibble(population = rnorm(100, 7, 3))
+
+new_cities <- new_cities |> 
+  bind_cols(predict(lm_model_fit, new_data = new_cities, type = "pred_int")) |> 
+  kable()
 ```
 
 Note: New data must be a data frame with the same columns names as the training data
