@@ -366,3 +366,169 @@ As $K$ in KNN regression increases:
 - the variance of the fit $\underline{\hspace{5cm}}$ ([increases]{.fragment .highlight-red}/decreases)
 
 
+## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
+
+- Let's look at the `house_prices` data
+```{r}
+#| echo: FALSE
+
+ames |>
+  select(Sale_Price, Gr_Liv_Area, Bedroom_AbvGr) |>
+  head()
+```
+:::{.fragment}
+:::{.incremental}
+- Should 1 square foot count the same as 1 bedroom?
+- Need to **center and scale** (freq. just say scale)
+  + subtract mean from each predictor
+  + divide by standard deviation of each predictor
+  + compares apples-to-apples
+:::
+:::
+
+## Scaling in R
+
+```{r}
+# scale predictors
+ames_scaled <- tibble(size_scaled = scale(ames$Gr_Liv_Area),
+                                  num_bedrooms_scaled = scale(ames$Bedroom_AbvGr),
+                                  price = ames$Sale_Price)
+
+head(ames_scaled)   # first six observations
+```
+
+
+## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
+
+
+```{r}
+library(caret)
+knnfit10 <- knnreg(price ~ size_scaled + num_bedrooms_scaled, data = ames_scaled, k = 10)   # 10-nn regression
+```
+
+- Must also scale test data points **using mean and sd from training set!!!!**
+- Test Point: `size` = 2000 square feet, and `num_bedrooms` = 3, then
+
+```{r}
+# obtain 10-nn prediction
+
+predict(knnfit10, newdata = tibble(size_scaled = (2000 - mean(ames$Gr_Liv_Area))/sd(ames$Gr_Liv_Area),
+                                     num_bedrooms_scaled = (3 - mean(ames$Bedroom_AbvGr))/sd(ames$Bedroom_AbvGr)))
+```
+
+
+## [Linear Regression vs K-Nearest Neighbors]{.r-fit-text} {.smaller}
+
+- Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.
+- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative (next lesson)
+- Linear regression is interpretable, KNN is not.
+- Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors
+- Performance: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - *curse of dimensionality*
+
+## Classification Problems {.smaller}
+
+- Response $Y$ is qualitative (categorical).
+- Objective: build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
+  + assigns class label to a future unlabeled (unseen) observations
+  + understand the relationship between the predictors and response
+- Two ways to make predictions
+  + Class probabilities
+  + Class labels
+
+## Classification Problems: Example
+
+**Default dataset**
+
+```{r, message=FALSE}
+library(ISLR2)   # load library
+data("Default")   # load dataset
+```
+
+```{r}
+head(Default)   # print first six observations
+```
+
+```{r,message=FALSE}
+table(Default$default)   # class frequencies
+```
+
+
+**We will consider `default` as the response variable.**
+
+
+## Classification Problems: Example
+
+For some algorithms, we might need to convert the categorical response to numeric (0/1) values.
+
+**Default dataset**
+
+```{r,message=FALSE}
+Default$default_id <- ifelse(Default$default == "Yes", 1, 0)   # create 0/1 variable
+
+head(Default, 10)   # print first ten observations
+```
+
+
+
+
+## K-Nearest Neighbors Classifier
+
+Given a value for $K$ and a test data point $x_0$,
+$$P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)$$
+
+where $\mathcal{N}_0$ is known as the **neighborhood** of $x_0$.
+
+
+For classification problems, the predictions are obtained in terms of **majority vote** (unlike in regression where predictions are obtained by averaging).
+
+
+## K-Nearest Neighbors Classifier: Build Model
+
+**Default dataset**
+
+response ($Y$): `default` and predictor ($X$): `balance`
+
+```{r}
+knnfit <- knn3(default ~ balance, data = Default, k = 10)   # fit 10-nn model
+```
+
+
+## K-Nearest Neighbors Classifier: Predictions
+
+**Default dataset**
+
+* One can directly obtain the class label predictions as below.
+
+```{r}
+knn_class_preds_1 <- predict(knnfit, newdata = Default, type = "class")   # obtain default class label predictions
+```
+
+
+* Otherwise, one can first obtain predictions in terms of probabilities and then convert them into class label predictions based on a threshold.
+
+```{r}
+knn_prob_preds <- predict(knnfit, newdata = Default, type = "prob")   # obtain predictions as probabilities
+```
+
+
+```{r}
+threshold <- 0.5   # set threshold
+
+knn_class_preds_2 <- factor(ifelse(knn_prob_preds[,2] > threshold, "Yes", "No"))   # obtain predictions as class labels
+```
+
+
+## K-Nearest Neighbors Classifier: Performance  {.smaller}
+
+**Default dataset**
+
+```{r}
+# create confusion matrix
+
+# use the following code only when all predictions are from the same class
+# levels(knn_class_preds_1) = c("No", "Yes")
+
+confusionMatrix(data = knn_class_preds_1, reference = Default$default, positive = "Yes")
+```
+
+

@@ -518,7 +518,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <span id="cb3-2"><a></a><span class="fu">ggpairs</span>(<span class="at">data =</span> house_prices)   <span class="co"># correlation plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-MultipleRegression_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
+<img data-src="CopyOf04-MultipleRegression_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
 <section id="multiple-linear-regression-in-r" class="slide level2 smaller">
 <h2>Multiple Linear Regression in R</h2>
 <div class="cell">
@@ -771,7 +771,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <h2>Regression: Conditional Averaging</h2>
 <p><strong>Restaurant Outlets Profit dataset</strong></p>
 
-<img data-src="04-MultipleRegression_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"><p>What is a good value of <span class="math inline">\(\hat{f}(x)\)</span> (expected profit), say at <span class="math inline">\(x=6\)</span>?</p>
+<img data-src="CopyOf04-MultipleRegression_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"><p>What is a good value of <span class="math inline">\(\hat{f}(x)\)</span> (expected profit), say at <span class="math inline">\(x=6\)</span>?</p>
 <p>A possible choice is the <strong>average of the observed responses</strong> at <span class="math inline">\(x=6\)</span>. But we may not observe responses for certain <span class="math inline">\(x\)</span> values.</p>
 </section>
 <section id="k-nearest-neighbors-knn-regression" class="slide level2 smaller">
@@ -813,7 +813,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-MultipleRegression_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+<p><img data-src="CopyOf04-MultipleRegression_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -844,7 +844,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-MultipleRegression_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+<p><img data-src="CopyOf04-MultipleRegression_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -854,7 +854,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <section id="regression-methods-comparison" class="slide level2">
 <h2>Regression Methods: Comparison</h2>
 
-<img data-src="04-MultipleRegression_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<img data-src="CopyOf04-MultipleRegression_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
 <section id="question-1" class="slide level2">
 <h2><span style="color:blue">Question!!!</span></h2>
 <p>As <span class="math inline">\(K\)</span> in KNN regression increases:</p>
@@ -863,6 +863,234 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <li>the bias of the fit <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/<span class="fragment highlight-red">decreases</span> )</li>
 <li>the variance of the fit <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (<span class="fragment highlight-red">increases</span>/decreases)</li>
 </ul>
+</section>
+<section id="k-nearest-neighbors-regression-multiple-predictors" class="slide level2 smaller">
+<h2><span class="r-fit-text">K-Nearest Neighbors Regression (multiple predictors)</span></h2>
+<ul>
+<li>Let’s look at the <code>house_prices</code> data</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Sale_Price Gr_Liv_Area Bedroom_AbvGr
+       &lt;int&gt;       &lt;int&gt;         &lt;int&gt;
+1     215000        1656             3
+2     105000         896             2
+3     172000        1329             3
+4     244000        2110             3
+5     189900        1629             3
+6     195500        1604             3</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div>
+<ul>
+<li class="fragment">Should 1 square foot count the same as 1 bedroom?</li>
+<li class="fragment">Need to <strong>center and scale</strong> (freq. just say scale)
+<ul>
+<li class="fragment">subtract mean from each predictor</li>
+<li class="fragment">divide by standard deviation of each predictor</li>
+<li class="fragment">compares apples-to-apples</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="scaling-in-r" class="slide level2">
+<h2>Scaling in R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># scale predictors</span></span>
+<span id="cb23-2"><a></a>ames_scaled <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">size_scaled =</span> <span class="fu">scale</span>(ames<span class="sc">$</span>Gr_Liv_Area),</span>
+<span id="cb23-3"><a></a>                                  <span class="at">num_bedrooms_scaled =</span> <span class="fu">scale</span>(ames<span class="sc">$</span>Bedroom_AbvGr),</span>
+<span id="cb23-4"><a></a>                                  <span class="at">price =</span> ames<span class="sc">$</span>Sale_Price)</span>
+<span id="cb23-5"><a></a></span>
+<span id="cb23-6"><a></a><span class="fu">head</span>(ames_scaled)   <span class="co"># first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  size_scaled[,1] num_bedrooms_scaled[,1]  price
+            &lt;dbl&gt;                   &lt;dbl&gt;  &lt;int&gt;
+1           0.309                   0.176 215000
+2          -1.19                   -1.03  105000
+3          -0.338                   0.176 172000
+4           1.21                    0.176 244000
+5           0.256                   0.176 189900
+6           0.206                   0.176 195500</code></pre>
+</div>
+</div>
+</section>
+<section id="k-nearest-neighbors-regression-multiple-predictors-1" class="slide level2 smaller">
+<h2><span class="r-fit-text">K-Nearest Neighbors Regression (multiple predictors)</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(caret)</span>
+<span id="cb25-2"><a></a>knnfit10 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(price <span class="sc">~</span> size_scaled <span class="sc">+</span> num_bedrooms_scaled, <span class="at">data =</span> ames_scaled, <span class="at">k =</span> <span class="dv">10</span>)   <span class="co"># 10-nn regression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Must also scale test data points <strong>using mean and sd from training set!!!!</strong></li>
+<li>Test Point: <code>size</code> = 2000 square feet, and <code>num_bedrooms</code> = 3, then</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="co"># obtain 10-nn prediction</span></span>
+<span id="cb26-2"><a></a></span>
+<span id="cb26-3"><a></a><span class="fu">predict</span>(knnfit10, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">size_scaled =</span> (<span class="dv">2000</span> <span class="sc">-</span> <span class="fu">mean</span>(ames<span class="sc">$</span>Gr_Liv_Area))<span class="sc">/</span><span class="fu">sd</span>(ames<span class="sc">$</span>Gr_Liv_Area),</span>
+<span id="cb26-4"><a></a>                                     <span class="at">num_bedrooms_scaled =</span> (<span class="dv">3</span> <span class="sc">-</span> <span class="fu">mean</span>(ames<span class="sc">$</span>Bedroom_AbvGr))<span class="sc">/</span><span class="fu">sd</span>(ames<span class="sc">$</span>Bedroom_AbvGr)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 259490</code></pre>
+</div>
+</div>
+</section>
+<section id="linear-regression-vs-k-nearest-neighbors" class="slide level2 smaller">
+<h2><span class="r-fit-text">Linear Regression vs K-Nearest Neighbors</span></h2>
+<ul>
+<li>Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.</li>
+<li>Linear regression works for regression problems (<span class="math inline">\(Y\)</span> numerical), KNN can be used for both regression and classification - i.e.&nbsp;<span class="math inline">\(Y\)</span> qualitative (next lesson)</li>
+<li>Linear regression is interpretable, KNN is not.</li>
+<li>Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors</li>
+<li>Performance: KNN can be pretty good for small <span class="math inline">\(p\)</span>, that is, <span class="math inline">\(p \le 4\)</span> and large <span class="math inline">\(n\)</span>. Performance of KNN deteriorates as <span class="math inline">\(p\)</span> increases - <em>curse of dimensionality</em></li>
+</ul>
+</section>
+<section id="classification-problems" class="slide level2 smaller">
+<h2>Classification Problems</h2>
+<ul>
+<li>Response <span class="math inline">\(Y\)</span> is qualitative (categorical).</li>
+<li>Objective: build a classifier <span class="math inline">\(\hat{Y}=\hat{C}(\mathbf{X})\)</span>
+<ul>
+<li>assigns class label to a future unlabeled (unseen) observations</li>
+<li>understand the relationship between the predictors and response</li>
+</ul></li>
+<li>Two ways to make predictions
+<ul>
+<li>Class probabilities</li>
+<li>Class labels</li>
+</ul></li>
+</ul>
+</section>
+<section id="classification-problems-example" class="slide level2">
+<h2>Classification Problems: Example</h2>
+<p><strong>Default dataset</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(ISLR2)   <span class="co"># load library</span></span>
+<span id="cb28-2"><a></a><span class="fu">data</span>(<span class="st">"Default"</span>)   <span class="co"># load dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">head</span>(Default)   <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  default student   balance    income
+1      No      No  729.5265 44361.625
+2      No     Yes  817.1804 12106.135
+3      No      No 1073.5492 31767.139
+4      No      No  529.2506 35704.494
+5      No      No  785.6559 38463.496
+6      No     Yes  919.5885  7491.559</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">table</span>(Default<span class="sc">$</span>default)   <span class="co"># class frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  No  Yes 
+9667  333 </code></pre>
+</div>
+</div>
+<p><strong>We will consider <code>default</code> as the response variable.</strong></p>
+</section>
+<section id="classification-problems-example-1" class="slide level2">
+<h2>Classification Problems: Example</h2>
+<p>For some algorithms, we might need to convert the categorical response to numeric (0/1) values.</p>
+<p><strong>Default dataset</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>Default<span class="sc">$</span>default_id <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Default<span class="sc">$</span>default <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)   <span class="co"># create 0/1 variable</span></span>
+<span id="cb33-2"><a></a></span>
+<span id="cb33-3"><a></a><span class="fu">head</span>(Default, <span class="dv">10</span>)   <span class="co"># print first ten observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   default student   balance    income default_id
+1       No      No  729.5265 44361.625          0
+2       No     Yes  817.1804 12106.135          0
+3       No      No 1073.5492 31767.139          0
+4       No      No  529.2506 35704.494          0
+5       No      No  785.6559 38463.496          0
+6       No     Yes  919.5885  7491.559          0
+7       No      No  825.5133 24905.227          0
+8       No     Yes  808.6675 17600.451          0
+9       No      No 1161.0579 37468.529          0
+10      No      No    0.0000 29275.268          0</code></pre>
+</div>
+</div>
+</section>
+<section id="k-nearest-neighbors-classifier" class="slide level2">
+<h2>K-Nearest Neighbors Classifier</h2>
+<p>Given a value for <span class="math inline">\(K\)</span> and a test data point <span class="math inline">\(x_0\)</span>, <span class="math display">\[P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)\]</span></p>
+<p>where <span class="math inline">\(\mathcal{N}_0\)</span> is known as the <strong>neighborhood</strong> of <span class="math inline">\(x_0\)</span>.</p>
+<p>For classification problems, the predictions are obtained in terms of <strong>majority vote</strong> (unlike in regression where predictions are obtained by averaging).</p>
+</section>
+<section id="k-nearest-neighbors-classifier-build-model" class="slide level2">
+<h2>K-Nearest Neighbors Classifier: Build Model</h2>
+<p><strong>Default dataset</strong></p>
+<p>response (<span class="math inline">\(Y\)</span>): <code>default</code> and predictor (<span class="math inline">\(X\)</span>): <code>balance</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>knnfit <span class="ot">&lt;-</span> <span class="fu">knn3</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> Default, <span class="at">k =</span> <span class="dv">10</span>)   <span class="co"># fit 10-nn model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="k-nearest-neighbors-classifier-predictions" class="slide level2">
+<h2>K-Nearest Neighbors Classifier: Predictions</h2>
+<p><strong>Default dataset</strong></p>
+<ul>
+<li>One can directly obtain the class label predictions as below.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>knn_class_preds_1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(knnfit, <span class="at">newdata =</span> Default, <span class="at">type =</span> <span class="st">"class"</span>)   <span class="co"># obtain default class label predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Otherwise, one can first obtain predictions in terms of probabilities and then convert them into class label predictions based on a threshold.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>knn_prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(knnfit, <span class="at">newdata =</span> Default, <span class="at">type =</span> <span class="st">"prob"</span>)   <span class="co"># obtain predictions as probabilities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
+<span id="cb38-2"><a></a></span>
+<span id="cb38-3"><a></a>knn_class_preds_2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(knn_prob_preds[,<span class="dv">2</span>] <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))   <span class="co"># obtain predictions as class labels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="k-nearest-neighbors-classifier-performance" class="slide level2 smaller">
+<h2>K-Nearest Neighbors Classifier: Performance</h2>
+<p><strong>Default dataset</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># create confusion matrix</span></span>
+<span id="cb39-2"><a></a></span>
+<span id="cb39-3"><a></a><span class="co"># use the following code only when all predictions are from the same class</span></span>
+<span id="cb39-4"><a></a><span class="co"># levels(knn_class_preds_1) = c("No", "Yes")</span></span>
+<span id="cb39-5"><a></a></span>
+<span id="cb39-6"><a></a><span class="fu">confusionMatrix</span>(<span class="at">data =</span> knn_class_preds_1, <span class="at">reference =</span> Default<span class="sc">$</span>default, <span class="at">positive =</span> <span class="st">"Yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction   No  Yes
+       No  9618  210
+       Yes   49  123
+                                          
+               Accuracy : 0.9741          
+                 95% CI : (0.9708, 0.9771)
+    No Information Rate : 0.9667          
+    P-Value [Acc &gt; NIR] : 1.076e-05       
+                                          
+                  Kappa : 0.4752          
+                                          
+ Mcnemar's Test P-Value : &lt; 2.2e-16       
+                                          
+            Sensitivity : 0.3694          
+            Specificity : 0.9949          
+         Pos Pred Value : 0.7151          
+         Neg Pred Value : 0.9786          
+             Prevalence : 0.0333          
+         Detection Rate : 0.0123          
+   Detection Prevalence : 0.0172          
+      Balanced Accuracy : 0.6822          
+                                          
+       'Positive' Class : Yes             
+                                          </code></pre>
+</div>
+</div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
