@@ -405,20 +405,6 @@
     "text": "Bias-Variance Trade-off: Example\n\nFrom ISLR2"
   },
   {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#bias-variance-trade-off-app",
-    "href": "slides/03-SLR-Gradient_Desc.html#bias-variance-trade-off-app",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Bias-Variance Trade-Off App",
-    "text": "Bias-Variance Trade-Off App\nWhen Dr. F tell you, navigate to this app\n\nSelect your assigned data set and look at the second row of plots\nWhich order polynomials have the lowest Bias, Variance, training MSE, and test MSE\n\nWhich order polynomial would you say is best?\n\nScroll down to the last row of plots and discuss how these images support your answers\nRepeat this process for different amounts of noise?\nReturn to the first row of plots and select three different order polynomials based on your answers above… is the bias variance trade-off visible in this plot?"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#question",
-    "href": "slides/03-SLR-Gradient_Desc.html#question",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Question!!!",
-    "text": "Question!!!\nAs a model’s flexibility increases:\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
-  },
-  {
     "objectID": "slides/03-SLR-Gradient_Desc.html#a-familiar-supervised-learning-model",
     "href": "slides/03-SLR-Gradient_Desc.html#a-familiar-supervised-learning-model",
     "title": "MATH 427: Simple Linear Regression + Gradient Descent",
@@ -507,70 +493,7 @@
     "href": "slides/03-SLR-Gradient_Desc.html#gradient-descent-for-linear-regression-2",
     "title": "MATH 427: Simple Linear Regression + Gradient Descent",
     "section": "Gradient Descent for Linear Regression",
-    "text": "Gradient Descent for Linear Regression\n\nGradient descent update:\n\nFor \\(\\hat{\\beta}_0\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_0 \\ \\text{(new)}\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_0\\bigg)\\\\\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]\nFor \\(\\hat{\\beta}_1\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_1  \\ \\text{(new)} &= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_1 \\bigg)\\\\\n&= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#r-as-an-open-source-language",
-    "href": "slides/03-SLR-Gradient_Desc.html#r-as-an-open-source-language",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "R as an open-source language",
-    "text": "R as an open-source language\n\nR is an open source language\n\nAdvantages:\n\nPackages for almost anything you want\n“Cutting edge” methods rolled out quickly and early\n\nDisadvantages\n\nMany packages (especially new ones) may have bugs\nLots of syntactical diversity\nSyntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#enter-tidyverse",
-    "href": "slides/03-SLR-Gradient_Desc.html#enter-tidyverse",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Enter tidyverse",
-    "text": "Enter tidyverse\n\nThe tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.\n\n\ntidyverse is for manipulating and visualizing data\nthe tidyverse is a meta-package meaning it is a collection of a bunch of other packages"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#enter-tidymodels",
-    "href": "slides/03-SLR-Gradient_Desc.html#enter-tidymodels",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Enter tidymodels",
-    "text": "Enter tidymodels\n\nThe tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.\n\n\ntidymodels creates a unified framework for building models in R\nEric’s opinion: similar idea to scikit-learn in Python"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#back-to-linear-regression",
-    "href": "slides/03-SLR-Gradient_Desc.html#back-to-linear-regression",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Back to linear regression",
-    "text": "Back to linear regression\n\nggplot(data = outlets) +\n  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot\n  geom_smooth(mapping = aes(x = population, y = profit), \n              method = \"lm\", se = FALSE)   # add the regression line"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#classic-linear-regression-in-r",
-    "href": "slides/03-SLR-Gradient_Desc.html#classic-linear-regression-in-r",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Classic Linear Regression in R",
-    "text": "Classic Linear Regression in R\n\n\n\noutlets_model &lt;- lm(profit ~ population, data = outlets)\noutlets_model\n\n\nCall:\nlm(formula = profit ~ population, data = outlets)\n\nCoefficients:\n(Intercept)   population  \n     -3.896        1.193  \n\n\n\nThis corresponds to the model:\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\] i.e. \\(\\hat{\\beta}_0 = -3.90\\) and \\(\\hat{\\beta}_1 = 1.19\\)"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#modeling-with-tidymodels",
-    "href": "slides/03-SLR-Gradient_Desc.html#modeling-with-tidymodels",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Modeling with tidymodels",
-    "text": "Modeling with tidymodels\n\nSpecify mathematical structure of model (e.g. linear regression, logistic regression)\nSpecify the engine for fitting the model. (e.g. lm, stan, glmnet).\nWhen required, declare the mode of the model (i.e. regression or classification)."
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-with-tidymodels",
-    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-with-tidymodels",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Linear Regression with tidymodels",
-    "text": "Linear Regression with tidymodels\n\n# Usually put these at the top\nlibrary(tidymodels) # load tidymodels package\ntidymodels_prefer() # avoid common conflicts\n\nlm_model &lt;- linear_reg() |&gt; # Step 1\n  set_engine(\"lm\") # Step 2\n\n# Step 3 not requires since linear regression can't be used for classification\n\n# Fit the model\nlm_model_fit &lt;- lm_model |&gt; \n  fit(profit ~ population, data = outlets)"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-with-tidymodels-1",
-    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-with-tidymodels-1",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Linear Regression with tidymodels",
-    "text": "Linear Regression with tidymodels\n\nlm_model_fit |&gt; \n  tidy() |&gt; \n  kable()\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-3.895781\n0.7194828\n-5.414696\n5e-07\n\n\npopulation\n1.193034\n0.0797439\n14.960806\n0e+00\n\n\n\n\n\nSame model as before:\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\]"
-  },
-  {
-    "objectID": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r-prediction",
-    "href": "slides/03-SLR-Gradient_Desc.html#linear-regression-in-r-prediction",
-    "title": "MATH 427: Simple Linear Regression + Gradient Descent",
-    "section": "Linear Regression in R: Prediction",
-    "text": "Linear Regression in R: Prediction\n\nnew_cities &lt;- tibble(population = rnorm(100, 7, 3))\n\nlm_model_fit |&gt; \npredict(new_data = new_cities) |&gt; \n  kable()\n\n\n\n\n.pred\n\n\n\n\n5.3040493\n\n\n1.8932967\n\n\n6.5245725\n\n\n5.7493812\n\n\n5.7875962\n\n\n5.3882917\n\n\n3.8035775\n\n\n8.2149067\n\n\n8.6023268\n\n\n0.3341058\n\n\n8.9857985\n\n\n8.5162025\n\n\n1.8024185\n\n\n2.5613470\n\n\n6.1917842\n\n\n11.6190466\n\n\n4.2477595\n\n\n1.5575790\n\n\n3.1008907\n\n\n5.1221109\n\n\n7.8640443\n\n\n5.8210413\n\n\n3.7704806\n\n\n3.0207727\n\n\n-0.2230507\n\n\n5.5682328\n\n\n1.7022287\n\n\n1.1189213\n\n\n6.0188254\n\n\n8.0471884\n\n\n2.0886976\n\n\n5.3628183\n\n\n2.2467232\n\n\n1.0530741\n\n\n5.1838499\n\n\n1.7422032\n\n\n0.3873675\n\n\n2.6352442\n\n\n5.7335091\n\n\n4.9847353\n\n\n5.1762821\n\n\n4.8549142\n\n\n4.0008644\n\n\n5.4840257\n\n\n1.7570842\n\n\n2.2288338\n\n\n2.5527003\n\n\n7.6538772\n\n\n4.3298218\n\n\n4.5847881\n\n\n13.1244612\n\n\n-0.4772387\n\n\n3.2889253\n\n\n7.0326913\n\n\n6.5946785\n\n\n2.4726822\n\n\n5.7731572\n\n\n9.3239228\n\n\n8.4075587\n\n\n6.2396803\n\n\n0.1118416\n\n\n3.4306860\n\n\n0.8337955\n\n\n3.7245860\n\n\n10.4409066\n\n\n2.8172061\n\n\n3.0648300\n\n\n7.3709565\n\n\n8.6197653\n\n\n2.0451191\n\n\n3.6999918\n\n\n3.8851102\n\n\n11.0037138\n\n\n10.6615050\n\n\n1.0892900\n\n\n6.0571010\n\n\n8.5706833\n\n\n7.2935612\n\n\n4.4819433\n\n\n12.3578637\n\n\n5.5916714\n\n\n5.5324664\n\n\n-0.7820912\n\n\n3.7495576\n\n\n1.2365681\n\n\n-1.1432753\n\n\n9.3786209\n\n\n5.3823563\n\n\n3.7970048\n\n\n3.6265462\n\n\n4.9693877\n\n\n5.1836564\n\n\n8.6023238\n\n\n2.3997783\n\n\n3.4794146\n\n\n3.4897096\n\n\n9.7628567\n\n\n5.0315091\n\n\n-0.0794609\n\n\n3.9804761\n\n\n\n\n\n\nnew_cities &lt;- tibble(population = rnorm(100, 7, 3))\n\nnew_cities &lt;- new_cities |&gt; \n  bind_cols(predict(lm_model_fit, new_data = new_cities, type = \"pred_int\")) |&gt; \n  kable()\n\nNote: New data must be a data frame with the same columns names as the training data\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Gradient Descent for Linear Regression\n\nGradient descent update:\n\nFor \\(\\hat{\\beta}_0\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_0 \\ \\text{(new)}\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_0\\bigg)\\\\\n&= \\hat{\\beta}_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]\nFor \\(\\hat{\\beta}_1\\): \\[\n\\begin{aligned}\n\\hat{\\beta}_1  \\ \\text{(new)} &= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\text{derivative w.r.t} \\ \\hat{\\beta}_1 \\bigg)\\\\\n&= \\hat{\\beta}_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\bigg)\n\\end{aligned}\n\\]\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
     "objectID": "slides/01-big-picture.html#five-tips-for-success",
@@ -1245,11 +1168,95 @@
     "href": "slides/04-MultipleRegression.html#computational-setup",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Computational Setup",
-    "text": "Computational Setup\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(gridExtra)\nlibrary(modeldata)\nlibrary(knitr)\n\ntidymodels_prefer()"
+    "text": "Computational Setup\n\nlibrary(tidyverse)\nlibrary(knitr)\nlibrary(readODS)"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression",
+    "objectID": "slides/04-MultipleRegression.html#question",
+    "href": "slides/04-MultipleRegression.html#question",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Question!!!",
+    "text": "Question!!!\nAs a model’s flexibility increases:\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#bias-variance-trade-off-app",
+    "href": "slides/04-MultipleRegression.html#bias-variance-trade-off-app",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Bias-Variance Trade-Off App",
+    "text": "Bias-Variance Trade-Off App\nWhen Dr. F tell you, navigate to this app\n\nSelect your assigned data set and look at the second row of plots\nWhich order polynomials have the lowest Bias, Variance, training MSE, and test MSE\n\nWhich order polynomial would you say is best?\n\nScroll down to the last row of plots and discuss how these images support your answers\nRepeat this process for different amounts of noise?\nReturn to the first row of plots and select three different order polynomials based on your answers above… is the bias variance trade-off visible in this plot?"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#outlet-data",
+    "href": "slides/04-MultipleRegression.html#outlet-data",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Outlet Data",
+    "text": "Outlet Data\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.\n\noutlets &lt;- readRDS(\"../data/outlets.rds\")   # load dataset\nhead(outlets) |&gt; kable() # first six observations of the dataset\n\n\n\n\npopulation\nprofit\n\n\n\n\n6.1101\n17.5920\n\n\n5.5277\n9.1302\n\n\n8.5186\n13.6620\n\n\n7.0032\n11.8540\n\n\n5.8598\n6.8233\n\n\n8.3829\n11.8860"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#r-as-an-open-source-language",
+    "href": "slides/04-MultipleRegression.html#r-as-an-open-source-language",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "R as an open-source language",
+    "text": "R as an open-source language\n\nR is an open source language\n\nAdvantages:\n\nPackages for almost anything you want\n“Cutting edge” methods rolled out quickly and early\n\nDisadvantages\n\nMany packages (especially new ones) may have bugs\nLots of syntactical diversity\nSyntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#enter-tidyverse",
+    "href": "slides/04-MultipleRegression.html#enter-tidyverse",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Enter tidyverse",
+    "text": "Enter tidyverse\n\nThe tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.\n\n\ntidyverse is for manipulating and visualizing data\nthe tidyverse is a meta-package meaning it is a collection of a bunch of other packages"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#enter-tidymodels",
+    "href": "slides/04-MultipleRegression.html#enter-tidymodels",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Enter tidymodels",
+    "text": "Enter tidymodels\n\nThe tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.\n\n\ntidymodels creates a unified framework for building models in R\nEric’s opinion: similar idea to scikit-learn in Python"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#back-to-linear-regression",
+    "href": "slides/04-MultipleRegression.html#back-to-linear-regression",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Back to linear regression",
+    "text": "Back to linear regression\n\nggplot(data = outlets) +\n  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot\n  geom_smooth(mapping = aes(x = population, y = profit), \n              method = \"lm\", se = FALSE)   # add the regression line"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#classic-linear-regression-in-r",
+    "href": "slides/04-MultipleRegression.html#classic-linear-regression-in-r",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Classic Linear Regression in R",
+    "text": "Classic Linear Regression in R\n\n\n\noutlets_model &lt;- lm(profit ~ population, data = outlets)\noutlets_model\n\n\nCall:\nlm(formula = profit ~ population, data = outlets)\n\nCoefficients:\n(Intercept)   population  \n     -3.896        1.193  \n\n\n\nThis corresponds to the model:\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\] i.e. \\(\\hat{\\beta}_0 = -3.90\\) and \\(\\hat{\\beta}_1 = 1.19\\)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#modeling-with-tidymodels",
+    "href": "slides/04-MultipleRegression.html#modeling-with-tidymodels",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Modeling with tidymodels",
+    "text": "Modeling with tidymodels\n\nSpecify mathematical structure of model (e.g. linear regression, logistic regression)\nSpecify the engine for fitting the model. (e.g. lm, stan, glmnet).\nWhen required, declare the mode of the model (i.e. regression or classification)."
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-with-tidymodels",
+    "href": "slides/04-MultipleRegression.html#linear-regression-with-tidymodels",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Linear Regression with tidymodels",
+    "text": "Linear Regression with tidymodels\n\n# Usually put these at the top\nlibrary(tidymodels) # load tidymodels package\ntidymodels_prefer() # avoid common conflicts\n\nlm_model &lt;- linear_reg() |&gt; # Step 1\n  set_engine(\"lm\") # Step 2\n\n# Step 3 not required since linear regression can't be used for classification\n\n# Fit the model\nlm_model_fit &lt;- lm_model |&gt; \n  fit(profit ~ population, data = outlets)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-with-tidymodels-1",
+    "href": "slides/04-MultipleRegression.html#linear-regression-with-tidymodels-1",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Linear Regression with tidymodels",
+    "text": "Linear Regression with tidymodels\n\nlm_model_fit |&gt; \n  tidy() |&gt; \n  kable()\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-3.895781\n0.7194828\n-5.414696\n5e-07\n\n\npopulation\n1.193034\n0.0797439\n14.960806\n0e+00\n\n\n\n\n\nSame model as before:\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-in-r-prediction",
+    "href": "slides/04-MultipleRegression.html#linear-regression-in-r-prediction",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "Linear Regression in R: Prediction",
+    "text": "Linear Regression in R: Prediction\n\nnew_cities &lt;- tibble(population = rnorm(100, 7, 3))\n\nlm_model_fit |&gt; \npredict(new_data = new_cities) |&gt; \n  kable()\n\n\n\n\n.pred\n\n\n\n\n0.4889652\n\n\n3.6625105\n\n\n7.6818386\n\n\n3.4912164\n\n\n-0.7417786\n\n\n6.3256699\n\n\n9.5310272\n\n\n1.0828577\n\n\n2.4970978\n\n\n4.1252529\n\n\n1.4799014\n\n\n6.5884128\n\n\n14.6291040\n\n\n5.0633175\n\n\n11.7794863\n\n\n6.1050430\n\n\n4.0859515\n\n\n11.3531761\n\n\n5.5484202\n\n\n7.8737727\n\n\n4.3650040\n\n\n6.1872627\n\n\n-1.9048730\n\n\n1.8354761\n\n\n2.8479956\n\n\n2.5517259\n\n\n0.6772379\n\n\n1.4211071\n\n\n6.2520754\n\n\n6.9582377\n\n\n-1.6184066\n\n\n10.4123130\n\n\n2.8143659\n\n\n4.2905259\n\n\n-0.9925139\n\n\n1.4346711\n\n\n-0.8131297\n\n\n7.2087757\n\n\n0.2289460\n\n\n4.3721440\n\n\n1.2394631\n\n\n6.0835128\n\n\n10.2457562\n\n\n9.8387182\n\n\n2.6512463\n\n\n6.4799195\n\n\n4.0905007\n\n\n7.3948929\n\n\n3.9030657\n\n\n6.0808643\n\n\n7.0669680\n\n\n3.6433094\n\n\n3.8995837\n\n\n4.8850569\n\n\n7.4816315\n\n\n9.2464340\n\n\n7.2600035\n\n\n3.8371986\n\n\n5.2976027\n\n\n9.5031881\n\n\n1.6360366\n\n\n2.0667820\n\n\n5.6629904\n\n\n5.3926843\n\n\n0.6904280\n\n\n9.2293647\n\n\n2.5340768\n\n\n5.3347039\n\n\n4.7395661\n\n\n9.3761433\n\n\n0.9122518\n\n\n8.5049099\n\n\n4.3271392\n\n\n9.4414074\n\n\n-0.3818308\n\n\n1.1997303\n\n\n0.2092529\n\n\n7.3398047\n\n\n13.3067511\n\n\n3.8234740\n\n\n1.3570409\n\n\n6.7523653\n\n\n6.4900025\n\n\n-0.7842835\n\n\n2.4121447\n\n\n7.4250145\n\n\n4.0034491\n\n\n6.0303675\n\n\n5.9445652\n\n\n5.6623623\n\n\n2.7837142\n\n\n4.2680377\n\n\n8.1597372\n\n\n4.8997639\n\n\n9.2750552\n\n\n4.6735481\n\n\n2.3362903\n\n\n5.6321530\n\n\n-4.3415974\n\n\n3.1087472\n\n\n\n\n\n\nnew_cities &lt;- tibble(population = rnorm(100, 7, 3))\n\nnew_cities &lt;- new_cities |&gt; \n  bind_cols(predict(lm_model_fit, new_data = new_cities, type = \"pred_int\")) |&gt; \n  kable()\n\nNote: New data must be a data frame with the same columns names as the training data"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Multiple Linear Regression",
     "text": "Multiple Linear Regression\n\nResponse: \\(Y\\)\nPredictor Variables: \\(X_1, X_2, \\ldots, X_p\\)\nAssume true relationship:\n\n\\[\n\\begin{aligned}\nY&=f(\\mathbf{X}) + \\epsilon\\\\\n&=\\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_p X_p + \\epsilon\n\\end{aligned}\n\\] where \\(\\beta_j\\) quantifies the association between the \\(j^{th}\\) predictor and the response."
@@ -1276,8 +1283,8 @@
     "text": "House Prices dataset\n\nsize is in square feet\nnum_bedrooms is a count\nprice is in $1,000’s\n\n\nhouse_prices &lt;- readRDS(\"../data/house_prices.rds\")   # load dataset\nhead(house_prices, 6) |&gt; kable()  # print first 6 observations\n\n\n\n\nsize\nnum_bedrooms\nprice\n\n\n\n\n2104\n3\n399.9\n\n\n1600\n3\n329.9\n\n\n2400\n3\n369.0\n\n\n1416\n2\n232.0\n\n\n3000\n4\n539.9\n\n\n1985\n4\n299.9"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-2",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-2",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Multiple Linear Regression",
     "text": "Multiple Linear Regression\nSome Exploratory Data Analysis (EDA)\n\nlibrary(GGally)\nggpairs(data = house_prices)   # correlation plot"
@@ -1336,7 +1343,7 @@
     "href": "slides/04-MultipleRegression.html#linear-regression-comparing-models-1",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Linear Regression: Comparing Models",
-    "text": "Linear Regression: Comparing Models\n\nLet’s create three models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_AbvGr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_AbvGr as predictors\n\n\n\nfit1 &lt;- mlr_model |&gt; fit(Sale_Price ~ Bedroom_AbvGr, data = ames_train) # Use only training set\nfit2 &lt;- mlr_model |&gt; fit(Sale_Price ~ Gr_Liv_Area, data = ames_train)\nfit3 &lt;- mlr_model |&gt; fit(Sale_Price ~ Gr_Liv_Area + Bedroom_AbvGr, data = ames_train)\nfit4 &lt;- mlr_model |&gt; fit(Sale_Price ~ poly(Gr_Liv_Area, degree = 10) + poly(Bedroom_AbvGr, degree = 2), data = ames_train)"
+    "text": "Linear Regression: Comparing Models\n\nLet’s create three models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_AbvGr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_AbvGr as predictors\nfit4: super flexible model which fits a 10th degree polynomial to Gr_Liv_Area and a 2nd degree polynomial to Bedroom_AbvGr\n\n\n\nfit1 &lt;- mlr_model |&gt; fit(Sale_Price ~ Bedroom_AbvGr, data = ames_train) # Use only training set\nfit2 &lt;- mlr_model |&gt; fit(Sale_Price ~ Gr_Liv_Area, data = ames_train)\nfit3 &lt;- mlr_model |&gt; fit(Sale_Price ~ Gr_Liv_Area + Bedroom_AbvGr, data = ames_train)\nfit4 &lt;- mlr_model |&gt; fit(Sale_Price ~ poly(Gr_Liv_Area, degree = 10) + poly(Bedroom_AbvGr, degree = 2), data = ames_train)"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#computing-mse",
@@ -1346,8 +1353,8 @@
     "text": "Computing MSE\n\n# Fit 1\nfit1_train_mse &lt;- mean((ames_train$Sale_Price - predict(fit1, new_data = ames_train)$.pred)^2)\nfit1_test_mse &lt;- mean((ames_test$Sale_Price - predict(fit1, new_data = ames_test)$.pred)^2)\n\n# Fit 2\nfit2_train_mse &lt;- mean((ames_train$Sale_Price - predict(fit2, new_data = ames_train)$.pred)^2)\nfit2_test_mse &lt;- mean((ames_test$Sale_Price - predict(fit2, new_data = ames_test)$.pred)^2)\n\n# Fit \nfit3_train_mse &lt;- mean((ames_train$Sale_Price - predict(fit3, , new_data = ames_train)$.pred)^2)\nfit3_test_mse &lt;- mean((ames_test$Sale_Price - predict(fit3, new_data = ames_test)$.pred)^2)\n\n# Fit \nfit4_train_mse &lt;- mean((ames_train$Sale_Price - predict(fit4, , new_data = ames_train)$.pred)^2)\nfit4_test_mse &lt;- mean((ames_test$Sale_Price - predict(fit4, new_data = ames_test)$.pred)^2)"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#question",
-    "href": "slides/04-MultipleRegression.html#question",
+    "objectID": "slides/04-MultipleRegression.html#question-1",
+    "href": "slides/04-MultipleRegression.html#question-1",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Question",
     "text": "Question\nWithout looking at the numbers\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, fit3_train_mse, fit4_train_mse? Yes, fit4_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse? No"
@@ -1388,8 +1395,8 @@
     "text": "Regression Methods: Comparison"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#question-1",
-    "href": "slides/04-MultipleRegression.html#question-1",
+    "objectID": "slides/04-MultipleRegression.html#question-2",
+    "href": "slides/04-MultipleRegression.html#question-2",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Question!!!",
     "text": "Question!!!\nAs \\(K\\) in KNN regression increases:\n\nthe flexibility of the fit \\(\\underline{\\hspace{5cm}}\\) (increases /decreases)\nthe bias of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases )\nthe variance of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
