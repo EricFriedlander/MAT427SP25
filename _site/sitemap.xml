@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://mat427sp25.netlify.app/index.html</loc>
+    <lastmod>2025-02-03T18:04:35.108Z</lastmod>
+  </url>
+  <url>
     <loc>https://mat427sp25.netlify.app/syllabus.html</loc>
-    <lastmod>2025-02-09T17:50:48.895Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/CopyOf04-MultipleRegression.html</loc>
-    <lastmod>2025-02-09T19:39:14.798Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/03-SLR-Gradient_Desc.html</loc>
-    <lastmod>2025-02-11T01:58:14.907Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
-    <lastmod>2025-02-09T17:50:48.892Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/schedule.html</loc>
-    <lastmod>2025-02-09T17:50:48.891Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
-    <lastmod>2025-02-09T17:50:48.889Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
-    <lastmod>2025-02-01T22:06:18.162Z</lastmod>
+    <lastmod>2025-02-03T17:52:13.346Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/hw/02-mlr.html</loc>
-    <lastmod>2025-02-11T02:28:37.481Z</lastmod>
+    <lastmod>2025-02-11T15:41:42.479Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>
-    <lastmod>2025-02-01T20:49:46.398Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
-    <lastmod>2025-02-01T20:49:46.398Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/hw/01-hw-eda.html</loc>
-    <lastmod>2025-02-09T17:50:48.889Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/index.html</loc>
-    <lastmod>2025-02-09T17:50:48.889Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
-    <lastmod>2025-02-01T22:06:18.162Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/schedule.html</loc>
+    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-04.html</loc>
-    <lastmod>2025-02-09T17:50:48.889Z</lastmod>
+    <lastmod>2025-02-07T18:15:17.111Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
+    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/03-SLR-Gradient_Desc.html</loc>
+    <lastmod>2025-02-11T15:00:17.824Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
-    <lastmod>2025-02-09T17:50:48.892Z</lastmod>
+    <lastmod>2025-02-04T17:47:19.521Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
-    <lastmod>2025-02-09T17:50:48.893Z</lastmod>
+    <lastmod>2025-02-10T21:24:44.985Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
+    <lastmod>2025-02-04T17:47:19.521Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/04-MultipleRegression.html</loc>
-    <lastmod>2025-02-11T01:58:14.907Z</lastmod>
+    <lastmod>2025-02-11T15:00:17.824Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/CopyOf04-MultipleRegression.html</loc>
+    <lastmod>2025-02-10T21:24:44.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
+    <lastmod>2025-02-07T18:10:49.484Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
+    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>
+    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/hw/01-hw-eda.html</loc>
+    <lastmod>2025-02-04T17:58:56.549Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/support.html</loc>
-    <lastmod>2025-02-01T20:49:46.399Z</lastmod>
+    <lastmod>2025-02-03T17:52:13.346Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
+    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
   </url>
 </urlset>
