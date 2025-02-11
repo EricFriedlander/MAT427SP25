@@ -674,6 +674,153 @@
     "text": "Review Syllabus\nRead Chapter 1 from ISLR2"
   },
   {
+    "objectID": "hw/02-mlr.html",
+    "href": "hw/02-mlr.html",
+    "title": "Homework 2: Intro to Regression",
+    "section": "",
+    "text": "In this homework, you will practice multiple linear regression by working with the data set Carseats from the package ISLR2. In addition, you will practice collaborating with a team over GitHub. The process of collaborating over GitHub is similar to when you completed your work alone. You will clone the repo to you computer, do your work, and then stage, commit, and push changes to GitHub. Once you push changes to GitHub, your partners should be able to then pull your changes to their computer. This data set contains simulated data of child car seat sales at 400 different stores."
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-1",
+    "href": "hw/02-mlr.html#exercise-1",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nInstall the ISLR2 package if you haven’t and then load it. You should be able to access the dataset Carseats. Based on your knowledge of the world, which features do you think will be most predictive of Sales. Hint: ?Carseats will give you more information on the data set and the variables."
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-2",
+    "href": "hw/02-mlr.html#exercise-2",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nUse tidymodels to create a training and test set from the Carseats data using a 70-30 split. Note that this is a random process so you will get different partitions every time you split your data. As a result, it is considered good practice to set your seed so that the results a reproducible. For this homework please use the seed 427. For the training set, what quantitative variable is most highly correlated with Sales, our target variable?"
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-3",
+    "href": "hw/02-mlr.html#exercise-3",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nFit a linear regression model predicting Sales using the variable you identified in Exercise 2. Write down the resulting model in the form: \\[Price = \\beta_0 + \\beta_1\\times Variable\\] When you get to this part, if you have no idea how to do this, Dr. Friedlander can show you. Don’t forget to use your training set rather than the full data to train your model."
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-4",
+    "href": "hw/02-mlr.html#exercise-4",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\n\n\n\n\n\nQuestion\n\n\n\nCompute the RMSE for your baseline model on both the training and test set and report them. Try and report your results inline.\n\n\nThe second primary metric that we can use to assess the accuracy of regression models is called the coefficient of determination, denoted \\(R^2\\). \\(R^2\\) is the proportion of variance (information) in our target variable that is explained by our model and can be computed by squaring \\(R\\), the correlation coefficient between the target variable \\(y\\) and the predicted target \\(\\hat{y}\\). The lm function actually computes the \\(R^2\\) of our training data for us which we can access using the glance function from the broom package which is included in tidymodels so you don’t need to load it."
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-5",
+    "href": "hw/02-mlr.html#exercise-5",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 5",
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nWhat proportion of the variation in Sales is explained by our baseline model for the training and validation sets?"
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-6",
+    "href": "hw/02-mlr.html#exercise-6",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 6",
+    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nBuild a two-input linear model for Sales by adding US in addition to the variable you selected above. Save your model as lmfit1. Use tidy and kable to output the model. Is the coefficient for Price the same or different than it was in our baseline model?\n\n\nNotice that the only coefficient added for US is called USYes. When you build a linear model with a categorical variable, R will introduce dummy variables which encode each category as a vector of 0’s and 1’s. In data science, this is sometimes called one-hot encoding. One level is always lumped into the intercept coefficient and is called the reference level. In this case, the reference level is No. When including a categorical variable in a linear model, you can interpret the resulting line being shifted up or down based on the category of a given observation.\nLet’s now assess the accuracy of our new model. To make computation of RMSE and \\(R^2\\) easier let’s take advantage of the rmse and r2 functions in the yardstick package."
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-7",
+    "href": "hw/02-mlr.html#exercise-7",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 7",
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nUse the rmse`` andrsqfunctions from theyardstick` package to compute the RMSE and \\(R^2\\) values for this new model on both the training and validation sets. How do these compare to the baseline model?"
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-8",
+    "href": "hw/02-mlr.html#exercise-8",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 8",
+    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nFit a model using all of the predictors in your training data. Call the model lmfull. Assess the models accuracy on the training data and the test data, comparing it to the previous models we’ve fit, and comment on your results.\n\n\nYou should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as overfitting. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in the Wikipedia article for overfitting. As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to overalign to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.\nWhen modeling there are two related trade-offs that you need to consider. The first is the trade-off between prediction accuracy and interpretability. In general, one can typically create models with better prediction accuracy by sacrificing interpretability (e.g. by including more variables in your model, transforming these variables, etc.). Another trade-off is something called the bias-variance trade-off. As we increase the complexity of a model, we allow it to account for more and more intricate patterns in our data. In theory, this allows the model to mimic more complex relationships between our predictors and our target variables, reducing bias. On the other hand, more complex models typically have more parameters which need to be estimated which require more data to estimate accurately. When you increase the complexity of a model you usually increase the variance of the estimates of model parameters and the predictions the model makes. In other words, the model will be much more sensitive to the noise in the data that you have. Bias and variance will both decrease the accuracy of your model so you should try to minimize both. However, past a certain point, it will be a trade-off between the two."
+  },
+  {
+    "objectID": "hw/02-mlr.html#exercise-9",
+    "href": "hw/02-mlr.html#exercise-9",
+    "title": "Homework 2: Intro to Regression",
+    "section": "Exercise 9",
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nFind and fit a model which outperforms all the models we fit so far on the test set. Briefly summarize your results. The “best” model will receive a high-five from Dr. Friedlander. Feel free to use any techniques we’ve learned in this class, up to this point. I encourage you to try out different data transformations like polynomials."
+  },
+  {
+    "objectID": "computing-r-resources.html",
+    "href": "computing-r-resources.html",
+    "title": "Resources for learning R",
+    "section": "",
+    "text": "R for Data Science by Hadley Wickham & Garrett Grolemund\nTidy Modeling with R by Max Kuhn & Julia Silge",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-r-resources.html#books-free-online",
+    "href": "computing-r-resources.html#books-free-online",
+    "title": "Resources for learning R",
+    "section": "",
+    "text": "R for Data Science by Hadley Wickham & Garrett Grolemund\nTidy Modeling with R by Max Kuhn & Julia Silge",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-r-resources.html#rstudio-primers",
+    "href": "computing-r-resources.html#rstudio-primers",
+    "title": "Resources for learning R",
+    "section": "RStudio Primers",
+    "text": "RStudio Primers\n\nInteractive LearnR Tutorial\nAnother set of tutorials\nR Primers for full list of tutorials. Note that we will be using a simplified version of ggplot2 in this course.",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-r-resources.html#additional-resources",
+    "href": "computing-r-resources.html#additional-resources",
+    "title": "Resources for learning R",
+    "section": "Additional resources",
+    "text": "Additional resources\n\nRStudio Cheatsheets\nR Fun workshops and videos by Duke Center for Data and Visualization Sciences.",
+    "crumbs": [
+      "Computing",
+      "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-access.html",
+    "href": "computing-access.html",
+    "title": "Computing access",
+    "section": "",
+    "text": "Not that we will go through this as a call and on your first homework. Feel free to revisit it here if you need to.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "computing-access.html#r-rstudio",
+    "href": "computing-access.html#r-rstudio",
+    "title": "Computing access",
+    "section": "R & RStudio",
+    "text": "R & RStudio\nIt is highly recommended that you install R and RStudio on your own personal computer. Follow the directions here to install R and RStudio on your computer\nIf, for some reason, you are unable to use R or RStudio on your personal computer, you may use the College of Idaho’s RStudio Server. However, I do not recommend you do this as I want you to practice installing packages in this course and you do not have the permissions to do that on the server. If you must use the RStudio Server, please notify Dr. Friedlander immediately.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "computing-access.html#git-github",
+    "href": "computing-access.html#git-github",
+    "title": "Computing access",
+    "section": "Git & Github",
+    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH. Below are an outline of the authentication steps.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n\nStep 0: Type install.packages(\"credentials\") into your console.\nStep 1: Type credentials::ssh_setup_github() into your console.\nStep 2: R will ask “No SSH key found. Generate one now?” Click 1 for yes.\nStep 3: You will generate a key. It will begin with “ssh-rsa….” R will then ask “Would you like to open a browser now?” Click 1 for yes.\nStep 4: You may be asked to provide your username and password to log into GitHub. This would be the ones associated with your account that you set up. After entering this information, paste the key in and give it a name. You might name it in a way that indicates where the key will be used, e.g., mat427)\n\nYou can find more detailed instructions here if you’re interested.\n\n\nConfigure git\nThere is one more thing we need to do before getting started on the assignment. Specifically, we need to configure your git so that RStudio can communicate with GitHub. This requires two pieces of information: your name and email address.\nTo do so, you will use the use_git_config() function from the usethis package. You will need to install the usethis package in the same way you installed the credentials packages above.\nType the following lines of code in the console in RStudio filling in your name and the email address associated with your GitHub account.\n\nusethis::use_git_config(\n  user.name = \"Your name\", \n  user.email = \"Email associated with your GitHub account\")\n\nFor example, mine would be\n\nusethis::use_git_config(\n  user.name = \"EricFriedlander\",\n  user.email = \"efriedlander@collegeofidaho.edu\")\n\nYou are now ready interact between GitHub and RStudio!",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
     "objectID": "hw/01-hw-eda.html",
     "href": "hw/01-hw-eda.html",
     "title": "Homework 1: Exploratory Data Analysis",
@@ -735,83 +882,6 @@
     "title": "Homework 1: Exploratory Data Analysis",
     "section": "Graphical Summaries",
     "text": "Graphical Summaries\nGraphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.\n\nTIPS |&gt; \n  ggplot(aes(x = PartySize)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nOr we could explore the question about the percentage of tables that are smokers on different days of the week visually.\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar()\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nWe might summarize a numerical variable with a histogram. For example, here is a histogram of all of the tips in the data set.\n\nTIPS |&gt; \n  ggplot(aes(x = Tip)) +\n    geom_histogram(bins = 100)\n\n\n\n\n\n\n\n\n\nExercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that there are a few “spikes” in the histogram above. What do you think is causing this?\n\n\nWe can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the ggforce package.\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  geom_jitter() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_violin() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nlibrary(ggforce)\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_sina() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\n\nOr we can visualize the relationship between a lot of our numerical variables at once.\n\n# Using pairs (only numerical allowed)\npairs(~ Bill + TipPercentage + Tip\n    , data = TIPS\n    , main=\"Scatterplot Matrix for TIPS\")\n\n\n\n\n\n\n\n# Using ggpairs from GGally package (preferable even though more syntax)\nlibrary(GGally)\nTIPS |&gt; \n  select(Bill, TipPercentage, Tip, Weekday) |&gt; \n  ggpairs()\n\n\n\n\n\n\n\n\n\n\nExercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nAre there any clear linear relationships in the scatterplots above? What do you think is the explanation for these relationships?\n\n\nThere are lots of other interesting graphical summaries available for interpreting and displaying data. In addition, there are lots of R packages that allow you to draw these graphics and to further customize some of the ones we discussed here. In your projects, you are welcome to use any of these that you think are appropriate.\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 7 - 8”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\nExercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nState a reasonable conjecture about tipping behavior that you would like to explore in the data set. For example, you might think that people on dates tip more or that the waiter gets smaller tips when he has too many tables. Give at least one numerical and one graphical summary to explore this conjecture. Is there any evidence to support your conjecture?\nIt’s okay if your conjecture is not supported or if you are just wrong–that’s often the case in exploratory data analysis.\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 9”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nBefore you’re done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I can’t tell you how often students turn in work and their output doesn’t match their prose or the output definitely doesn’t look the way they wanted it to."
-  },
-  {
-    "objectID": "computing-access.html",
-    "href": "computing-access.html",
-    "title": "Computing access",
-    "section": "",
-    "text": "Not that we will go through this as a call and on your first homework. Feel free to revisit it here if you need to.",
-    "crumbs": [
-      "Computing",
-      "Computing access"
-    ]
-  },
-  {
-    "objectID": "computing-access.html#r-rstudio",
-    "href": "computing-access.html#r-rstudio",
-    "title": "Computing access",
-    "section": "R & RStudio",
-    "text": "R & RStudio\nIt is highly recommended that you install R and RStudio on your own personal computer. Follow the directions here to install R and RStudio on your computer\nIf, for some reason, you are unable to use R or RStudio on your personal computer, you may use the College of Idaho’s RStudio Server. However, I do not recommend you do this as I want you to practice installing packages in this course and you do not have the permissions to do that on the server. If you must use the RStudio Server, please notify Dr. Friedlander immediately.",
-    "crumbs": [
-      "Computing",
-      "Computing access"
-    ]
-  },
-  {
-    "objectID": "computing-access.html#git-github",
-    "href": "computing-access.html#git-github",
-    "title": "Computing access",
-    "section": "Git & Github",
-    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH. Below are an outline of the authentication steps.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n\nStep 0: Type install.packages(\"credentials\") into your console.\nStep 1: Type credentials::ssh_setup_github() into your console.\nStep 2: R will ask “No SSH key found. Generate one now?” Click 1 for yes.\nStep 3: You will generate a key. It will begin with “ssh-rsa….” R will then ask “Would you like to open a browser now?” Click 1 for yes.\nStep 4: You may be asked to provide your username and password to log into GitHub. This would be the ones associated with your account that you set up. After entering this information, paste the key in and give it a name. You might name it in a way that indicates where the key will be used, e.g., mat427)\n\nYou can find more detailed instructions here if you’re interested.\n\n\nConfigure git\nThere is one more thing we need to do before getting started on the assignment. Specifically, we need to configure your git so that RStudio can communicate with GitHub. This requires two pieces of information: your name and email address.\nTo do so, you will use the use_git_config() function from the usethis package. You will need to install the usethis package in the same way you installed the credentials packages above.\nType the following lines of code in the console in RStudio filling in your name and the email address associated with your GitHub account.\n\nusethis::use_git_config(\n  user.name = \"Your name\", \n  user.email = \"Email associated with your GitHub account\")\n\nFor example, mine would be\n\nusethis::use_git_config(\n  user.name = \"EricFriedlander\",\n  user.email = \"efriedlander@collegeofidaho.edu\")\n\nYou are now ready interact between GitHub and RStudio!",
-    "crumbs": [
-      "Computing",
-      "Computing access"
-    ]
-  },
-  {
-    "objectID": "computing-r-resources.html",
-    "href": "computing-r-resources.html",
-    "title": "Resources for learning R",
-    "section": "",
-    "text": "R for Data Science by Hadley Wickham & Garrett Grolemund\nTidy Modeling with R by Max Kuhn & Julia Silge",
-    "crumbs": [
-      "Computing",
-      "R resources"
-    ]
-  },
-  {
-    "objectID": "computing-r-resources.html#books-free-online",
-    "href": "computing-r-resources.html#books-free-online",
-    "title": "Resources for learning R",
-    "section": "",
-    "text": "R for Data Science by Hadley Wickham & Garrett Grolemund\nTidy Modeling with R by Max Kuhn & Julia Silge",
-    "crumbs": [
-      "Computing",
-      "R resources"
-    ]
-  },
-  {
-    "objectID": "computing-r-resources.html#rstudio-primers",
-    "href": "computing-r-resources.html#rstudio-primers",
-    "title": "Resources for learning R",
-    "section": "RStudio Primers",
-    "text": "RStudio Primers\n\nInteractive LearnR Tutorial\nAnother set of tutorials\nR Primers for full list of tutorials. Note that we will be using a simplified version of ggplot2 in this course.",
-    "crumbs": [
-      "Computing",
-      "R resources"
-    ]
-  },
-  {
-    "objectID": "computing-r-resources.html#additional-resources",
-    "href": "computing-r-resources.html#additional-resources",
-    "title": "Resources for learning R",
-    "section": "Additional resources",
-    "text": "Additional resources\n\nRStudio Cheatsheets\nR Fun workshops and videos by Duke Center for Data and Visualization Sciences.",
-    "crumbs": [
-      "Computing",
-      "R resources"
-    ]
   },
   {
     "objectID": "index.html",
