@@ -9,27 +9,35 @@
     <lastmod>2025-02-03T17:52:13.346Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/hw/02-mlr.html</loc>
-    <lastmod>2025-02-11T15:41:42.479Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/hw/02-hw-mlr.html</loc>
+    <lastmod>2025-02-11T17:22:46.724Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/schedule.html</loc>
     <lastmod>2025-02-03T17:52:13.330Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-04.html</loc>
-    <lastmod>2025-02-07T18:15:17.111Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-05.html</loc>
+    <lastmod>2025-02-11T17:23:42.164Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
     <lastmod>2025-02-03T17:52:13.330Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/03-SLR-Gradient_Desc.html</loc>
-    <lastmod>2025-02-11T15:00:17.824Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
+    <lastmod>2025-02-07T18:10:49.484Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
+    <loc>https://mat427sp25.netlify.app/slides/04-MultipleRegression.html</loc>
+    <lastmod>2025-02-11T17:01:51.868Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/05-knn.html</loc>
+    <lastmod>2025-02-11T17:03:21.979Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
     <lastmod>2025-02-04T17:47:19.521Z</lastmod>
   </url>
   <url>
@@ -37,24 +45,20 @@
     <lastmod>2025-02-10T21:24:44.985Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
+    <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
     <lastmod>2025-02-04T17:47:19.521Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/04-MultipleRegression.html</loc>
+    <loc>https://mat427sp25.netlify.app/slides/03-SLR-Gradient_Desc.html</loc>
     <lastmod>2025-02-11T15:00:17.824Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/CopyOf04-MultipleRegression.html</loc>
-    <lastmod>2025-02-10T21:24:44.986Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
-    <lastmod>2025-02-07T18:10:49.484Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
     <lastmod>2025-02-03T17:52:13.330Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-04.html</loc>
+    <lastmod>2025-02-11T17:23:35.696Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>

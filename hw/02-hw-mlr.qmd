@@ -14,7 +14,7 @@ format:
 
 # Introduction
 
-In this homework, you will practice multiple linear regression by working with the data set `Carseats` from the package `ISLR2`. In addition, you will practice collaborating with a team over GitHub. 
+In this homework, you will practice multiple linear regression by working with the data set `Carseats` from the package `ISLR2`. In addition, you will practice collaborating with a team over GitHub.
 
 ## Learning goals
 
@@ -28,16 +28,16 @@ By the end of the homework, you will...
 
 # Getting Started
 
-The process of collaborating over GitHub is similar to when you completed your work alone. You will clone the repo to you computer, do your work, and then stage, commit, and push changes to GitHub. Once you push changes to GitHub, your partners should be able to then pull your changes to their computer. 
+The process of collaborating over GitHub is similar to when you completed your work alone. You will clone the repo to you computer, do your work, and then stage, commit, and push changes to GitHub. Once you push changes to GitHub, your partners should be able to then pull your changes to their computer.
 
 ## Teams
 
 You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW2**. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:
 
-1. You and your team members should be in the same physical room when you complete this assignment.
-2. You should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.
-3. In order to receive credit, you must have a commit after each exercise by the correct member of your team.
-4. For now, don't try to edit the same document at the same time. We will cover that in later homeworks.
+1.  You and your team members should be in the same physical room when you complete this assignment.
+2.  You should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.
+3.  In order to receive credit, you must have a commit after each exercise by the correct member of your team.
+4.  For now, don't try to edit the same document at the same time. We will cover that in later homeworks.
 
 ## Clone the repo & start new RStudio project
 
@@ -60,15 +60,14 @@ Once this is complete, the other two members can do the same thing, being carefu
 Have the first member of your group fill in the blanks below and then render, commit, and push the changes back to your GitHub repository.
 :::
 
-- Team Name: [Make one up and enter here]
-- Member 1: [Insert Name]
-- Member 2: [Insert Name]
-- Member 3: [Insert Name/Delete line if you only have two members]
+-   Team Name: \[Make one up and enter here\]
+-   Member 1: \[Insert Name\]
+-   Member 2: \[Insert Name\]
+-   Member 3: \[Insert Name/Delete line if you only have two members\]
 
 # The Data
 
-This data set contains simulated data of child car seat sales at 400 different stores.
-Your prediction task in this homework will be to predict `Sales` from some combination of the other variables. Look at the help documentation for this data to explore the available variables. 
+This data set contains simulated data of child car seat sales at 400 different stores. Your prediction task in this homework will be to predict `Sales` from some combination of the other variables. Look at the help documentation for this data to explore the available variables.
 
 ## Exercise 1
 
@@ -94,9 +93,9 @@ Use `tidymodels` to create a training and test set from the `Carseats` data usin
 Once you have completed this, have the third member render, commit, and push the changes to GitHub.
 :::
 
-## Commiting Changes
+## Committing Changes
 
-::: {.callout-tip-warning}
+::: callout-tip-warning
 You should continue in this manner, rotating who completes each question in order from member 1 to member 2 to member 3 and back to member 1 for the remainder of the assignment. In order to receive credit, you must have a commit after each exercise by the correct member of your team.
 :::
 
@@ -110,11 +109,27 @@ In predictive modeling, we often begin with a simple baseline model, to which we
 Fit a linear regression model predicting `Sales` using the variable you identified in Exercise 2. Write down the resulting model in the form: $$Price = \beta_0 + \beta_1\times Variable$$ Don't forget to use your training set rather than the full data to train your model.
 :::
 
+# Gradient Descent
+
+## Exercise 4 (Hard)
+
+::: {.callout-tip title="Question"}
+Re-estimate the parameters (i.e. the intercept and slope) for the model above using gradient descent. Your estimates should be similar to those in Exercise 3 but likely won't be EXACTLY the same. Your solution should include the following:
+
+1. Initialize the values of your $\beta$'s.
+2. Initialize the step size.
+3. Initialize your tolerance (i.e. the stopping criteria).
+2. Enter a loop. For each iteration in the loop:
+    a. Compute the partial derivatives for $\beta_0$ and $\beta_1$.
+    b. Update the values of $\beta_0$ and $\beta_1$.
+    c. Check to see if the change in your estimates is smaller than your tolerance. If it is, exit the loop, otherwise continue.
+:::
+
 # Evaluating Our Model
 
 Let's now see how our model performs.
 
-## Exercise 4
+## Exercise 5
 
 ::: {.callout-tip title="Question"}
 Compute the RMSE for your baseline model on both the training and test set and report them. Try and report your results [inline](https://quarto.org/docs/get-started/computations/rstudio.html#inline-code).
@@ -122,7 +137,7 @@ Compute the RMSE for your baseline model on both the training and test set and r
 
 The second primary metric that we can use to assess the accuracy of regression models is called the **coefficient of determination**, denoted $R^2$. $R^2$ is the proportion of variance (information) in our target variable that is explained by our model and can be computed by squaring $R$, the correlation coefficient between the target variable $y$ and the predicted target $\hat{y}$. The `lm` function actually computes the $R^2$ of our training data for us which we can access using the `glance` function from the `broom` package which is included in `tidymodels` so you don't need to load it.
 
-## Exercise 5
+## Exercise 6
 
 ::: {.callout-tip title="Question"}
 What proportion of the variation in `Sales` is explained by our baseline model for the training and validation sets?
@@ -132,7 +147,7 @@ What proportion of the variation in `Sales` is explained by our baseline model f
 
 Let's start to expand our model a bit by adding the predictor `US`.
 
-## Exercise 6
+## Exercise 7
 
 ::: {.callout-tip title="Question"}
 Using `tidymodels`, build a two-input linear model for `Sales` by adding `US` in addition to the variable you selected above. Save your model as `lmfit1`. Use `tidy` and `kable` to output the model. Is the coefficient for `Price` the same or different than it was in our baseline model?
@@ -142,7 +157,7 @@ Notice that the only coefficient added for `US` is called `USYes`. When you buil
 
 Let's now assess the accuracy of our new model. To make computation of RMSE and $R^2$ easier let's take advantage of the `rmse` and `r2` functions in the `yardstick` package (also included in `tidymodels`).
 
-## Exercise 7
+## Exercise 8
 
 ::: {.callout-tip title="Question"}
 Use the `rmse` and `rsq` functions from the`yardstick` package to compute the RMSE and $R^2$ values for this new model on both the training and validation sets. How do these compare to the baseline model?
@@ -152,7 +167,7 @@ Use the `rmse` and `rsq` functions from the`yardstick` package to compute the RM
 
 Now let's see what happens if we add in ALL of the predictors to our model. This is sometimes referred to as the **full model**. To include all of your predictors in a model you can use the syntax `fit(Y ~ ., data)`.
 
-## Exercise 8
+## Exercise 9
 
 ::: {.callout-tip title="Question"}
 Fit a model using all of the predictors in your training data. Call the model `lmfull`. Assess the model's accuracy on the training data and the test data, comparing it to the previous models we've fit, and comment on your results.
@@ -162,7 +177,7 @@ You should notice that while the accuracy metrics on the training data drastical
 
 When modeling there are two related trade-offs that you need to consider. The first is the trade-off between prediction accuracy and interpretability. In general, one can typically create models with better prediction accuracy by sacrificing interpretability (e.g. by including more variables in your model, transforming these variables, etc.). Another trade-off is something called the bias-variance trade-off. As we increase the complexity of a model, we allow it to account for more and more intricate patterns in our data. In theory, this allows the model to mimic more complex relationships between our predictors and our target variables, reducing **bias**. On the other hand, more complex models typically have more parameters which need to be estimated which require more data to estimate accurately. When you increase the complexity of a model you usually increase the variance of the estimates of model parameters and the predictions the model makes. In other words, the model will be much more sensitive to the noise in the data that you have. Bias and variance will both decrease the accuracy of your model so you should try to minimize both. However, past a certain point, it will be a trade-off between the two.
 
-## Exercise 9
+## Exercise 10
 
 ::: {.callout-tip title="Question"}
 Find and fit a model on the training data which outperforms all the models we fit so far when evaluated on the test set. Briefly summarize your results. The "best" model will receive a high-five from Dr. Friedlander. Feel free to use any techniques we've learned in this class, up to this point. I encourage you to try out different data transformations like polynomials.

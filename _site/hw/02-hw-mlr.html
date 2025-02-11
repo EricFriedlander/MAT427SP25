@@ -4956,29 +4956,33 @@ window.Quarto = {
   <li><a href="#data-splitting" id="toc-data-splitting" class="nav-link" data-scroll-target="#data-splitting">Data Splitting</a>
   <ul class="collapse">
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
-  <li><a href="#commiting-changes" id="toc-commiting-changes" class="nav-link" data-scroll-target="#commiting-changes">Commiting Changes</a></li>
+  <li><a href="#committing-changes" id="toc-committing-changes" class="nav-link" data-scroll-target="#committing-changes">Committing Changes</a></li>
   </ul></li>
   <li><a href="#fitting-our-first-model" id="toc-fitting-our-first-model" class="nav-link" data-scroll-target="#fitting-our-first-model">Fitting Our First Model</a>
   <ul class="collapse">
   <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
   </ul></li>
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4-hard" id="toc-exercise-4-hard" class="nav-link" data-scroll-target="#exercise-4-hard">Exercise 4 (Hard)</a></li>
+  </ul></li>
   <li><a href="#evaluating-our-model" id="toc-evaluating-our-model" class="nav-link" data-scroll-target="#evaluating-our-model">Evaluating Our Model</a>
   <ul class="collapse">
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
   </ul></li>
   <li><a href="#categorical-predictors" id="toc-categorical-predictors" class="nav-link" data-scroll-target="#categorical-predictors">Categorical Predictors</a>
   <ul class="collapse">
-  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
   <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
+  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   </ul></li>
   <li><a href="#overfitting-and-the-bias-variance-trade-off" id="toc-overfitting-and-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#overfitting-and-the-bias-variance-trade-off">Overfitting and the Bias-Variance Trade-Off</a>
   <ul class="collapse">
-  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/02-mlr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/02-hw-mlr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -5127,8 +5131,8 @@ Question
 </div>
 </div>
 </section>
-<section id="commiting-changes" class="level2">
-<h2 class="anchored" data-anchor-id="commiting-changes">Commiting Changes</h2>
+<section id="committing-changes" class="level2">
+<h2 class="anchored" data-anchor-id="committing-changes">Committing Changes</h2>
 <div class="callout-tip-warning">
 <p>You should continue in this manner, rotating who completes each question in order from member 1 to member 2 to member 3 and back to member 1 for the remainder of the assignment. In order to receive credit, you must have a commit after each exercise by the correct member of your team.</p>
 </div>
@@ -5154,11 +5158,41 @@ Question
 </div>
 </section>
 </section>
+<section id="gradient-descent" class="level1">
+<h1>Gradient Descent</h1>
+<section id="exercise-4-hard" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4-hard">Exercise 4 (Hard)</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Re-estimate the parameters (i.e. the intercept and slope) for the model above using gradient descent. Your estimates should be similar to those in Exercise 3 but likely won’t be EXACTLY the same. Your solution should include the following:</p>
+<ol type="1">
+<li>Initialize the values of your <span class="math inline">\(\beta\)</span>’s.</li>
+<li>Initialize the step size.</li>
+<li>Initialize your tolerance (i.e. the stopping criteria).</li>
+<li>Enter a loop. For each iteration in the loop:
+<ol type="a">
+<li>Compute the partial derivatives for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</li>
+<li>Update the values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</li>
+<li>Check to see if the change in your estimates is smaller than your tolerance. If it is, exit the loop, otherwise continue.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+</section>
+</section>
 <section id="evaluating-our-model" class="level1">
 <h1>Evaluating Our Model</h1>
 <p>Let’s now see how our model performs.</p>
-<section id="exercise-4" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5174,8 +5208,8 @@ Question
 </div>
 <p>The second primary metric that we can use to assess the accuracy of regression models is called the <strong>coefficient of determination</strong>, denoted <span class="math inline">\(R^2\)</span>. <span class="math inline">\(R^2\)</span> is the proportion of variance (information) in our target variable that is explained by our model and can be computed by squaring <span class="math inline">\(R\)</span>, the correlation coefficient between the target variable <span class="math inline">\(y\)</span> and the predicted target <span class="math inline">\(\hat{y}\)</span>. The <code>lm</code> function actually computes the <span class="math inline">\(R^2\)</span> of our training data for us which we can access using the <code>glance</code> function from the <code>broom</code> package which is included in <code>tidymodels</code> so you don’t need to load it.</p>
 </section>
-<section id="exercise-5" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5194,8 +5228,8 @@ Question
 <section id="categorical-predictors" class="level1">
 <h1>Categorical Predictors</h1>
 <p>Let’s start to expand our model a bit by adding the predictor <code>US</code>.</p>
-<section id="exercise-6" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<section id="exercise-7" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5212,8 +5246,8 @@ Question
 <p>Notice that the only coefficient added for <code>US</code> is called <code>USYes</code>. When you build a linear model with a categorical variable, R will introduce <em>dummy variables</em> which encode each category as a vector of 0’s and 1’s. In data science, this is sometimes called <em>one-hot encoding</em>. One level is always lumped into the intercept coefficient and is called the <em>reference level</em>. In this case, the reference level is <code>No</code>. When including a categorical variable in a linear model, you can interpret the resulting line being shifted up or down based on the category of a given observation.</p>
 <p>Let’s now assess the accuracy of our new model. To make computation of RMSE and <span class="math inline">\(R^2\)</span> easier let’s take advantage of the <code>rmse</code> and <code>r2</code> functions in the <code>yardstick</code> package (also included in <code>tidymodels</code>).</p>
 </section>
-<section id="exercise-7" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>
+<section id="exercise-8" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5232,8 +5266,8 @@ Question
 <section id="overfitting-and-the-bias-variance-trade-off" class="level1">
 <h1>Overfitting and the Bias-Variance Trade-Off</h1>
 <p>Now let’s see what happens if we add in ALL of the predictors to our model. This is sometimes referred to as the <strong>full model</strong>. To include all of your predictors in a model you can use the syntax <code>fit(Y ~ ., data)</code>.</p>
-<section id="exercise-8" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
+<section id="exercise-9" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-9">Exercise 9</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5250,8 +5284,8 @@ Question
 <p>You should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as <strong>overfitting</strong>. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in <a href="https://en.wikipedia.org/wiki/Overfitting">the Wikipedia article for overfitting</a>. As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to over-align to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.</p>
 <p>When modeling there are two related trade-offs that you need to consider. The first is the trade-off between prediction accuracy and interpretability. In general, one can typically create models with better prediction accuracy by sacrificing interpretability (e.g. by including more variables in your model, transforming these variables, etc.). Another trade-off is something called the bias-variance trade-off. As we increase the complexity of a model, we allow it to account for more and more intricate patterns in our data. In theory, this allows the model to mimic more complex relationships between our predictors and our target variables, reducing <strong>bias</strong>. On the other hand, more complex models typically have more parameters which need to be estimated which require more data to estimate accurately. When you increase the complexity of a model you usually increase the variance of the estimates of model parameters and the predictions the model makes. In other words, the model will be much more sensitive to the noise in the data that you have. Bias and variance will both decrease the accuracy of your model so you should try to minimize both. However, past a certain point, it will be a trade-off between the two.</p>
 </section>
-<section id="exercise-9" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-9">Exercise 9</h2>
+<section id="exercise-10" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5699,7 +5733,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
        
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/02-mlr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/02-hw-mlr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
 </div>
