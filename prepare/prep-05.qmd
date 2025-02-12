@@ -5,4 +5,4 @@ title: "Preparation for KNN and Classification"
 ## Assigned readings & videos
 
 - Read Chapter 3.5-4.3 from ISLR2
-- Read [Chapters 9 of TMWR](https://www.tmwr.org/base-r)
+- Read [Chapters 8-9 of TMWR](https://www.tmwr.org/base-r)
