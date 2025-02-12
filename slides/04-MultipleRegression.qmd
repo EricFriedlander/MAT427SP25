@@ -51,16 +51,16 @@ As a model's flexibility increases:
 :::
 
 
-## Bias-Variance Trade-Off App {.smaller}
+<!-- ## Bias-Variance Trade-Off App {.smaller} -->
 
-When Dr. F tell you, navigate to [this app](https://efriedlander.shinyapps.io/BVTappRegression/)
+<!-- When Dr. F tell you, navigate to [this app](https://efriedlander.shinyapps.io/BVTappRegression/) -->
 
--   Select your assigned data set and look at the second row of plots
-  +   Which order polynomials have the lowest Bias, Variance, training MSE, and test MSE
-      +   Which order polynomial would you say is best?
-  +   Scroll down to the last row of plots and discuss how these images support your answers
-  +   Repeat this process for different amounts of noise?
-  +   Return to the first row of plots and select three different order polynomials based on your answers above... is the bias variance trade-off visible in this plot?
+<!-- -   Select your assigned data set and look at the second row of plots -->
+<!--   +   Which order polynomials have the lowest Bias, Variance, training MSE, and test MSE -->
+<!--       +   Which order polynomial would you say is best? -->
+<!--   +   Scroll down to the last row of plots and discuss how these images support your answers -->
+<!--   +   Repeat this process for different amounts of noise? -->
+<!--   +   Return to the first row of plots and select three different order polynomials based on your answers above... is the bias variance trade-off visible in this plot? -->
 
 
 # Modeling in R
