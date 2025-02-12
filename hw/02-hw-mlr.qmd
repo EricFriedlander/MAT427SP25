@@ -48,7 +48,7 @@ The following directions will guide you through the process of setting up your h
 ::: {.callout-tip title="Question"}
 In your group, decide on a team name. Then have **one member of your group**:
 
-1.  [Click this link](https://classroom.github.com/a/vKdMyAYm) to accept the assignment and enter your team name.
+1.  [Click this link](https://classroom.github.com/a/nFPs1hcX) to accept the assignment and enter your team name.
 2.  Repeat the directions for creating a project from HW 1 with the HW 2 repository.
 
 Once this is complete, the other two members can do the same thing, being careful to join the already created team on GitHub classroom.
@@ -116,13 +116,13 @@ Fit a linear regression model predicting `Sales` using the variable you identifi
 ::: {.callout-tip title="Question"}
 Re-estimate the parameters (i.e. the intercept and slope) for the model above using gradient descent. Your estimates should be similar to those in Exercise 3 but likely won't be EXACTLY the same. Your solution should include the following:
 
-1. Initialize the values of your $\beta$'s.
-2. Initialize the step size.
-3. Initialize your tolerance (i.e. the stopping criteria).
-2. Enter a loop. For each iteration in the loop:
-    a. Compute the partial derivatives for $\beta_0$ and $\beta_1$.
-    b. Update the values of $\beta_0$ and $\beta_1$.
-    c. Check to see if the change in your estimates is smaller than your tolerance. If it is, exit the loop, otherwise continue.
+1.  Initialize the values of your $\beta$'s.
+2.  Initialize the step size.
+3.  Initialize your tolerance (i.e. the stopping criteria).
+4.  Enter a loop. For each iteration in the loop:
+    a.  Compute the partial derivatives for $\beta_0$ and $\beta_1$.
+    b.  Update the values of $\beta_0$ and $\beta_1$.
+    c.  Check to see if the change in your estimates is smaller than your tolerance. If it is, exit the loop, otherwise continue.
 :::
 
 # Evaluating Our Model
