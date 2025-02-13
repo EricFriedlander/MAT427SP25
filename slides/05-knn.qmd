@@ -1,5 +1,5 @@
 ---
-title: 'MAT-427: Multiple Linear Regression + Data Splitting'
+title: 'MAT-427: Data Splitting + KNN'
 author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
@@ -26,12 +26,109 @@ knitr:
 ```{r setup}
 library(tidyverse)
 library(tidymodels)
-library(gridExtra)
-library(modeldata)
 library(knitr)
+library(readODS)
+library(modeldata) # contains ames dataset
 
 tidymodels_prefer()
+
+mlr_model <- linear_reg() |> 
+  set_engine("lm")
 ```
+
+## Comparing Models: Data Splitting {.smaller}
+
+- Split `ames` data set into two parts
+  + Training set: randomly selected proportion $p$ (typically 50-90%) of data used for fitting model
+  + Test set: randomly selected proportion $1-p$ of data used for estimating prediction error
+- If comparing A LOT of models, split into *three* parts to prevent **information leakage**
+  + Training set: randomly selected proportion $p$ (typically 50-90%) of data used for fitting model
+  + Validation set: randomly selected proportion $q$ (typically 20-30%) of data used to choosing tuning parameters
+  + Test set: randomly selected proportion $1-p-q$ of data used for estimating prediction error
+- Idea: use data your model hasn't seen to get more accurate estimate of error and prevent overfitting
+
+## Comparing Models: Data Splitting with `tidymodels` {.smaller}
+
+```{r}
+set.seed(427) # Why?
+
+ames_split <- initial_split(ames, prop = 0.70, strata = Sale_Price) # initialize 70/30
+ames_split
+
+ames_train <- training(ames_split) # get training data
+ames_test <- testing(ames_split) # get test data
+```
+
+- `strata` not necessary but good practice
+  + `strata` will use *stratified sampling* on the variable you specify (very little downside) 
+
+## Linear Regression: Comparing Models {.smaller}
+
+- Let's create three models with `Sale_Price` as the response:
+  + **fit1**: a linear regression model with `Bedroom_AbvGr`  as the only predictor
+  + **fit2**: a linear regression model with `Gr_Liv_Area` as the only predictor
+  + **fit3** (similar to model in previous slides): a multiple regression model with `Gr_Liv_Area` and `Bedroom_AbvGr` as predictors
+  + **fit4**: super flexible model which fits a 10th degree polynomial to `Gr_Liv_Area` and a 2nd degree polynomial to `Bedroom_AbvGr`
+
+```{r}
+fit1 <- mlr_model |> fit(Sale_Price ~ Bedroom_AbvGr, data = ames_train) # Use only training set
+fit2 <- mlr_model |> fit(Sale_Price ~ Gr_Liv_Area, data = ames_train)
+fit3 <- mlr_model |> fit(Sale_Price ~ Gr_Liv_Area + Bedroom_AbvGr, data = ames_train)
+fit4 <- mlr_model |> fit(Sale_Price ~ poly(Gr_Liv_Area, degree = 10) + poly(Bedroom_AbvGr, degree = 2), data = ames_train)
+```
+
+## Computing MSE {.smaller}
+
+```{r}
+# Fit 1
+fit1_train_mse <- mean((ames_train$Sale_Price - predict(fit1, new_data = ames_train)$.pred)^2)
+fit1_test_mse <- mean((ames_test$Sale_Price - predict(fit1, new_data = ames_test)$.pred)^2)
+
+# Fit 2
+fit2_train_mse <- mean((ames_train$Sale_Price - predict(fit2, new_data = ames_train)$.pred)^2)
+fit2_test_mse <- mean((ames_test$Sale_Price - predict(fit2, new_data = ames_test)$.pred)^2)
+
+# Fit 
+fit3_train_mse <- mean((ames_train$Sale_Price - predict(fit3, , new_data = ames_train)$.pred)^2)
+fit3_test_mse <- mean((ames_test$Sale_Price - predict(fit3, new_data = ames_test)$.pred)^2)
+
+# Fit 
+fit4_train_mse <- mean((ames_train$Sale_Price - predict(fit4, , new_data = ames_train)$.pred)^2)
+fit4_test_mse <- mean((ames_test$Sale_Price - predict(fit4, new_data = ames_test)$.pred)^2)
+```
+
+## [Question]{style="color:blue"}
+
+Without looking at the numbers
+
+1. Do we know which of the following is the smallest: `fit1_train_mse`, `fit2_train_mse`, `fit3_train_mse`, `fit4_train_mse`? [Yes, `fit4_train_mse`]{.fragment .fade-in}
+2. Do we know which of the following is the smallest: `fit1_test_mse`, `fit2_test_mse`, `fit3_test_mse`, `fit4_test_mse`? [No]{.fragment .fade-in}
+
+## Choosing a Model {.smaller}
+
+::::{.columns}
+:::{.column}
+```{r}
+# Training Errors
+c(fit1_train_mse, fit2_train_mse, 
+  fit3_train_mse, fit4_train_mse)
+which.min(c(fit1_train_mse, fit2_train_mse, 
+            fit3_train_mse, fit4_train_mse))
+
+# test Errors
+c(fit1_test_mse, fit2_test_mse, 
+  fit3_test_mse, fit4_test_mse)
+which.min(c(fit1_test_mse, fit2_test_mse, 
+            fit3_test_mse, fit4_test_mse))
+```
+:::
+:::{.column}
+- `fit4` has the lowest training MSE (to be expected)
+- `fit3` has the lowest test MSE
+  + We would choose `fit3`
+- Anything else interesting we see?
+:::
+::::
 
 # K-Nearest Neighbors
 
