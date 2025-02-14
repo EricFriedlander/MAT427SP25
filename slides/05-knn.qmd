@@ -168,8 +168,9 @@ $$||\mathbf{x}_i-\mathbf{x}_j||_2 = \sqrt{(x_{i1}-x_{j1})^2 + (x_{i2}-x_{j2})^2 
 :::{.column}
 **$K=1$**
 ```{r}
-knnfit1 <- nearest_neighbor(mode = "regression", neighbors = 1) |> 
+knnfit1 <- nearest_neighbor(neighbors = 1) |> 
   set_engine("kknn") |> 
+  set_mode("regression") |> 
   fit(profit ~ population, data = outlets)   # 1-nn regression
 predict(knnfit1, new_data = tibble(population = 6)) |> kable()  # 1-nn prediction
 ```
@@ -190,8 +191,9 @@ outlets |>
 :::{.column}
 **$K=5$**
 ```{r}
-knnfit5 <- nearest_neighbor(mode = "regression", neighbors = 5) |> 
+knnfit5 <- nearest_neighbor(neighbors = 5) |> 
   set_engine("kknn") |> 
+  set_mode("regression") |> 
   fit(profit ~ population, data = outlets)   # 1-nn regression
 predict(knnfit5, new_data = tibble(population = 6)) |> kable()  # 1-nn prediction
 ```
@@ -241,20 +243,21 @@ ggplot(data = outlets, aes(x = population, y = profit)) +
 
 As $K$ in KNN regression increases:
 
-- the flexibility of the fit $\underline{\hspace{5cm}}$ ([increases]{.fragment .highlight-red} /decreases)
-- the bias of the fit $\underline{\hspace{5cm}}$ (increases/[decreases]{.fragment .highlight-red} )
-- the variance of the fit $\underline{\hspace{5cm}}$ ([increases]{.fragment .highlight-red}/decreases)
+- the flexibility of the fit ([increases]{.fragment .highlight-red} /decreases)
+- the bias of the fit (increases/[decreases]{.fragment .highlight-red} )
+- the variance of the fit ([increases]{.fragment .highlight-red}/decreases)
 
 
 ## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
 
 - Let's look at the `house_prices` data
 ```{r}
-#| echo: FALSE
+#| echo: TRUE
 
 ames |>
   select(Sale_Price, Gr_Liv_Area, Bedroom_AbvGr) |>
-  head()
+  head() |> 
+  kable()
 ```
 :::{.fragment}
 :::{.incremental}
@@ -274,33 +277,56 @@ ames_scaled <- tibble(size_scaled = scale(ames$Gr_Liv_Area),
                                   num_bedrooms_scaled = scale(ames$Bedroom_AbvGr),
                                   price = ames$Sale_Price)
 
-head(ames_scaled)   # first six observations
+head(ames_scaled) |> kable()  # first six observations
 ```
 
+## Question...
+
+:::{.incremental}
+-   What about the training and test sets?
+-   Need to scale BOTH sets based on the mean and standard deviation of the training set...
+-   Discussion: Why?
+-   Discussion: Why don't I need to center and scale `Sale_Price`?
+:::
+
+## Scaling Revisited
+
+```{r}
+ames_train_scaled <- tibble(size_scaled = scale(ames_train$Gr_Liv_Area),
+                                  num_bedrooms_scaled = scale(ames_train$Bedroom_AbvGr),
+                                  price = ames_train$Sale_Price)
+
+ames_test_scaled <- tibble(size_scaled = (ames_test$Gr_Liv_Area - mean(ames_train$Gr_Liv_Area)/sd(ames_train$Gr_Liv_Area)),
+                                  num_bedrooms_scaled = (ames_test$Bedroom_AbvGr - mean(ames_train$Bedroom_AbvGr))/sd(ames_train$Bedroom_AbvGr),
+                                  price = ames_test$Sale_Price)
+```
+
+-   Next time: using `recipe`'s in `tidymodels` to simplify this process
 
 ## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
 
 
 ```{r}
-library(caret)
-knnfit10 <- knnreg(price ~ size_scaled + num_bedrooms_scaled, data = ames_scaled, k = 10)   # 10-nn regression
+knnfit10 <- nearest_neighbor(neighbors = 10) |>   # 10-nn regression
+  set_engine("kknn") |> 
+  set_mode("regression") |> 
+  fit(price ~ size_scaled + num_bedrooms_scaled, data = ames_train_scaled)
 ```
 
-- Must also scale test data points **using mean and sd from training set!!!!**
-- Test Point: `size` = 2000 square feet, and `num_bedrooms` = 3, then
+- Test Point: `Gr_Liv_area` = 2000 square feet, and `Bedroom_AbvGr` = 3, then
 
 ```{r}
 # obtain 10-nn prediction
 
-predict(knnfit10, newdata = tibble(size_scaled = (2000 - mean(ames$Gr_Liv_Area))/sd(ames$Gr_Liv_Area),
-                                     num_bedrooms_scaled = (3 - mean(ames$Bedroom_AbvGr))/sd(ames$Bedroom_AbvGr)))
+predict(knnfit10, new_data = tibble(size_scaled = (2000 - mean(ames_train$Gr_Liv_Area))/sd(ames_train$Gr_Liv_Area),
+                                     num_bedrooms_scaled = (3 - mean(ames_train$Bedroom_AbvGr))/sd(ames_train$Bedroom_AbvGr)))
 ```
 
 
 ## [Linear Regression vs K-Nearest Neighbors]{.r-fit-text} {.smaller}
 
 - Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.
-- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative (next lesson)
+- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative
 - Linear regression is interpretable, KNN is not.
 - Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors
 - Performance: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - *curse of dimensionality*
@@ -315,41 +341,35 @@ predict(knnfit10, newdata = tibble(size_scaled = (2000 - mean(ames$Gr_Liv_Area))
   + Class probabilities
   + Class labels
 
-## Classification Problems: Example
+## Default Dataset {.smaller}
 
-**Default dataset**
+
+A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.
 
 ```{r, message=FALSE}
 library(ISLR2)   # load library
-data("Default")   # load dataset
+head(Default) |> kable()  # print first six observations
 ```
+
+## Summarizing our response variable
+
+```{r,message=FALSE}
+library(janitor)
+Default |> tabyl(default) |> kable()  # class frequencies
+```
+
+We will consider `default` as the response variable.
+
+## Data Types in R {.smaller}
 
 ```{r}
-head(Default)   # print first six observations
+Default |> glimpse()
 ```
 
-```{r,message=FALSE}
-table(Default$default)   # class frequencies
-```
-
-
-**We will consider `default` as the response variable.**
-
-
-## Classification Problems: Example
-
-For some algorithms, we might need to convert the categorical response to numeric (0/1) values.
-
-**Default dataset**
-
-```{r,message=FALSE}
-Default$default_id <- ifelse(Default$default == "Yes", 1, 0)   # create 0/1 variable
-
-head(Default, 10)   # print first ten observations
-```
-
-
-
+-   `fct` = `factor` which is the data type you want to use for categorical data
+-   `as_factor` will typically transform things (including numbers) into factors for you
+-   `chr` can also be used but `factor`s are better because they store all possible levels for your categorical data
+-   `factor`s are helpful for plotting because you can reorder the levels to help you plot things
 
 ## K-Nearest Neighbors Classifier
 
@@ -369,46 +389,77 @@ For classification problems, the predictions are obtained in terms of **majority
 response ($Y$): `default` and predictor ($X$): `balance`
 
 ```{r}
-knnfit <- knn3(default ~ balance, data = Default, k = 10)   # fit 10-nn model
+knn_default_fit <- nearest_neighbor(neighbors = 10) |> 
+  set_engine("kknn") |> 
+  set_mode("classification") |> 
+  fit(default ~ balance, data = Default)   # fit 10-nn model
 ```
 
 
 ## K-Nearest Neighbors Classifier: Predictions
 
-**Default dataset**
+-   `predict` with a categorical response: [documentation](https://parsnip.tidymodels.org/reference/predict.model_fit.html)
+-   Two different ways of making predictions
 
-* One can directly obtain the class label predictions as below.
-
-```{r}
-knn_class_preds_1 <- predict(knnfit, newdata = Default, type = "class")   # obtain default class label predictions
-```
-
-
-* Otherwise, one can first obtain predictions in terms of probabilities and then convert them into class label predictions based on a threshold.
+## Predicting a class
 
 ```{r}
-knn_prob_preds <- predict(knnfit, newdata = Default, type = "prob")   # obtain predictions as probabilities
+knn_class_preds <- predict(knn_default_fit, new_data = Default, type = "class")   # obtain default class label predictions
+
+knn_class_preds |> head() |> kable()
 ```
 
+##  Predicting a probability
+
+```{r}
+knn_prob_preds <- predict(knn_default_fit, new_data = Default, type = "prob")   # obtain predictions as probabilities
+knn_prob_preds |> filter(.pred_No*.pred_Yes >0) |> head() |> kable()
+```
+
+## Questions
+
+-   How do you think the probabilities are calculated?
+-   How do you think we get from the probabilities to the class predictions?
+-   Can you think of a situation in which you might choose a different way of going to probabilities to class labels?
+
+## Thresholds
+
+-   Can convert probabilities to classifications
 
 ```{r}
 threshold <- 0.5   # set threshold
 
-knn_class_preds_2 <- factor(ifelse(knn_prob_preds[,2] > threshold, "Yes", "No"))   # obtain predictions as class labels
+knn_class_preds_2 <- factor(if_else(knn_prob_preds$.pred_Yes > threshold, "Yes", "No"))   # obtain predictions as class labels
+knn_class_preds_2 |> tabyl()
 ```
 
+. . .
 
-## K-Nearest Neighbors Classifier: Performance  {.smaller}
+-   What if the downside of default is REALLY BAD 
 
-**Default dataset**
+## Thresholds
+
+-   Can convert probabilities to classifications
 
 ```{r}
-# create confusion matrix
+threshold <- 0.2   # set threshold
 
-# use the following code only when all predictions are from the same class
-# levels(knn_class_preds_1) = c("No", "Yes")
-
-confusionMatrix(data = knn_class_preds_1, reference = Default$default, positive = "Yes")
+knn_class_preds_3 <- factor(if_else(knn_prob_preds$.pred_Yes > threshold, "Yes", "No"))   # obtain predictions as class labels
+knn_class_preds_3 |> tabyl()
 ```
+
+
+<!-- ## K-Nearest Neighbors Classifier: Performance  {.smaller} -->
+
+<!-- **Default dataset** -->
+
+<!-- ```{r} -->
+<!-- # create confusion matrix -->
+
+<!-- # use the following code only when all predictions are from the same class -->
+<!-- # levels(knn_class_preds_1) = c("No", "Yes") -->
+
+<!-- confusionMatrix(data = knn_class_preds_1, reference = Default$default, positive = "Yes") -->
+<!-- ``` -->
 
 
