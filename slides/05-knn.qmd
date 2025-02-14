@@ -243,9 +243,9 @@ ggplot(data = outlets, aes(x = population, y = profit)) +
 
 As $K$ in KNN regression increases:
 
-- the flexibility of the fit ([increases]{.fragment .highlight-red} /decreases)
-- the bias of the fit (increases/[decreases]{.fragment .highlight-red} )
-- the variance of the fit ([increases]{.fragment .highlight-red}/decreases)
+- the flexibility of the fit ([decreases]{.fragment .highlight-red} /increases)
+- the bias of the fit (decreases/[increases]{.fragment .highlight-red} )
+- the variance of the fit ([decreases]{.fragment .highlight-red}/increases)
 
 
 ## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}

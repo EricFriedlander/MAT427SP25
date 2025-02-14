@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-05.html</loc>
-    <lastmod>2025-02-14T18:17:51.550Z</lastmod>
+    <lastmod>2025-02-14T18:20:00.764Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-06.html</loc>
-    <lastmod>2025-02-14T18:17:50.054Z</lastmod>
+    <lastmod>2025-02-14T18:20:00.764Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/03-SLR-Gradient_Desc.html</loc>
@@ -37,20 +37,28 @@
     <lastmod>2025-02-04T17:47:19.521Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
-    <lastmod>2025-02-10T21:24:44.985Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/06-classification-logistic.html</loc>
+    <lastmod>2025-02-14T21:41:03.600Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/07-classifiction-metrics.html</loc>
+    <lastmod>2025-02-14T20:53:57.263Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
     <lastmod>2025-02-04T17:47:19.521Z</lastmod>
   </url>
   <url>
+    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
+    <lastmod>2025-02-10T21:24:44.985Z</lastmod>
+  </url>
+  <url>
     <loc>https://mat427sp25.netlify.app/slides/05-knn.html</loc>
-    <lastmod>2025-02-14T18:12:24.311Z</lastmod>
+    <lastmod>2025-02-14T23:08:37.785Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/04-MultipleRegression.html</loc>
-    <lastmod>2025-02-13T17:31:06.854Z</lastmod>
+    <lastmod>2025-02-14T18:19:52.953Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
@@ -79,13 +87,5 @@
   <url>
     <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
     <lastmod>2025-02-03T17:52:13.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/06-classifiction-logistic.html</loc>
-    <lastmod>2025-02-14T20:56:43.279Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/06-classification-logistic.html</loc>
-    <lastmod>2025-02-14T21:41:03.600Z</lastmod>
   </url>
 </urlset>
