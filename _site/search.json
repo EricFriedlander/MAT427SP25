@@ -1482,5 +1482,250 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#classification-problems",
+    "href": "slides/06-classifiction-logistic.html#classification-problems",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Classification Problems",
+    "text": "Classification Problems\n\nResponse \\(Y\\) is qualitative (categorical).\n\nOnly two classes \\(\\implies\\) Binary Classification Problem\n\nObjectives: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\) that:\n\nassigns a class label to a future unlabeled (unseen) observation\nhelps understand the relationship between the predictors and response\n\nThere can be two types of predictions based on the research problem.\n\nClass probabilities\nClass labels"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#classification-problem-default-dataset",
+    "href": "slides/06-classifiction-logistic.html#classification-problem-default-dataset",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Classification Problem: Default Dataset",
+    "text": "Classification Problem: Default Dataset\n\n\n\ndata(\"Default\")   # load dataset\n\nhead(Default) |&gt;   # print first six observations\n  kable()         # Make it look pretty\n\n\n\n\ndefault\nstudent\nbalance\nincome\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n\n\nNo\nYes\n817.1804\n12106.135\n\n\nNo\nNo\n1073.5492\n31767.139\n\n\nNo\nNo\n529.2506\n35704.494\n\n\nNo\nNo\n785.6559\n38463.496\n\n\nNo\nYes\n919.5885\n7491.559\n\n\n\n\n\n\nResponse Variable: default\n\nDefault |&gt; \n  count(default) |&gt;  # class frequencies\n  kable()           # Make it look nice\n\n\n\n\ndefault\nn\n\n\n\n\nNo\n9667\n\n\nYes\n333"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier",
+    "href": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier",
+    "text": "K-Nearest Neighbors Classifier\n\nGiven a value for \\(K\\) and a test data point \\(x_0\\): \\[P(Y=j | X=x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} I(y_i = j)\\] where \\(\\mathcal{N}_0\\) is the set of the \\(K\\) “closest” neighbors.\nFor classification: neighbors “vote” for class (unlike in regression where predictions are obtained by averaging) \\[P(Y=j | X=x_0)=\\text{Proportion of neighbors in class }j\\]"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-build-model",
+    "href": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-build-model",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier: Build Model",
+    "text": "K-Nearest Neighbors Classifier: Build Model\n\nResponse (\\(Y\\)): default\nPredictor (\\(X\\)): balance\n\n\nknnfit &lt;- nearest_neighbor(neighbors = 10) |&gt; \n  set_engine(\"kknn\") |&gt; \n  set_mode(\"classification\") |&gt;  \n  fit(default ~ balance, data = Default)   # fit 10-nn model"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-predictions",
+    "href": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-predictions",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier: Predictions",
+    "text": "K-Nearest Neighbors Classifier: Predictions\n\nProbabilitiesClass labels\n\n\n\npredict(knnfit, new_data = Default, type = \"prob\") |&gt;    # obtain predictions as probabilities\n  head() |&gt; # predicted probabilities for first six observations\n  kable()\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n\n\n\n\n\n\nPredicts class w/ maximum probability\n\n\npredict(knnfit, new_data = Default, type = \"class\") |&gt;    # obtain predictions as probabilities\n  head() |&gt; # predicted probabilities for first six observations\n  kable()\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-performance",
+    "href": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-performance",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier: Performance",
+    "text": "K-Nearest Neighbors Classifier: Performance\n\nDefault_wpreds |&gt; \n  conf_mat(truth = default, estimate = pred_50)\n\n          Truth\nPrediction   No  Yes\n       No  9624  209\n       Yes   43  124"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#confusion-matrix-terms",
+    "href": "slides/06-classifiction-logistic.html#confusion-matrix-terms",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Confusion Matrix Terms",
+    "text": "Confusion Matrix Terms\n\n\n\n\n\n\n\n\n\nActual Positive/Event\nActual Negative/Non-event\n\n\n\n\nPredicted Positive/Event\nTrue Negative\nFalse Positive\n\n\nPredicted Negative/Non-event\nFalse Negative\nTrue Positive"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#roc-curve-and-auc",
+    "href": "slides/06-classifiction-logistic.html#roc-curve-and-auc",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "ROC Curve and AUC",
+    "text": "ROC Curve and AUC\n\nROC (Receiver Operating Characteristics) curve: popular graphic for comparing different classifiers across all possible thresholds\n\nPlots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis\n\nAUC: area under the AUC curve\n\nIdeal ROC curve will hug the top left corner\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#roc-curve-and-auc-1",
+    "href": "slides/06-classifiction-logistic.html#roc-curve-and-auc-1",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "ROC Curve and AUC",
+    "text": "ROC Curve and AUC\n\nlibrary(pROC)   # functions for computing ROC and AUC\n\n# create object for ROC curve for KNN fit\nroc_object_knn &lt;- roc(response = Default$default, \n                      predictor = knn_prob_preds[,2])\nggroc(roc_object_knn)   # plot ROC curve\n\nauc(roc_object_knn)   # obtain AUC\n\nArea under the curve: 0.9739"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#classes-as-numbers",
+    "href": "slides/06-classifiction-logistic.html#classes-as-numbers",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Classes as numbers",
+    "text": "Classes as numbers\n\nSome functions require categorical response to be input using numeric values (e.g. 0/1)\n\n\nDefault$default_id &lt;- ifelse(Default$default == \"Yes\", 1, 0)   # create 0/1 variable\nDefault |&gt; \n  tabyl(default, default_id) |&gt; # create contingency table \n  kable() # make it looks nice\n\n\n\n\ndefault\n0\n1\n\n\n\n\nNo\n9667\n0\n\n\nYes\n0\n333"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#why-not-linear-regression",
+    "href": "slides/06-classifiction-logistic.html#why-not-linear-regression",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Why Not Linear Regression?",
+    "text": "Why Not Linear Regression?\n\nlrfit &lt;- lm(default_id ~ balance, data = Default)   # fit SLR\nsummary(lrfit$fitted.values)  # summary of y_hats\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-0.07519 -0.01263  0.03178  0.03330  0.07628  0.26953 \n\n\n\n\nLinear regression: does not model probabilities well\n\nmight produce probabilities less than zero or bigger than one\ntreats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#why-not-linear-regression-1",
+    "href": "slides/06-classifiction-logistic.html#why-not-linear-regression-1",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Why Not Linear Regression?",
+    "text": "Why Not Linear Regression?\nSuppose we have a response, \\[Y=\\begin{cases}\n1 & \\text{if stroke} \\\\\n2 & \\text{if drug overdose} \\\\\n3  & \\text{if epileptic seizure}\n\\end{cases}\\]\n\nLinear regression suggests an ordering, and in fact implies that the differences between classes have meaning\n\ne.g. drug overdose \\(-\\) stroke \\(= 1\\)? 🤔"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#logistic-regression-1",
+    "href": "slides/06-classifiction-logistic.html#logistic-regression-1",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Logistic Regression",
+    "text": "Logistic Regression\nConsider a one-dimensional binary classification problem:\n\nTransform the linear model \\(\\beta_0 + \\beta_1 \\ X\\) so that the output is a probability\nUse logistic or sigmoid function: \\[g(t)=\\dfrac{e^t}{1+e^t} \\ \\ \\ \\text{for} \\ t \\in \\mathcal{R}\\]\nThen: \\[p(X)=P(Y=1|X)=g\\left(\\beta_0 + \\beta_1 \\ X\\right)=\\dfrac{e^{\\beta_0 + \\beta_1 \\ X}}{1+e^{\\beta_0 + \\beta_1 \\ X}}\\]"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#other-important-quantities",
+    "href": "slides/06-classifiction-logistic.html#other-important-quantities",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Other important quantities",
+    "text": "Other important quantities\n\nOdds: \\(\\dfrac{p(x)}{1-p(x)}\\)\nLog-Odd: \\(\\log\\left(\\dfrac{p(x)}{1-p(x)}\\right) = \\beta_0 + \\beta_1 \\ X\\)\n\nLinear function of predictors\n\nInverse Logit (sometimes called expit): \\[\\log \\left(\\dfrac{p(X)}{1-p(X)}\\right) = \\beta_0 + \\beta_1 \\ X\\]"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#logistic-regression-2",
+    "href": "slides/06-classifiction-logistic.html#logistic-regression-2",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Logistic Regression",
+    "text": "Logistic Regression"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#fitting-the-model",
+    "href": "slides/06-classifiction-logistic.html#fitting-the-model",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Fitting the model",
+    "text": "Fitting the model\nFitting a logistic regression model with default as the response and balance as the predictor:\n\nlibrary(broom) #for formatting model output\nlogregfit &lt;- glm(default ~ balance, data = Default, family = binomial)   # fit logistic regression model\ntidy(logregfit)   # obtain results\n\n# A tibble: 2 × 5\n  term         estimate std.error statistic   p.value\n  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n1 (Intercept) -10.7      0.361        -29.5 3.62e-191\n2 balance       0.00550  0.000220      25.0 1.98e-137"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#interpreting-coefficients",
+    "href": "slides/06-classifiction-logistic.html#interpreting-coefficients",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Interpreting Coefficients",
+    "text": "Interpreting Coefficients\n\nAs \\(X\\) increases by 1, the log-odds increase by\\(\\hat{\\beta}_1\\)\n\nI.e. probability of default increases but NOT linearly\nChange in the probability of default due to a one-unit change in balance depends on the current balance value"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#interpreting-coefficients-1",
+    "href": "slides/06-classifiction-logistic.html#interpreting-coefficients-1",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Interpreting Coefficients",
+    "text": "Interpreting Coefficients"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#making-predictions-theory",
+    "href": "slides/06-classifiction-logistic.html#making-predictions-theory",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Making predictions: Theory",
+    "text": "Making predictions: Theory\nFor balance=$700,\n\n\n\\[\\hat{p}(X)=\\dfrac{e^{\\hat{\\beta}_0+\\hat{\\beta}_1 X}}{1+e^{\\hat{\\beta}_0+\\hat{\\beta}_1 X}}=\\dfrac{e^{-10.65 + (0.005499 \\times 700)}}{1+e^{-10.65 + (0.005499 \\times 700)}}=0.0011\\]\n\\[\\textbf{Odds}(X) = \\dfrac{\\hat{p}(X)}{1-\\hat{p}(X)} = \\dfrac{0.0011}{1-0.0011}\\approx 0.0011\\]\n\\[\\textbf{Log-Odds}(X)=\\log\\left(\\dfrac{\\hat{p}(X)}{1-\\hat{p}(X)}\\right) = \\log(0.0011) = -6.80\\]"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#making-predictions-in-r",
+    "href": "slides/06-classifiction-logistic.html#making-predictions-in-r",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Making predictions in R",
+    "text": "Making predictions in R\n\npredict(logregfit, newdata = data.frame(balance = 700))   # obtain log-odds predictions\n\n        1 \n-6.802089 \n\npredict(logregfit, newdata = data.frame(balance = 700), type = \"response\")   # obtain probability predictions\n\n          1 \n0.001110217"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#using-a-threshold",
+    "href": "slides/06-classifiction-logistic.html#using-a-threshold",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Using a threshold",
+    "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\n\n\nlogreg_prob_preds &lt;- predict(logregfit, newdata = Default, type = \"response\")   # obtain probability predictions\nhead(logreg_prob_preds) |&gt;    # predicted probabilities for first six observations\n  kable()\n\n\n\n\nx\n\n\n\n\n0.0013057\n\n\n0.0021126\n\n\n0.0085947\n\n\n0.0004344\n\n\n0.0017770\n\n\n0.0037042"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#using-a-threshold-1",
+    "href": "slides/06-classifiction-logistic.html#using-a-threshold-1",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Using a threshold",
+    "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\nStep 2: Set a threshold to obtain class labels (0.5 below)\n\n\nthreshold &lt;- 0.5   # set threshold\nlogreg_class_preds &lt;- factor(ifelse(logreg_prob_preds &gt; threshold, \"Yes\", \"No\"))   # obtain class predictions\nhead(logreg_class_preds) |&gt;    # predicted class labels for first six observations\n  kable()\n\n\n\n\nx\n\n\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#assessing-performance",
+    "href": "slides/06-classifiction-logistic.html#assessing-performance",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Assessing Performance",
+    "text": "Assessing Performance\n\n# use the following code only when all predictions are from the same class\n# levels(logreg_class_preds) = c(\"No\", \"Yes\")\n\nconfusionMatrix(data = logreg_class_preds, reference = Default$default, positive = \"Yes\")\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction   No  Yes\n       No  9625  233\n       Yes   42  100\n                                          \n               Accuracy : 0.9725          \n                 95% CI : (0.9691, 0.9756)\n    No Information Rate : 0.9667          \n    P-Value [Acc &gt; NIR] : 0.0004973       \n                                          \n                  Kappa : 0.4093          \n                                          \n Mcnemar's Test P-Value : &lt; 2.2e-16       \n                                          \n            Sensitivity : 0.3003          \n            Specificity : 0.9957          \n         Pos Pred Value : 0.7042          \n         Neg Pred Value : 0.9764          \n             Prevalence : 0.0333          \n         Detection Rate : 0.0100          \n   Detection Prevalence : 0.0142          \n      Balanced Accuracy : 0.6480          \n                                          \n       'Positive' Class : Yes"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#roc-curve-and-auc-2",
+    "href": "slides/06-classifiction-logistic.html#roc-curve-and-auc-2",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "ROC Curve and AUC",
+    "text": "ROC Curve and AUC\n\nlibrary(pROC)   # load library\n\n# create object for ROC curve\n\nroc_object &lt;- roc(response = Default$default, predictor = logreg_prob_preds)\nggroc(roc_object, col = \"red\")   # plot ROC curve\n\nauc(roc_object)   # obtain AUC\n\nArea under the curve: 0.948"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#logistic-regression-vs-knn",
+    "href": "slides/06-classifiction-logistic.html#logistic-regression-vs-knn",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Logistic Regression vs KNN",
+    "text": "Logistic Regression vs KNN\n\nLogistic regression \\(\\implies\\) parametric , KNN \\(\\implies\\) non-parametric.\nLogistic regression \\(\\implies\\) only for classification problems (\\(Y\\) categorical), KNN \\(\\implies\\) both regression and classification.\nLogistic regression is interpretable, KNN is not.\nLogistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.\nPrediction: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality."
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#decision-boundaries-simulated-observations",
+    "href": "slides/06-classifiction-logistic.html#decision-boundaries-simulated-observations",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Decision Boundaries: Simulated observations",
+    "text": "Decision Boundaries: Simulated observations"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#the-machine-learning-process",
+    "href": "slides/06-classifiction-logistic.html#the-machine-learning-process",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "The Machine Learning Process",
+    "text": "The Machine Learning Process\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#default-dataset",
+    "href": "slides/06-classifiction-logistic.html#default-dataset",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Default Dataset",
+    "text": "Default Dataset\n\n\nA simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.\n\nhead(Default) |&gt; kable()  # print first six observations\n\n\n\n\ndefault\nstudent\nbalance\nincome\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n\n\nNo\nYes\n817.1804\n12106.135\n\n\nNo\nNo\n1073.5492\n31767.139\n\n\nNo\nNo\n529.2506\n35704.494\n\n\nNo\nNo\n785.6559\n38463.496\n\n\nNo\nYes\n919.5885\n7491.559\n\n\n\n\n\n\nResponse Variable: default\n\nDefault |&gt; \n  tabyl(default) |&gt;  # class frequencies\n  kable()           # Make it look nice\n\n\n\n\ndefault\nn\npercent\n\n\n\n\nNo\n9667\n0.9667\n\n\nYes\n333\n0.0333"
+  },
+  {
+    "objectID": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-performance-1",
+    "href": "slides/06-classifiction-logistic.html#k-nearest-neighbors-classifier-performance-1",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier: Performance",
+    "text": "K-Nearest Neighbors Classifier: Performance\n\nDefault_wpreds |&gt; \n  conf_mat(truth = default, estimate = pred_50) |&gt; \n  autoplot(type = \"heatmap\")"
+  },
+  {
+    "objectID": "slides/06-classification-logistic.html#classification-problems",
+    "href": "slides/06-classification-logistic.html#classification-problems",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Classification Problems",
+    "text": "Classification Problems\n\nResponse \\(Y\\) is qualitative (categorical).\n\nOnly two classes \\(\\implies\\) Binary Classification Problem\n\nObjectives: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\) that:\n\nassigns a class label to a future unlabeled (unseen) observation\nhelps understand the relationship between the predictors and response\n\nThere can be two types of predictions based on the research problem.\n\nClass probabilities\nClass labels"
+  },
+  {
+    "objectID": "slides/06-classification-logistic.html#default-dataset",
+    "href": "slides/06-classification-logistic.html#default-dataset",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Default Dataset",
+    "text": "Default Dataset\n\n\nA simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.\n\nhead(Default) |&gt; kable()  # print first six observations\n\n\n\n\ndefault\nstudent\nbalance\nincome\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n\n\nNo\nYes\n817.1804\n12106.135\n\n\nNo\nNo\n1073.5492\n31767.139\n\n\nNo\nNo\n529.2506\n35704.494\n\n\nNo\nNo\n785.6559\n38463.496\n\n\nNo\nYes\n919.5885\n7491.559\n\n\n\n\n\n\nResponse Variable: default\n\nDefault |&gt; \n  tabyl(default) |&gt;  # class frequencies\n  kable()           # Make it look nice\n\n\n\n\ndefault\nn\npercent\n\n\n\n\nNo\n9667\n0.9667\n\n\nYes\n333\n0.0333"
+  },
+  {
+    "objectID": "slides/06-classification-logistic.html#k-nearest-neighbors-classifier",
+    "href": "slides/06-classification-logistic.html#k-nearest-neighbors-classifier",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier",
+    "text": "K-Nearest Neighbors Classifier\n\nGiven a value for \\(K\\) and a test data point \\(x_0\\): \\[P(Y=j | X=x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} I(y_i = j)\\] where \\(\\mathcal{N}_0\\) is the set of the \\(K\\) “closest” neighbors.\nFor classification: neighbors “vote” for class (unlike in regression where predictions are obtained by averaging) \\[P(Y=j | X=x_0)=\\text{Proportion of neighbors in class }j\\]"
+  },
+  {
+    "objectID": "slides/06-classification-logistic.html#k-nearest-neighbors-classifier-build-model",
+    "href": "slides/06-classification-logistic.html#k-nearest-neighbors-classifier-build-model",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier: Build Model",
+    "text": "K-Nearest Neighbors Classifier: Build Model\n\nResponse (\\(Y\\)): default\nPredictor (\\(X\\)): balance\n\n\nknnfit &lt;- nearest_neighbor(neighbors = 10) |&gt; \n  set_engine(\"kknn\") |&gt; \n  set_mode(\"classification\") |&gt;  \n  fit(default ~ balance, data = Default)   # fit 10-nn model"
+  },
+  {
+    "objectID": "slides/06-classification-logistic.html#k-nearest-neighbors-classifier-predictions",
+    "href": "slides/06-classification-logistic.html#k-nearest-neighbors-classifier-predictions",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "K-Nearest Neighbors Classifier: Predictions",
+    "text": "K-Nearest Neighbors Classifier: Predictions\n\nProbabilitiesClass labels\n\n\n\npredict(knnfit, new_data = Default, type = \"prob\") |&gt;    # obtain predictions as probabilities\n  head() |&gt; # predicted probabilities for first six observations\n  kable()\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n\n\n\n\n\n\nPredicts class w/ maximum probability\n\n\npredict(knnfit, new_data = Default, type = \"class\") |&gt;    # obtain predictions as probabilities\n  head() |&gt; # predicted probabilities for first six observations\n  kable()\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo"
+  },
+  {
+    "objectID": "slides/06-classification-logistic.html#why-not-linear-regression",
+    "href": "slides/06-classification-logistic.html#why-not-linear-regression",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "Why Not Linear Regression?",
+    "text": "Why Not Linear Regression?\n\nDefault_lr &lt;- Default |&gt; \n  mutate(default_0_1 = if_else(default == \"Yes\", 1, 0))\n\nlrfit &lt;- linear_reg() |&gt; \n  set_engine(\"lm\") |&gt; \n  fit(default_0_1 ~ balance, data = Default_lr)   # fit SLR\n\nlrfit |&gt; predict(new_data = Default) |&gt; head() |&gt; kable()\n\n\n\n\n.pred\n\n\n\n\n0.0195532\n\n\n0.0309370\n\n\n0.0642322\n\n\n-0.0064570\n\n\n0.0268429\n\n\n0.0442370\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLinear regression: does not model probabilities well\n\nmight produce probabilities less than zero or bigger than one\ntreats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
