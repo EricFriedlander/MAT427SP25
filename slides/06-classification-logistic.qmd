@@ -128,6 +128,8 @@ lrfit <- linear_reg() |>
 lrfit |> predict(new_data = Default) |> head() |> kable()
 ```
 
+## Why Not Linear Regression? {.smaller}
+
 ```{r}
 #| echo: FALSE
 #| fig.align: "center"
@@ -142,31 +144,30 @@ ggplot(data = Default_lr, aes(x = balance, y = default_0_1)) +
   + might produce probabilities less than zero or bigger than one
   + treats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)
 
-<!-- ## Why Not Linear Regression? -->
+## Why Not Linear Regression?
 
-<!-- Suppose we have a response, -->
-<!-- $$Y=\begin{cases} -->
-<!-- 1 & \text{if stroke} \\ -->
-<!-- 2 & \text{if drug overdose} \\ -->
-<!-- 3  & \text{if epileptic seizure} -->
-<!-- \end{cases}$$ -->
+Suppose we have a response,
+$$Y=\begin{cases}
+1 & \text{if stroke} \\
+2 & \text{if drug overdose} \\
+3  & \text{if epileptic seizure}
+\end{cases}$$
 
-<!-- - Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning -->
-<!--   + e.g. drug overdose $-$ stroke $= 1$? `r emo::ji("thinking")` -->
+- Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning
+  + e.g. drug overdose $-$ stroke $= 1$? `r emo::ji("thinking")`
 
-<!-- ## Logistic Regression {.smaller} -->
+## Logistic Regression {.smaller}
 
-<!-- Consider a one-dimensional binary classification problem: -->
+Consider a one-dimensional binary classification problem:
 
-<!-- - Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability -->
-<!-- - Use **logistic** or **sigmoid** function: $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$ -->
-<!-- - Then: $$p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$ -->
+- Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability
+- Use **logistic** function: $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$
+- Then: $$p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$
 
-<!-- ## Other important quantities -->
-<!-- - **Odds**: $\dfrac{p(x)}{1-p(x)}$ -->
-<!-- - **Log-Odd**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$ -->
-<!--   + Linear function of predictors -->
-<!-- - **Inverse Logit** (sometimes called **expit**): $$\log \left(\dfrac{p(X)}{1-p(X)}\right) = \beta_0 + \beta_1 \ X$$ -->
+## Other important quantities
+- **Odds**: $\dfrac{p(x)}{1-p(x)}$
+- **Log-Odds (logit)**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$
+  + Linear function of predictors
 
 <!-- ## Logistic Regression -->
 

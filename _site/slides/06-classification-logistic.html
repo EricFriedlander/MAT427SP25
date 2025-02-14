@@ -669,41 +669,50 @@ Eric Friedlander
 </table>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="06-classification-logistic_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
+</section>
+<section id="why-not-linear-regression-1" class="slide level2 smaller">
+<h2>Why Not Linear Regression?</h2>
+
+<img data-src="06-classification-logistic_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
 <li>Linear regression: does not model probabilities well
 <ul>
 <li>might produce probabilities less than zero or bigger than one</li>
 <li>treats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)</li>
 </ul></li>
 </ul>
-<!-- ## Why Not Linear Regression? -->
-<!-- Suppose we have a response, -->
-<!-- $$Y=\begin{cases} -->
-<!-- 1 & \text{if stroke} \\ -->
-<!-- 2 & \text{if drug overdose} \\ -->
-<!-- 3  & \text{if epileptic seizure} -->
-<!-- \end{cases}$$ -->
-<!-- - Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning -->
-<!--   + e.g. drug overdose $-$ stroke $= 1$? 🤔 -->
-<!-- ## Logistic Regression {.smaller} -->
-<!-- Consider a one-dimensional binary classification problem: -->
-<!-- - Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability -->
-<!-- - Use **logistic** or **sigmoid** function: $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$ -->
-<!-- - Then: $$p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$ -->
-<!-- ## Other important quantities -->
-<!-- - **Odds**: $\dfrac{p(x)}{1-p(x)}$ -->
-<!-- - **Log-Odd**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$ -->
-<!--   + Linear function of predictors -->
-<!-- - **Inverse Logit** (sometimes called **expit**): $$\log \left(\dfrac{p(X)}{1-p(X)}\right) = \beta_0 + \beta_1 \ X$$ -->
+</section>
+<section id="why-not-linear-regression-2" class="slide level2">
+<h2>Why Not Linear Regression?</h2>
+<p>Suppose we have a response, <span class="math display">\[Y=\begin{cases}
+1 &amp; \text{if stroke} \\
+2 &amp; \text{if drug overdose} \\
+3  &amp; \text{if epileptic seizure}
+\end{cases}\]</span></p>
+<ul>
+<li>Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning
+<ul>
+<li>e.g.&nbsp;drug overdose <span class="math inline">\(-\)</span> stroke <span class="math inline">\(= 1\)</span>? 🤔</li>
+</ul></li>
+</ul>
+</section>
+<section id="logistic-regression-1" class="slide level2 smaller">
+<h2>Logistic Regression</h2>
+<p>Consider a one-dimensional binary classification problem:</p>
+<ul>
+<li>Transform the linear model <span class="math inline">\(\beta_0 + \beta_1 \ X\)</span> so that the output is a probability</li>
+<li>Use <strong>logistic</strong> function: <span class="math display">\[g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}\]</span></li>
+<li>Then: <span class="math display">\[p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}\]</span></li>
+</ul>
+</section>
+<section id="other-important-quantities" class="slide level2">
+<h2>Other important quantities</h2>
+<ul>
+<li><strong>Odds</strong>: <span class="math inline">\(\dfrac{p(x)}{1-p(x)}\)</span></li>
+<li><strong>Log-Odds (logit)</strong>: <span class="math inline">\(\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X\)</span>
+<ul>
+<li>Linear function of predictors</li>
+</ul></li>
+</ul>
 <!-- ## Logistic Regression -->
 <!-- ```{r} -->
 <!-- #| echo: FALSE -->
