@@ -32,175 +32,65 @@ library(ISLR2)
 tidymodels_prefer()
 ```
 
-<!-- ## Classification Problems {.smaller} -->
-
-<!-- - Response $Y$ is qualitative (categorical). -->
-<!-- - Objective: build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$ -->
-<!--   + assigns class label to a future unlabeled (unseen) observations -->
-<!--   + understand the relationship between the predictors and response -->
-<!-- - Two ways to make predictions -->
-<!--   + Class probabilities -->
-<!--   + Class labels -->
-
-<!-- ## Default Dataset {.smaller} -->
-
-
-<!-- A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt. -->
-
-<!-- ```{r, message=FALSE} -->
-<!-- library(ISLR2)   # load library -->
-<!-- head(Default) |> kable()  # print first six observations -->
-<!-- ``` -->
-
-<!-- ## Summarizing our response variable -->
-
-<!-- ```{r,message=FALSE} -->
-<!-- library(janitor) -->
-<!-- Default |> tabyl(default) |> kable()  # class frequencies -->
-<!-- ``` -->
-
-<!-- We will consider `default` as the response variable. -->
-
-<!-- ## Data Types in R {.smaller} -->
-
-<!-- ```{r} -->
-<!-- Default |> glimpse() -->
-<!-- ``` -->
-
-<!-- -   `fct` = `factor` which is the data type you want to use for categorical data -->
-<!-- -   `as_factor` will typically transform things (including numbers) into factors for you -->
-<!-- -   `chr` can also be used but `factor`s are better because they store all possible levels for your categorical data -->
-<!-- -   `factor`s are helpful for plotting because you can reorder the levels to help you plot things -->
-
-<!-- ## K-Nearest Neighbors Classifier -->
-
-<!-- Given a value for $K$ and a test data point $x_0$, -->
-<!-- $$P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)$$ -->
-
-<!-- where $\mathcal{N}_0$ is known as the **neighborhood** of $x_0$. -->
-
-
-<!-- For classification problems, the predictions are obtained in terms of **majority vote** (unlike in regression where predictions are obtained by averaging). -->
-
-
-<!-- ## K-Nearest Neighbors Classifier: Build Model -->
-
-<!-- **Default dataset** -->
-
-<!-- response ($Y$): `default` and predictor ($X$): `balance` -->
-
-<!-- ```{r} -->
-<!-- knn_default_fit <- nearest_neighbor(neighbors = 10) |>  -->
-<!--   set_engine("kknn") |>  -->
-<!--   set_mode("classification") |>  -->
-<!--   fit(default ~ balance, data = Default)   # fit 10-nn model -->
-<!-- ``` -->
-
-
-<!-- ## K-Nearest Neighbors Classifier: Predictions -->
-
-<!-- -   `predict` with a categorical response: [documentation](https://parsnip.tidymodels.org/reference/predict.model_fit.html) -->
-<!-- -   Two different ways of making predictions -->
-
-<!-- ## Predicting a class -->
-
-<!-- ```{r} -->
-<!-- knn_class_preds <- predict(knn_default_fit, new_data = Default, type = "class")   # obtain default class label predictions -->
-
-<!-- knn_class_preds |> head() |> kable() -->
-<!-- ``` -->
-
-<!-- ##  Predicting a probability -->
-
-<!-- ```{r} -->
-<!-- knn_prob_preds <- predict(knn_default_fit, new_data = Default, type = "prob")   # obtain predictions as probabilities -->
-<!-- knn_prob_preds |> filter(.pred_No*.pred_Yes >0) |> head() |> kable() -->
-<!-- ``` -->
-
-<!-- ## Questions -->
-
-<!-- -   How do you think the probabilities are calculated? -->
-<!-- -   How do you think we get from the probabilities to the class predictions? -->
-<!-- -   Can you think of a situation in which you might choose a different way of going to probabilities to class labels? -->
-
-<!-- ## Thresholds -->
-
-<!-- -   Can convert probabilities to classifications -->
-
-<!-- ```{r} -->
-<!-- threshold <- 0.5   # set threshold -->
-
-<!-- knn_class_preds_2 <- factor(if_else(knn_prob_preds$.pred_Yes > threshold, "Yes", "No"))   # obtain predictions as class labels -->
-<!-- knn_class_preds_2 |> tabyl() -->
-<!-- ``` -->
-
-<!-- . . . -->
-
-<!-- -   What if the downside of default is REALLY BAD  -->
-
-<!-- ## Thresholds -->
-
-<!-- -   Can convert probabilities to classifications -->
-
-<!-- ```{r} -->
-<!-- threshold <- 0.2   # set threshold -->
-
-<!-- knn_class_preds_3 <- factor(if_else(knn_prob_preds$.pred_Yes > threshold, "Yes", "No"))   # obtain predictions as class labels -->
-<!-- knn_class_preds_3 |> tabyl() -->
-<!-- ``` -->
-
-
-<!-- <!-- ## K-Nearest Neighbors Classifier: Performance  {.smaller} --> -->
-
-<!-- <!-- **Default dataset** --> -->
-
-<!-- <!-- ```{r} --> -->
-<!-- <!-- # create confusion matrix --> -->
-
-<!-- <!-- # use the following code only when all predictions are from the same class --> -->
-<!-- <!-- # levels(knn_class_preds_1) = c("No", "Yes") --> -->
-
-<!-- <!-- confusionMatrix(data = knn_class_preds_1, reference = Default$default, positive = "Yes") --> -->
-<!-- <!-- ``` --> -->
-
-
-
-
 ## Classification Problems {.smaller}
 
--   Response $Y$ is qualitative (categorical).
-    -   Only two classes $\implies$ **Binary Classification Problem**
--   **Objectives**: build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
-    that:
-    -   assigns a class label to a future unlabeled (unseen) observation
-    -   helps understand the relationship between the predictors and
-        response
--   There can be two types of predictions based on the research problem.
-    -   Class probabilities
-    -   Class labels
+- Response $Y$ is qualitative (categorical).
+- Objective: build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
+  + assigns class label to a future unlabeled (unseen) observations
+  + understand the relationship between the predictors and response
+- Two ways to make predictions
+  + Class probabilities
+  + Class labels
 
 ## Default Dataset {.smaller}
 
-::: columns
-::: column
+
 A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.
 
 ```{r}
-#| message: FALSE
+#| message: false
+
+library(ISLR2)   # load library
 head(Default) |> kable()  # print first six observations
 ```
-:::
 
-::: column
-**Response Variable**: `default`
+We will consider `default` as the response variable.
+
+
+## Split the data
 
 ```{r}
-Default |> 
-  tabyl(default) |>  # class frequencies
-  kable()           # Make it look nice
+set.seed(427)
+
+default_split <- initial_split(Default, prop = 0.6, strata = default)
+default_split
+
+default_train <- training(default_split)
+default_test <- testing(default_split)
 ```
-:::
-:::
+
+## Summarizing our response variable {.smaller}
+
+```{r}
+#| message: false
+
+library(janitor)
+Default |> tabyl(default) |> kable()  # class frequencies
+default_train |> tabyl(default) |> kable()
+default_test |> tabyl(default) |> kable()
+```
+
+
+## Data Types in R {.smaller}
+
+```{r}
+Default |> glimpse()
+```
+
+-   `fct` = `factor` which is the data type you want to use for categorical data
+-   `as_factor` will typically transform things (including numbers) into factors for you
+-   `chr` can also be used but `factor`s are better because they store all possible levels for your categorical data
+-   `factor`s are helpful for plotting because you can reorder the levels to help you plot things
 
 ## K-Nearest Neighbors Classifier
 
@@ -211,55 +101,72 @@ Default |>
     where predictions are obtained by averaging)
     $$P(Y=j | X=x_0)=\text{Proportion of neighbors in class }j$$
 
-## [K-Nearest Neighbors Classifier: Build Model]{.r-fit-text}
 
--   **Response** ($Y$): `default`
--   **Predictor** ($X$): `balance`
+## K-Nearest Neighbors Classifier: Build Model
 
 ```{r}
-knnfit <- nearest_neighbor(neighbors = 10) |> 
-  set_engine("kknn") |> 
-  set_mode("classification") |>  
-  fit(default ~ balance, data = Default)   # fit 10-nn model
+knn_default_fit <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
+  set_mode("classification") |>
+  fit(default ~ balance, data = default_train)   # fit 10-nn model
 ```
 
-## [K-Nearest Neighbors Classifier: Predictions]{.r-fit-text} {.smaller}
+-   Why don't I need to worry about centering and scaling?
 
-::: panel-tabset
-## Probabilities
+
+## K-Nearest Neighbors Classifier: Predictions
+
+-   `predict` with a categorical response: [documentation](https://parsnip.tidymodels.org/reference/predict.model_fit.html)
+-   Two different ways of making predictions
+
+## Predicting a class
 
 ```{r}
-predict(knnfit, new_data = Default, type = "prob") |>    # obtain predictions as probabilities
-  head() |> # predicted probabilities for first six observations
-  kable()
+knn_class_preds <- predict(knn_default_fit, new_data = default_test, type = "class")   # obtain default class label predictions
+
+knn_class_preds |> head() |> kable()
 ```
 
-## Class labels
+##  Predicting a probability
 
--   Predicts class w/ maximum probability
+-   Can anyone pick-out what's wrong here? Hint: $k = 10$
 
 ```{r}
-predict(knnfit, new_data = Default, type = "class") |>    # obtain predictions as probabilities
-  head() |> # predicted probabilities for first six observations
-  kable()
+knn_prob_preds <- predict(knn_default_fit, new_data = default_test, type = "prob")   # obtain predictions as probabilities
+knn_prob_preds |> filter(.pred_No*.pred_Yes >0) |> head() |> kable()
 ```
 
+## I've been lying to you
 
-:::
+-   `kknn` actually takes a *weighted average* of the nearest neighbors
+    +   I.e. closer observations get more weight
+-   To use unweighted KNN need `weight_func = "rectangular"`
+
+## Unweighted KNN
+
+```{r}
+knn_default_unw_fit <- nearest_neighbor(neighbors = 10, weight_fun = "rectangular") |>
+  set_engine("kknn") |>
+  set_mode("classification") |>
+  fit(default ~ balance, data = default_train)   # fit 10-nn model
+
+knn_uw_prob_preds <- predict(knn_default_unw_fit, new_data = default_test, type = "prob")   # obtain predictions as probabilities
+knn_uw_prob_preds |> filter(.pred_No*.pred_Yes >0) |> head() |> kable()
+```
 
 # Logistic Regression
 
 ## Why Not Linear Regression? {.smaller}
 
 ```{r}
-Default_lr <- Default |> 
+Default_lr <- default_train |> 
   mutate(default_0_1 = if_else(default == "Yes", 1, 0))
 
 lrfit <- linear_reg() |> 
   set_engine("lm") |> 
   fit(default_0_1 ~ balance, data = Default_lr)   # fit SLR
 
-lrfit |> predict(new_data = Default) |> head() |> kable()
+lrfit |> predict(new_data = default_train) |> head() |> kable()
 ```
 
 ## Why Not Linear Regression? {.smaller}
@@ -303,79 +210,82 @@ Consider a one-dimensional binary classification problem:
 - **Log-Odds (logit)**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$
   + Linear function of predictors
 
-<!-- ## Logistic Regression -->
+## Logistic Regression
 
 
-<!-- ```{r} -->
-<!-- #| echo: FALSE -->
-<!-- logregfit <- glm(default ~ balance, data = Default, family = binomial)   # fit logistic regression model -->
-<!-- ggplot(data = Default, aes(x = balance, y = default_id)) + -->
-<!--   geom_point() + -->
-<!--   geom_line(aes(y = logregfit$fitted.values), color = "blue") + -->
-<!--   scale_y_continuous(breaks = c(0, 0.5, 1)) -->
-<!-- ``` -->
+```{r}
+#| echo: FALSE
+logregfit_orig <- glm(default_0_1 ~ balance, data = Default_lr, family = binomial)   # fit logistic regression model
+ggplot(data = Default_lr, aes(x = balance, y = default_0_1)) +
+  geom_point() +
+  geom_line(aes(y = logregfit_orig$fitted.values), color = "blue") +
+  scale_y_continuous(breaks = c(0, 0.5, 1))
+```
 
 
 
-<!-- ## Fitting the model -->
+## Fitting the model
 
-<!-- Fitting a logistic regression model with `default` as the response and `balance` as the predictor: -->
+Fitting a logistic regression model with `default` as the response and `balance` as the predictor:
 
-<!-- ```{r} -->
-<!-- #| code-line-numbers: "|2" -->
-<!-- library(broom) #for formatting model output -->
-<!-- logregfit <- glm(default ~ balance, data = Default, family = binomial)   # fit logistic regression model -->
-<!-- tidy(logregfit)   # obtain results -->
-<!-- ``` -->
+```{r}
+logregfit <- logistic_reg() |> 
+  set_engine("glm") |> 
+  fit(default ~ balance, data = default_train)   # fit logistic regression model
 
-<!-- ## Interpreting Coefficients -->
+tidy(logregfit) |> kable()  # obtain results
+```
 
-<!-- - As $X$ increases by 1, the log-odds increase by$\hat{\beta}_1$ -->
-<!--   + I.e. probability of default increases but NOT linearly -->
-<!--   + Change in the probability of default due to a one-unit change in balance depends on the current balance value -->
+## Interpreting Coefficients
 
-<!-- ## Interpreting Coefficients -->
+- As $X$ increases by 1, the log-odds increase by$\hat{\beta}_1$
+  + I.e. probability of default increases but NOT linearly
+  + Change in the probability of default due to a one-unit change in balance depends on the current balance value
 
-<!-- ```{r} -->
-<!-- #| echo: FALSE -->
-<!-- x0 <- 1000 -->
-<!-- x1 <- 1500 -->
-<!-- x2 <- 2000 -->
-<!-- y0 <- predict(logregfit, newdata = data.frame(balance = x0), type = "response") -->
-<!-- y1 <- predict(logregfit, newdata = data.frame(balance = x1), type = "response") -->
-<!-- y2 <- predict(logregfit, newdata = data.frame(balance = x2), type = "response") -->
-<!-- ggplot(data = Default, aes(x = balance, y = default_id)) + -->
-<!--   geom_point() + -->
-<!--   geom_vline(xintercept = x0, color = "red", alpha = 1, linetype = "dotted") + -->
-<!--   geom_vline(xintercept = x1, color = "red", alpha = 1, linetype = "dotted") + -->
-<!--   geom_vline(xintercept = x2, color = "red", alpha = 1, linetype = "dotted") + -->
-<!--   geom_hline(yintercept = y0, color = "blue", alpha = 0.5) + -->
-<!--   geom_hline(yintercept = y1, color = "blue", alpha = 0.5) + -->
-<!--   geom_hline(yintercept = y2, color = "blue", alpha = 0.5) + -->
-<!--  geom_segment(aes(x = 1250, y = y0, xend = 1250, yend = y1), -->
-<!--                   arrow = arrow(length = unit(0.1, "cm"), type = "closed", ends="both"), color = "blue") + -->
-<!--    geom_segment(aes(x = 1750, y = y1, xend = 1750, yend = y2), -->
-<!--                   arrow = arrow(length = unit(0.1, "cm"), type = "closed", ends="both"), color = "blue") + -->
-<!--   geom_line(aes(y = logregfit$fitted.values)) + -->
-<!--   scale_y_continuous(breaks = c(0, 0.5, 1)) -->
-<!-- ``` -->
+## Interpreting Coefficients
 
-<!-- ## Making predictions: Theory {.smaller} -->
+```{r}
+#| echo: FALSE
+x0 <- 1000
+x1 <- 1500
+x2 <- 2000
+y0 <- predict(logregfit_orig, newdata = data.frame(balance = x0), type = "response")
+y1 <- predict(logregfit_orig, newdata = data.frame(balance = x1), type = "response")
+y2 <- predict(logregfit_orig, newdata = data.frame(balance = x2), type = "response")
+ggplot(data = Default_lr, aes(x = balance, y = default_0_1)) +
+  geom_point() +
+  geom_vline(xintercept = x0, color = "red", alpha = 1, linetype = "dotted") +
+  geom_vline(xintercept = x1, color = "red", alpha = 1, linetype = "dotted") +
+  geom_vline(xintercept = x2, color = "red", alpha = 1, linetype = "dotted") +
+  geom_hline(yintercept = y0, color = "blue", alpha = 0.5) +
+  geom_hline(yintercept = y1, color = "blue", alpha = 0.5) +
+  geom_hline(yintercept = y2, color = "blue", alpha = 0.5) +
+ geom_segment(aes(x = 1250, y = y0, xend = 1250, yend = y1),
+                  arrow = arrow(length = unit(0.1, "cm"), type = "closed", ends="both"), color = "blue") +
+   geom_segment(aes(x = 1750, y = y1, xend = 1750, yend = y2),
+                  arrow = arrow(length = unit(0.1, "cm"), type = "closed", ends="both"), color = "blue") +
+  geom_line(aes(y = logregfit_orig$fitted.values)) +
+  scale_y_continuous(breaks = c(0, 0.5, 1)) +
+  ylab("Probility of Default")
+```
 
-<!-- For `balance`=\$700, -->
+## Making predictions: Theory {.smaller}
 
-<!-- :::{.incremental} -->
-<!-- - $$\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-10.65 + (0.005499 \times 700)}}{1+e^{-10.65 + (0.005499 \times 700)}}=0.0011$$ -->
-<!-- -  $$\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} = \dfrac{0.0011}{1-0.0011}\approx 0.0011$$ -->
-<!-- - $$\textbf{Log-Odds}(X)=\log\left(\dfrac{\hat{p}(X)}{1-\hat{p}(X)}\right) = \log(0.0011) = -6.80$$ -->
-<!-- ::: -->
+For `balance`=\$700,
 
-<!-- ## Making predictions in R -->
+:::{.incremental}
+- $$\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-10.69 + (0.005533 \times 700)}}{1+e^{-10.69 + (0.005533 \times 700)}}=0.0011$$
+-  $$\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} = \dfrac{0.0011}{1-0.0011}\approx 0.0011$$
+- $$\textbf{Log-Odds}(X)=\log\left(\dfrac{\hat{p}(X)}{1-\hat{p}(X)}\right) = \log(0.0011) = -6.80$$
+:::
 
-<!-- ```{r} -->
-<!-- predict(logregfit, newdata = data.frame(balance = 700))   # obtain log-odds predictions -->
-<!-- predict(logregfit, newdata = data.frame(balance = 700), type = "response")   # obtain probability predictions -->
-<!-- ``` -->
+## Making predictions in R
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "class") |> kable()   # obtain class predictions
+predict(logregfit, new_data = tibble(balance = 700), type = "raw") |> kable()   # obtain log-odds predictions
+predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  # obtain probability predictions
+```
 
 
 <!-- ## Using a threshold {.smaller} -->

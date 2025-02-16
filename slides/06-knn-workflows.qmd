@@ -27,7 +27,6 @@ knitr:
 library(tidyverse)
 library(tidymodels)
 library(knitr)
-library(readODS)
 library(modeldata) # contains ames dataset
 
 tidymodels_prefer()
