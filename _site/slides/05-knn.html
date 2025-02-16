@@ -649,7 +649,7 @@ Eric Friedlander
 <section id="k-nearest-neighbors-regression-multiple-predictors" class="slide level2 smaller">
 <h2><span class="r-fit-text">K-Nearest Neighbors Regression (multiple predictors)</span></h2>
 <ul>
-<li>Let’s look at the <code>house_prices</code> data</li>
+<li>Let’s look at the <code>ames</code> data</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>ames <span class="sc">|&gt;</span></span>
@@ -817,300 +817,6 @@ Eric Friedlander
 1 256380</code></pre>
 </div>
 </div>
-</section>
-<section id="linear-regression-vs-k-nearest-neighbors" class="slide level2 smaller">
-<h2><span class="r-fit-text">Linear Regression vs K-Nearest Neighbors</span></h2>
-<ul>
-<li>Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.</li>
-<li>Linear regression works for regression problems (<span class="math inline">\(Y\)</span> numerical), KNN can be used for both regression and classification - i.e.&nbsp;<span class="math inline">\(Y\)</span> qualitative</li>
-<li>Linear regression is interpretable, KNN is not.</li>
-<li>Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors</li>
-<li>Performance: KNN can be pretty good for small <span class="math inline">\(p\)</span>, that is, <span class="math inline">\(p \le 4\)</span> and large <span class="math inline">\(n\)</span>. Performance of KNN deteriorates as <span class="math inline">\(p\)</span> increases - <em>curse of dimensionality</em></li>
-</ul>
-</section>
-<section id="classification-problems" class="slide level2 smaller">
-<h2>Classification Problems</h2>
-<ul>
-<li>Response <span class="math inline">\(Y\)</span> is qualitative (categorical).</li>
-<li>Objective: build a classifier <span class="math inline">\(\hat{Y}=\hat{C}(\mathbf{X})\)</span>
-<ul>
-<li>assigns class label to a future unlabeled (unseen) observations</li>
-<li>understand the relationship between the predictors and response</li>
-</ul></li>
-<li>Two ways to make predictions
-<ul>
-<li>Class probabilities</li>
-<li>Class labels</li>
-</ul></li>
-</ul>
-</section>
-<section id="default-dataset" class="slide level2 smaller">
-<h2>Default Dataset</h2>
-<p>A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">library</span>(ISLR2)   <span class="co"># load library</span></span>
-<span id="cb23-2"><a></a><span class="fu">head</span>(Default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">default</th>
-<th style="text-align: left;">student</th>
-<th style="text-align: right;">balance</th>
-<th style="text-align: right;">income</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">729.5265</td>
-<td style="text-align: right;">44361.625</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">817.1804</td>
-<td style="text-align: right;">12106.135</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1073.5492</td>
-<td style="text-align: right;">31767.139</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">529.2506</td>
-<td style="text-align: right;">35704.494</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">785.6559</td>
-<td style="text-align: right;">38463.496</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">919.5885</td>
-<td style="text-align: right;">7491.559</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="summarizing-our-response-variable" class="slide level2">
-<h2>Summarizing our response variable</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb24-2"><a></a>Default <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># class frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">default</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">percent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">9667</td>
-<td style="text-align: right;">0.9667</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">333</td>
-<td style="text-align: right;">0.0333</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>We will consider <code>default</code> as the response variable.</p>
-</section>
-<section id="data-types-in-r" class="slide level2 smaller">
-<h2>Data Types in R</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>Default <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 10,000
-Columns: 4
-$ default &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, No, No, No, No…
-$ student &lt;fct&gt; No, Yes, No, No, No, Yes, No, Yes, No, No, Yes, Yes, No, No, N…
-$ balance &lt;dbl&gt; 729.5265, 817.1804, 1073.5492, 529.2506, 785.6559, 919.5885, 8…
-$ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 7491.55…</code></pre>
-</div>
-</div>
-<ul>
-<li><code>fct</code> = <code>factor</code> which is the data type you want to use for categorical data</li>
-<li><code>as_factor</code> will typically transform things (including numbers) into factors for you</li>
-<li><code>chr</code> can also be used but <code>factor</code>s are better because they store all possible levels for your categorical data</li>
-<li><code>factor</code>s are helpful for plotting because you can reorder the levels to help you plot things</li>
-</ul>
-</section>
-<section id="k-nearest-neighbors-classifier" class="slide level2">
-<h2>K-Nearest Neighbors Classifier</h2>
-<p>Given a value for <span class="math inline">\(K\)</span> and a test data point <span class="math inline">\(x_0\)</span>, <span class="math display">\[P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)\]</span></p>
-<p>where <span class="math inline">\(\mathcal{N}_0\)</span> is known as the <strong>neighborhood</strong> of <span class="math inline">\(x_0\)</span>.</p>
-<p>For classification problems, the predictions are obtained in terms of <strong>majority vote</strong> (unlike in regression where predictions are obtained by averaging).</p>
-</section>
-<section id="k-nearest-neighbors-classifier-build-model" class="slide level2">
-<h2>K-Nearest Neighbors Classifier: Build Model</h2>
-<p><strong>Default dataset</strong></p>
-<p>response (<span class="math inline">\(Y\)</span>): <code>default</code> and predictor (<span class="math inline">\(X\)</span>): <code>balance</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>knn_default_fit <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb27-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb27-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb27-4"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> Default)   <span class="co"># fit 10-nn model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="k-nearest-neighbors-classifier-predictions" class="slide level2">
-<h2>K-Nearest Neighbors Classifier: Predictions</h2>
-<ul>
-<li><code>predict</code> with a categorical response: <a href="https://parsnip.tidymodels.org/reference/predict.model_fit.html">documentation</a></li>
-<li>Two different ways of making predictions</li>
-</ul>
-</section>
-<section id="predicting-a-class" class="slide level2">
-<h2>Predicting a class</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>knn_class_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_default_fit, <span class="at">new_data =</span> Default, <span class="at">type =</span> <span class="st">"class"</span>)   <span class="co"># obtain default class label predictions</span></span>
-<span id="cb28-2"><a></a></span>
-<span id="cb28-3"><a></a>knn_class_preds <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.pred_class</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="predicting-a-probability" class="slide level2">
-<h2>Predicting a probability</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>knn_prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_default_fit, <span class="at">new_data =</span> Default, <span class="at">type =</span> <span class="st">"prob"</span>)   <span class="co"># obtain predictions as probabilities</span></span>
-<span id="cb29-2"><a></a>knn_prob_preds <span class="sc">|&gt;</span> <span class="fu">filter</span>(.pred_No<span class="sc">*</span>.pred_Yes <span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">.pred_No</th>
-<th style="text-align: right;">.pred_Yes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0.9855</td>
-<td style="text-align: right;">0.0145</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.8030</td>
-<td style="text-align: right;">0.1970</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.9345</td>
-<td style="text-align: right;">0.0655</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.9855</td>
-<td style="text-align: right;">0.0145</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.9855</td>
-<td style="text-align: right;">0.0145</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.6565</td>
-<td style="text-align: right;">0.3435</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="questions" class="slide level2">
-<h2>Questions</h2>
-<ul>
-<li>How do you think the probabilities are calculated?</li>
-<li>How do you think we get from the probabilities to the class predictions?</li>
-<li>Can you think of a situation in which you might choose a different way of going to probabilities to class labels?</li>
-</ul>
-</section>
-<section id="thresholds" class="slide level2">
-<h2>Thresholds</h2>
-<ul>
-<li>Can convert probabilities to classifications</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
-<span id="cb30-2"><a></a></span>
-<span id="cb30-3"><a></a>knn_class_preds_2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(knn_prob_preds<span class="sc">$</span>.pred_Yes <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))   <span class="co"># obtain predictions as class labels</span></span>
-<span id="cb30-4"><a></a>knn_class_preds_2 <span class="sc">|&gt;</span> <span class="fu">tabyl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> knn_class_preds_2    n percent
-                No 9833  0.9833
-               Yes  167  0.0167</code></pre>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>What if the downside of default is REALLY BAD</li>
-</ul>
-</div>
-</section>
-<section id="thresholds-1" class="slide level2">
-<h2>Thresholds</h2>
-<ul>
-<li>Can convert probabilities to classifications</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.2</span>   <span class="co"># set threshold</span></span>
-<span id="cb32-2"><a></a></span>
-<span id="cb32-3"><a></a>knn_class_preds_3 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(knn_prob_preds<span class="sc">$</span>.pred_Yes <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))   <span class="co"># obtain predictions as class labels</span></span>
-<span id="cb32-4"><a></a>knn_class_preds_3 <span class="sc">|&gt;</span> <span class="fu">tabyl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> knn_class_preds_3    n percent
-                No 9464  0.9464
-               Yes  536  0.0536</code></pre>
-</div>
-</div>
-<!-- ## K-Nearest Neighbors Classifier: Performance  {.smaller} -->
-<!-- **Default dataset** -->
-<!-- ```{r} -->
-<!-- # create confusion matrix -->
-<!-- # use the following code only when all predictions are from the same class -->
-<!-- # levels(knn_class_preds_1) = c("No", "Yes") -->
-<!-- confusionMatrix(data = knn_class_preds_1, reference = Default$default, positive = "Yes") -->
-<!-- ``` -->
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
@@ -1332,42 +1038,80 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
