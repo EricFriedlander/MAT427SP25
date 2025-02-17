@@ -68,8 +68,7 @@ Have Member 1 fill in the Team Name and their name below and have Members 2  & 3
 
 -   Team Name: Test
 -   Member 1: \[Insert Name\]
--   Member 2: \[Insert Name\]
--   Member 3: \[Insert Name/Delete line if you only have two members\]
+-   Member 2: My name
 
 
 ## KNN for Classification
