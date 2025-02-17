@@ -32,7 +32,7 @@ The basic idea is that predictions are made based on the $K$ observation in the 
 
 # Getting Started
 
-In last weeks homework you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document *simultaneously*. 
+In last weeks homework you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document *simultaneously*.
 
 ## Teams
 
@@ -63,12 +63,12 @@ Once this is complete, the other members can do the same thing, being careful to
 We will now learn how to collaborate on the same document at the same time.
 
 ::: {.callout-tip title="Question"}
-Have Member 1 fill in the Team Name and their name below and have Members 2  & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3. 
+Have Member 1 fill in the Team Name and their name below and have Members 2 & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3.
 :::
 
 -   Team Name: Test
 -   Member 1: \[Insert Name\]
--   Member 2: \[Insert Name\]
+-   Member 2: Test
 -   Member 3: \[Insert Name/Delete line if you only have two members\]
 
 ## KNN for Classification

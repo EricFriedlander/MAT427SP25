@@ -1930,7 +1930,10 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
   }
 
   async function findAndActivateCategories() {
-    const currentPagePath = offsetAbsoluteUrl(window.location.href);
+    // Categories search with listing only use path without query
+    const currentPagePath = offsetAbsoluteUrl(
+      window.location.origin + window.location.pathname
+    );
     const response = await fetch(offsetRelativeUrl("listings.json"));
     if (response.status == 200) {
       return response.json().then(function (listingPaths) {
@@ -5111,7 +5114,7 @@ Question
 <ul>
 <li>Team Name: Test</li>
 <li>Member 1: [Insert Name]</li>
-<li>Member 2: [Insert Name]</li>
+<li>Member 2: Test</li>
 <li>Member 3: [Insert Name/Delete line if you only have two members]</li>
 </ul>
 </section>
