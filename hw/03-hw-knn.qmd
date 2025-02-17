@@ -22,22 +22,22 @@ In this homework, you will practice applying the $K$-Nearest Neighbors (KNN) met
 By the end of the homework, you will...
 
 -   Be able to work simultaneously with teammates on the same document using GitHub
--   Fit and interpret linear models
--   Split data using `tidymodels`
--   Compare and evaluate different linear models
+-   Fit and interpret KNN models in both regression and classification settings
+-   Compare and evaluate different KNN models
 
 # Getting Started
 
-In last weeks homework you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document *simultaneously*.
+In last weeks homework, you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document *simultaneously*.
 
-## Teams
+## Teams & Rules
 
 You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW3**. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:
 
-1.  You and your team members should be in the same physical room when you complete this assignment.
-2.  You should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.
-3.  In order to receive credit, you must have a commit after each exercise by the correct member of your team.
-4.  For now, don't try to edit the same document at the same time. We will cover that in later homeworks.
+1.  You and your team members should be in the same physical room for Exercises 0.1 and 0.2. After that, you are welcome to divide up the work as you see fit. Please note that most of these problems have to be done sequentially except for Exercises 10-12, which can be done apart from 1-9.
+2.  You are all responsible for understanding the work that you turn in.
+3.  In order to receive credit, each team member but make a roughly equal contribution. Since this project has 12 exercises (not including 0), each team member should commit and push at least 4 different exercises.
+4.  If you are working on the same document simultaneously, make sure to render, commit, push, and pull FREQUENTLY. 
+5.  If you encounter a merge error that you don't know how to fix, contact Dr. Friedlander as soon as possible. I recommend starting this assignment early so there is time for Dr. Friedlander to help you resolve any problems before the deadline.
 
 ## Clone the repo & start new RStudio project
 
@@ -48,7 +48,7 @@ The following directions will guide you through the process of setting up your h
 ::: {.callout-tip title="Question"}
 In your group, decide on a team name. Then have **one member of your group**:
 
-1.  [Click this link](https://classroom.github.com/a/3cnqO-bh) to accept the assignment and enter your team name.
+1.  [Click this link](https://classroom.github.com/a/LEbjScjp) to accept the assignment and enter your team name.
 2.  Repeat the directions for creating a project from HW 1 with the HW 3 repository.
 
 Once this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom.
@@ -56,20 +56,18 @@ Once this is complete, the other members can do the same thing, being careful to
 
 ## Exercise 0.2
 
-We will now learn how to collaborate on the same document at the same time by creating a **merge conflict**.
-You can read more about it [here](https://happygitwithr.com/pull-tricky#pull-tricky) and [here](https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch).
+We will now learn how to collaborate on the same document at the same time by creating a **merge conflict**. You can read more about it [here](https://happygitwithr.com/pull-tricky#pull-tricky) and [here](https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch).
 
 ::: {.callout-tip title="Question"}
-1. Have Members 1, 2, and 3 all create write different team names below and Render the document.
-2. Have Member 1 add, commit, and push changes.
-3. Have Member 2 add, commit, and push changes. This should cause an error.
-4. Have Member 2 pull changes from the remote repo which should generate something like this: `CONFLICT (content): Merge conflict in 03-hw-knn.qmd`.
-5. Have Member 2 open the `.qmd` file. You should see something like the third block of code
-in Section 22.4 of [this link](https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch).
-6. Have Member edit the document so that it has only their team name.
-7. Have Member 3 repeat steps 3-6.
-8. Agree on what you want your team name to actually be and have Member 1 repeat steps 3-6.
-9. Note that you will only generate a merge conflict if you make edits to the same line of code. If you are working on the same document simultaneously but are editing different portions, git should automatically merge for you. 
+1.  Have Members 1, 2, and 3 all create write different team names below and Render the document.
+2.  Have Member 1 add, commit, and push changes.
+3.  Have Member 2 add, commit, and push changes. This should cause an error.
+4.  Have Member 2 pull changes from the remote repo which should generate something like this: `CONFLICT (content): Merge conflict in 03-hw-knn.qmd`.
+5.  Have Member 2 open the `.qmd` file. You should see something like the third block of code in Section 22.4 of [this link](https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch).
+6.  Have Member edit the document so that it has only their team name, then render, commit, and push. This should not cause an error.
+7.  Have Member 3 repeat steps 3-6.
+8.  Agree on what you want your team name to actually be and have Member 1 repeat steps 3-6.
+9.  Note that you will only generate a merge conflict if you make edits to the same line of code. If you are working on the same document simultaneously but are editing different portions, git should automatically merge for you.
 :::
 
 -   Team Name: \[Insert Name\]
@@ -87,12 +85,12 @@ We'll start by using KNN for classification.
 
 ## Data
 
-We will be working with the famous `iris` data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package `datasets` and then load the data set `iris`.
+We will be working with the famous `iris` data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/eugenicist, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software.
 
 ## Exercise 1
 
 ::: {.callout-tip title="Question"}
-Import the `datasets` package and take a look at the columns of `iris` and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `strata` argument in the `initial_split` function! Once again, set your seed to 427.
+Import the `datasets` package, take a look at the columns of `iris`, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `strata` argument in the `initial_split` function! Once again, set your seed to 427.
 :::
 
 ## Exercise 2
@@ -110,7 +108,7 @@ As the name suggests, the $K$-nearest neighbors (KNN) method classifies a point 
 ## Exercise 4
 
 ::: {.callout-tip title="Question"}
-Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm.
+Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. This should be done by computing the Euclidean distance of (3, 1) to each observation and then sorting the resulting tibble to get the row with the smallest distance. Don't worry about normalizaing the data.
 :::
 
 ## Exercise 5
@@ -152,7 +150,6 @@ Notice that the decision boundary between `versicolor` and `virginica` looks a l
 Determine which value of $k$, the number of neighbors selected, gives the highest accuracy on the test set. Test all $k$s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest $k$ among the ones which are tied. Hint: A for loop may be helpful. What is the accuracy of the model you ended up choosing?
 :::
 
-
 Awesome!! Your model probably did pretty well, because KNN performs really well on the `iris` data set. However, this isn't a very challenging data set for most classification methods. More challenging data sets have data on different scales and *class imbalance* where there are very few observations belonging to a particular class.
 
 # KNN for Regression
@@ -166,7 +163,7 @@ For this portion of the homework, we'll use the `Carseat` data from the `ISLR2` 
 ## Exercise 10
 
 ::: {.callout-tip title="Question"}
-Look at the `Carseat` data from the `ISLR2` package. Then, split the data into a training, and test set using a 70-30 split and a seed of 427 (as usual).
+Look at the `Carseat` data from the `ISLR2` package. Then, split the data into a training and test set using a 70-30 split and a seed of 427 (as usual).
 :::
 
 ## Exercise 11
@@ -178,5 +175,5 @@ Create a recipe which first, converts all categorical variables into dummy varia
 ## Exercise 12
 
 ::: {.callout-tip title="Question"}
-Fit a KNN model to predict `Sales` from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. You will find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals. 
+Fit a KNN model to predict `Sales` from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. You may find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals.
 :::

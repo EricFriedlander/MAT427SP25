@@ -4978,7 +4978,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
-  <li><a href="#teams" id="toc-teams" class="nav-link" data-scroll-target="#teams">Teams</a></li>
+  <li><a href="#teams-rules" id="toc-teams-rules" class="nav-link" data-scroll-target="#teams-rules">Teams &amp; Rules</a></li>
   <li><a href="#clone-the-repo-start-new-rstudio-project" id="toc-clone-the-repo-start-new-rstudio-project" class="nav-link" data-scroll-target="#clone-the-repo-start-new-rstudio-project">Clone the repo &amp; start new RStudio project</a></li>
   <li><a href="#exercise-0.1" id="toc-exercise-0.1" class="nav-link" data-scroll-target="#exercise-0.1">Exercise 0.1</a></li>
   <li><a href="#exercise-0.2" id="toc-exercise-0.2" class="nav-link" data-scroll-target="#exercise-0.2">Exercise 0.2</a></li>
@@ -5043,23 +5043,23 @@ window.Quarto = {
 <p>By the end of the homework, you will…</p>
 <ul>
 <li>Be able to work simultaneously with teammates on the same document using GitHub</li>
-<li>Fit and interpret linear models</li>
-<li>Split data using <code>tidymodels</code></li>
-<li>Compare and evaluate different linear models</li>
+<li>Fit and interpret KNN models in both regression and classification settings</li>
+<li>Compare and evaluate different KNN models</li>
 </ul>
 </section>
 </section>
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
-<p>In last weeks homework you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document <em>simultaneously</em>.</p>
-<section id="teams" class="level2">
-<h2 class="anchored" data-anchor-id="teams">Teams</h2>
+<p>In last weeks homework, you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document <em>simultaneously</em>.</p>
+<section id="teams-rules" class="level2">
+<h2 class="anchored" data-anchor-id="teams-rules">Teams &amp; Rules</h2>
 <p>You can find your team for this assignment on Canvas in the <strong>People</strong> section. The group set is called <strong>HW3</strong>. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:</p>
 <ol type="1">
-<li>You and your team members should be in the same physical room when you complete this assignment.</li>
-<li>You should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.</li>
-<li>In order to receive credit, you must have a commit after each exercise by the correct member of your team.</li>
-<li>For now, don’t try to edit the same document at the same time. We will cover that in later homeworks.</li>
+<li>You and your team members should be in the same physical room for Exercises 0.1 and 0.2. After that, you are welcome to divide up the work as you see fit. Please note that most of these problems have to be done sequentially except for Exercises 10-12, which can be done apart from 1-9.</li>
+<li>You are all responsible for understanding the work that you turn in.</li>
+<li>In order to receive credit, each team member but make a roughly equal contribution. Since this project has 12 exercises (not including 0), each team member should commit and push at least 4 different exercises.</li>
+<li>If you are working on the same document simultaneously, make sure to render, commit, push, and pull FREQUENTLY.</li>
+<li>If you encounter a merge error that you don’t know how to fix, contact Dr. Friedlander as soon as possible. I recommend starting this assignment early so there is time for Dr. Friedlander to help you resolve any problems before the deadline.</li>
 </ol>
 </section>
 <section id="clone-the-repo-start-new-rstudio-project" class="level2">
@@ -5080,7 +5080,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>In your group, decide on a team name. Then have <strong>one member of your group</strong>:</p>
 <ol type="1">
-<li><a href="https://classroom.github.com/a/3cnqO-bh">Click this link</a> to accept the assignment and enter your team name.</li>
+<li><a href="https://classroom.github.com/a/LEbjScjp">Click this link</a> to accept the assignment and enter your team name.</li>
 <li>Repeat the directions for creating a project from HW 1 with the HW 3 repository.</li>
 </ol>
 <p>Once this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom.</p>
@@ -5106,7 +5106,7 @@ Question
 <li>Have Member 2 add, commit, and push changes. This should cause an error.</li>
 <li>Have Member 2 pull changes from the remote repo which should generate something like this: <code>CONFLICT (content): Merge conflict in 03-hw-knn.qmd</code>.</li>
 <li>Have Member 2 open the <code>.qmd</code> file. You should see something like the third block of code in Section 22.4 of <a href="https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch">this link</a>.</li>
-<li>Have Member edit the document so that it has only their team name.</li>
+<li>Have Member edit the document so that it has only their team name, then render, commit, and push. This should not cause an error.</li>
 <li>Have Member 3 repeat steps 3-6.</li>
 <li>Agree on what you want your team name to actually be and have Member 1 repeat steps 3-6.</li>
 <li>Note that you will only generate a merge conflict if you make edits to the same line of code. If you are working on the same document simultaneously but are editing different portions, git should automatically merge for you.</li>
@@ -5130,7 +5130,7 @@ Question
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>We will be working with the famous <code>iris</code> data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package <code>datasets</code> and then load the data set <code>iris</code>.</p>
+<p>We will be working with the famous <code>iris</code> data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/eugenicist, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software.</p>
 </section>
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
@@ -5144,7 +5144,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Import the <code>datasets</code> package and take a look at the columns of <code>iris</code> and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the <code>strata</code> argument in the <code>initial_split</code> function! Once again, set your seed to 427.</p>
+<p>Import the <code>datasets</code> package, take a look at the columns of <code>iris</code>, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the <code>strata</code> argument in the <code>initial_split</code> function! Once again, set your seed to 427.</p>
 </div>
 </div>
 </section>
@@ -5192,7 +5192,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm.</p>
+<p>Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. This should be done by computing the Euclidean distance of (3, 1) to each observation and then sorting the resulting tibble to get the row with the smallest distance. Don’t worry about normalizaing the data.</p>
 </div>
 </div>
 </section>
@@ -5304,7 +5304,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look at the <code>Carseat</code> data from the <code>ISLR2</code> package. Then, split the data into a training, and test set using a 70-30 split and a seed of 427 (as usual).</p>
+<p>Look at the <code>Carseat</code> data from the <code>ISLR2</code> package. Then, split the data into a training and test set using a 70-30 split and a seed of 427 (as usual).</p>
 </div>
 </div>
 </section>
@@ -5336,7 +5336,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fit a KNN model to predict <code>Sales</code> from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the <span class="math inline">\(R^2\)</span> and RMSE against the number of neighbors you include in your model. You will find that the RMSE and <span class="math inline">\(R^2\)</span> disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (<code>Sales</code> in this case) against the model residuals.</p>
+<p>Fit a KNN model to predict <code>Sales</code> from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the <span class="math inline">\(R^2\)</span> and RMSE against the number of neighbors you include in your model. You may find that the RMSE and <span class="math inline">\(R^2\)</span> disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (<code>Sales</code> in this case) against the model residuals.</p>
 </div>
 </div>
 
