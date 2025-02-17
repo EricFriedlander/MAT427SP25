@@ -1930,10 +1930,7 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
   }
 
   async function findAndActivateCategories() {
-    // Categories search with listing only use path without query
-    const currentPagePath = offsetAbsoluteUrl(
-      window.location.origin + window.location.pathname
-    );
+    const currentPagePath = offsetAbsoluteUrl(window.location.href);
     const response = await fetch(offsetRelativeUrl("listings.json"));
     if (response.status == 200) {
       return response.json().then(function (listingPaths) {
@@ -4978,7 +4975,6 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning goals</a></li>
-  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</a></li>
   </ul></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
@@ -4986,10 +4982,12 @@ window.Quarto = {
   <li><a href="#clone-the-repo-start-new-rstudio-project" id="toc-clone-the-repo-start-new-rstudio-project" class="nav-link" data-scroll-target="#clone-the-repo-start-new-rstudio-project">Clone the repo &amp; start new RStudio project</a></li>
   <li><a href="#exercise-0.1" id="toc-exercise-0.1" class="nav-link" data-scroll-target="#exercise-0.1">Exercise 0.1</a></li>
   <li><a href="#exercise-0.2" id="toc-exercise-0.2" class="nav-link" data-scroll-target="#exercise-0.2">Exercise 0.2</a></li>
+  </ul></li>
+  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</a>
+  <ul class="collapse">
   <li><a href="#knn-for-classification" id="toc-knn-for-classification" class="nav-link" data-scroll-target="#knn-for-classification">KNN for Classification</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
-  <li><a href="#the-knn-algorithm" id="toc-the-knn-algorithm" class="nav-link" data-scroll-target="#the-knn-algorithm">The KNN algorithm</a></li>
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
   <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
   <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
@@ -4998,15 +4996,13 @@ window.Quarto = {
   <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
   <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
-  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
-  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11">Exercise 11</a></li>
   </ul></li>
   <li><a href="#knn-for-regression" id="toc-knn-for-regression" class="nav-link" data-scroll-target="#knn-for-regression">KNN for Regression</a>
   <ul class="collapse">
   <li><a href="#data-dummy-variables" id="toc-data-dummy-variables" class="nav-link" data-scroll-target="#data-dummy-variables">Data &amp; Dummy Variables</a></li>
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
+  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11">Exercise 11</a></li>
   <li><a href="#exercise-12" id="toc-exercise-12" class="nav-link" data-scroll-target="#exercise-12">Exercise 12</a></li>
-  <li><a href="#using-knn-for-regression" id="toc-using-knn-for-regression" class="nav-link" data-scroll-target="#using-knn-for-regression">Using KNN for Regression</a></li>
-  <li><a href="#exercise-13" id="toc-exercise-13" class="nav-link" data-scroll-target="#exercise-13">Exercise 13</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/03-hw-knn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -5052,10 +5048,6 @@ window.Quarto = {
 <li>Compare and evaluate different linear models</li>
 </ul>
 </section>
-<section id="k-nearest-neighbors" class="level2">
-<h2 class="anchored" data-anchor-id="k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</h2>
-<p>The basic idea is that predictions are made based on the <span class="math inline">\(K\)</span> observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different <strong>metrics</strong> (i.e. measures of distance) can be used, we will work exclusively with the <strong>Euclidean metric</strong>: <span class="math display">\[\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}\]</span> for vectors <span class="math inline">\(x = (x_1,\ldots, x_p)\)</span> and <span class="math inline">\(y = (y_1,\ldots,y_p)\)</span>.</p>
-</section>
 </section>
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
@@ -5097,7 +5089,7 @@ Question
 </section>
 <section id="exercise-0.2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-0.2">Exercise 0.2</h2>
-<p>We will now learn how to collaborate on the same document at the same time.</p>
+<p>We will now learn how to collaborate on the same document at the same time by creating a <strong>merge conflict</strong>. You can read more about it <a href="https://happygitwithr.com/pull-tricky#pull-tricky">here</a> and <a href="https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch">here</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5108,16 +5100,30 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Have Member 1 fill in the Team Name and their name below and have Members 2 &amp; 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3.</p>
+<ol type="1">
+<li>Have Members 1, 2, and 3 all create write different team names below and Render the document.</li>
+<li>Have Member 1 add, commit, and push changes.</li>
+<li>Have Member 2 add, commit, and push changes. This should cause an error.</li>
+<li>Have Member 2 pull changes from the remote repo which should generate something like this: <code>CONFLICT (content): Merge conflict in 03-hw-knn.qmd</code>.</li>
+<li>Have Member 2 open the <code>.qmd</code> file. You should see something like the third block of code in Section 22.4 of <a href="https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch">this link</a>.</li>
+<li>Have Member edit the document so that it has only their team name.</li>
+<li>Have Member 3 repeat steps 3-6.</li>
+<li>Agree on what you want your team name to actually be and have Member 1 repeat steps 3-6.</li>
+<li>Note that you will only generate a merge conflict if you make edits to the same line of code. If you are working on the same document simultaneously but are editing different portions, git should automatically merge for you.</li>
+</ol>
 </div>
 </div>
 <ul>
-<li>Team Name: Test</li>
+<li>Team Name: [Insert Name]</li>
 <li>Member 1: [Insert Name]</li>
-<li>Member 2: Test</li>
+<li>Member 2: [Insert Name]</li>
 <li>Member 3: [Insert Name/Delete line if you only have two members]</li>
 </ul>
 </section>
+</section>
+<section id="k-nearest-neighbors" class="level1">
+<h1><span class="math inline">\(K\)</span>-Nearest Neighbors</h1>
+<p>The basic idea is that predictions are made based on the <span class="math inline">\(K\)</span> observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different <strong>metrics</strong> (i.e. measures of distance) can be used, we will work exclusively with the <strong>Euclidean metric</strong>: <span class="math display">\[\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}\]</span> for vectors <span class="math inline">\(x = (x_1,\ldots, x_p)\)</span> and <span class="math inline">\(y = (y_1,\ldots,y_p)\)</span>.</p>
 <section id="knn-for-classification" class="level2">
 <h2 class="anchored" data-anchor-id="knn-for-classification">KNN for Classification</h2>
 <p>We’ll start by using KNN for classification.</p>
@@ -5138,12 +5144,9 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Import the <code>iris</code> data set from the <code>datasets</code> package and take a look at the columns. We would like to visualize the <span class="math inline">\(K\)</span>-nearest neighbor method in two dimensions, so make a data set called <code>iris2</code> consisting of the columns <code>Sepal.Width</code>, <code>Petal.Width</code>, and <code>Species</code>. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the <code>strata</code> argument in the <code>initial_split</code> function! Once again, set your seed to 301.</p>
+<p>Import the <code>datasets</code> package and take a look at the columns of <code>iris</code> and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the <code>strata</code> argument in the <code>initial_split</code> function! Once again, set your seed to 427.</p>
 </div>
 </div>
-</section>
-<section id="the-knn-algorithm" class="level2">
-<h2 class="anchored" data-anchor-id="the-knn-algorithm">The KNN algorithm</h2>
 </section>
 <section id="exercise-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
@@ -5157,7 +5160,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Plot the points in your training set in the xy-plane colored by the <code>Species</code> labels.</p>
+<p>Create a scatter plot of your training set with <code>Sepal.Width</code> and <code>Petal.Width</code> on the x- and y- axes, respectively, and color the points by <code>Species</code>.</p>
 </div>
 </div>
 </section>
@@ -5173,7 +5176,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As the name suggests, the <span class="math inline">\(K\)</span>-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If <span class="math inline">\(k &gt; 1\)</span>, then the neighbors essentially “vote” on the classification of the point. Based on your graph, if <span class="math inline">\(k = 1\)</span>, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?</p>
+<p>As the name suggests, the <span class="math inline">\(K\)</span>-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If <span class="math inline">\(k &gt; 1\)</span>, then the neighbors essentially “vote” on the classification of the point. Using only your graph, if <span class="math inline">\(k = 1\)</span>, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?</p>
 </div>
 </div>
 </section>
@@ -5205,7 +5208,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Center and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets.</p>
+<p>Create a <code>recipe</code> to center and scale your data sets using the mean and standard deviation from your training set.</p>
 </div>
 </div>
 </section>
@@ -5221,7 +5224,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Rather than implementing this method by hand, we can use the function <code>knn3</code> in the <code>caret</code> package.</p>
+<p>Create a <code>workflow</code> to fit a KNN model that uses <code>weight_func = &quot;rectangular&quot;</code> with 1 neighbor that includes the recipe above and fit the model to your training set.</p>
 </div>
 </div>
 <p>We would like to understand how the method of <span class="math inline">\(K\)</span>-nearest neighbors will classify points in the plane. That is, we would like to view the <em>decision boundaries</em> of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called <code>grid</code> consisting of 6.25^{4} points in the plane.</p>
@@ -5244,7 +5247,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uncomment the code above and classify the points in <code>grid</code> using your training data and <span class="math inline">\(k = 1\)</span>. Then, plot the points in <code>grid</code> colored by their classification. Don’t forget to center and scale the grid.</p>
+<p>Uncomment the code above, and change the variable names so that it will work with your model. Classify the points in <code>grid</code> using your training data and <span class="math inline">\(k = 1\)</span>. Then, plot the points in <code>grid</code> colored by their classification. Make sure your code is written so that the grid points are being centered and scaled before predictions are being made for them.</p>
 </div>
 </div>
 </section>
@@ -5260,7 +5263,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Notice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using <span class="math inline">\(k = 2\)</span> make things better or worse? Why do you think that is?</p>
+<p>Notice that the decision boundary between <code>versicolor</code> and <code>virginica</code> looks a little strange. What do you observe? Why do you think this is happening? Does using <span class="math inline">\(k = 2\)</span> make things better or worse? Why do you think that is?</p>
 </div>
 </div>
 </section>
@@ -5276,9 +5279,18 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Determine which value of <span class="math inline">\(K\)</span>, the number of neighbors selected, gives the highest accuracy on the test set. Test all <span class="math inline">\(K\)</span>s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest <span class="math inline">\(K\)</span> among the ones which are tied.</p>
+<p>Determine which value of <span class="math inline">\(k\)</span>, the number of neighbors selected, gives the highest accuracy on the test set. Test all <span class="math inline">\(k\)</span>s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest <span class="math inline">\(k\)</span> among the ones which are tied. Hint: A for loop may be helpful. What is the accuracy of the model you ended up choosing?</p>
 </div>
 </div>
+<p>Awesome!! Your model probably did pretty well, because KNN performs really well on the <code>iris</code> data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and <em>class imbalance</em> where there are very few observations belonging to a particular class.</p>
+</section>
+</section>
+<section id="knn-for-regression" class="level1">
+<h1>KNN for Regression</h1>
+<p>For regression, we can predict the response variable for our point to be the average (or sometimes median) of the response variable for the <span class="math inline">\(K\)</span>-nearest neighbors.</p>
+<section id="data-dummy-variables" class="level2">
+<h2 class="anchored" data-anchor-id="data-dummy-variables">Data &amp; Dummy Variables</h2>
+<p>For this portion of the homework, we’ll use the <code>Carseat</code> data from the <code>ISLR2</code> package. Frequently, when working with categorical data, you will be required to transform that data into <strong>dummy variables</strong>. Namely, you’ll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as <strong>one-hot encoding</strong>.</p>
 </section>
 <section id="exercise-10" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
@@ -5292,8 +5304,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use your value of <span class="math inline">\(K\)</span> to classify the points in <code>test</code> based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? <em>Note.</em> You should “set the seed” in R by specifying <code>set.seed(301)</code> before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).</p>
-<p>Awesome!! Your model probably did pretty well, because KNN performs really well on the <code>iris</code> data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and <em>class imbalance</em> where there are very few observations belonging to a particular class.</p>
+<p>Look at the <code>Carseat</code> data from the <code>ISLR2</code> package. Then, split the data into a training, and test set using a 70-30 split and a seed of 427 (as usual).</p>
 </div>
 </div>
 </section>
@@ -5309,17 +5320,9 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>KNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?</p>
+<p>Create a recipe which first, converts all categorical variables into dummy variables using <code>step_dummy()</code> then centers and scales all of the predictors based on the training data.</p>
 </div>
 </div>
-</section>
-</section>
-<section id="knn-for-regression" class="level1">
-<h1>KNN for Regression</h1>
-<p>For regression, we can predict the response variable for our point to be the average (or sometimes median) of the response variable for the <span class="math inline">\(K\)</span>-nearest neighbors.</p>
-<section id="data-dummy-variables" class="level2">
-<h2 class="anchored" data-anchor-id="data-dummy-variables">Data &amp; Dummy Variables</h2>
-<p>For this portion of the homework, we’ll return to using the <code>Carseat</code> data from the <code>ISLR</code> package that we worked with in homework 4. Frequently, when working with categorical data, you will be required to transform that data into <strong>dummy variables</strong>. Namely, you’ll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as <strong>one-hot encoding</strong>.</p>
 </section>
 <section id="exercise-12" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-12">Exercise 12</h2>
@@ -5333,28 +5336,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Load the <code>Carseat</code> data from the <code>ISLR</code> package. Use the <code>dummyVars</code> function from the <code>caret</code> package to create dummy variables for the categorical variables in <code>Carseat</code>. Then, split the data into a training, validation, and test set using a 60-20-20 split and a seed of 301 (as usual). Explain what the <code>fullRank</code> options does and why we can create dummy variables before splitting our data.</p>
-</div>
-</div>
-<p>There is no standard way of handling categorical variables when applying KNN to predictors that are categorical. This is because we need to answer the fundamental question of “What is the distance between two observations that belong to different categories?”. There are several ways of approaching this. One is to use different metrics and another is to just convert your categorical variables into numerical variables by using this one-hot encoding. Past that, you’ll need to decide whether to center and standardize your dummy variables.</p>
-</section>
-<section id="using-knn-for-regression" class="level2">
-<h2 class="anchored" data-anchor-id="using-knn-for-regression">Using KNN for Regression</h2>
-<p>The function <code>knnreg</code> from the <code>caret</code> package will apply KNN to a regression problem by taking the average of the <span class="math inline">\(K\)</span> nearest neighbors to the observation you’re looking to make a prediction for. <code>knnreg</code> works very similar to <code>knn3</code> and previous models that we’ve fit in R.</p>
-</section>
-<section id="exercise-13" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-13">Exercise 13</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Question">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Fit a KNN model to predict <code>Sales</code> from the data we have. Fit your model on the training data and use the validation set to choose the appropriate variable and the number of neighbors to include. You may find it useful to plot the <span class="math inline">\(R^2\)</span> and RMSE against the number of neighbors you include in your model. Once you select a <span class="math inline">\(K\)</span> and the variables you want to include in your model, see how it performs on the test set and compare your result to the linear model you fit at the end of homework 4. Which model works better? You will find that the RMSE and <span class="math inline">\(R^2\)</span> disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (<code>Sales</code> in this case) against the model residuals. When you do this, what pattern do you see?</p>
+<p>Fit a KNN model to predict <code>Sales</code> from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the <span class="math inline">\(R^2\)</span> and RMSE against the number of neighbors you include in your model. You will find that the RMSE and <span class="math inline">\(R^2\)</span> disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (<code>Sales</code> in this case) against the model residuals.</p>
 </div>
 </div>
 

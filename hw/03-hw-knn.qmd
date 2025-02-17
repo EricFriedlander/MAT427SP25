@@ -26,10 +26,6 @@ By the end of the homework, you will...
 -   Split data using `tidymodels`
 -   Compare and evaluate different linear models
 
-## $K$-Nearest Neighbors
-
-The basic idea is that predictions are made based on the $K$ observation in the training data which are "closest" to the observation that we're making a prediction for. While many different **metrics** (i.e. measures of distance) can be used, we will work exclusively with the **Euclidean metric**: $$\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}$$ for vectors $x = (x_1,\ldots, x_p)$ and $y = (y_1,\ldots,y_p)$.
-
 # Getting Started
 
 In last weeks homework you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document *simultaneously*.
@@ -60,16 +56,30 @@ Once this is complete, the other members can do the same thing, being careful to
 
 ## Exercise 0.2
 
-We will now learn how to collaborate on the same document at the same time.
+We will now learn how to collaborate on the same document at the same time by creating a **merge conflict**.
+You can read more about it [here](https://happygitwithr.com/pull-tricky#pull-tricky) and [here](https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch).
 
 ::: {.callout-tip title="Question"}
-Have Member 1 fill in the Team Name and their name below and have Members 2 & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3.
+1. Have Members 1, 2, and 3 all create write different team names below and Render the document.
+2. Have Member 1 add, commit, and push changes.
+3. Have Member 2 add, commit, and push changes. This should cause an error.
+4. Have Member 2 pull changes from the remote repo which should generate something like this: `CONFLICT (content): Merge conflict in 03-hw-knn.qmd`.
+5. Have Member 2 open the `.qmd` file. You should see something like the third block of code
+in Section 22.4 of [this link](https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch).
+6. Have Member edit the document so that it has only their team name.
+7. Have Member 3 repeat steps 3-6.
+8. Agree on what you want your team name to actually be and have Member 1 repeat steps 3-6.
+9. Note that you will only generate a merge conflict if you make edits to the same line of code. If you are working on the same document simultaneously but are editing different portions, git should automatically merge for you. 
 :::
 
--   Team Name: Test
+-   Team Name: \[Insert Name\]
 -   Member 1: \[Insert Name\]
--   Member 2: Test
+-   Member 2: \[Insert Name\]
 -   Member 3: \[Insert Name/Delete line if you only have two members\]
+
+# $K$-Nearest Neighbors
+
+The basic idea is that predictions are made based on the $K$ observation in the training data which are "closest" to the observation that we're making a prediction for. While many different **metrics** (i.e. measures of distance) can be used, we will work exclusively with the **Euclidean metric**: $$\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}$$ for vectors $x = (x_1,\ldots, x_p)$ and $y = (y_1,\ldots,y_p)$.
 
 ## KNN for Classification
 
@@ -82,21 +92,19 @@ We will be working with the famous `iris` data set which consists of four measur
 ## Exercise 1
 
 ::: {.callout-tip title="Question"}
-Import the `iris` data set from the `datasets` package and take a look at the columns. We would like to visualize the $K$-nearest neighbor method in two dimensions, so make a data set called `iris2` consisting of the columns `Sepal.Width`, `Petal.Width`, and `Species`. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `strata` argument in the `initial_split` function! Once again, set your seed to 301.
+Import the `datasets` package and take a look at the columns of `iris` and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `strata` argument in the `initial_split` function! Once again, set your seed to 427.
 :::
-
-## The KNN algorithm
 
 ## Exercise 2
 
 ::: {.callout-tip title="Question"}
-Plot the points in your training set in the xy-plane colored by the `Species` labels.
+Create a scatter plot of your training set with `Sepal.Width` and `Petal.Width` on the x- and y- axes, respectively, and color the points by `Species`.
 :::
 
 ## Exercise 3
 
 ::: {.callout-tip title="Question"}
-As the name suggests, the $K$-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If $k > 1$, then the neighbors essentially "vote" on the classification of the point. Based on your graph, if $k = 1$, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?
+As the name suggests, the $K$-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If $k > 1$, then the neighbors essentially "vote" on the classification of the point. Using only your graph, if $k = 1$, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?
 :::
 
 ## Exercise 4
@@ -108,13 +116,13 @@ Just to verify that we are correct, find the sepal width, petal width, and speci
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Center and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets.
+Create a `recipe` to center and scale your data sets using the mean and standard deviation from your training set.
 :::
 
 ## Exercise 6
 
 ::: {.callout-tip title="Question"}
-Rather than implementing this method by hand, we can use the function `knn3` in the `caret` package.
+Create a `workflow` to fit a KNN model that uses `weight_func = "rectangular"` with 1 neighbor that includes the recipe above and fit the model to your training set.
 :::
 
 We would like to understand how the method of $K$-nearest neighbors will classify points in the plane. That is, we would like to view the *decision boundaries* of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called `grid` consisting of `r 250^2` points in the plane.
@@ -129,34 +137,23 @@ We would like to understand how the method of $K$-nearest neighbors will classif
 ## Exercise 7
 
 ::: {.callout-tip title="Question"}
-Uncomment the code above and classify the points in `grid` using your training data and $k = 1$. Then, plot the points in `grid` colored by their classification. Don't forget to center and scale the grid.
+Uncomment the code above, and change the variable names so that it will work with your model. Classify the points in `grid` using your training data and $k = 1$. Then, plot the points in `grid` colored by their classification. Make sure your code is written so that the grid points are being centered and scaled before predictions are being made for them.
 :::
 
 ## Exercise 8
 
 ::: {.callout-tip title="Question"}
-Notice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using $k = 2$ make things better or worse? Why do you think that is?
+Notice that the decision boundary between `versicolor` and `virginica` looks a little strange. What do you observe? Why do you think this is happening? Does using $k = 2$ make things better or worse? Why do you think that is?
 :::
 
 ## Exercise 9
 
 ::: {.callout-tip title="Question"}
-Determine which value of $K$, the number of neighbors selected, gives the highest accuracy on the test set. Test all $K$s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest $K$ among the ones which are tied.
+Determine which value of $k$, the number of neighbors selected, gives the highest accuracy on the test set. Test all $k$s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest $k$ among the ones which are tied. Hint: A for loop may be helpful. What is the accuracy of the model you ended up choosing?
 :::
 
-## Exercise 10
-
-::: {.callout-tip title="Question"}
-Use your value of $K$ to classify the points in `test` based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? *Note.* You should "set the seed" in R by specifying `set.seed(301)` before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won't match your code).
 
 Awesome!! Your model probably did pretty well, because KNN performs really well on the `iris` data set. However, this isn't a very challenging data set for most classification methods. More challenging data sets have data on different scales and *class imbalance* where there are very few observations belonging to a particular class.
-:::
-
-## Exercise 11
-
-::: {.callout-tip title="Question"}
-KNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?
-:::
 
 # KNN for Regression
 
@@ -164,22 +161,22 @@ For regression, we can predict the response variable for our point to be the ave
 
 ## Data & Dummy Variables
 
-For this portion of the homework, we'll return to using the `Carseat` data from the `ISLR` package that we worked with in homework 4. Frequently, when working with categorical data, you will be required to transform that data into **dummy variables**. Namely, you'll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as **one-hot encoding**.
+For this portion of the homework, we'll use the `Carseat` data from the `ISLR2` package. Frequently, when working with categorical data, you will be required to transform that data into **dummy variables**. Namely, you'll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as **one-hot encoding**.
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Look at the `Carseat` data from the `ISLR2` package. Then, split the data into a training, and test set using a 70-30 split and a seed of 427 (as usual).
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+Create a recipe which first, converts all categorical variables into dummy variables using `step_dummy()` then centers and scales all of the predictors based on the training data.
+:::
 
 ## Exercise 12
 
 ::: {.callout-tip title="Question"}
-Load the `Carseat` data from the `ISLR` package. Use the `dummyVars` function from the `caret` package to create dummy variables for the categorical variables in `Carseat`. Then, split the data into a training, validation, and test set using a 60-20-20 split and a seed of 301 (as usual). Explain what the `fullRank` options does and why we can create dummy variables before splitting our data.
-:::
-
-There is no standard way of handling categorical variables when applying KNN to predictors that are categorical. This is because we need to answer the fundamental question of "What is the distance between two observations that belong to different categories?". There are several ways of approaching this. One is to use different metrics and another is to just convert your categorical variables into numerical variables by using this one-hot encoding. Past that, you'll need to decide whether to center and standardize your dummy variables.
-
-## Using KNN for Regression
-
-The function `knnreg` from the `caret` package will apply KNN to a regression problem by taking the average of the $K$ nearest neighbors to the observation you're looking to make a prediction for. `knnreg` works very similar to `knn3` and previous models that we've fit in R.
-
-## Exercise 13
-
-::: {.callout-tip title="Question"}
-Fit a KNN model to predict `Sales` from the data we have. Fit your model on the training data and use the validation set to choose the appropriate variable and the number of neighbors to include. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. Once you select a $K$ and the variables you want to include in your model, see how it performs on the test set and compare your result to the linear model you fit at the end of homework 4. Which model works better? You will find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals. When you do this, what pattern do you see?
+Fit a KNN model to predict `Sales` from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. You will find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals. 
 :::
