@@ -1,5 +1,5 @@
 ---
-title: 'MATH 427: Classification + Logistic Regression'
+title: 'MATH 427: Evaluating Classification Models'
 author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
@@ -20,8 +20,9 @@ knitr:
     width: 200
 ---
 
+## Computational Set-Up
+
 ```{r}
-#| include: FALSE
 library(tidyverse)
 library(tidymodels)
 library(gridExtra)
@@ -32,18 +33,7 @@ library(ISLR2)
 tidymodels_prefer()
 ```
 
-## Classification Problems {.smaller}
 
--   Response $Y$ is qualitative (categorical).
-    -   Only two classes $\implies$ **Binary Classification Problem**
--   **Objectives**: build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
-    that:
-    -   assigns a class label to a future unlabeled (unseen) observation
-    -   helps understand the relationship between the predictors and
-        response
--   There can be two types of predictions based on the research problem.
-    -   Class probabilities
-    -   Class labels
 
 ## Default Dataset {.smaller}
 
@@ -68,14 +58,17 @@ Default |>
 :::
 :::
 
-## K-Nearest Neighbors Classifier
+## Split the data
 
--   Given a value for $K$ and a test data point $x_0$:
-    $$P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)$$
-    where $\mathcal{N}_0$ is the set of the $K$ "closest" neighbors.
--   For classification: neighbors "vote" for class (unlike in regression
-    where predictions are obtained by averaging)
-    $$P(Y=j | X=x_0)=\text{Proportion of neighbors in class }j$$
+```{r}
+set.seed(427)
+
+default_split <- initial_split(Default, prop = 0.6, strata = default)
+default_split
+
+default_train <- training(default_split)
+default_test <- testing(default_split)
+```
 
 ## [K-Nearest Neighbors Classifier: Build Model]{.r-fit-text}
 
@@ -92,69 +85,85 @@ knnfit <- nearest_neighbor(neighbors = 10) |>
 ## [K-Nearest Neighbors Classifier: Predictions]{.r-fit-text} {.smaller}
 
 ::: panel-tabset
-## Probabilities
+## Class labels
 
 ```{r}
-Default_wpreds <-  Default |> 
-  bind_cols(predict(knnfit, new_data = Default, type = "prob"))   # obtain predictions as probabilities
-head(Default_wpreds) |> # predicted probabilities for first six observations
-  kable()
+predict(knnfit, new_data = Default, type = "class") |> head() |> kable()   # obtain predictions as classes
 ```
 
-## Class labels
+## Probabilities
 
 -   Predicts class w/ maximum probability
 
 ```{r}
-Default_wpreds <-  Default_wpreds |> 
-  bind_cols(predict(knnfit, new_data = Default, type = "class")) |>    # obtain class label predictions directly
-  select(-.pred_No) |> 
-  rename(prob_yes = .pred_Yes, pred_50 = .pred_class)
-head(Default_wpreds) |>   # predicted class labels for first six observations
-  kable()
-```
-
-## Threshold
-
--   More effective when one class is more important and/or classes are
-    imbalanced
-
-```{r}
-threshold <- 0.25   # set threshold
-Default_wpreds <- Default_wpreds |> 
-  mutate(pred_25 = as_factor(if_else(prob_yes > threshold, "Yes", "No")))   # obtain predictions as class labels
-head(Default_wpreds) |>   kable()
+predict(knnfit, new_data = Default, type = "prob") |> head() |> kable() # obtain predictions as probabilities
 ```
 :::
 
-## K-Nearest Neighbors Classifier: Performance {.smaller}
+## Fitting a logistic regression
+
+Fitting a logistic regression model with `default` as the response and `balance` as the predictor:
 
 ```{r}
-Default_wpreds |> 
-  conf_mat(truth = default, estimate = pred_50)
+logregfit <- logistic_reg() |> 
+  set_engine("glm") |> 
+  fit(default ~ balance, data = default_train)   # fit logistic regression model
+
+tidy(logregfit) |> kable()  # obtain results
 ```
 
-## K-Nearest Neighbors Classifier: Performance {.smaller}
+## Making predictions in R
+
+::: panel-tabset
+
+## Class Labels
 
 ```{r}
-Default_wpreds |> 
-  conf_mat(truth = default, estimate = pred_50) |> 
-  autoplot(type = "heatmap")
+predict(logregfit, new_data = tibble(balance = 700), type = "class") |> kable()   # obtain class predictions
 ```
 
-## Confusion Matrix Terms
+## Log-Odds
 
-|                                  | Actual Positive/Event | Actual Negative/Non-event |
-|:--------------------------------:|:---------------------:|:-------------------------:|
-|   **Predicted Positive/Event**   |     True Negative     |      False Positive       |
-| **Predicted Negative/Non-event** |    False Negative     |       True Positive       |
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "raw") |> kable()   # obtain log-odds predictions
+```
 
-## ROC Curve and AUC
+## Probabilities
 
-- **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds
-  + Plots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis
-- **AUC**: area under the AUC curve
-  + Ideal ROC curve will hug the top left corner
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  # obtain probability predictions
+```
+
+:::
+
+<!-- ## K-Nearest Neighbors Classifier: Performance {.smaller} -->
+
+<!-- ```{r} -->
+<!-- Default_wpreds |>  -->
+<!--   conf_mat(truth = default, estimate = pred_50) -->
+<!-- ``` -->
+
+<!-- ## K-Nearest Neighbors Classifier: Performance {.smaller} -->
+
+<!-- ```{r} -->
+<!-- Default_wpreds |>  -->
+<!--   conf_mat(truth = default, estimate = pred_50) |>  -->
+<!--   autoplot(type = "heatmap") -->
+<!-- ``` -->
+
+<!-- ## Confusion Matrix Terms -->
+
+<!-- |                                  | Actual Positive/Event | Actual Negative/Non-event | -->
+<!-- |:--------------------------------:|:---------------------:|:-------------------------:| -->
+<!-- |   **Predicted Positive/Event**   |     True Negative     |      False Positive       | -->
+<!-- | **Predicted Negative/Non-event** |    False Negative     |       True Positive       | -->
+
+<!-- ## ROC Curve and AUC -->
+
+<!-- - **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds -->
+<!--   + Plots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis -->
+<!-- - **AUC**: area under the AUC curve -->
+<!--   + Ideal ROC curve will hug the top left corner -->
 
 <!-- ## ROC Curve and AUC  {.smaller} -->
 
@@ -167,142 +176,6 @@ Default_wpreds |>
 <!-- ggroc(roc_object_knn)   # plot ROC curve -->
 <!-- auc(roc_object_knn)   # obtain AUC -->
 <!-- ``` -->
-
-<!-- # Logistic Regression -->
-
-<!-- ## Classes as numbers {.smaller} -->
-
-<!-- - Some functions require categorical response to be input using numeric values (e.g. 0/1) -->
-
-<!-- ```{r} -->
-
-<!-- Default$default_id <- ifelse(Default$default == "Yes", 1, 0)   # create 0/1 variable -->
-<!-- Default |>  -->
-<!--   tabyl(default, default_id) |> # create contingency table  -->
-<!--   kable() # make it looks nice -->
-<!-- ``` -->
-
-<!-- ## Why Not Linear Regression? {.smaller} -->
-
-<!-- ```{r} -->
-<!-- lrfit <- lm(default_id ~ balance, data = Default)   # fit SLR -->
-<!-- summary(lrfit$fitted.values)  # summary of y_hats -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- #| echo: FALSE -->
-<!-- #| fig.align: "center" -->
-
-<!-- ggplot(data = Default, aes(x = balance, y = default_id)) + -->
-<!--   geom_point() + -->
-<!--   geom_smooth(method = "lm", se = FALSE) + -->
-<!--   scale_y_continuous(breaks = c(0, 0.5, 1)) -->
-<!-- ``` -->
-
-<!-- - Linear regression: does not model probabilities well -->
-<!--   + might produce probabilities less than zero or bigger than one -->
-<!--   + treats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)  -->
-
-<!-- ## Why Not Linear Regression? -->
-
-<!-- Suppose we have a response, -->
-<!-- $$Y=\begin{cases} -->
-<!-- 1 & \text{if stroke} \\ -->
-<!-- 2 & \text{if drug overdose} \\ -->
-<!-- 3  & \text{if epileptic seizure} -->
-<!-- \end{cases}$$ -->
-
-<!-- - Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning -->
-<!--   + e.g. drug overdose $-$ stroke $= 1$? `r emo::ji("thinking")` -->
-
-<!-- ## Logistic Regression {.smaller} -->
-
-<!-- Consider a one-dimensional binary classification problem: -->
-
-<!-- - Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability -->
-<!-- - Use **logistic** or **sigmoid** function: $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$ -->
-<!-- - Then: $$p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$ -->
-
-<!-- ## Other important quantities -->
-<!-- - **Odds**: $\dfrac{p(x)}{1-p(x)}$ -->
-<!-- - **Log-Odd**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$ -->
-<!--   + Linear function of predictors -->
-<!-- - **Inverse Logit** (sometimes called **expit**): $$\log \left(\dfrac{p(X)}{1-p(X)}\right) = \beta_0 + \beta_1 \ X$$ -->
-
-<!-- ## Logistic Regression -->
-
-
-<!-- ```{r} -->
-<!-- #| echo: FALSE -->
-<!-- logregfit <- glm(default ~ balance, data = Default, family = binomial)   # fit logistic regression model -->
-<!-- ggplot(data = Default, aes(x = balance, y = default_id)) + -->
-<!--   geom_point() + -->
-<!--   geom_line(aes(y = logregfit$fitted.values), color = "blue") + -->
-<!--   scale_y_continuous(breaks = c(0, 0.5, 1)) -->
-<!-- ``` -->
-
-
-
-<!-- ## Fitting the model -->
-
-<!-- Fitting a logistic regression model with `default` as the response and `balance` as the predictor: -->
-
-<!-- ```{r} -->
-<!-- #| code-line-numbers: "|2" -->
-<!-- library(broom) #for formatting model output -->
-<!-- logregfit <- glm(default ~ balance, data = Default, family = binomial)   # fit logistic regression model -->
-<!-- tidy(logregfit)   # obtain results -->
-<!-- ``` -->
-
-<!-- ## Interpreting Coefficients -->
-
-<!-- - As $X$ increases by 1, the log-odds increase by$\hat{\beta}_1$ -->
-<!--   + I.e. probability of default increases but NOT linearly -->
-<!--   + Change in the probability of default due to a one-unit change in balance depends on the current balance value -->
-
-<!-- ## Interpreting Coefficients -->
-
-<!-- ```{r} -->
-<!-- #| echo: FALSE -->
-<!-- x0 <- 1000 -->
-<!-- x1 <- 1500 -->
-<!-- x2 <- 2000 -->
-<!-- y0 <- predict(logregfit, newdata = data.frame(balance = x0), type = "response") -->
-<!-- y1 <- predict(logregfit, newdata = data.frame(balance = x1), type = "response") -->
-<!-- y2 <- predict(logregfit, newdata = data.frame(balance = x2), type = "response") -->
-<!-- ggplot(data = Default, aes(x = balance, y = default_id)) + -->
-<!--   geom_point() + -->
-<!--   geom_vline(xintercept = x0, color = "red", alpha = 1, linetype = "dotted") + -->
-<!--   geom_vline(xintercept = x1, color = "red", alpha = 1, linetype = "dotted") + -->
-<!--   geom_vline(xintercept = x2, color = "red", alpha = 1, linetype = "dotted") + -->
-<!--   geom_hline(yintercept = y0, color = "blue", alpha = 0.5) + -->
-<!--   geom_hline(yintercept = y1, color = "blue", alpha = 0.5) + -->
-<!--   geom_hline(yintercept = y2, color = "blue", alpha = 0.5) + -->
-<!--  geom_segment(aes(x = 1250, y = y0, xend = 1250, yend = y1), -->
-<!--                   arrow = arrow(length = unit(0.1, "cm"), type = "closed", ends="both"), color = "blue") + -->
-<!--    geom_segment(aes(x = 1750, y = y1, xend = 1750, yend = y2), -->
-<!--                   arrow = arrow(length = unit(0.1, "cm"), type = "closed", ends="both"), color = "blue") + -->
-<!--   geom_line(aes(y = logregfit$fitted.values)) + -->
-<!--   scale_y_continuous(breaks = c(0, 0.5, 1)) -->
-<!-- ``` -->
-
-<!-- ## Making predictions: Theory {.smaller} -->
-
-<!-- For `balance`=\$700, -->
-
-<!-- :::{.incremental} -->
-<!-- - $$\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-10.65 + (0.005499 \times 700)}}{1+e^{-10.65 + (0.005499 \times 700)}}=0.0011$$ -->
-<!-- -  $$\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} = \dfrac{0.0011}{1-0.0011}\approx 0.0011$$ -->
-<!-- - $$\textbf{Log-Odds}(X)=\log\left(\dfrac{\hat{p}(X)}{1-\hat{p}(X)}\right) = \log(0.0011) = -6.80$$ -->
-<!-- ::: -->
-
-<!-- ## Making predictions in R -->
-
-<!-- ```{r} -->
-<!-- predict(logregfit, newdata = data.frame(balance = 700))   # obtain log-odds predictions -->
-<!-- predict(logregfit, newdata = data.frame(balance = 700), type = "response")   # obtain probability predictions -->
-<!-- ``` -->
-
 
 <!-- ## Using a threshold {.smaller} -->
 

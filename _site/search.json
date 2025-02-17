@@ -1179,7 +1179,7 @@
   {
     "objectID": "slides/08-classifiction-metrics.html#default-dataset",
     "href": "slides/08-classifiction-metrics.html#default-dataset",
-    "title": "MATH 427: Classification + Logistic Regression",
+    "title": "MATH 427: Evaluating Classification Models",
     "section": "Default Dataset",
     "text": "Default Dataset\n\n\nA simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.\n\nhead(Default) |&gt; kable()  # print first six observations\n\n\n\n\ndefault\nstudent\nbalance\nincome\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n\n\nNo\nYes\n817.1804\n12106.135\n\n\nNo\nNo\n1073.5492\n31767.139\n\n\nNo\nNo\n529.2506\n35704.494\n\n\nNo\nNo\n785.6559\n38463.496\n\n\nNo\nYes\n919.5885\n7491.559\n\n\n\n\n\n\nResponse Variable: default\n\nDefault |&gt; \n  tabyl(default) |&gt;  # class frequencies\n  kable()           # Make it look nice\n\n\n\n\ndefault\nn\npercent\n\n\n\n\nNo\n9667\n0.9667\n\n\nYes\n333\n0.0333"
   },
@@ -1193,16 +1193,16 @@
   {
     "objectID": "slides/08-classifiction-metrics.html#k-nearest-neighbors-classifier-build-model",
     "href": "slides/08-classifiction-metrics.html#k-nearest-neighbors-classifier-build-model",
-    "title": "MATH 427: Classification + Logistic Regression",
+    "title": "MATH 427: Evaluating Classification Models",
     "section": "K-Nearest Neighbors Classifier: Build Model",
     "text": "K-Nearest Neighbors Classifier: Build Model\n\nResponse (\\(Y\\)): default\nPredictor (\\(X\\)): balance\n\n\nknnfit &lt;- nearest_neighbor(neighbors = 10) |&gt; \n  set_engine(\"kknn\") |&gt; \n  set_mode(\"classification\") |&gt;  \n  fit(default ~ balance, data = Default)   # fit 10-nn model"
   },
   {
     "objectID": "slides/08-classifiction-metrics.html#k-nearest-neighbors-classifier-predictions",
     "href": "slides/08-classifiction-metrics.html#k-nearest-neighbors-classifier-predictions",
-    "title": "MATH 427: Classification + Logistic Regression",
+    "title": "MATH 427: Evaluating Classification Models",
     "section": "K-Nearest Neighbors Classifier: Predictions",
-    "text": "K-Nearest Neighbors Classifier: Predictions\n\nProbabilitiesClass labelsThreshold\n\n\n\nDefault_wpreds &lt;-  Default |&gt; \n  bind_cols(predict(knnfit, new_data = Default, type = \"prob\"))   # obtain predictions as probabilities\nhead(Default_wpreds) |&gt; # predicted probabilities for first six observations\n  kable()\n\n\n\n\ndefault\nstudent\nbalance\nincome\n.pred_No\n.pred_Yes\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n1\n0\n\n\nNo\nYes\n817.1804\n12106.135\n1\n0\n\n\nNo\nNo\n1073.5492\n31767.139\n1\n0\n\n\nNo\nNo\n529.2506\n35704.494\n1\n0\n\n\nNo\nNo\n785.6559\n38463.496\n1\n0\n\n\nNo\nYes\n919.5885\n7491.559\n1\n0\n\n\n\n\n\n\n\n\nPredicts class w/ maximum probability\n\n\nDefault_wpreds &lt;-  Default_wpreds |&gt; \n  bind_cols(predict(knnfit, new_data = Default, type = \"class\")) |&gt;    # obtain class label predictions directly\n  select(-.pred_No) |&gt; \n  rename(prob_yes = .pred_Yes, pred_50 = .pred_class)\nhead(Default_wpreds) |&gt;   # predicted class labels for first six observations\n  kable()\n\n\n\n\ndefault\nstudent\nbalance\nincome\nprob_yes\npred_50\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n0\nNo\n\n\nNo\nYes\n817.1804\n12106.135\n0\nNo\n\n\nNo\nNo\n1073.5492\n31767.139\n0\nNo\n\n\nNo\nNo\n529.2506\n35704.494\n0\nNo\n\n\nNo\nNo\n785.6559\n38463.496\n0\nNo\n\n\nNo\nYes\n919.5885\n7491.559\n0\nNo\n\n\n\n\n\n\n\n\nMore effective when one class is more important and/or classes are imbalanced\n\n\nthreshold &lt;- 0.25   # set threshold\nDefault_wpreds &lt;- Default_wpreds |&gt; \n  mutate(pred_25 = as_factor(if_else(prob_yes &gt; threshold, \"Yes\", \"No\")))   # obtain predictions as class labels\nhead(Default_wpreds) |&gt;   kable()\n\n\n\n\ndefault\nstudent\nbalance\nincome\nprob_yes\npred_50\npred_25\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n0\nNo\nNo\n\n\nNo\nYes\n817.1804\n12106.135\n0\nNo\nNo\n\n\nNo\nNo\n1073.5492\n31767.139\n0\nNo\nNo\n\n\nNo\nNo\n529.2506\n35704.494\n0\nNo\nNo\n\n\nNo\nNo\n785.6559\n38463.496\n0\nNo\nNo\n\n\nNo\nYes\n919.5885\n7491.559\n0\nNo\nNo"
+    "text": "K-Nearest Neighbors Classifier: Predictions\n\nClass labelsProbabilities\n\n\n\npredict(knnfit, new_data = Default, type = \"class\") |&gt; head() |&gt; kable()   # obtain predictions as classes\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\n\n\n\n\n\n\nPredicts class w/ maximum probability\n\n\npredict(knnfit, new_data = Default, type = \"prob\") |&gt; head() |&gt; kable() # obtain predictions as probabilities\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0"
   },
   {
     "objectID": "slides/08-classifiction-metrics.html#k-nearest-neighbors-classifier-performance",
@@ -2224,5 +2224,33 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/08-classifiction-metrics.html#computational-set-up",
+    "href": "slides/08-classifiction-metrics.html#computational-set-up",
+    "title": "MATH 427: Evaluating Classification Models",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(gridExtra)\nlibrary(janitor) # for next contingency tables\nlibrary(kableExtra)\nlibrary(ISLR2)\n\ntidymodels_prefer()"
+  },
+  {
+    "objectID": "slides/08-classifiction-metrics.html#split-the-data",
+    "href": "slides/08-classifiction-metrics.html#split-the-data",
+    "title": "MATH 427: Evaluating Classification Models",
+    "section": "Split the data",
+    "text": "Split the data\n\nset.seed(427)\n\ndefault_split &lt;- initial_split(Default, prop = 0.6, strata = default)\ndefault_split\n\n&lt;Training/Testing/Total&gt;\n&lt;6000/4000/10000&gt;\n\ndefault_train &lt;- training(default_split)\ndefault_test &lt;- testing(default_split)"
+  },
+  {
+    "objectID": "slides/08-classifiction-metrics.html#fitting-a-logistic-regression",
+    "href": "slides/08-classifiction-metrics.html#fitting-a-logistic-regression",
+    "title": "MATH 427: Evaluating Classification Models",
+    "section": "Fitting a logistic regression",
+    "text": "Fitting a logistic regression\nFitting a logistic regression model with default as the response and balance as the predictor:\n\nlogregfit &lt;- logistic_reg() |&gt; \n  set_engine(\"glm\") |&gt; \n  fit(default ~ balance, data = default_train)   # fit logistic regression model\n\ntidy(logregfit) |&gt; kable()  # obtain results\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-10.6926385\n0.4659035\n-22.95033\n0\n\n\nbalance\n0.0055327\n0.0002841\n19.47329\n0"
+  },
+  {
+    "objectID": "slides/08-classifiction-metrics.html#making-predictions-in-r",
+    "href": "slides/08-classifiction-metrics.html#making-predictions-in-r",
+    "title": "MATH 427: Evaluating Classification Models",
+    "section": "Making predictions in R",
+    "text": "Making predictions in R\n\nClass LabelsLog-OddsProbabilities\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"class\") |&gt; kable()   # obtain class predictions\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\n\n\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"raw\") |&gt; kable()   # obtain log-odds predictions\n\n\n\n\nx\n\n\n\n\n-6.819727\n\n\n\n\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"prob\") |&gt; kable()  # obtain probability predictions\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n0.9989092\n0.0010908\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
