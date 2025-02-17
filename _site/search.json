@@ -1922,21 +1922,21 @@
     "href": "hw/03-hw-knn.html",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
     "section": "",
-    "text": "In this homework, you will practice applying the \\(K\\)-Nearest Neighbors (KNN) method which is capable of performing both classification and regression. You will also practice collaborating with a team over GitHub. The basic idea is that predictions are made based on the \\(K\\) observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different metrics (i.e. measures of distance) can be used, we will work exclusively with the Euclidean metric: \\[\\text{dist}(x, y) = \\sqrt{\\sum_{i=1}^p(x_i-y_i)^2}\\] for vectors \\(x = (x_1,\\ldots, x_p)\\) and \\(y = (y_1,\\ldots,y_p)\\).\n\n\nBy the end of the homework, you will…\n\nBe able to work simultaneously with teammates on the same document using GitHub\nFit and interpret linear models\nSplit data using tidymodels\nCompare and evaluate different linear models\n\n\n\n\nWe’ll start by using KNN for classification.\n\n\n\nWe will be working with the famous iris data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package datasets and then load the data set iris.\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nImport the iris data set from the datasets package and take a look at the columns. We would like to visualize the \\(K\\)-nearest neighbor method in two dimensions, so make a data set called iris2 consisting of the columns Sepal.Width, Petal.Width, and Species. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the strata argument in the initial_split function! Once again, set your seed to 301.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nPlot the points in your training set in the xy-plane colored by the Species labels.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nCenter and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nUncomment the code above and classify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the test set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nUse your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
+    "text": "In this homework, you will practice applying the \\(K\\)-Nearest Neighbors (KNN) method which is capable of performing both classification and regression. You will also practice collaborating with a team over GitHub.\n\n\nBy the end of the homework, you will…\n\nBe able to work simultaneously with teammates on the same document using GitHub\nFit and interpret linear models\nSplit data using tidymodels\nCompare and evaluate different linear models\n\n\n\n\nThe basic idea is that predictions are made based on the \\(K\\) observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different metrics (i.e. measures of distance) can be used, we will work exclusively with the Euclidean metric: \\[\\text{dist}(x, y) = \\sqrt{\\sum_{i=1}^p(x_i-y_i)^2}\\] for vectors \\(x = (x_1,\\ldots, x_p)\\) and \\(y = (y_1,\\ldots,y_p)\\)."
   },
   {
     "objectID": "hw/03-hw-knn.html#data",
     "href": "hw/03-hw-knn.html#data",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "We will be working with the famous iris data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package datasets and then load the data set iris."
+    "section": "Data",
+    "text": "Data\nWe will be working with the famous iris data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package datasets and then load the data set iris."
   },
   {
     "objectID": "hw/03-hw-knn.html#the-knn-algorithm",
     "href": "hw/03-hw-knn.html#the-knn-algorithm",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
     "section": "The KNN algorithm",
-    "text": "The KNN algorithm\n\nPlot the points in your training set in the xy-plane colored by the Species labels.\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. There are a lot of ways you could do this. A popular Data Scientist interview question is asking you to implement your own KNN algorithm. I suggest practicing this on your own.\nCenter and scale all three of the data sets. You should be using the mean and standard deviation from your training set to center and scale ALL THREE data sets. The preProcess function from the caret package may be helpful here. Since the KNN algorithm finds the \\(K\\)-nearest neighbors, why might it be important to center and scale your data BEFORE using KNN?\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)\n\n\nClassify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid. Protip: set type = \"class\" when you call predict.\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the validation set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied.\nCombine your training and validation sets. Use your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\n\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class.\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
+    "text": "The KNN algorithm"
   },
   {
     "objectID": "hw/03-hw-knn.html#data-dummy-variables",
@@ -1991,85 +1991,85 @@
     "objectID": "hw/03-hw-knn.html#knn-for-classification",
     "href": "hw/03-hw-knn.html#knn-for-classification",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "We’ll start by using KNN for classification."
+    "section": "KNN for Classification",
+    "text": "KNN for Classification\nWe’ll start by using KNN for classification."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-1",
     "href": "hw/03-hw-knn.html#exercise-1",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nImport the iris data set from the datasets package and take a look at the columns. We would like to visualize the \\(K\\)-nearest neighbor method in two dimensions, so make a data set called iris2 consisting of the columns Sepal.Width, Petal.Width, and Species. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the strata argument in the initial_split function! Once again, set your seed to 301."
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nImport the iris data set from the datasets package and take a look at the columns. We would like to visualize the \\(K\\)-nearest neighbor method in two dimensions, so make a data set called iris2 consisting of the columns Sepal.Width, Petal.Width, and Species. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the strata argument in the initial_split function! Once again, set your seed to 301."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-2",
     "href": "hw/03-hw-knn.html#exercise-2",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nPlot the points in your training set in the xy-plane colored by the Species labels."
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nPlot the points in your training set in the xy-plane colored by the Species labels."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-3",
     "href": "hw/03-hw-knn.html#exercise-3",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?"
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?"
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-4",
     "href": "hw/03-hw-knn.html#exercise-4",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm."
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\n\n\n\n\n\nQuestion\n\n\n\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-5",
     "href": "hw/03-hw-knn.html#exercise-5",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nCenter and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets."
+    "section": "Exercise 5",
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nCenter and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-6",
     "href": "hw/03-hw-knn.html#exercise-6",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)"
+    "section": "Exercise 6",
+    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)"
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-7",
     "href": "hw/03-hw-knn.html#exercise-7",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nUncomment the code above and classify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid."
+    "section": "Exercise 7",
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nUncomment the code above and classify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-8",
     "href": "hw/03-hw-knn.html#exercise-8",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?"
+    "section": "Exercise 8",
+    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?"
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-9",
     "href": "hw/03-hw-knn.html#exercise-9",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the test set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied."
+    "section": "Exercise 9",
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the test set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-10",
     "href": "hw/03-hw-knn.html#exercise-10",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nUse your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class."
+    "section": "Exercise 10",
+    "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nUse your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class."
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-11",
     "href": "hw/03-hw-knn.html#exercise-11",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
-    "section": "",
-    "text": "Question\n\n\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
+    "section": "Exercise 11",
+    "text": "Exercise 11\n\n\n\n\n\n\nQuestion\n\n\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
   },
   {
     "objectID": "hw/03-hw-knn.html#exercise-12",
@@ -2091,5 +2091,40 @@
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "",
     "text": "library(tidyverse)\nlibrary(knitr)\nlibrary(readODS)"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#k-nearest-neighbors",
+    "href": "hw/03-hw-knn.html#k-nearest-neighbors",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "The basic idea is that predictions are made based on the \\(K\\) observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different metrics (i.e. measures of distance) can be used, we will work exclusively with the Euclidean metric: \\[\\text{dist}(x, y) = \\sqrt{\\sum_{i=1}^p(x_i-y_i)^2}\\] for vectors \\(x = (x_1,\\ldots, x_p)\\) and \\(y = (y_1,\\ldots,y_p)\\)."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#teams",
+    "href": "hw/03-hw-knn.html#teams",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Teams",
+    "text": "Teams\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW3. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:\n\nYou and your team members should be in the same physical room when you complete this assignment.\nYou should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.\nIn order to receive credit, you must have a commit after each exercise by the correct member of your team.\nFor now, don’t try to edit the same document at the same time. We will cover that in later homeworks."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#clone-the-repo-start-new-rstudio-project",
+    "href": "hw/03-hw-knn.html#clone-the-repo-start-new-rstudio-project",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Clone the repo & start new RStudio project",
+    "text": "Clone the repo & start new RStudio project\nThe following directions will guide you through the process of setting up your homework to work as a group."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-0.1",
+    "href": "hw/03-hw-knn.html#exercise-0.1",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Exercise 0.1",
+    "text": "Exercise 0.1\n\n\n\n\n\n\nQuestion\n\n\n\nIn your group, decide on a team name. Then have one member of your group:\n\nClick this link to accept the assignment and enter your team name.\nRepeat the directions for creating a project from HW 1 with the HW 3 repository.\n\nOnce this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-0.2",
+    "href": "hw/03-hw-knn.html#exercise-0.2",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Exercise 0.2",
+    "text": "Exercise 0.2\nWe will now learn how to collaborate on the same document at the same time.\n\n\n\n\n\n\nQuestion\n\n\n\nHave Member 1 fill in the Team Name and their name below and have Members 2 & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3.\n\n\n\nTeam Name: Test\nMember 1: [Insert Name]\nMember 2: [Insert Name]\nMember 3: [Insert Name/Delete line if you only have two members]"
   }
 ]

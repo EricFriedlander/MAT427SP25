@@ -1,6 +1,6 @@
 ---
 title: "Homework 3: $K$-Nearest Neighbors"
-author: "Test Name 2"
+author: "Your Name"
 editor: visual
 format:
   html:
@@ -15,7 +15,7 @@ format:
 
 # Introduction
 
-In this homework, you will practice applying the $K$-Nearest Neighbors (KNN) method which is capable of performing both classification and regression. You will also practice collaborating with a team over GitHub. The basic idea is that predictions are made based on the $K$ observation in the training data which are "closest" to the observation that we're making a prediction for. While many different **metrics** (i.e. measures of distance) can be used, we will work exclusively with the **Euclidean metric**: $$\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}$$ for vectors $x = (x_1,\ldots, x_p)$ and $y = (y_1,\ldots,y_p)$.
+In this homework, you will practice applying the $K$-Nearest Neighbors (KNN) method which is capable of performing both classification and regression. You will also practice collaborating with a team over GitHub.
 
 ## Learning goals
 
@@ -25,6 +25,52 @@ By the end of the homework, you will...
 -   Fit and interpret linear models
 -   Split data using `tidymodels`
 -   Compare and evaluate different linear models
+
+## $K$-Nearest Neighbors
+
+The basic idea is that predictions are made based on the $K$ observation in the training data which are "closest" to the observation that we're making a prediction for. While many different **metrics** (i.e. measures of distance) can be used, we will work exclusively with the **Euclidean metric**: $$\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}$$ for vectors $x = (x_1,\ldots, x_p)$ and $y = (y_1,\ldots,y_p)$.
+
+# Getting Started
+
+In last weeks homework you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document *simultaneously*. 
+
+## Teams
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW3**. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:
+
+1.  You and your team members should be in the same physical room when you complete this assignment.
+2.  You should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.
+3.  In order to receive credit, you must have a commit after each exercise by the correct member of your team.
+4.  For now, don't try to edit the same document at the same time. We will cover that in later homeworks.
+
+## Clone the repo & start new RStudio project
+
+The following directions will guide you through the process of setting up your homework to work as a group.
+
+## Exercise 0.1
+
+::: {.callout-tip title="Question"}
+In your group, decide on a team name. Then have **one member of your group**:
+
+1.  [Click this link](https://classroom.github.com/a/3cnqO-bh) to accept the assignment and enter your team name.
+2.  Repeat the directions for creating a project from HW 1 with the HW 3 repository.
+
+Once this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom.
+:::
+
+## Exercise 0.2
+
+We will now learn how to collaborate on the same document at the same time.
+
+::: {.callout-tip title="Question"}
+Have Member 1 fill in the Team Name and their name below and have Members 2  & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3. 
+:::
+
+-   Team Name: Test
+-   Member 1: \[Insert Name\]
+-   Member 2: \[Insert Name\]
+-   Member 3: \[Insert Name/Delete line if you only have two members\]
+
 
 ## KNN for Classification
 
