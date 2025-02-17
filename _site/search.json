@@ -443,8 +443,8 @@
     "objectID": "slides/04-MultipleRegression.html#computational-setup",
     "href": "slides/04-MultipleRegression.html#computational-setup",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
-    "section": "Computational Setup",
-    "text": "Computational Setup\n\nlibrary(tidyverse)\nlibrary(knitr)\nlibrary(readODS)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(knitr)\nlibrary(readODS)"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#question",
@@ -570,7 +570,7 @@
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Multiple Linear Regression: Interpreting Parameters",
-    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\\(\\hat{\\beta}_0=89.5978\\): The intercept \\(\\implies\\) a house with 0 square feet and 0 bedrooms would cost approximately $89,598.80. Is this meaningful in context? Not really\n\\(\\hat{\\beta}_1=0.1392\\): With num_bedrooms remaining fixed, an additional 1 square foot of size leads to an increase in price by approximately $139.20.\n\\(\\hat{\\beta}_2=-8.7379\\): With size remaining fixed, an additional bedroom leads to an decrease in price of approximately $8,737.90.\n\n\n\nHmm…. that’s a little weird…\nSimpson’s Paradox: when relationship between two variables disappears or reverses when controlling for a third, confounding variable"
+    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\\(\\hat{\\beta}_0=89.5978\\): The intercept \\(\\implies\\) a house with 0 square feet and 0 bedrooms would cost approximately $89,598.80. Is this meaningful in context? Not really\n\\(\\hat{\\beta}_1=0.1392\\): With num_bedrooms remaining fixed, an additional 1 square foot of size leads to an increase in price by approximately $139.20.\n\\(\\hat{\\beta}_2=-8.7379\\): With size remaining fixed, an additional bedroom leads to an decrease in price of approximately $8,737.90.\n\n. . .\n\nHmm…. that’s a little weird…\nSimpson’s Paradox: when relationship between two variables disappears or reverses when controlling for a third, confounding variable"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
@@ -584,14 +584,14 @@
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Multiple Linear Regression: Prediction",
-    "text": "Multiple Linear Regression: Prediction\n\nPrediction of price when size is 2000 square feet for a house with 3 bedrooms\n\\(\\text{sales} = 89.5978 + 0.1392\\times2000 - 8.7379\\times3 = 341.7841\\)\n\n\n\npredict(house_price_mlr, new_data = tibble(size = 2000, num_bedrooms = 3))   # obtain prediction\n\n# A tibble: 1 × 1\n  .pred\n  &lt;dbl&gt;\n1  342.\n\n\n\nWhy don’t these match exactly? rounding"
+    "text": "Multiple Linear Regression: Prediction\n\nPrediction of price when size is 2000 square feet for a house with 3 bedrooms\n\\(\\text{sales} = 89.5978 + 0.1392\\times2000 - 8.7379\\times3 = 341.7841\\)\n\n. . .\n\npredict(house_price_mlr, new_data = tibble(size = 2000, num_bedrooms = 3))   # obtain prediction\n\n# A tibble: 1 × 1\n  .pred\n  &lt;dbl&gt;\n1  342.\n\n\n\nWhy don’t these match exactly? rounding"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#linear-regression-comparing-models",
     "href": "slides/04-MultipleRegression.html#linear-regression-comparing-models",
     "title": "MAT-427: Multiple Linear Regression + Data Splitting",
     "section": "Linear Regression: Comparing Models",
-    "text": "Linear Regression: Comparing Models\n\n\n\nMany methods for comparing regression models from your regression course\nToday: Data splitting\nFirst: New Data\n\n\n\n\n\names housing data\n\nMany variables\nFocus on:\n\nSale_Price: in dollars\nGr_Liv_Area: size in square feet\nBedroom_AbvGr: number of bedrooms above grade\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Linear Regression: Comparing Models\n\n\n\nMany methods for comparing regression models from your regression course\nToday: Data splitting\nFirst: New Data\n\n\n\n\n\names housing data\n\nMany variables\nFocus on:\n\nSale_Price: in dollars\nGr_Liv_Area: size in square feet\nBedroom_AbvGr: number of bedrooms above grade"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#pre-survey",
@@ -2084,5 +2084,12 @@
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
     "section": "Exercise 13",
     "text": "Exercise 13\n\n\n\n\n\n\nQuestion\n\n\n\nFit a KNN model to predict Sales from the data we have. Fit your model on the training data and use the validation set to choose the appropriate variable and the number of neighbors to include. You may find it useful to plot the \\(R^2\\) and RMSE against the number of neighbors you include in your model. Once you select a \\(K\\) and the variables you want to include in your model, see how it performs on the test set and compare your result to the linear model you fit at the end of homework 4. Which model works better? You will find that the RMSE and \\(R^2\\) disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (Sales in this case) against the model residuals. When you do this, what pattern do you see?"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html",
+    "href": "slides/04-MultipleRegression.html",
+    "title": "MAT-427: Multiple Linear Regression + Data Splitting",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(knitr)\nlibrary(readODS)"
   }
 ]
