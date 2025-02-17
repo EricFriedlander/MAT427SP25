@@ -93,8 +93,8 @@
     "objectID": "slides/08-classifiction-metrics.html#classification-problems",
     "href": "slides/08-classifiction-metrics.html#classification-problems",
     "title": "MATH 427: Classification + Logistic Regression",
-    "section": "Classification Problems",
-    "text": "Classification Problems\n\nResponse \\(Y\\) is qualitative (categorical).\n\nOnly two classes \\(\\implies\\) Binary Classification Problem\n\nObjectives: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\) that:\n\nassigns a class label to a future unlabeled (unseen) observation\nhelps understand the relationship between the predictors and response\n\nThere can be two types of predictions based on the research problem.\n\nClass probabilities\nClass labels"
+    "section": "",
+    "text": "Response \\(Y\\) is qualitative (categorical).\n\nOnly two classes \\(\\implies\\) Binary Classification Problem\n\nObjectives: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\) that:\n\nassigns a class label to a future unlabeled (unseen) observation\nhelps understand the relationship between the predictors and response\n\nThere can be two types of predictions based on the research problem.\n\nClass probabilities\nClass labels"
   },
   {
     "objectID": "slides/08-classifiction-metrics.html#default-dataset",
@@ -150,14 +150,14 @@
     "href": "slides/08-classifiction-metrics.html#roc-curve-and-auc",
     "title": "MATH 427: Classification + Logistic Regression",
     "section": "ROC Curve and AUC",
-    "text": "ROC Curve and AUC\n\nROC (Receiver Operating Characteristics) curve: popular graphic for comparing different classifiers across all possible thresholds\n\nPlots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis\n\nAUC: area under the AUC curve\n\nIdeal ROC curve will hug the top left corner\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "ROC Curve and AUC\n\nROC (Receiver Operating Characteristics) curve: popular graphic for comparing different classifiers across all possible thresholds\n\nPlots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis\n\nAUC: area under the AUC curve\n\nIdeal ROC curve will hug the top left corner\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;"
   },
   {
     "objectID": "slides/06-knn-workflows.html#computational-setup",
     "href": "slides/06-knn-workflows.html#computational-setup",
     "title": "MAT-427: KNN + Preprocessing",
-    "section": "Computational Setup",
-    "text": "Computational Setup\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(modeldata) # contains ames dataset\n\ntidymodels_prefer()"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(modeldata) # contains ames dataset\n\ntidymodels_prefer()"
   },
   {
     "objectID": "slides/06-knn-workflows.html#comparing-models-data-splitting-with-tidymodels",
@@ -178,7 +178,7 @@
     "href": "slides/06-knn-workflows.html#new-observation",
     "title": "MAT-427: KNN + Preprocessing",
     "section": "New observation",
-    "text": "New observation\n\n\nCode\nnew_house &lt;- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)\nggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\")\n\n\n\n\nWhere do you think the 10 nearest neighbors should be?"
+    "text": "New observation\n\n\nCode\nnew_house &lt;- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)\nggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\")\n\n\n\n\n\n\n\n\n\n\nWhere do you think the 10 nearest neighbors should be?"
   },
   {
     "objectID": "slides/06-knn-workflows.html#computing-distances",
@@ -192,7 +192,7 @@
     "href": "slides/06-knn-workflows.html#nearest-neighbors",
     "title": "MAT-427: KNN + Preprocessing",
     "section": "10 “Nearest Neighbors”",
-    "text": "10 “Nearest Neighbors”\n\n\nCode\nggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\") +\n  geom_point(data = ames_dist |&gt; slice(1:10), color = \"green\")\n\n\n\n\nAre they where you thought they should be?"
+    "text": "10 “Nearest Neighbors”\n\n\nCode\nggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\") +\n  geom_point(data = ames_dist |&gt; slice(1:10), color = \"green\")\n\n\n\n\n\n\n\n\n\n\nAre they where you thought they should be?"
   },
   {
     "objectID": "slides/06-knn-workflows.html#looking-at-distances",
@@ -248,14 +248,14 @@
     "href": "slides/06-knn-workflows.html#new-observation-1",
     "title": "MAT-427: KNN + Preprocessing",
     "section": "New Observation",
-    "text": "New Observation\n\n\nCode\nnew_house &lt;- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)\nggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\")\n\n\n\n\nWhere should we put this point on the normalized plot?"
+    "text": "New Observation\n\n\nCode\nnew_house &lt;- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)\nggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\")\n\n\n\n\n\n\n\n\n\n\nWhere should we put this point on the normalized plot?"
   },
   {
     "objectID": "slides/06-knn-workflows.html#plotting-new-observation-witout-normalizing",
     "href": "slides/06-knn-workflows.html#plotting-new-observation-witout-normalizing",
     "title": "MAT-427: KNN + Preprocessing",
     "section": "Plotting new observation witout normalizing",
-    "text": "Plotting new observation witout normalizing\n\n\nCode\nnew_house &lt;- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)\names_train |&gt; mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area), Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr)) |&gt; \n  ggplot(aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) +\n  geom_point() +\n  geom_point(data = new_house, mapping = aes(Gr_Liv_Area, y = Bedroom_AbvGr), color = \"red\")\n\n\n\n\nDoes this look right?"
+    "text": "Plotting new observation witout normalizing\n\n\nCode\nnew_house &lt;- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)\names_train |&gt; mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area), Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr)) |&gt; \n  ggplot(aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) +\n  geom_point() +\n  geom_point(data = new_house, mapping = aes(Gr_Liv_Area, y = Bedroom_AbvGr), color = \"red\")\n\n\n\n\n\n\n\n\n\n\nDoes this look right?"
   },
   {
     "objectID": "slides/06-knn-workflows.html#normalized-using-training-data",
@@ -437,7 +437,7 @@
     "href": "slides/06-knn-workflows.html#computing-error-metrics-r2",
     "title": "MAT-427: KNN + Preprocessing",
     "section": "Computing Error Metrics: \\(R^2\\)",
-    "text": "Computing Error Metrics: \\(R^2\\)\n\nrsq(ames_test_preds, estimate = lr_preds, truth = Sale_Price) |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrsq\nstandard\n0.574702\n\n\n\n\nrsq(ames_test_preds, estimate = knn5_preds, truth = Sale_Price) |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrsq\nstandard\n0.605208\n\n\n\n\nrsq(ames_test_preds, estimate = knn10_preds, truth = Sale_Price) |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrsq\nstandard\n0.6296263\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Computing Error Metrics: \\(R^2\\)\n\nrsq(ames_test_preds, estimate = lr_preds, truth = Sale_Price) |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrsq\nstandard\n0.574702\n\n\n\n\nrsq(ames_test_preds, estimate = knn5_preds, truth = Sale_Price) |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrsq\nstandard\n0.605208\n\n\n\n\nrsq(ames_test_preds, estimate = knn10_preds, truth = Sale_Price) |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrsq\nstandard\n0.6296263"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#computational-setup",
@@ -1601,8 +1601,8 @@
     "objectID": "slides/05-knn.html#computational-setup",
     "href": "slides/05-knn.html#computational-setup",
     "title": "MAT-427: Data Splitting + KNN",
-    "section": "Computational Setup",
-    "text": "Computational Setup\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(readODS)\nlibrary(modeldata) # contains ames dataset\n\ntidymodels_prefer()\n\nmlr_model &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(readODS)\nlibrary(modeldata) # contains ames dataset\n\ntidymodels_prefer()\n\nmlr_model &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")"
   },
   {
     "objectID": "slides/05-knn.html#comparing-models-data-splitting",
@@ -1651,7 +1651,7 @@
     "href": "slides/05-knn.html#regression-conditional-averaging",
     "title": "MAT-427: Data Splitting + KNN",
     "section": "Regression: Conditional Averaging",
-    "text": "Regression: Conditional Averaging\nRestaurant Outlets Profit dataset\n\nWhat is a good value of \\(\\hat{f}(x)\\) (expected profit), say at \\(x=6\\)?\nA possible choice is the average of the observed responses at \\(x=6\\). But we may not observe responses for certain \\(x\\) values."
+    "text": "Regression: Conditional Averaging\nRestaurant Outlets Profit dataset\n\n\n\n\n\n\n\n\n\nWhat is a good value of \\(\\hat{f}(x)\\) (expected profit), say at \\(x=6\\)?\nA possible choice is the average of the observed responses at \\(x=6\\). But we may not observe responses for certain \\(x\\) values."
   },
   {
     "objectID": "slides/05-knn.html#k-nearest-neighbors-knn-regression",
@@ -1714,14 +1714,14 @@
     "href": "slides/05-knn.html#k-nearest-neighbors-regression-multiple-predictors-1",
     "title": "MAT-427: Data Splitting + KNN",
     "section": "K-Nearest Neighbors Regression (multiple predictors)",
-    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nknnfit10 &lt;- nearest_neighbor(neighbors = 10) |&gt;   # 10-nn regression\n  set_engine(\"kknn\") |&gt; \n  set_mode(\"regression\") |&gt; \n  fit(price ~ size_scaled + num_bedrooms_scaled, data = ames_train_scaled)\n\n\nTest Point: Gr_Liv_area = 2000 square feet, and Bedroom_AbvGr = 3, then\n\n\n# obtain 10-nn prediction\n\npredict(knnfit10, new_data = tibble(size_scaled = (2000 - mean(ames_train$Gr_Liv_Area))/sd(ames_train$Gr_Liv_Area),\n                                     num_bedrooms_scaled = (3 - mean(ames_train$Bedroom_AbvGr))/sd(ames_train$Bedroom_AbvGr)))\n\n# A tibble: 1 × 1\n   .pred\n   &lt;dbl&gt;\n1 256380\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nknnfit10 &lt;- nearest_neighbor(neighbors = 10) |&gt;   # 10-nn regression\n  set_engine(\"kknn\") |&gt; \n  set_mode(\"regression\") |&gt; \n  fit(price ~ size_scaled + num_bedrooms_scaled, data = ames_train_scaled)\n\n\nTest Point: Gr_Liv_area = 2000 square feet, and Bedroom_AbvGr = 3, then\n\n\n# obtain 10-nn prediction\n\npredict(knnfit10, new_data = tibble(size_scaled = (2000 - mean(ames_train$Gr_Liv_Area))/sd(ames_train$Gr_Liv_Area),\n                                     num_bedrooms_scaled = (3 - mean(ames_train$Bedroom_AbvGr))/sd(ames_train$Bedroom_AbvGr)))\n\n# A tibble: 1 × 1\n   .pred\n   &lt;dbl&gt;\n1 256380"
   },
   {
     "objectID": "slides/07-classification-logistic.html#classification-problems",
     "href": "slides/07-classification-logistic.html#classification-problems",
     "title": "MATH 427: Classification + Logistic Regression",
-    "section": "Classification Problems",
-    "text": "Classification Problems\n\nResponse \\(Y\\) is qualitative (categorical).\nObjective: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\nassigns class label to a future unlabeled (unseen) observations\nunderstand the relationship between the predictors and response\n\nTwo ways to make predictions\n\nClass probabilities\nClass labels"
+    "section": "",
+    "text": "Response \\(Y\\) is qualitative (categorical).\nObjective: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\nassigns class label to a future unlabeled (unseen) observations\nunderstand the relationship between the predictors and response\n\nTwo ways to make predictions\n\nClass probabilities\nClass labels"
   },
   {
     "objectID": "slides/07-classification-logistic.html#default-dataset",
@@ -1812,7 +1812,7 @@
     "href": "slides/07-classification-logistic.html#why-not-linear-regression-1",
     "title": "MATH 427: Classification + Logistic Regression",
     "section": "Why Not Linear Regression?",
-    "text": "Why Not Linear Regression?\n\n\nLinear regression: does not model probabilities well\n\nmight produce probabilities less than zero or bigger than one\ntreats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)"
+    "text": "Why Not Linear Regression?\n\n\n\n\n\n\n\n\n\n\nLinear regression: does not model probabilities well\n\nmight produce probabilities less than zero or bigger than one\ntreats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)"
   },
   {
     "objectID": "slides/07-classification-logistic.html#why-not-linear-regression-2",
@@ -1875,7 +1875,7 @@
     "href": "slides/07-classification-logistic.html#making-predictions-in-r",
     "title": "MATH 427: Classification + Logistic Regression",
     "section": "Making predictions in R",
-    "text": "Making predictions in R\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"class\") |&gt; kable()   # obtain class predictions\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"raw\") |&gt; kable()   # obtain log-odds predictions\n\n\n\n\nx\n\n\n\n\n-6.819727\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"prob\") |&gt; kable()  # obtain probability predictions\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n0.9989092\n0.0010908\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Making predictions in R\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"class\") |&gt; kable()   # obtain class predictions\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"raw\") |&gt; kable()   # obtain log-odds predictions\n\n\n\n\nx\n\n\n\n\n-6.819727\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"prob\") |&gt; kable()  # obtain probability predictions\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n0.9989092\n0.0010908\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;"
   },
   {
     "objectID": "support.html",
@@ -1916,5 +1916,173 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "hw/03-hw-knn.html",
+    "href": "hw/03-hw-knn.html",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "In this homework, you will practice applying the \\(K\\)-Nearest Neighbors (KNN) method which is capable of performing both classification and regression. You will also practice collaborating with a team over GitHub. The basic idea is that predictions are made based on the \\(K\\) observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different metrics (i.e. measures of distance) can be used, we will work exclusively with the Euclidean metric: \\[\\text{dist}(x, y) = \\sqrt{\\sum_{i=1}^p(x_i-y_i)^2}\\] for vectors \\(x = (x_1,\\ldots, x_p)\\) and \\(y = (y_1,\\ldots,y_p)\\).\n\n\nBy the end of the homework, you will…\n\nBe able to work simultaneously with teammates on the same document using GitHub\nFit and interpret linear models\nSplit data using tidymodels\nCompare and evaluate different linear models\n\n\n\n\nWe’ll start by using KNN for classification.\n\n\n\nWe will be working with the famous iris data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package datasets and then load the data set iris.\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nImport the iris data set from the datasets package and take a look at the columns. We would like to visualize the \\(K\\)-nearest neighbor method in two dimensions, so make a data set called iris2 consisting of the columns Sepal.Width, Petal.Width, and Species. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the strata argument in the initial_split function! Once again, set your seed to 301.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nPlot the points in your training set in the xy-plane colored by the Species labels.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nCenter and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nUncomment the code above and classify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the test set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nUse your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class.\n\n\n\n\n\n\n\n\n\n\n\nQuestion\n\n\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#data",
+    "href": "hw/03-hw-knn.html#data",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "We will be working with the famous iris data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/proponent of Eugenics, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. To access this data first load the package datasets and then load the data set iris."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#the-knn-algorithm",
+    "href": "hw/03-hw-knn.html#the-knn-algorithm",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "The KNN algorithm",
+    "text": "The KNN algorithm\n\nPlot the points in your training set in the xy-plane colored by the Species labels.\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. There are a lot of ways you could do this. A popular Data Scientist interview question is asking you to implement your own KNN algorithm. I suggest practicing this on your own.\nCenter and scale all three of the data sets. You should be using the mean and standard deviation from your training set to center and scale ALL THREE data sets. The preProcess function from the caret package may be helpful here. Since the KNN algorithm finds the \\(K\\)-nearest neighbors, why might it be important to center and scale your data BEFORE using KNN?\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)\n\n\nClassify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid. Protip: set type = \"class\" when you call predict.\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the validation set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied.\nCombine your training and validation sets. Use your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\n\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class.\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#data-dummy-variables",
+    "href": "hw/03-hw-knn.html#data-dummy-variables",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Data & Dummy Variables",
+    "text": "Data & Dummy Variables\nFor this portion of the homework, we’ll return to using the Carseat data from the ISLR package that we worked with in homework 4. Frequently, when working with categorical data, you will be required to transform that data into dummy variables. Namely, you’ll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as one-hot encoding."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#using-knn-for-regression",
+    "href": "hw/03-hw-knn.html#using-knn-for-regression",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Using KNN for Regression",
+    "text": "Using KNN for Regression\nThe function knnreg from the caret package will apply KNN to a regression problem by taking the average of the \\(K\\) nearest neighbors to the observation you’re looking to make a prediction for. knnreg works very similar to knn3 and previous models that we’ve fit in R."
+  },
+  {
+    "objectID": "slides/06-knn-workflows.html",
+    "href": "slides/06-knn-workflows.html",
+    "title": "MAT-427: KNN + Preprocessing",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(modeldata) # contains ames dataset\n\ntidymodels_prefer()"
+  },
+  {
+    "objectID": "slides/07-classification-logistic.html",
+    "href": "slides/07-classification-logistic.html",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "",
+    "text": "Response \\(Y\\) is qualitative (categorical).\nObjective: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\nassigns class label to a future unlabeled (unseen) observations\nunderstand the relationship between the predictors and response\n\nTwo ways to make predictions\n\nClass probabilities\nClass labels"
+  },
+  {
+    "objectID": "slides/08-classifiction-metrics.html",
+    "href": "slides/08-classifiction-metrics.html",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "",
+    "text": "Response \\(Y\\) is qualitative (categorical).\n\nOnly two classes \\(\\implies\\) Binary Classification Problem\n\nObjectives: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\) that:\n\nassigns a class label to a future unlabeled (unseen) observation\nhelps understand the relationship between the predictors and response\n\nThere can be two types of predictions based on the research problem.\n\nClass probabilities\nClass labels"
+  },
+  {
+    "objectID": "slides/05-knn.html",
+    "href": "slides/05-knn.html",
+    "title": "MAT-427: Data Splitting + KNN",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(readODS)\nlibrary(modeldata) # contains ames dataset\n\ntidymodels_prefer()\n\nmlr_model &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#learning-goals",
+    "href": "hw/03-hw-knn.html#learning-goals",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "By the end of the homework, you will…\n\nBe able to work simultaneously with teammates on the same document using GitHub\nFit and interpret linear models\nSplit data using tidymodels\nCompare and evaluate different linear models"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#knn-for-classification",
+    "href": "hw/03-hw-knn.html#knn-for-classification",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "We’ll start by using KNN for classification."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-1",
+    "href": "hw/03-hw-knn.html#exercise-1",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nImport the iris data set from the datasets package and take a look at the columns. We would like to visualize the \\(K\\)-nearest neighbor method in two dimensions, so make a data set called iris2 consisting of the columns Sepal.Width, Petal.Width, and Species. Split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the strata argument in the initial_split function! Once again, set your seed to 301."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-2",
+    "href": "hw/03-hw-knn.html#exercise-2",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nPlot the points in your training set in the xy-plane colored by the Species labels."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-3",
+    "href": "hw/03-hw-knn.html#exercise-3",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nAs the name suggests, the \\(K\\)-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If \\(k &gt; 1\\), then the neighbors essentially “vote” on the classification of the point. Based on your graph, if \\(k = 1\\), how would KNN classify a flower that had sepal width 3cm and petal width 1cm?"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-4",
+    "href": "hw/03-hw-knn.html#exercise-4",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nJust to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-5",
+    "href": "hw/03-hw-knn.html#exercise-5",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nCenter and scale your data sets. You should be using the mean and standard deviation from your training set to center and scale both data sets."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-6",
+    "href": "hw/03-hw-knn.html#exercise-6",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nRather than implementing this method by hand, we can use the function knn3 in the caret package.\n\n\nWe would like to understand how the method of \\(K\\)-nearest neighbors will classify points in the plane. That is, we would like to view the decision boundaries of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called grid consisting of 6.25^{4} points in the plane.\n\n# g1 &lt;- rep((200:450)*(1/100), 250)\n# g2 &lt;- rep((0:250)*(1/100), each = 250)\n# grid &lt;- tibble(  x1 = g1\n#                    , x2 = g2)"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-7",
+    "href": "hw/03-hw-knn.html#exercise-7",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nUncomment the code above and classify the points in grid using your training data and \\(k = 1\\). Then, plot the points in grid colored by their classification. Don’t forget to center and scale the grid."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-8",
+    "href": "hw/03-hw-knn.html#exercise-8",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nNotice that the decision boundary between versicolor and virginica looks a little strange. What do you observe? Why do you think this is happening? Does using \\(k = 2\\) make things better or worse? Why do you think that is?"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-9",
+    "href": "hw/03-hw-knn.html#exercise-9",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nDetermine which value of \\(K\\), the number of neighbors selected, gives the highest accuracy on the test set. Test all \\(K\\)s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest \\(K\\) among the ones which are tied."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-10",
+    "href": "hw/03-hw-knn.html#exercise-10",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nUse your value of \\(K\\) to classify the points in test based on this combined data set. You must recenter and scale your data based on this combination. Generate a confusion matrix and report the accuracy of your method? Note. You should “set the seed” in R by specifying set.seed(301) before you build your model. Because R randomly breaks ties, if you do not set the seed, you may get a different result the next time you knit your document (and your answer won’t match your code).\nAwesome!! Your model probably did pretty well, because KNN performs really well on the iris data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and class imbalance where there are very few observations belonging to a particular class."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-11",
+    "href": "hw/03-hw-knn.html#exercise-11",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "",
+    "text": "Question\n\n\n\nKNN can also be modified to give probabilistic predictions like we get from logistic regression. How would you modify the method to give a probabilistic prediction instead of a classification?"
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-12",
+    "href": "hw/03-hw-knn.html#exercise-12",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Exercise 12",
+    "text": "Exercise 12\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the Carseat data from the ISLR package. Use the dummyVars function from the caret package to create dummy variables for the categorical variables in Carseat. Then, split the data into a training, validation, and test set using a 60-20-20 split and a seed of 301 (as usual). Explain what the fullRank options does and why we can create dummy variables before splitting our data.\n\n\nThere is no standard way of handling categorical variables when applying KNN to predictors that are categorical. This is because we need to answer the fundamental question of “What is the distance between two observations that belong to different categories?”. There are several ways of approaching this. One is to use different metrics and another is to just convert your categorical variables into numerical variables by using this one-hot encoding. Past that, you’ll need to decide whether to center and standardize your dummy variables."
+  },
+  {
+    "objectID": "hw/03-hw-knn.html#exercise-13",
+    "href": "hw/03-hw-knn.html#exercise-13",
+    "title": "Homework 3: \\(K\\)-Nearest Neighbors",
+    "section": "Exercise 13",
+    "text": "Exercise 13\n\n\n\n\n\n\nQuestion\n\n\n\nFit a KNN model to predict Sales from the data we have. Fit your model on the training data and use the validation set to choose the appropriate variable and the number of neighbors to include. You may find it useful to plot the \\(R^2\\) and RMSE against the number of neighbors you include in your model. Once you select a \\(K\\) and the variables you want to include in your model, see how it performs on the test set and compare your result to the linear model you fit at the end of homework 4. Which model works better? You will find that the RMSE and \\(R^2\\) disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (Sales in this case) against the model residuals. When you do this, what pattern do you see?"
   }
 ]
