@@ -2125,6 +2125,10 @@
     "href": "hw/03-hw-knn.html#exercise-0.2",
     "title": "Homework 3: \\(K\\)-Nearest Neighbors",
     "section": "Exercise 0.2",
+<<<<<<< HEAD
     "text": "Exercise 0.2\nWe will now learn how to collaborate on the same document at the same time.\n\n\n\n\n\n\nQuestion\n\n\n\nHave Member 1 fill in the Team Name and their name below and have Members 2 & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3.\n\n\n\nTeam Name: Test\nMember 1: [Insert Name]\nMember 2: My name"
+=======
+    "text": "Exercise 0.2\nWe will now learn how to collaborate on the same document at the same time.\n\n\n\n\n\n\nQuestion\n\n\n\nHave Member 1 fill in the Team Name and their name below and have Members 2 & 3 fill in their names. If you only have two members Member 2 should delete the line for Member 3.\n\n\n\nTeam Name: Test\nMember 1: Leader Name\nMember 2: [Insert Name]\nMember 3: [Insert Name/Delete line if you only have two members] git pull"
+>>>>>>> c7f797c (Testing merge)
   }
 ]
