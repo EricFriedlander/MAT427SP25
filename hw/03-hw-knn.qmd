@@ -1,6 +1,6 @@
 ---
 title: "Homework 3: $K$-Nearest Neighbors"
-author: "Our names"
+author: "Test name 1"
 editor: visual
 format:
   html:
