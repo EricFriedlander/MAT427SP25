@@ -727,23 +727,238 @@ Eric Friedlander
 </div>
 </div>
 </div>
-<!-- ## K-Nearest Neighbors Classifier: Performance {.smaller} -->
-<!-- ```{r} -->
-<!-- Default_wpreds |>  -->
-<!--   conf_mat(truth = default, estimate = pred_50) -->
-<!-- ``` -->
-<!-- ## K-Nearest Neighbors Classifier: Performance {.smaller} -->
-<!-- ```{r} -->
-<!-- Default_wpreds |>  -->
-<!--   conf_mat(truth = default, estimate = pred_50) |>  -->
-<!--   autoplot(type = "heatmap") -->
-<!-- ``` -->
-<!-- ## Confusion Matrix Terms -->
-<!-- |                                  | Actual Positive/Event | Actual Negative/Non-event | -->
-<!-- |:--------------------------------:|:---------------------:|:-------------------------:| -->
-<!-- |   **Predicted Positive/Event**   |     True Negative     |      False Positive       | -->
-<!-- | **Predicted Negative/Non-event** |    False Negative     |       True Positive       | -->
-<!-- ## ROC Curve and AUC -->
+</section>
+<section>
+<section id="assessing-performance-of-classifiers" class="title-slide slide level1 center">
+<h1>Assessing Performance of Classifiers</h1>
+
+</section>
+<section id="binary-classifiers" class="slide level2">
+<h2>Binary Classifiers</h2>
+<ul>
+<li>Start with binary classification scenarios</li>
+<li>With binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”
+<ul>
+<li>If relavent to your problem: “Positive” should be the thing you’re trying to predict/care more about</li>
+<li>Note: “Positive” <span class="math inline">\(\neq\)</span> “Good”</li>
+<li>For <code>default</code>: “Yes” is Positive</li>
+</ul></li>
+<li>Some metrics weight “Positives” more and viceversa</li>
+</ul>
+</section>
+<section id="confusion-matrix" class="slide level2">
+<h2>Confusion Matrix</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 27%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Actual Positive/Event</th>
+<th style="text-align: center;">Actual Negative/Non-event</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Predicted Positive/Event</strong></td>
+<td style="text-align: center;">True Negative (TN)</td>
+<td style="text-align: center;">False Positive (FP)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Predicted Negative/Non-event</strong></td>
+<td style="text-align: center;">False Negative (FN)</td>
+<td style="text-align: center;">True Positive (TP)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="adding-predictions-to-tibble" class="slide level2">
+<h2>Adding predictions to tibble</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>default_test_wpreds <span class="ot">&lt;-</span> default_test <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a></a>    <span class="at">knn_preds =</span> <span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>)<span class="sc">$</span>.pred_class,</span>
+<span id="cb14-4"><a></a>    <span class="at">logistic_preds =</span> <span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>)<span class="sc">$</span>.pred_class</span>
+<span id="cb14-5"><a></a>  )</span>
+<span id="cb14-6"><a></a></span>
+<span id="cb14-7"><a></a>default_test_wpreds <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">default</th>
+<th style="text-align: left;">student</th>
+<th style="text-align: right;">balance</th>
+<th style="text-align: right;">income</th>
+<th style="text-align: left;">knn_preds</th>
+<th style="text-align: left;">logistic_preds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">729.5265</td>
+<td style="text-align: right;">44361.63</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">808.6675</td>
+<td style="text-align: right;">17600.45</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">1220.5838</td>
+<td style="text-align: right;">13268.56</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">237.0451</td>
+<td style="text-align: right;">28251.70</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">606.7423</td>
+<td style="text-align: right;">44994.56</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">286.2326</td>
+<td style="text-align: right;">45042.41</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="knn-confusion-matrix" class="slide level2">
+<h2>KNN: Confusion Matrix</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No  3854   80
+       Yes   17   49</code></pre>
+</div>
+</div>
+</section>
+<section id="knn-confusion-matrix-sexy" class="slide level2">
+<h2>KNN: Confusion Matrix (Sexy)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a></a>  <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="logistic-regression-confusion-matrix" class="slide level2">
+<h2>Logistic Regression: Confusion Matrix</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> logistic_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="classification-metrics" class="slide level2 smaller">
+<h2>Classification Metrics</h2>
+<ul>
+<li>Accuracy: proportion of your classes that are correct <span class="math display">\[(TP + TN)/Total\]</span></li>
+<li>Recall/Sensitivity: proportion of true positives correct (true positive rate) <span class="math display">\[TP/(TP+FN)\]</span></li>
+<li>Precision/Positive Predictive Value (PPV): proportion of predicted positive that are correct <span class="math display">\[TP/(TP+FP)\]</span></li>
+<li>Specificity: proportion of true negatives correct (true negative rate) <span class="math display">\[TN/(TN+FP)\]</span></li>
+<li>Negative Predictive Value (NPV): proportion of predicted negatives that are correct <span class="math display">\[TN/(TN+FN)\]</span></li>
+</ul>
+</section>
+<section id="knn-performance" class="slide level2 smaller">
+<h2>KNN: Performance</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a></a>  <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb19-5"><a></a>    <span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>)</span>
+<span id="cb19-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li>Accuracy: <span class="math inline">\((3854+49)/4000 = .976 = 97.6\%\)</span></li>
+<li>Recall/Sensitivity: <span class="math inline">\(49/(49+80) = 0.380 = 38.0\%\)</span></li>
+<li>Precision/Positive Predictive Value (PPV): <span class="math inline">\(49/(49+17) = .742 = 74.2\%\)</span></li>
+<li>Specificity: <span class="math inline">\(3854/(3854+17) = 0.996 = 99.6\%\)</span></li>
+<li>Negative Predictive Value (NPV): <span class="math inline">\(3854/(3854+80) = 98.0\)</span></li>
+</ul>
+</div></div>
+</section>
+<section id="logistic-regression-performance" class="slide level2 smaller">
+<h2>Logistic Regression: Performance</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a></a>  <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb20-5"><a></a>    <span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>)</span>
+<span id="cb20-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<p>Compute the following and write your answers on the board:</p>
+<ul>
+<li>Accuracy</li>
+<li>Recall/Sensitivity</li>
+<li>Precision/Positive Predictive Value (PPV)</li>
+<li>Specificity</li>
+<li>Negative Predictive Value (NPV)</li>
+</ul>
+</div></div>
+</section>
+<section id="performance-metrics-with-yardstick" class="slide level2">
+<h2>Performance Metrics with <code>yardstick</code></h2>
+<ul>
+<li><code>yardstick</code> is a package that ships with <code>tidymodels</code> meant for model evaluation</li>
+</ul>
+</section>
+<section id="roc-curve-and-auc" class="slide level2">
+<h2>ROC Curve and AUC</h2>
 <!-- - **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds -->
 <!--   + Plots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis -->
 <!-- - **AUC**: area under the AUC curve -->
@@ -1326,7 +1541,7 @@ Eric Friedlander
 <p><a href="https://mat427sp25.netlify.app/schedule">🔗 MAT 427 - Spring 2025 - Schedule</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
