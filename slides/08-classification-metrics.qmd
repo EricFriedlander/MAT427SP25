@@ -20,6 +20,16 @@ knitr:
     width: 200
 ---
 
+## Tips on Gradient Descent HW
+
+-   Make step size small!
+-   May take a while to converge
+-   Try adaptive step size (i.e. backtracking)
+-   Clarification on stopping criteria
+    +   Set tolerance
+    +   Stop when distance from gradient to $(0, 0)$ is below tolerance
+
+
 ## Computational Set-Up
 
 ```{r}
@@ -143,7 +153,7 @@ predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  
 
 -   Start with binary classification scenarios
 -   With binary classification, designate one category as "Success/Positive" and the other as "Failure/Negative"
-    +   If relavent to your problem: "Positive" should be the thing you're trying to predict/care more about
+    +   If relevant to your problem: "Positive" should be the thing you're trying to predict/care more about
     +   Note: "Positive" $\neq$ "Good"
     +   For `default`: "Yes" is Positive
 -   Some metrics weight "Positives" more and viceversa

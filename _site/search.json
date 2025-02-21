@@ -1282,6 +1282,13 @@
     "text": "Recap\n\nWhat is a Machine Learning algorithm?\n\nT: has task\nP: performance is measured\nE: improves with experience\n\nTerminology:\n\nFeatures\n\n\\(p\\)\n\nTarget\nObservations\n\n\\(n\\)\n\n\nSupervised vs. unsupervised learning\n\nSupervised: data is labeled\nUnsupervised: data is unlabeled\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
+    "objectID": "slides/08-classification-metrics.html#tips-on-gradient-descent-hw",
+    "href": "slides/08-classification-metrics.html#tips-on-gradient-descent-hw",
+    "title": "MATH 427: Evaluating Classification Models",
+    "section": "Tips on Gradient Descent HW",
+    "text": "Tips on Gradient Descent HW\n\nMake step size small!\nMay take a while to converge\nTry adaptive step size (i.e. backtracking)\nClarification on stopping criteria\n\nSet tolerance\nStop when distance from gradient to \\((0, 0)\\) is below tolerance"
+  },
+  {
     "objectID": "slides/08-classification-metrics.html#computational-set-up",
     "href": "slides/08-classification-metrics.html#computational-set-up",
     "title": "MATH 427: Evaluating Classification Models",
@@ -1335,7 +1342,7 @@
     "href": "slides/08-classification-metrics.html#binary-classifiers",
     "title": "MATH 427: Evaluating Classification Models",
     "section": "Binary Classifiers",
-    "text": "Binary Classifiers\n\nStart with binary classification scenarios\nWith binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”\n\nIf relavent to your problem: “Positive” should be the thing you’re trying to predict/care more about\nNote: “Positive” \\(\\neq\\) “Good”\nFor default: “Yes” is Positive\n\nSome metrics weight “Positives” more and viceversa"
+    "text": "Binary Classifiers\n\nStart with binary classification scenarios\nWith binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”\n\nIf relevant to your problem: “Positive” should be the thing you’re trying to predict/care more about\nNote: “Positive” \\(\\neq\\) “Good”\nFor default: “Yes” is Positive\n\nSome metrics weight “Positives” more and viceversa"
   },
   {
     "objectID": "slides/08-classification-metrics.html#confusion-matrix",

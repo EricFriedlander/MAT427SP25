@@ -404,6 +404,19 @@ Eric Friedlander
 </div>
 
 </section>
+<section id="tips-on-gradient-descent-hw" class="slide level2">
+<h2>Tips on Gradient Descent HW</h2>
+<ul>
+<li>Make step size small!</li>
+<li>May take a while to converge</li>
+<li>Try adaptive step size (i.e.&nbsp;backtracking)</li>
+<li>Clarification on stopping criteria
+<ul>
+<li>Set tolerance</li>
+<li>Stop when distance from gradient to <span class="math inline">\((0, 0)\)</span> is below tolerance</li>
+</ul></li>
+</ul>
+</section>
 <section id="computational-set-up" class="slide level2">
 <h2>Computational Set-Up</h2>
 <div class="cell">
@@ -739,7 +752,7 @@ Eric Friedlander
 <li>Start with binary classification scenarios</li>
 <li>With binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”
 <ul>
-<li>If relavent to your problem: “Positive” should be the thing you’re trying to predict/care more about</li>
+<li>If relevant to your problem: “Positive” should be the thing you’re trying to predict/care more about</li>
 <li>Note: “Positive” <span class="math inline">\(\neq\)</span> “Good”</li>
 <li>For <code>default</code>: “Yes” is Positive</li>
 </ul></li>
