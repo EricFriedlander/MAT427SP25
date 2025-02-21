@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Eric Friedlander">
-  <title>MAT 427 - Spring 2025 – MATH 427: Classification + Logistic Regression</title>
+  <title>MAT 427 - Spring 2025 – MATH 427: Evaluating Classification Models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -393,7 +393,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 427: Classification + Logistic Regression</h1>
+  <h1 class="title">MATH 427: Evaluating Classification Models</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -404,28 +404,26 @@ Eric Friedlander
 </div>
 
 </section>
-<section id="classification-problems" class="slide level2 smaller">
-<h2>Classification Problems</h2>
-<ul>
-<li>Response <span class="math inline">\(Y\)</span> is qualitative (categorical).</li>
-<li>Objective: build a classifier <span class="math inline">\(\hat{Y}=\hat{C}(\mathbf{X})\)</span>
-<ul>
-<li>assigns class label to a future unlabeled (unseen) observations</li>
-<li>understand the relationship between the predictors and response</li>
-</ul></li>
-<li>Two ways to make predictions
-<ul>
-<li>Class probabilities</li>
-<li>Class labels</li>
-</ul></li>
-</ul>
+<section id="computational-set-up" class="slide level2">
+<h2>Computational Set-Up</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-4"><a></a><span class="fu">library</span>(janitor) <span class="co"># for next contingency tables</span></span>
+<span id="cb1-5"><a></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-6"><a></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb1-7"><a></a></span>
+<span id="cb1-8"><a></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="default-dataset" class="slide level2 smaller">
 <h2>Default Dataset</h2>
+<div class="columns">
+<div class="column">
 <p>A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(ISLR2)   <span class="co"># load library</span></span>
-<span id="cb1-2"><a></a><span class="fu">head</span>(Default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">head</span>(Default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -477,28 +475,12 @@ Eric Friedlander
 </table>
 </div>
 </div>
-<p>We will consider <code>default</code> as the response variable.</p>
-</section>
-<section id="split-the-data" class="slide level2">
-<h2>Split the data</h2>
+</div><div class="column">
+<p><strong>Response Variable</strong>: <code>default</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>default_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(Default, <span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">strata =</span> default)</span>
-<span id="cb2-4"><a></a>default_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;Training/Testing/Total&gt;
-&lt;6000/4000/10000&gt;</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>default_train <span class="ot">&lt;-</span> <span class="fu">training</span>(default_split)</span>
-<span id="cb4-2"><a></a>default_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(default_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="summarizing-our-response-variable" class="slide level2 smaller">
-<h2>Summarizing our response variable</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb5-2"><a></a>Default <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># class frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>Default <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a></a>  <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span>  <span class="co"># class frequencies</span></span>
+<span id="cb3-3"><a></a>  <span class="fu">kable</span>()           <span class="co"># Make it look nice</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -522,108 +504,45 @@ Eric Friedlander
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>default_train <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">default</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">percent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">5796</td>
-<td style="text-align: right;">0.966</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">204</td>
-<td style="text-align: right;">0.034</td>
-</tr>
-</tbody>
-</table>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>default_test <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">default</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">percent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">3871</td>
-<td style="text-align: right;">0.96775</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">129</td>
-<td style="text-align: right;">0.03225</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+</div></div>
 </section>
-<section id="data-types-in-r" class="slide level2 smaller">
-<h2>Data Types in R</h2>
+<section id="split-the-data" class="slide level2">
+<h2>Split the data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>Default <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>default_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(Default, <span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">strata =</span> default)</span>
+<span id="cb4-4"><a></a>default_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 10,000
-Columns: 4
-$ default &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, No, No, No, No…
-$ student &lt;fct&gt; No, Yes, No, No, No, Yes, No, Yes, No, No, Yes, Yes, No, No, N…
-$ balance &lt;dbl&gt; 729.5265, 817.1804, 1073.5492, 529.2506, 785.6559, 919.5885, 8…
-$ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 7491.55…</code></pre>
+<pre><code>&lt;Training/Testing/Total&gt;
+&lt;6000/4000/10000&gt;</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>default_train <span class="ot">&lt;-</span> <span class="fu">training</span>(default_split)</span>
+<span id="cb6-2"><a></a>default_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(default_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li><code>fct</code> = <code>factor</code> which is the data type you want to use for categorical data</li>
-<li><code>as_factor</code> will typically transform things (including numbers) into factors for you</li>
-<li><code>chr</code> can also be used but <code>factor</code>s are better because they store all possible levels for your categorical data</li>
-<li><code>factor</code>s are helpful for plotting because you can reorder the levels to help you plot things</li>
-</ul>
-</section>
-<section id="k-nearest-neighbors-classifier" class="slide level2">
-<h2>K-Nearest Neighbors Classifier</h2>
-<ul>
-<li>Given a value for <span class="math inline">\(K\)</span> and a test data point <span class="math inline">\(x_0\)</span>: <span class="math display">\[P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)\]</span> where <span class="math inline">\(\mathcal{N}_0\)</span> is the set of the <span class="math inline">\(K\)</span> “closest” neighbors.</li>
-<li>For classification: neighbors “vote” for class (unlike in regression where predictions are obtained by averaging) <span class="math display">\[P(Y=j | X=x_0)=\text{Proportion of neighbors in class }j\]</span></li>
-</ul>
 </section>
 <section id="k-nearest-neighbors-classifier-build-model" class="slide level2">
-<h2>K-Nearest Neighbors Classifier: Build Model</h2>
+<h2><span class="r-fit-text">K-Nearest Neighbors Classifier: Build Model</span></h2>
+<ul>
+<li><strong>Response</strong> (<span class="math inline">\(Y\)</span>): <code>default</code></li>
+<li><strong>Predictor</strong> (<span class="math inline">\(X\)</span>): <code>balance</code></li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>knn_default_fit <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit 10-nn model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>knnfit <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb7-4"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> Default)   <span class="co"># fit 10-nn model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li>Why don’t I need to worry about centering and scaling?</li>
-</ul>
 </section>
-<section id="k-nearest-neighbors-classifier-predictions" class="slide level2">
-<h2>K-Nearest Neighbors Classifier: Predictions</h2>
-<ul>
-<li><code>predict</code> with a categorical response: <a href="https://parsnip.tidymodels.org/reference/predict.model_fit.html">documentation</a></li>
-<li>Two different ways of making predictions</li>
-</ul>
-</section>
-<section id="predicting-a-class" class="slide level2">
-<h2>Predicting a class</h2>
+<section id="k-nearest-neighbors-classifier-predictions" class="slide level2 smaller">
+<h2><span class="r-fit-text">K-Nearest Neighbors Classifier: Predictions</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Class labels</a></li><li><a href="#tabset-1-2">Probabilities</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>knn_class_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_default_fit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>)   <span class="co"># obtain default class label predictions</span></span>
-<span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a>knn_class_preds <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> Default, <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain predictions as classes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -654,15 +573,13 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
 </table>
 </div>
 </div>
-</section>
-<section id="predicting-a-probability" class="slide level2">
-<h2>Predicting a probability</h2>
+</div>
+<div id="tabset-1-2">
 <ul>
-<li>Can anyone pick-out what’s wrong here? Hint: <span class="math inline">\(k = 10\)</span></li>
+<li>Predicts class w/ maximum probability</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>knn_prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_default_fit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>)   <span class="co"># obtain predictions as probabilities</span></span>
-<span id="cb12-2"><a></a>knn_prob_preds <span class="sc">|&gt;</span> <span class="fu">filter</span>(.pred_No<span class="sc">*</span>.pred_Yes <span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> Default, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="co"># obtain predictions as probabilities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -673,196 +590,46 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0.8685</td>
-<td style="text-align: right;">0.1315</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.8685</td>
-<td style="text-align: right;">0.1315</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">0.8685</td>
-<td style="text-align: right;">0.1315</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.8505</td>
-<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">0.7105</td>
-<td style="text-align: right;">0.2895</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.4775</td>
-<td style="text-align: right;">0.5225</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-</section>
-<section id="ive-been-lying-to-you" class="slide level2">
-<h2>I’ve been lying to you</h2>
-<ul>
-<li><code>kknn</code> actually takes a <em>weighted average</em> of the nearest neighbors
-<ul>
-<li>I.e. closer observations get more weight</li>
-</ul></li>
-<li>To use unweighted KNN need <code>weight_func = "rectangular"</code></li>
-</ul>
-</section>
-<section id="unweighted-knn" class="slide level2">
-<h2>Unweighted KNN</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>knn_default_unw_fit <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>, <span class="at">weight_fun =</span> <span class="st">"rectangular"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit 10-nn model</span></span>
-<span id="cb13-5"><a></a></span>
-<span id="cb13-6"><a></a>knn_uw_prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(knn_default_unw_fit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>)   <span class="co"># obtain predictions as probabilities</span></span>
-<span id="cb13-7"><a></a>knn_uw_prob_preds <span class="sc">|&gt;</span> <span class="fu">filter</span>(.pred_No<span class="sc">*</span>.pred_Yes <span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">.pred_No</th>
-<th style="text-align: right;">.pred_Yes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.1</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.1</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">0.3</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.5</td>
-</tr>
-</tbody>
-</table>
+</div>
 </div>
 </div>
 </section>
-<section>
-<section id="logistic-regression" class="title-slide slide level1 center">
-<h1>Logistic Regression</h1>
-
-</section>
-<section id="why-not-linear-regression" class="slide level2 smaller">
-<h2>Why Not Linear Regression?</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>Default_lr <span class="ot">&lt;-</span> default_train <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(<span class="at">default_0_1 =</span> <span class="fu">if_else</span>(default <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb14-3"><a></a></span>
-<span id="cb14-4"><a></a>lrfit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb14-5"><a></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-6"><a></a>  <span class="fu">fit</span>(default_0_1 <span class="sc">~</span> balance, <span class="at">data =</span> Default_lr)   <span class="co"># fit SLR</span></span>
-<span id="cb14-7"><a></a></span>
-<span id="cb14-8"><a></a>lrfit <span class="sc">|&gt;</span> <span class="fu">predict</span>(<span class="at">new_data =</span> default_train) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">.pred</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0.0316011</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.0655518</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">-0.0065293</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.0274263</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.0451629</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.0327046</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="why-not-linear-regression-1" class="slide level2 smaller">
-<h2>Why Not Linear Regression?</h2>
-
-<img data-src="CopyOf07-classification-logistic_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
-<li>Linear regression: does not model probabilities well
-<ul>
-<li>might produce probabilities less than zero or bigger than one</li>
-<li>treats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)</li>
-</ul></li>
-</ul>
-</section>
-<section id="why-not-linear-regression-2" class="slide level2">
-<h2>Why Not Linear Regression?</h2>
-<p>Suppose we have a response, <span class="math display">\[Y=\begin{cases}
-1 &amp; \text{if stroke} \\
-2 &amp; \text{if drug overdose} \\
-3  &amp; \text{if epileptic seizure}
-\end{cases}\]</span></p>
-<ul>
-<li>Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning
-<ul>
-<li>e.g.&nbsp;drug overdose <span class="math inline">\(-\)</span> stroke <span class="math inline">\(= 1\)</span>? 🤔</li>
-</ul></li>
-</ul>
-</section>
-<section id="logistic-regression-1" class="slide level2 smaller">
-<h2>Logistic Regression</h2>
-<p>Consider a one-dimensional binary classification problem:</p>
-<ul>
-<li>Transform the linear model <span class="math inline">\(\beta_0 + \beta_1 \ X\)</span> so that the output is a probability</li>
-<li>Use <strong>logistic</strong> function: <span class="math display">\[g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}\]</span></li>
-<li>Then: <span class="math display">\[p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}\]</span></li>
-</ul>
-</section>
-<section id="other-important-quantities" class="slide level2">
-<h2>Other important quantities</h2>
-<ul>
-<li><strong>Odds</strong>: <span class="math inline">\(\dfrac{p(x)}{1-p(x)}\)</span></li>
-<li><strong>Log-Odds (logit)</strong>: <span class="math inline">\(\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X\)</span>
-<ul>
-<li>Linear function of predictors</li>
-</ul></li>
-</ul>
-</section>
-<section id="logistic-regression-2" class="slide level2">
-<h2>Logistic Regression</h2>
-
-<img data-src="CopyOf07-classification-logistic_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
-<section id="fitting-the-model" class="slide level2">
-<h2>Fitting the model</h2>
+<section id="fitting-a-logistic-regression" class="slide level2">
+<h2>Fitting a logistic regression</h2>
 <p>Fitting a logistic regression model with <code>default</code> as the response and <code>balance</code> as the predictor:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>logregfit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb15-3"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit logistic regression model</span></span>
-<span id="cb15-4"><a></a></span>
-<span id="cb15-5"><a></a><span class="fu">tidy</span>(logregfit) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>logregfit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit logistic regression model</span></span>
+<span id="cb10-4"><a></a></span>
+<span id="cb10-5"><a></a><span class="fu">tidy</span>(logregfit) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -894,35 +661,14 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
 </div>
 </div>
 </section>
-<section id="interpreting-coefficients" class="slide level2">
-<h2>Interpreting Coefficients</h2>
-<ul>
-<li>As <span class="math inline">\(X\)</span> increases by 1, the log-odds increase by <span class="math inline">\(\hat{\beta}_1\)</span>
-<ul>
-<li>I.e. probability of default increases but NOT linearly</li>
-<li>Change in the probability of default due to a one-unit change in balance depends on the current balance value</li>
-</ul></li>
-</ul>
-</section>
-<section id="interpreting-coefficients-1" class="slide level2">
-<h2>Interpreting Coefficients</h2>
-
-<img data-src="CopyOf07-classification-logistic_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
-<section id="making-predictions-theory" class="slide level2 smaller">
-<h2>Making predictions: Theory</h2>
-<p>For <code>balance</code>=$700,</p>
-<div>
-<ul>
-<li class="fragment"><span class="math display">\[\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-10.69 + (0.005533 \times 700)}}{1+e^{-10.69 + (0.005533 \times 700)}}=0.0011\]</span></li>
-<li class="fragment"><span class="math display">\[\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} = \dfrac{0.0011}{1-0.0011}\approx 0.0011\]</span></li>
-<li class="fragment"><span class="math display">\[\textbf{Log-Odds}(X)=\log\left(\dfrac{\hat{p}(X)}{1-\hat{p}(X)}\right) = \log(0.0011) = -6.80\]</span></li>
-</ul>
-</div>
-</section>
 <section id="making-predictions-in-r" class="slide level2">
 <h2>Making predictions in R</h2>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Class Labels</a></li><li><a href="#tabset-2-2">Log-Odds</a></li><li><a href="#tabset-2-3">Probabilities</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain class predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain class predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -937,7 +683,11 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"raw"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain log-odds predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"raw"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain log-odds predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -952,7 +702,11 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-3">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -970,36 +724,853 @@ $ income  &lt;dbl&gt; 44361.625, 12106.135, 31767.139, 35704.494, 38463.496, 749
 </table>
 </div>
 </div>
-<!-- ## Using a threshold {.smaller} -->
-<!-- - Step 1: Predict **probabilities** for all observations -->
-<!-- ```{r} -->
-<!-- logreg_prob_preds <- predict(logregfit, newdata = Default, type = "response")   # obtain probability predictions -->
-<!-- head(logreg_prob_preds) |>    # predicted probabilities for first six observations -->
-<!--   kable() -->
-<!-- ``` -->
-<!-- ## Using a threshold {.smaller} -->
-<!-- - Step 1: Predict **probabilities** for all observations -->
-<!-- - Step 2: Set a threshold to obtain **class labels** (0.5 below) -->
-<!-- ```{r} -->
-<!-- threshold <- 0.5   # set threshold -->
-<!-- logreg_class_preds <- factor(ifelse(logreg_prob_preds > threshold, "Yes", "No"))   # obtain class predictions -->
-<!-- head(logreg_class_preds) |>    # predicted class labels for first six observations -->
-<!--   kable() -->
-<!-- ``` -->
-<!-- ## Assessing Performance {.smaller} -->
-<!-- ```{r} -->
-<!-- # use the following code only when all predictions are from the same class -->
-<!-- # levels(logreg_class_preds) = c("No", "Yes") -->
-<!-- confusionMatrix(data = logreg_class_preds, reference = Default$default, positive = "Yes") -->
-<!-- ``` -->
-<!-- ## ROC Curve and AUC  {.smaller} -->
-<!-- ```{r} -->
-<!-- library(pROC)   # load library -->
-<!-- # create object for ROC curve -->
-<!-- roc_object <- roc(response = Default$default, predictor = logreg_prob_preds) -->
-<!-- ggroc(roc_object, col = "red")   # plot ROC curve -->
-<!-- auc(roc_object)   # obtain AUC -->
-<!-- ``` -->
+</div>
+</div>
+</div>
+</section>
+<section>
+<section id="assessing-performance-of-classifiers" class="title-slide slide level1 center">
+<h1>Assessing Performance of Classifiers</h1>
+
+</section>
+<section id="binary-classifiers" class="slide level2">
+<h2>Binary Classifiers</h2>
+<ul>
+<li>Start with binary classification scenarios</li>
+<li>With binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”
+<ul>
+<li>If relavent to your problem: “Positive” should be the thing you’re trying to predict/care more about</li>
+<li>Note: “Positive” <span class="math inline">\(\neq\)</span> “Good”</li>
+<li>For <code>default</code>: “Yes” is Positive</li>
+</ul></li>
+<li>Some metrics weight “Positives” more and viceversa</li>
+</ul>
+</section>
+<section id="confusion-matrix" class="slide level2">
+<h2>Confusion Matrix</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 27%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Actual Positive/Event</th>
+<th style="text-align: center;">Actual Negative/Non-event</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Predicted Positive/Event</strong></td>
+<td style="text-align: center;">True Negative (TN)</td>
+<td style="text-align: center;">False Positive (FP)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Predicted Negative/Non-event</strong></td>
+<td style="text-align: center;">False Negative (FN)</td>
+<td style="text-align: center;">True Positive (TP)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="adding-predictions-to-tibble" class="slide level2">
+<h2>Adding predictions to tibble</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>default_test_wpreds <span class="ot">&lt;-</span> default_test <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a></a>    <span class="at">knn_preds =</span> <span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>)<span class="sc">$</span>.pred_class,</span>
+<span id="cb14-4"><a></a>    <span class="at">logistic_preds =</span> <span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>)<span class="sc">$</span>.pred_class</span>
+<span id="cb14-5"><a></a>  )</span>
+<span id="cb14-6"><a></a></span>
+<span id="cb14-7"><a></a>default_test_wpreds <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">default</th>
+<th style="text-align: left;">student</th>
+<th style="text-align: right;">balance</th>
+<th style="text-align: right;">income</th>
+<th style="text-align: left;">knn_preds</th>
+<th style="text-align: left;">logistic_preds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">729.5265</td>
+<td style="text-align: right;">44361.63</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">808.6675</td>
+<td style="text-align: right;">17600.45</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">1220.5838</td>
+<td style="text-align: right;">13268.56</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">237.0451</td>
+<td style="text-align: right;">28251.70</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">606.7423</td>
+<td style="text-align: right;">44994.56</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">286.2326</td>
+<td style="text-align: right;">45042.41</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="knn-confusion-matrix" class="slide level2">
+<h2>KNN: Confusion Matrix</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No  3854   80
+       Yes   17   49</code></pre>
+</div>
+</div>
+</section>
+<section id="knn-confusion-matrix-sexy" class="slide level2">
+<h2>KNN: Confusion Matrix (Sexy)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a></a>  <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CopyOf08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="logistic-regression-confusion-matrix" class="slide level2">
+<h2>Logistic Regression: Confusion Matrix</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> logistic_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CopyOf08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="classification-metrics" class="slide level2 smaller">
+<h2>Classification Metrics</h2>
+<ul>
+<li>Accuracy: proportion of your classes that are correct <span class="math display">\[(TP + TN)/Total\]</span></li>
+<li>Recall/Sensitivity: proportion of true positives correct (true positive rate) <span class="math display">\[TP/(TP+FN)\]</span></li>
+<li>Precision/Positive Predictive Value (PPV): proportion of predicted positive that are correct <span class="math display">\[TP/(TP+FP)\]</span></li>
+<li>Specificity: proportion of true negatives correct (true negative rate) <span class="math display">\[TN/(TN+FP)\]</span></li>
+<li>Negative Predictive Value (NPV): proportion of predicted negatives that are correct <span class="math display">\[TN/(TN+FN)\]</span></li>
+</ul>
+</section>
+<section id="knn-performance" class="slide level2 smaller">
+<h2>KNN: Performance</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a></a>  <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="CopyOf08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li>Accuracy: <span class="math inline">\((3854+49)/4000 = .976 = 97.6\%\)</span></li>
+<li>Recall/Sensitivity: <span class="math inline">\(49/(49+80) = 0.380 = 38.0\%\)</span></li>
+<li>Precision/Positive Predictive Value (PPV): <span class="math inline">\(49/(49+17) = .742 = 74.2\%\)</span></li>
+<li>Specificity: <span class="math inline">\(3854/(3854+17) = 0.996 = 99.6\%\)</span></li>
+<li>Negative Predictive Value (NPV): <span class="math inline">\(3854/(3854+80) = 98.0\)</span></li>
+</ul>
+</div></div>
+</section>
+<section id="logistic-regression-performance" class="slide level2 smaller">
+<h2>Logistic Regression: Performance</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> logistic_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a></a>  <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="CopyOf08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<p>Compute the following and write your answers on the board:</p>
+<ul>
+<li>Accuracy</li>
+<li>Recall/Sensitivity</li>
+<li>Precision/Positive Predictive Value (PPV)</li>
+<li>Specificity</li>
+<li>Negative Predictive Value (NPV)</li>
+</ul>
+</div></div>
+</section>
+<section id="performance-metrics-with-yardstick" class="slide level2">
+<h2>Performance Metrics with <code>yardstick</code></h2>
+<ul>
+<li><code>yardstick</code> is a package that ships with <code>tidymodels</code> meant for model evaluation</li>
+<li>Typical syntax: <code>metricname(data, truth, estimate, ...)</code>
+<ul>
+<li>Bind original data with predicted observations</li>
+<li>Put true response in for <code>truth</code> and predicted values in for <code>estimate</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="logistic-regression-accuracy" class="slide level2 smaller">
+<h2>Logistic Regression: Accuracy</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> logistic_preds) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.973</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="two-more-metrics" class="slide level2 smaller">
+<h2>Two More Metrics</h2>
+<ul>
+<li>Matthews correlation coefficient (MCC): similar to <span class="math inline">\(R^2\)</span> but for classification <span class="math display">\[\frac{TP\times TN - FP \times FN}{\sqrt{(TP + FP)(TP+FN)(TN+FP)(TN+FN)}}\]</span>
+<ul>
+<li>Good for imbalanced data</li>
+<li>Considers both positives and negatives</li>
+</ul></li>
+<li>F-Measure: harmonic mean of recall and precision <span class="math display">\[\frac{2}{recall^{-1} + precision^{-1}} = \frac{2TP}{2TP+FP+FN}\]</span>
+<ul>
+<li>Focuses more on positives</li>
+<li>bad of imbalanced data</li>
+</ul></li>
+</ul>
+</section>
+<section id="metric-sets" class="slide level2">
+<h2>Metric Sets</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>binary_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, recall, precision, specificity,</span>
+<span id="cb22-2"><a></a>                             npv, mcc, f_meas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Can apply this to compute a bunch of metrics</li>
+</ul>
+</section>
+<section id="knn-performance-1" class="slide level2 smaller">
+<h2>KNN: Performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a></a>  <span class="fu">binary_metrics</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9757500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">recall</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.3798450</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">precision</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7424242</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">specificity</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9956084</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">npv</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9796645</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mcc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5206828</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">f_meas</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5025641</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="logistic-regression-performance-1" class="slide level2 smaller">
+<h2>Logistic Regression: Performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>default_test_wpreds <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a></a>  <span class="fu">binary_metrics</span>(<span class="at">truth =</span> default, <span class="at">estimate =</span> logistic_preds, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9730000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">recall</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.3023256</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">precision</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.6842105</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">specificity</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9953500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">npv</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9771747</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mcc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.4437097</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">f_meas</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.4193548</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="discussion" class="slide level2">
+<h2>Discussion</h2>
+<ul>
+<li>For each of the following metrics, brainstorm a situation in which that metric is probably the most important:
+<ul>
+<li>Recall</li>
+<li>Precision</li>
+<li>Accuracy</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="thresholding" class="title-slide slide level1 center">
+<h1>Thresholding</h1>
+
+</section>
+<section id="using-a-threshold" class="slide level2 smaller">
+<h2>Using a threshold</h2>
+<ul>
+<li>Step 1: Predict <strong>probabilities</strong> for all observations</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-3"><a></a>    <span class="at">knn_probs =</span> <span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>)<span class="sc">$</span>.pred_Yes,</span>
+<span id="cb25-4"><a></a>    <span class="at">logistic_probs =</span> <span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>)<span class="sc">$</span>.pred_Yes</span>
+<span id="cb25-5"><a></a>  )</span>
+<span id="cb25-6"><a></a></span>
+<span id="cb25-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">default</th>
+<th style="text-align: left;">student</th>
+<th style="text-align: right;">balance</th>
+<th style="text-align: right;">income</th>
+<th style="text-align: right;">knn_probs</th>
+<th style="text-align: right;">logistic_probs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">729.5265</td>
+<td style="text-align: right;">44361.63</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0012842</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">808.6675</td>
+<td style="text-align: right;">17600.45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0019883</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">1220.5838</td>
+<td style="text-align: right;">13268.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0190870</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">237.0451</td>
+<td style="text-align: right;">28251.70</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000843</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">606.7423</td>
+<td style="text-align: right;">44994.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0006514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">286.2326</td>
+<td style="text-align: right;">45042.41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0001107</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="using-a-threshold-1" class="slide level2 smaller">
+<h2>Using a threshold</h2>
+<ul>
+<li>Step 1: Predict <strong>probabilities</strong> for all observations</li>
+<li>Step 2: Set a threshold to obtain <strong>class labels</strong> (0.5 below)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
+<span id="cb26-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)),</span>
+<span id="cb26-4"><a></a>         <span class="at">logistic_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(logistic_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb26-5"><a></a>  )</span>
+<span id="cb26-6"><a></a></span>
+<span id="cb26-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">default</th>
+<th style="text-align: left;">student</th>
+<th style="text-align: right;">balance</th>
+<th style="text-align: right;">income</th>
+<th style="text-align: right;">knn_probs</th>
+<th style="text-align: right;">logistic_probs</th>
+<th style="text-align: left;">knn_preds</th>
+<th style="text-align: left;">logistic_preds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">729.5265</td>
+<td style="text-align: right;">44361.63</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0012842</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">808.6675</td>
+<td style="text-align: right;">17600.45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0019883</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">1220.5838</td>
+<td style="text-align: right;">13268.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0190870</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">237.0451</td>
+<td style="text-align: right;">28251.70</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000843</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">606.7423</td>
+<td style="text-align: right;">44994.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0006514</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">286.2326</td>
+<td style="text-align: right;">45042.41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0001107</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="using-a-threshold-2" class="slide level2 smaller">
+<h2>Using a threshold</h2>
+<ul>
+<li>Step 1: Predict <strong>probabilities</strong> for all observations</li>
+<li>Step 2: Set a threshold to obtain <strong>class labels</strong> (0.5 below)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
+<span id="cb27-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)),</span>
+<span id="cb27-4"><a></a>         <span class="at">logistic_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(logistic_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb27-5"><a></a>  )</span>
+<span id="cb27-6"><a></a></span>
+<span id="cb27-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">default</th>
+<th style="text-align: left;">student</th>
+<th style="text-align: right;">balance</th>
+<th style="text-align: right;">income</th>
+<th style="text-align: right;">knn_probs</th>
+<th style="text-align: right;">logistic_probs</th>
+<th style="text-align: left;">knn_preds</th>
+<th style="text-align: left;">logistic_preds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">729.5265</td>
+<td style="text-align: right;">44361.63</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0012842</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">808.6675</td>
+<td style="text-align: right;">17600.45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0019883</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">1220.5838</td>
+<td style="text-align: right;">13268.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0190870</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">237.0451</td>
+<td style="text-align: right;">28251.70</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000843</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">606.7423</td>
+<td style="text-align: right;">44994.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0006514</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">286.2326</td>
+<td style="text-align: right;">45042.41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0001107</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="performance" class="slide level2">
+<h2>Performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>roc_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sensitivity, specificity)</span>
+<span id="cb28-2"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.976
+2 sensitivity binary         0.996
+3 specificity binary         0.380</code></pre>
+</div>
+</div>
+</section>
+<section id="low-threshold" class="slide level2">
+<h2>Low Threshold</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.1</span>   <span class="co"># set threshold</span></span>
+<span id="cb30-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb30-4"><a></a>  )</span>
+<span id="cb30-5"><a></a></span>
+<span id="cb30-6"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.923
+2 sensitivity binary         1    
+3 specificity binary         0.921</code></pre>
+</div>
+</div>
+</section>
+<section id="high-threshold" class="slide level2">
+<h2>High Threshold</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.9</span>   <span class="co"># set threshold</span></span>
+<span id="cb32-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb32-4"><a></a>  )</span>
+<span id="cb32-5"><a></a></span>
+<span id="cb32-6"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary        0.968 
+2 sensitivity binary        0.0233
+3 specificity binary        1     </code></pre>
+</div>
+</div>
+</section>
+<section id="roc-curve-and-auc" class="slide level2">
+<h2>ROC Curve and AUC</h2>
+<ul>
+<li><strong>ROC (Receiver Operating Characteristics) curve</strong>: popular graphic for comparing different classifiers across all possible thresholds
+<ul>
+<li>Plots the (1-Specificity) along the x-axis and the Sensitivity (true positive rate) along the y-axis</li>
+</ul></li>
+<li><strong>AUC</strong>: area under the AUC curve
+<ul>
+<li>Ideal ROC curve will hug the top left corner</li>
+</ul></li>
+</ul>
+</section>
+<section id="roc-curve" class="slide level2">
+<h2>ROC Curve</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">roc_curve</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">.threshold</th>
+<th style="text-align: right;">specificity</th>
+<th style="text-align: right;">sensitivity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">-Inf</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.0145</td>
+<td style="text-align: right;">0.8915009</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.0415</td>
+<td style="text-align: right;">0.8997675</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.0560</td>
+<td style="text-align: right;">0.9062258</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.0655</td>
+<td style="text-align: right;">0.9064841</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="roc-curve-plot" class="slide level2">
+<h2>ROC Curve: Plot</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">roc_curve</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CopyOf08-classifiction-metrics_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section>
+<section id="roc-curve-1" class="slide level2">
+<h2>ROC Curve</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">roc_auc</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9838903</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- ## Logistic Regression vs KNN {.smaller} -->
 <!-- - Logistic regression $\implies$ parametric , KNN $\implies$ non-parametric. -->
 <!-- - Logistic regression $\implies$ only for classification problems ($Y$ categorical), KNN $\implies$ both regression and classification. -->

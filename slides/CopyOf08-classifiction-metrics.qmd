@@ -224,11 +224,8 @@ default_test_wpreds |>
 ::: column
 ```{r}
 default_test_wpreds |>
-  conf_mat(truth = default, estimate = knn_preds) |> 
-  autoplot("heatmap") +
-  theme(
-    text=element_text(size=20)
-  )
+  conf_mat(truth = default, estimate = logistic_preds) |> 
+  autoplot("heatmap")
 ```
 :::
 
@@ -246,75 +243,169 @@ Compute the following and write your answers on the board:
 ## Performance Metrics with `yardstick`
 
 -   `yardstick` is a package that ships with `tidymodels` meant for model evaluation
+-   Typical syntax: `metricname(data, truth, estimate, ...)`
+    +   Bind original data with predicted observations
+    +   Put true response in for `truth` and predicted values in for `estimate`
+    
+## Logistic Regression: Accuracy {.smaller}
 
 
+```{r}
+default_test_wpreds |> 
+  accuracy(truth = default, estimate = logistic_preds) |> 
+  kable()
+```
+
+## Two More Metrics {.smaller}
+
+-   Matthews correlation coefficient (MCC): similar to $R^2$ but for classification
+$$\frac{TP\times TN - FP \times FN}{\sqrt{(TP + FP)(TP+FN)(TN+FP)(TN+FN)}}$$
+    +   Good for imbalanced data
+    +   Considers both positives and negatives
+-   F-Measure: harmonic mean of recall and precision
+$$\frac{2}{recall^{-1} + precision^{-1}} = \frac{2TP}{2TP+FP+FN}$$
+    +   Focuses more on positives
+    +   bad of imbalanced data
+
+## Metric Sets
+
+```{r}
+binary_metrics <- metric_set(accuracy, recall, precision, specificity,
+                             npv, mcc, f_meas)
+```
+
+-   Can apply this to compute a bunch of metrics
+
+
+## KNN: Performance {.smaller}
+
+```{r}
+default_test_wpreds |> 
+  binary_metrics(truth = default, estimate = knn_preds, event_level = "second") |> 
+  kable()
+```
+
+## Logistic Regression: Performance {.smaller}
+
+```{r}
+default_test_wpreds |> 
+  binary_metrics(truth = default, estimate = logistic_preds, event_level = "second") |> 
+  kable()
+```
+
+## Discussion
+
+-   For each of the following metrics, brainstorm a situation in which that metric is probably the most important:
+    +   Recall
+    +   Precision
+    +   Accuracy
+
+# Thresholding
+
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+
+```{r}
+default_test_wprobs <- default_test |> 
+  mutate(
+    knn_probs = predict(knnfit, new_data = default_test, type = "prob")$.pred_Yes,
+    logistic_probs = predict(logregfit, new_data = default_test, type = "prob")$.pred_Yes
+  )
+
+default_test_wprobs |> head() |> kable()   # obtain probability predictions
+```
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+
+```{r}
+threshold <- 0.5   # set threshold
+default_test_wprobs <- default_test_wprobs |> 
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
+         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No"))
+  )
+
+default_test_wprobs |> head() |> kable()      
+```
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+
+```{r}
+threshold <- 0.5   # set threshold
+default_test_wprobs <- default_test_wprobs |> 
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
+         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No"))
+  )
+
+default_test_wprobs |> head() |> kable()      
+```
+
+## Performance
+
+```{r}
+roc_metrics <- metric_set(accuracy, sensitivity, specificity)
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds)
+```
+
+## Low Threshold
+
+```{r}
+threshold <- 0.1   # set threshold
+default_test_wprobs <- default_test_wprobs |> 
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No"))
+  )
+
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second")  
+```
+
+## High Threshold
+
+```{r}
+threshold <- 0.9   # set threshold
+default_test_wprobs <- default_test_wprobs |> 
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No"))
+  )
+
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second")  
+```
 
 ## ROC Curve and AUC
 
-<!-- - **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds -->
-<!--   + Plots the Specificity (1-false positive rate) along the x-axis and the Sensitivity (true positive rate) along the y-axis -->
-<!-- - **AUC**: area under the AUC curve -->
-<!--   + Ideal ROC curve will hug the top left corner -->
+- **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds
+  + Plots the (1-Specificity) along the x-axis and the Sensitivity (true positive rate) along the y-axis
+- **AUC**: area under the AUC curve
+  + Ideal ROC curve will hug the top left corner
 
-<!-- ## ROC Curve and AUC  {.smaller} -->
+## ROC Curve
 
-<!-- ```{r} -->
-<!-- library(pROC)   # functions for computing ROC and AUC -->
+```{r}
+roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |> 
+  head() |> 
+  kable()
+```
 
-<!-- # create object for ROC curve for KNN fit -->
-<!-- roc_object_knn <- roc(response = Default$default,  -->
-<!--                       predictor = knn_prob_preds[,2]) -->
-<!-- ggroc(roc_object_knn)   # plot ROC curve -->
-<!-- auc(roc_object_knn)   # obtain AUC -->
-<!-- ``` -->
+## ROC Curve: Plot
 
-<!-- ## Using a threshold {.smaller} -->
+```{r}
+roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |> 
+  autoplot()
+```
 
-<!-- - Step 1: Predict **probabilities** for all observations -->
+## ROC Curve
 
-<!-- ```{r} -->
-
-<!-- logreg_prob_preds <- predict(logregfit, newdata = Default, type = "response")   # obtain probability predictions -->
-<!-- head(logreg_prob_preds) |>    # predicted probabilities for first six observations -->
-<!--   kable() -->
-<!-- ``` -->
-
-<!-- ## Using a threshold {.smaller} -->
-
-<!-- - Step 1: Predict **probabilities** for all observations -->
-<!-- - Step 2: Set a threshold to obtain **class labels** (0.5 below) -->
-
-<!-- ```{r} -->
-
-<!-- threshold <- 0.5   # set threshold -->
-<!-- logreg_class_preds <- factor(ifelse(logreg_prob_preds > threshold, "Yes", "No"))   # obtain class predictions -->
-<!-- head(logreg_class_preds) |>    # predicted class labels for first six observations -->
-<!--   kable() -->
-<!-- ``` -->
-
-<!-- ## Assessing Performance {.smaller} -->
+```{r}
+roc_auc(default_test_wprobs, truth = default, knn_probs, event_level = "second") |> 
+  kable()
+```
 
 
-<!-- ```{r} -->
-<!-- # use the following code only when all predictions are from the same class -->
-<!-- # levels(logreg_class_preds) = c("No", "Yes") -->
-
-<!-- confusionMatrix(data = logreg_class_preds, reference = Default$default, positive = "Yes") -->
-<!-- ``` -->
-
-
-<!-- ## ROC Curve and AUC  {.smaller} -->
-
-<!-- ```{r} -->
-
-<!-- library(pROC)   # load library -->
-
-<!-- # create object for ROC curve -->
-
-<!-- roc_object <- roc(response = Default$default, predictor = logreg_prob_preds) -->
-<!-- ggroc(roc_object, col = "red")   # plot ROC curve -->
-<!-- auc(roc_object)   # obtain AUC -->
-<!-- ``` -->
 
 <!-- ## Logistic Regression vs KNN {.smaller} -->
 
