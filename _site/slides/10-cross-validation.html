@@ -452,163 +452,35 @@ Eric Friedlander
 <li>For each of the metrics try to reconcile the performance metrics with the plots</li>
 </ul>
 </section>
-<section id="default-dataset" class="slide level2 smaller">
-<h2>Default Dataset</h2>
-<div class="columns">
-<div class="column">
-<p>A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">head</span>(Default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">default</th>
-<th style="text-align: left;">student</th>
-<th style="text-align: right;">balance</th>
-<th style="text-align: right;">income</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">729.5265</td>
-<td style="text-align: right;">44361.625</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">817.1804</td>
-<td style="text-align: right;">12106.135</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1073.5492</td>
-<td style="text-align: right;">31767.139</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">529.2506</td>
-<td style="text-align: right;">35704.494</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">785.6559</td>
-<td style="text-align: right;">38463.496</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">919.5885</td>
-<td style="text-align: right;">7491.559</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div><div class="column">
-<p><strong>Response Variable</strong>: <code>default</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>Default <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a></a>  <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span>  <span class="co"># class frequencies</span></span>
-<span id="cb3-3"><a></a>  <span class="fu">kable</span>()           <span class="co"># Make it look nice</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">default</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">percent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">9667</td>
-<td style="text-align: right;">0.9667</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Yes</td>
-<td style="text-align: right;">333</td>
-<td style="text-align: right;">0.0333</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div></div>
+<section>
+<section id="cross-validation" class="title-slide slide level1 center">
+<h1>Cross Validation</h1>
+
 </section>
-<section id="split-the-data" class="slide level2">
-<h2>Split the data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>default_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(Default, <span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">strata =</span> default)</span>
-<span id="cb4-4"><a></a>default_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;Training/Testing/Total&gt;
-&lt;6000/4000/10000&gt;</code></pre>
+<section id="data-splitting-discussion" class="slide level2">
+<h2>Data Splitting: Discussion</h2>
+<div>
+<ul>
+<li class="fragment">Why do we split our data before fitting a model?
+<ul>
+<li class="fragment">To prevent overfitting</li>
+</ul></li>
+<li class="fragment">What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or <span class="math inline">\(k = 1, 2, \ldots, 100\)</span> neighbors)
+<ul>
+<li class="fragment">We open ourselves up to information leakage</li>
+</ul></li>
+<li class="fragment">Potential solution… three way split (training/validation/test)</li>
+<li class="fragment">Better solution… cross validation and resampling</li>
+</ul>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>default_train <span class="ot">&lt;-</span> <span class="fu">training</span>(default_split)</span>
-<span id="cb6-2"><a></a>default_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(default_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="cross-validation-cv" class="slide level2">
+<h2>Cross-Validation (CV)</h2>
+<div>
+<ul>
+<li class="fragment">Partition your data</li>
+</ul>
 </div>
-<!-- ## The Machine Learning Process -->
-<!-- For the next 2-3 class periods, we are going to discuss the overall ML process. Note that, the procedures we will discuss are not ML models, rather the models go through this process to obtain the best (optimal) predictive model. -->
-<!-- **Ames Housing dataset** -->
-<!-- ```{r,message=FALSE} -->
-<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- # we won't use the entire dataset now (that's for later) -->
-<!-- # select the variables to work with for this class (04/18) -->
-<!-- ames <- ames %>% select(Sale_Price, Garage_Area, Year_Built)  -->
-<!-- ``` -->
-<!-- ## Exploratory Data Analysis -->
-<!-- **Ames Housing dataset** -->
-<!-- ```{r} -->
-<!-- summary(ames)   # summary of the variables -->
-<!-- ``` -->
-<!-- ## Exploratory Data Analysis -->
-<!-- **Ames Housing dataset** -->
-<!-- ```{r, fig.align='center'} -->
-<!-- library(GGally) -->
-<!-- ggpairs(ames)   # correlation plot -->
-<!-- ``` -->
-<!-- ## Data Splitting -->
-<!-- Available data split into **training** and **test** datasets. -->
-<!-- * **Training set:** these data are used to develop feature sets, train our algorithms, tune hyperparameters, compare models, and all of the other activities required to choose an optimal model. -->
-<!-- * **Test set:** having chosen a final optimal model, these data are used to obtain an unbiased estimate of the model’s performance. -->
-<!-- **It is critical that the test set not be used prior to selecting your final model.** Assessing results on the test set prior to final model selection biases the model selection process since the testing data will have become part of the model development process. -->
-<!-- ## Data Splitting -->
-<!-- ```{r, message = FALSE} -->
-<!-- # split data -->
-<!-- set.seed(041824)  # fix the random number generator for reproducibility -->
-<!-- library(caret)  # load library -->
-<!-- # split available data into 80% training and 20% test datasets -->
-<!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE)  -->
-<!-- ames_train <- ames[train_index,]   # training data -->
-<!-- ames_test <- ames[-train_index,]   # test data -->
-<!-- ``` -->
-<!-- <!-- ## Resampling Methods -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- # load required packages --> –&gt; <!-- <!-- library(tidyverse) --> –&gt; <!-- <!-- library(caret) --> –&gt; <!-- <!-- library(ISLR) --> –&gt;</p>
-<!-- <!-- data("Auto")   # load 'Auto' daatset -->
-<p>–&gt;</p>
-<!-- <!-- # split available data into training and test data -->
-<p>–&gt;</p>
-<!-- <!-- set.seed(04192022)   # fix the random number generator for reproducibility -->
-<p>–&gt;</p>
-<!-- <!-- # response: 'mpg' -->
-<p>–&gt; <!-- <!-- train_index <- createDataPartition(Auto$mpg, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets --> –&gt;</p>
-<!-- <!-- Auto_train <- Auto[train_index,]   # training data, we will work with this to choose our final model -->
-<p>–&gt;</p>
-<!-- <!-- Auto_test <- Auto[-train_index,]   # test data, KEEP IT ASIDE, use only after choosing final model -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
 <!-- ## Resampling Methods -->
 <!-- * **Idea:** Repeatedly draw samples from the training data and refit a model on each sample, and evaluate its performance on the other parts. -->
 <!-- * **Objective:** To obtain additional information about the fitted model. -->
@@ -1030,7 +902,7 @@ Eric Friedlander
 <p><a href="https://mat427sp25.netlify.app/schedule">🔗 MAT 427 - Spring 2025 - Schedule</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -1244,42 +1116,80 @@ Eric Friedlander
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {

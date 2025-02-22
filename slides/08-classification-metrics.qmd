@@ -162,8 +162,8 @@ predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  
 
 |                                  | Actual Positive/Event | Actual Negative/Non-event |
 |:--------------------------------:|:---------------------:|:-------------------------:|
-|   **Predicted Positive/Event**   |     True Negative (TN)     |      False Positive  (FP)     |
-| **Predicted Negative/Non-event** |    False Negative (FN)    |       True Positive  (TP)     |
+|   **Predicted Positive/Event**   |     True Positive (TP)     |      False Positive  (FP)     |
+| **Predicted Negative/Non-event** |    False Negative (FN)    |       True Negative  (TN)     |
 
 ## Adding predictions to tibble
 
@@ -309,115 +309,3 @@ default_test_wpreds |>
     +   Recall
     +   Precision
     +   Accuracy
-
-# Thresholding
-
-
-## Using a threshold {.smaller}
-
-- Step 1: Predict **probabilities** for all observations
-
-```{r}
-default_test_wprobs <- default_test |> 
-  mutate(
-    knn_probs = predict(knnfit, new_data = default_test, type = "prob")$.pred_Yes,
-    logistic_probs = predict(logregfit, new_data = default_test, type = "prob")$.pred_Yes
-  )
-
-default_test_wprobs |> head() |> kable()   # obtain probability predictions
-```
-
-## Using a threshold {.smaller}
-
-- Step 1: Predict **probabilities** for all observations
-- Step 2: Set a threshold to obtain **class labels** (0.5 below)
-
-```{r}
-threshold <- 0.5   # set threshold
-default_test_wprobs <- default_test_wprobs |> 
-  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
-         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No"))
-  )
-
-default_test_wprobs |> head() |> kable()      
-```
-
-## Using a threshold {.smaller}
-
-- Step 1: Predict **probabilities** for all observations
-- Step 2: Set a threshold to obtain **class labels** (0.5 below)
-
-```{r}
-threshold <- 0.5   # set threshold
-default_test_wprobs <- default_test_wprobs |> 
-  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
-         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No"))
-  )
-
-default_test_wprobs |> head() |> kable()      
-```
-
-## Performance
-
-```{r}
-roc_metrics <- metric_set(accuracy, sensitivity, specificity)
-roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds)
-```
-
-## Low Threshold
-
-```{r}
-threshold <- 0.1   # set threshold
-default_test_wprobs <- default_test_wprobs |> 
-  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No"))
-  )
-
-roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second")  
-```
-
-## High Threshold
-
-```{r}
-threshold <- 0.9   # set threshold
-default_test_wprobs <- default_test_wprobs |> 
-  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No"))
-  )
-
-roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second")  
-```
-
-## ROC Curve and AUC
-
-- **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds
-  + Plots the (1-Specificity) along the x-axis and the Sensitivity (true positive rate) along the y-axis
-- **AUC**: area under the AUC curve
-  + Ideal ROC curve will hug the top left corner
-
-## ROC Curve
-
-```{r}
-roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |> 
-  head() |> 
-  kable()
-```
-
-## ROC Curve: Plot
-
-```{r}
-roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |> 
-  autoplot()
-```
-
-## ROC Curve
-
-```{r}
-roc_auc(default_test_wprobs, truth = default, knn_probs, event_level = "second") |> 
-  kable()
-```
-
-## ROC AUC
-
--   Measures how good your model is at separating categories
--   Only for binary classification
--   What should be the minimum AUC?
--   What should be that maximum possible AUC?
