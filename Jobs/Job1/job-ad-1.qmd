@@ -1,0 +1,59 @@
+---
+title: "Job 1"
+---
+
+## Disclaimer
+
+This is for a course assignment at the College of Idaho and is not a real job advertisement.
+
+## Job Advertisement
+
+**Job Title: Data Analyst**
+
+**Location:** Boise, Idaho
+
+**Company:** Micron Technology, Inc.
+
+**About Us:**
+At Micron Technology, Inc., we are dedicated to transforming how the world uses information to enrich life. As a global leader in memory and storage solutions, we are committed to delivering innovative solutions that drive advancements in technology and improve the quality of life for people around the world.
+
+**Job Description:**
+As a Data Analyst at Micron, you will play a crucial role in analyzing data to help us make better business decisions. You will work closely with various departments to understand their data needs and provide actionable insights.
+
+**Key Responsibilities:**
+
+- Collect, clean, and analyze data from various sources.
+- Develop and maintain dashboards and reports to track key performance indicators (KPIs).
+- Identify trends, patterns, and anomalies in data sets.
+- Collaborate with cross-functional teams to understand business requirements and provide data-driven solutions.
+- Present findings and recommendations to stakeholders in a clear and concise manner.
+- Ensure data accuracy and integrity.
+
+**Qualifications:**
+
+- Bachelor's degree in Data Science, Statistics, Computer Science, or a related field.
+- Well-versed in data manipulation and visualization using R.
+- Expertise in statistical inference and basic statistical models.
+- Proficiency in basic machine learning (e.g. regression & classification problems, pre-processing and feature engineering, model evaluation)
+- Excellent communication, presentation, and teamwork skills.
+- Ability to work independently and as part of a team using Git.
+
+**Preferred Qualifications:**
+
+- Experience using the `tidyverse` and `tidymodels`.
+- Proficiency in a variety of data analysis tools and software (e.g. SQL, Python, Excel)
+- Familiarity with big data technologies (e.g., Hadoop, Spark).
+
+**Benefits:**
+
+- Getting a good grade in your MAT-427 class
+- Preparing for getting a job
+
+**How to Apply:**
+Interested candidates are invited to submit a link to their personal website which contains the follwoing:
+
+- Resume
+- A cover letter detailing their relevant experience and why they are a good fit for this role
+- A sample data analysis demonstrating skills described above
+
+**Application Deadline:** March 21, 2025 11:59PM

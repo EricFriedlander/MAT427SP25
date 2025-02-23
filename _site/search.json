@@ -93,8 +93,8 @@
     "objectID": "slides/10-cross-validation.html#computational-set-up",
     "href": "slides/10-cross-validation.html#computational-set-up",
     "title": "MATH 427: Cross Validation and Resmpling",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(gridExtra)\nlibrary(janitor) # for next contingency tables\nlibrary(kableExtra)\nlibrary(ISLR2)\n\ntidymodels_prefer()"
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(tidymodels)\n\n── Attaching packages ────────────────────────────────────── tidymodels 1.2.0 ──\n✔ broom        1.0.6     ✔ rsample      1.2.1\n✔ dials        1.3.0     ✔ tune         1.2.1\n✔ infer        1.0.7     ✔ workflows    1.1.4\n✔ modeldata    1.4.0     ✔ workflowsets 1.1.0\n✔ parsnip      1.2.1     ✔ yardstick    1.3.1\n✔ recipes      1.1.0     \n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ scales::discard() masks purrr::discard()\n✖ dplyr::filter()   masks stats::filter()\n✖ recipes::fixed()  masks stringr::fixed()\n✖ dplyr::lag()      masks stats::lag()\n✖ yardstick::spec() masks readr::spec()\n✖ recipes::step()   masks stats::step()\n• Use tidymodels_prefer() to resolve common conflicts.\n\nlibrary(gridExtra)\n\n\nAttaching package: 'gridExtra'\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\nlibrary(janitor) # for next contingency tables\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(kableExtra)\n\n\nAttaching package: 'kableExtra'\n\nThe following object is masked from 'package:dplyr':\n\n    group_rows\n\nlibrary(ISLR2)\n\ntidymodels_prefer()"
   },
   {
     "objectID": "slides/10-cross-validation.html#review-logistic-regression-vs-knn",
@@ -135,8 +135,8 @@
     "objectID": "slides/08-classification-metrics.html#tips-on-gradient-descent-hw",
     "href": "slides/08-classification-metrics.html#tips-on-gradient-descent-hw",
     "title": "MATH 427: Evaluating Classification Models",
-    "section": "Tips on Gradient Descent HW",
-    "text": "Tips on Gradient Descent HW\n\nMake step size small!\nMay take a while to converge\nTry adaptive step size (i.e. backtracking)\nClarification on stopping criteria\n\nSet tolerance\nStop when distance from gradient to \\((0, 0)\\) is below tolerance"
+    "section": "",
+    "text": "Make step size small!\nMay take a while to converge\nTry adaptive step size (i.e. backtracking)\nClarification on stopping criteria\n\nSet tolerance\nStop when distance from gradient to \\((0, 0)\\) is below tolerance"
   },
   {
     "objectID": "slides/08-classification-metrics.html#computational-set-up",
@@ -297,7 +297,7 @@
     "href": "slides/08-classification-metrics.html#discussion",
     "title": "MATH 427: Evaluating Classification Models",
     "section": "Discussion",
-    "text": "Discussion\n\nFor each of the following metrics, brainstorm a situation in which that metric is probably the most important:\n\nRecall\nPrecision\nAccuracy\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Discussion\n\nFor each of the following metrics, brainstorm a situation in which that metric is probably the most important:\n\nRecall\nPrecision\nAccuracy"
   },
   {
     "objectID": "slides/06-knn-workflows.html#computational-setup",
@@ -2056,8 +2056,8 @@
     "objectID": "slides/07-classification-logistic.html#classification-problems",
     "href": "slides/07-classification-logistic.html#classification-problems",
     "title": "MATH 427: Classification + Logistic Regression",
-    "section": "Classification Problems",
-    "text": "Classification Problems\n\nResponse \\(Y\\) is qualitative (categorical).\nObjective: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\nassigns class label to a future unlabeled (unseen) observations\nunderstand the relationship between the predictors and response\n\nTwo ways to make predictions\n\nClass probabilities\nClass labels"
+    "section": "",
+    "text": "Response \\(Y\\) is qualitative (categorical).\nObjective: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\nassigns class label to a future unlabeled (unseen) observations\nunderstand the relationship between the predictors and response\n\nTwo ways to make predictions\n\nClass probabilities\nClass labels"
   },
   {
     "objectID": "slides/07-classification-logistic.html#default-dataset",
@@ -2148,7 +2148,7 @@
     "href": "slides/07-classification-logistic.html#why-not-linear-regression-1",
     "title": "MATH 427: Classification + Logistic Regression",
     "section": "Why Not Linear Regression?",
-    "text": "Why Not Linear Regression?\n\n\nLinear regression: does not model probabilities well\n\nmight produce probabilities less than zero or bigger than one\ntreats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)"
+    "text": "Why Not Linear Regression?\n\n\n\n\n\n\n\n\n\n\nLinear regression: does not model probabilities well\n\nmight produce probabilities less than zero or bigger than one\ntreats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)"
   },
   {
     "objectID": "slides/07-classification-logistic.html#why-not-linear-regression-2",
@@ -2211,14 +2211,14 @@
     "href": "slides/07-classification-logistic.html#making-predictions-in-r",
     "title": "MATH 427: Classification + Logistic Regression",
     "section": "Making predictions in R",
-    "text": "Making predictions in R\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"class\") |&gt; kable()   # obtain class predictions\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"raw\") |&gt; kable()   # obtain log-odds predictions\n\n\n\n\nx\n\n\n\n\n-6.819727\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"prob\") |&gt; kable()  # obtain probability predictions\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n0.9989092\n0.0010908\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Making predictions in R\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"class\") |&gt; kable()   # obtain class predictions\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"raw\") |&gt; kable()   # obtain log-odds predictions\n\n\n\n\nx\n\n\n\n\n-6.819727\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"prob\") |&gt; kable()  # obtain probability predictions\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n0.9989092\n0.0010908"
   },
   {
     "objectID": "slides/09-ROC-AUC.html#computational-set-up",
     "href": "slides/09-ROC-AUC.html#computational-set-up",
     "title": "MATH 427: ROC Curve and AUC",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(janitor) # for contingency tables\nlibrary(ISLR2)\nlibrary(ggforce) # sina plots\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(janitor) # for contingency tables\nlibrary(ISLR2)\nlibrary(ggforce) # sina plots\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/09-ROC-AUC.html#default-dataset",
@@ -2414,7 +2414,7 @@
     "href": "slides/09-ROC-AUC.html#auc-questions",
     "title": "MATH 427: ROC Curve and AUC",
     "section": "AUC Questions",
-    "text": "AUC Questions\n\nWhat should be the minimum AUC?\nWhat should be that maximum possible AUC?\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "AUC Questions\n\nWhat should be the minimum AUC?\nWhat should be that maximum possible AUC?"
   },
   {
     "objectID": "support.html",
@@ -2461,7 +2461,7 @@
     "href": "slides/10-cross-validation.html#resampling",
     "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Resampling",
-    "text": "Resampling\n\nFigure 10.1 from TMWR"
+    "text": "Resampling\n ## Cross-Validation Terminology\n\nDivide training set into two sets\n\nAnalysis set: fit the model (similar to training set)\nAssessment set: evaluation the model (similar to test set)"
   },
   {
     "objectID": "slides/10-cross-validation.html#k--fold-cross-validation-cv",
@@ -2469,5 +2469,124 @@
     "title": "MATH 427: Cross Validation and Resmpling",
     "section": "K- Fold Cross-Validation (CV)",
     "text": "K- Fold Cross-Validation (CV)\n\n\nPartition your data into \\(K\\) pieces\nL\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "Jobs/Job1/job-add-1.html",
+    "href": "Jobs/Job1/job-add-1.html",
+    "title": "Job 1",
+    "section": "",
+    "text": "This is for a course assignment at the College of Idaho and is not a real job advertisement."
+  },
+  {
+    "objectID": "slides/10-cross-validation.html",
+    "href": "slides/10-cross-validation.html",
+    "title": "MATH 427: Cross Validation and Resmpling",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(tidymodels)\n\n── Attaching packages ────────────────────────────────────── tidymodels 1.2.0 ──\n✔ broom        1.0.6     ✔ rsample      1.2.1\n✔ dials        1.3.0     ✔ tune         1.2.1\n✔ infer        1.0.7     ✔ workflows    1.1.4\n✔ modeldata    1.4.0     ✔ workflowsets 1.1.0\n✔ parsnip      1.2.1     ✔ yardstick    1.3.1\n✔ recipes      1.1.0     \n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ scales::discard() masks purrr::discard()\n✖ dplyr::filter()   masks stats::filter()\n✖ recipes::fixed()  masks stringr::fixed()\n✖ dplyr::lag()      masks stats::lag()\n✖ yardstick::spec() masks readr::spec()\n✖ recipes::step()   masks stats::step()\n• Use tidymodels_prefer() to resolve common conflicts.\n\nlibrary(gridExtra)\n\n\nAttaching package: 'gridExtra'\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\nlibrary(janitor) # for next contingency tables\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(kableExtra)\n\n\nAttaching package: 'kableExtra'\n\nThe following object is masked from 'package:dplyr':\n\n    group_rows\n\nlibrary(ISLR2)\n\ntidymodels_prefer()"
+  },
+  {
+    "objectID": "slides/10-cross-validation.html#k-fold-cross-validation-cv",
+    "href": "slides/10-cross-validation.html#k-fold-cross-validation-cv",
+    "title": "MATH 427: Cross Validation and Resmpling",
+    "section": "K-Fold Cross-Validation (CV)",
+    "text": "K-Fold Cross-Validation (CV)\n\n\nPartition your data into \\(K\\) non-overlapping “folds”\nFolds don’t overlap and every training observation is in one fold\nEach fold contained \\(1/K\\) of the training data\nLooping through the folds \\(k = 1, \\ldots, K\\):\nTreat fold \\(k\\) as the assessment set\nTreat all folds except for \\(k\\) as the assessment set\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;"
+  },
+  {
+    "objectID": "slides/08-classification-metrics.html",
+    "href": "slides/08-classification-metrics.html",
+    "title": "MATH 427: Evaluating Classification Models",
+    "section": "",
+    "text": "Make step size small!\nMay take a while to converge\nTry adaptive step size (i.e. backtracking)\nClarification on stopping criteria\n\nSet tolerance\nStop when distance from gradient to \\((0, 0)\\) is below tolerance"
+  },
+  {
+    "objectID": "slides/07-classification-logistic.html",
+    "href": "slides/07-classification-logistic.html",
+    "title": "MATH 427: Classification + Logistic Regression",
+    "section": "",
+    "text": "Response \\(Y\\) is qualitative (categorical).\nObjective: build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\nassigns class label to a future unlabeled (unseen) observations\nunderstand the relationship between the predictors and response\n\nTwo ways to make predictions\n\nClass probabilities\nClass labels"
+  },
+  {
+    "objectID": "slides/09-ROC-AUC.html",
+    "href": "slides/09-ROC-AUC.html",
+    "title": "MATH 427: ROC Curve and AUC",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(janitor) # for contingency tables\nlibrary(ISLR2)\nlibrary(ggforce) # sina plots\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "Jobs/Job1/job-add-1.html#disclaimer",
+    "href": "Jobs/Job1/job-add-1.html#disclaimer",
+    "title": "Job 1",
+    "section": "",
+    "text": "This is for a course assignment at the College of Idaho and is not a real job advertisement."
+  },
+  {
+    "objectID": "Jobs/Job1/job-add-1.html#job-advertisement",
+    "href": "Jobs/Job1/job-add-1.html#job-advertisement",
+    "title": "Job 1",
+    "section": "Job Advertisement",
+    "text": "Job Advertisement\nJob Title: Data Analyst\nLocation: Boise, Idaho\nCompany: Micron Technology, Inc.\nAbout Us: At Micron Technology, Inc., we are dedicated to transforming how the world uses information to enrich life. As a global leader in memory and storage solutions, we are committed to delivering innovative solutions that drive advancements in technology and improve the quality of life for people around the world.\nJob Description: As a Data Analyst at Micron, you will play a crucial role in analyzing data to help us make better business decisions. You will work closely with various departments to understand their data needs and provide actionable insights.\nKey Responsibilities:\n\nCollect, clean, and analyze data from various sources.\nDevelop and maintain dashboards and reports to track key performance indicators (KPIs).\nIdentify trends, patterns, and anomalies in data sets.\nCollaborate with cross-functional teams to understand business requirements and provide data-driven solutions.\nPresent findings and recommendations to stakeholders in a clear and concise manner.\nEnsure data accuracy and integrity.\n\nQualifications:\n\nBachelor’s degree in Data Science, Statistics, Computer Science, or a related field.\nWell-versed in data manipulation and visualization using R.\nExpertise in statistical inference and basic statistical models.\nProficiency in basic machine learning (e.g. regression & classification problems, pre-processing and feature engineering, model evaluation)\nStrong analytical and problem-solving skills.\nExcellent communication and presentation skills.\nAbility to work independently and as part of a team.\n\nPreferred Qualifications:\n\nExperience using the tidyverse and tidymodels.\nProficiency in a variety of data analysis tools and software (e.g. SQL, Python, Excel)\nFamiliarity with big data technologies (e.g., Hadoop, Spark).\n\nBenefits:\n\nGetting a good grade in your MAT-427 class\nPreparing for getting a job\n\nHow to Apply: Interested candidates are invited to submit a link to their personal website which contains the follwoing:\n\nResume\nA cover letter detailing their relevant experience and why they are a good fit for this role\nA sample data analysis demonstrating skills described above\n\nApplication Deadline: March 21, 2025 11:59PM"
+  },
+  {
+    "objectID": "Jobs/job-app-resources.html",
+    "href": "Jobs/job-app-resources.html",
+    "title": "Job Application Resources",
+    "section": "",
+    "text": "Using Quarto & Netlify\nUsing Quarto, Netlify, & GitHub\nUsing Quarto & GitHub Pages"
+  },
+  {
+    "objectID": "Jobs/job-app-resources.html#building-a-website",
+    "href": "Jobs/job-app-resources.html#building-a-website",
+    "title": "Job Application Resources",
+    "section": "",
+    "text": "Using Quarto & Netlify\nUsing Quarto, Netlify, & GitHub\nUsing Quarto & GitHub Pages"
+  },
+  {
+    "objectID": "Jobs/job-app-resources.html#cover-letter-resume",
+    "href": "Jobs/job-app-resources.html#cover-letter-resume",
+    "title": "Job Application Resources",
+    "section": "Cover Letter & Resume",
+    "text": "Cover Letter & Resume\n\nCofI Career Prep Resources\nGeneral Tips from Eric:\n\nAlways customize your application materials to the job you’re applying to.\nThe first people who read your application may be HR recruiters with no expertise in the job you’re appling for so write your application accordingly. Alternatively, it could be an AI filtering software so make sure to include any important keywords.\nThe first people who read your application may be HR recruiters who are grumpy baby boomers who care deeply about “professionalism”. Make sure there is nothing on your job application that is unprofessional. This includes but is not limited to typos & grammar and GitHub handles or usernames that are anything other than a variation on your name. Furthermore, make sure there is nothing on your social media that could be disqualifying like pictures or videos of you partying/drinking.\nBe prepared to discuss anything on your resume in a job interview.\nJobs care A LOT about communication and teamwork skills. Anything you can do emphasize your skills in this area is worth including in your application. \n\n\n\nResume\n\nStart with Resume Template\nAdditional tips from Eric\n\nDON’T GO MORE THAN 1 PAGE. You should only ever go more than 1 page if you have don’t a lot of stuff. As college students, you haven’t… It may feel like you have… but you haven’t.\nCUSTOMIZE YOUR RESUME TO THE JOB AD!\nAdd a link to your personal website and GitHub to your resume.\nI like listing relvant coursework near the top.\nYou resume may first go through an AI filter or be reviewed by an HR hiring manager without expertise in the field you’re applying for. Make sure you include important key words in your resume that match what’s in the job description. For example, if the job ad says they want expertise in tidymodels, say tidymodels in your resume.\nThink of the “preferred qualifications” as a wishlist rather than a list of necessary skills. Remember… you miss 100% of the shots you don’t take.\nAlways save your resume as a PDF. (1) You never know what software they will be using to view your resume and you want it to ALWAYS looks the same. (2) You don’t want anyone to accidentally edit it.\n\nA nice article\n\n\n\nCover Letter\n\nStart with Cover Letter Template\nAdditional tips from Eric\n\nRemember that people may not be carefully be reading your cover letter from top to bottom. Design your cover letter so that it still makes sence if someone skims it.\n\n\n\n\nSample Analysis\n\nWhile not required, I recommend you start with something you’ve been working on\n\nIf you have a side project, you that\nIf not, I recommend starting with one of your homeworks\n\nYour data analysis should do the following\n\nTell a coherent story and narrative.\nInclude something similar to the following sections:\n\nIntroduction outlining and motivating the problem\nExploratory data analysis and pre-process/feature engineering\nModeling or Model Selection\nPerformance Analysis\nConclusion summarizing your results\n\nStrike a balance between addressing all of the relevant technical qualifications listed in the job ad without feeling like you’re just doing a bunch of unnecessary a non-relevant work. Keep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data.\nBe professional and be grammatically correct and devoid of typos.\n\nThings to avoid:\n\nWalls of code without context. You should be explaining what you do every time you write code. However, don’t put too much detail. Assume the reader is familiar with machine learning. For example, say “We now fit the logistic regression model to the training data.” instead of “A logistic regression model is a machine learning model that blah, blah, blah”.\nWalls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don’t need to include that in your final report. Make sure that anything you display is done with purpose and that you’re talking about that purpose.\nTalking about functions rather than what code is doing. For example, say “We now fit the logistic regression model to the training data.” instead of “We not use the fit function to fit the logistic regression model to the training data.”\nEnsure all plots have professional axis labels.\nWhen talking about your variables, mostly refer to them by what the represent rather than their name. For example say “We will be predicting whether a customer will default on their loan.” instead of “We will be using default as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.\nIncluding a bunch of unnecessary analysis steps to prove that you can do them. If the project you’ve chosen does not call of more advanced analysis steps, choose a different one."
+  },
+  {
+    "objectID": "Jobs/Job1/job-app-1-rubric.html",
+    "href": "Jobs/Job1/job-app-1-rubric.html",
+    "title": "Job Application 1 Rubric",
+    "section": "",
+    "text": "This is for a course assignment at the College of Idaho and is not a real job advertisement."
+  },
+  {
+    "objectID": "Jobs/Job1/job-app-1-rubric.html#disclaimer",
+    "href": "Jobs/Job1/job-app-1-rubric.html#disclaimer",
+    "title": "Job Application 1 Rubric",
+    "section": "",
+    "text": "This is for a course assignment at the College of Idaho and is not a real job advertisement."
+  },
+  {
+    "objectID": "Jobs/Job1/job-app-1-rubric.html#job-advertisement",
+    "href": "Jobs/Job1/job-app-1-rubric.html#job-advertisement",
+    "title": "Job Application 1 Rubric",
+    "section": "Job Advertisement",
+    "text": "Job Advertisement\nJob Title: Data Analyst\nLocation: Boise, Idaho\nCompany: Micron Technology, Inc.\nAbout Us: At Micron Technology, Inc., we are dedicated to transforming how the world uses information to enrich life. As a global leader in memory and storage solutions, we are committed to delivering innovative solutions that drive advancements in technology and improve the quality of life for people around the world.\nJob Description: As a Data Analyst at Micron, you will play a crucial role in analyzing data to help us make better business decisions. You will work closely with various departments to understand their data needs and provide actionable insights.\nKey Responsibilities:\n\nCollect, clean, and analyze data from various sources.\nDevelop and maintain dashboards and reports to track key performance indicators (KPIs).\nIdentify trends, patterns, and anomalies in data sets.\nCollaborate with cross-functional teams to understand business requirements and provide data-driven solutions.\nPresent findings and recommendations to stakeholders in a clear and concise manner.\nEnsure data accuracy and integrity.\n\nQualifications:\n\nBachelor’s degree in Data Science, Statistics, Computer Science, or a related field.\nWell-versed in data manipulation and visualization using R.\nExpertise in statistical inference and basic statistical models.\nProficiency in basic machine learning (e.g. regression & classification problems, pre-processing and feature engineering, model evaluation)\nStrong analytical and problem-solving skills.\nExcellent communication and presentation skills.\nAbility to work independently and as part of a team.\n\nPreferred Qualifications:\n\nExperience using the tidyverse and tidymodels.\nProficiency in a variety of data analysis tools and software (e.g. SQL, Python, Excel)\nFamiliarity with big data technologies (e.g., Hadoop, Spark).\n\nBenefits:\n\nGetting a good grade in your MAT-427 class\nPreparing for getting a job\n\nHow to Apply: Interested candidates are invited to submit a link to their personal website which contains the follwoing:\n\nResume\nA cover letter detailing their relevant experience and why they are a good fit for this role\nA sample data analysis demonstrating skills described above\n\nApplication Deadline: March 21, 2025 11:59PM"
+  },
+  {
+    "objectID": "Jobs/Job1/job-ad-1.html",
+    "href": "Jobs/Job1/job-ad-1.html",
+    "title": "Job 1",
+    "section": "",
+    "text": "This is for a course assignment at the College of Idaho and is not a real job advertisement."
+  },
+  {
+    "objectID": "Jobs/Job1/job-ad-1.html#disclaimer",
+    "href": "Jobs/Job1/job-ad-1.html#disclaimer",
+    "title": "Job 1",
+    "section": "",
+    "text": "This is for a course assignment at the College of Idaho and is not a real job advertisement."
+  },
+  {
+    "objectID": "Jobs/Job1/job-ad-1.html#job-advertisement",
+    "href": "Jobs/Job1/job-ad-1.html#job-advertisement",
+    "title": "Job 1",
+    "section": "Job Advertisement",
+    "text": "Job Advertisement\nJob Title: Data Analyst\nLocation: Boise, Idaho\nCompany: Micron Technology, Inc.\nAbout Us: At Micron Technology, Inc., we are dedicated to transforming how the world uses information to enrich life. As a global leader in memory and storage solutions, we are committed to delivering innovative solutions that drive advancements in technology and improve the quality of life for people around the world.\nJob Description: As a Data Analyst at Micron, you will play a crucial role in analyzing data to help us make better business decisions. You will work closely with various departments to understand their data needs and provide actionable insights.\nKey Responsibilities:\n\nCollect, clean, and analyze data from various sources.\nDevelop and maintain dashboards and reports to track key performance indicators (KPIs).\nIdentify trends, patterns, and anomalies in data sets.\nCollaborate with cross-functional teams to understand business requirements and provide data-driven solutions.\nPresent findings and recommendations to stakeholders in a clear and concise manner.\nEnsure data accuracy and integrity.\n\nQualifications:\n\nBachelor’s degree in Data Science, Statistics, Computer Science, or a related field.\nWell-versed in data manipulation and visualization using R.\nExpertise in statistical inference and basic statistical models.\nProficiency in basic machine learning (e.g. regression & classification problems, pre-processing and feature engineering, model evaluation)\nExcellent communication, presentation, and teamwork skills.\nAbility to work independently and as part of a team using Git.\n\nPreferred Qualifications:\n\nExperience using the tidyverse and tidymodels.\nProficiency in a variety of data analysis tools and software (e.g. SQL, Python, Excel)\nFamiliarity with big data technologies (e.g., Hadoop, Spark).\n\nBenefits:\n\nGetting a good grade in your MAT-427 class\nPreparing for getting a job\n\nHow to Apply: Interested candidates are invited to submit a link to their personal website which contains the follwoing:\n\nResume\nA cover letter detailing their relevant experience and why they are a good fit for this role\nA sample data analysis demonstrating skills described above\n\nApplication Deadline: March 21, 2025 11:59PM"
   }
 ]

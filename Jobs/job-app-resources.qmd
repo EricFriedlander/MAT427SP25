@@ -1,0 +1,65 @@
+---
+title: "Job Application Resources"
+---
+
+## Building a Website
+
+-   [Using Quarto & Netlify](https://jadeyryan.com/blog/2024-02-19_beginner-quarto-netlify/)
+-   [Using Quarto, Netlify, & GitHub](https://jadeyryan.com/blog/2023-11-19_publish-quarto-website/)
+-   [Using Quarto & GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
+
+## Cover Letter & Resume
+
+-   [CofI Career Prep Resources](https://cofi.instructure.com/courses/14763/pages/career-prep-resources)
+-   General Tips from Eric:
+    +   Always customize your application materials to the job you're applying to.
+    +   The first people who read your application may be HR recruiters with no expertise in the job you're appling for so write your application accordingly. Alternatively, it could be an AI filtering software so make sure to include any important keywords.
+    +   The first people who read your application may be HR recruiters who are grumpy baby boomers who care deeply about "professionalism". Make sure there is nothing on your job application that is unprofessional. This includes but is not limited to typos & grammar and GitHub handles or usernames that are anything other than a variation on your name. Furthermore, make sure there is nothing on your social media that could be disqualifying like pictures or videos of you partying/drinking.
+    +   Be prepared to discuss anything on your resume in a job interview.
+    +   Jobs care A LOT about communication and teamwork skills. Anything you can do emphasize your skills in this area is worth including in your application.
+    <!-- +   As much as this sucks, if you are foreign and English is not your first language, some employers may pay special attention to your writing and speaking skills. While you won't be in this class, in the real world you may be held to a higher standard than your American counterparts, especially because companies may have to sponsor you. I cannot express how important it is that you pay close attention to your writing and practice speaking clearly and professionally in English. -->
+    
+    
+### Resume
+
+-   Start with [Resume Template](https://cofi.instructure.com/courses/14763/files/1316826?verifier=et2few6bBRyK8o76gjpqmqVcimxqKVCB3ePQdxP0&wrap=1)
+-   Additional tips from Eric
+    +   DON'T GO MORE THAN 1 PAGE. You should only ever go more than 1 page if you have don't a lot of stuff. As college students, you haven't... It may feel like you have... but you haven't.
+    +   CUSTOMIZE YOUR RESUME TO THE JOB AD!
+    +   Rename "Skills" as "Technical Skills" and indicate level of prociency next to each. You can include programming languages (e.g. R (Proficient)) and major packages (e.g. `tidyverse` (proficient)). It is ok to a A LITTLE BIT optimistic about your skills. However, DO NOT LIE. If you claim you're proficient they may put you through a coding interview. A good rule of thumb is to ask yourself "What level of proficiency could I reach with one weekend of HARD studying?"
+    +   Add a link to your personal website and GitHub to your resume.
+    +   I like listing relvant coursework near the top.
+    +   You resume may first go through an AI filter or be reviewed by an HR hiring manager without expertise in the field you're applying for. Make sure you include important key words in your resume that match what's in the job description. For example, if the job ad says they want expertise in `tidymodels`, say `tidymodels` in your resume.
+    +   Think of the "preferred qualifications" as a wishlist rather than a list of necessary skills. Remember... you miss 100% of the shots you don't take.
+    +   When possible, quantify your achievements. An example from my old resume (emphasis added): "Devised cache replacement policy for Video-on-Demand settings which takes advantage of "chunked" files and achieves a **32% improvement** install duration compared to the LRU policy; **work published in peer-reviewed article**."
+    +   **Always save your resume as a PDF.** (1) You never know what software they will be using to view your resume and you want it to ALWAYS looks the same. (2) You don't want anyone to accidentally edit it.
+-   [A nice article](https://www.dataquest.io/blog/how-data-science-resume-cv/)
+
+### Cover Letter
+
+-   Start with [Cover Letter Template](https://cofi.instructure.com/courses/14763/files/1316820?verifier=A7l5P4axxJRpXFIRQLojylqCjEWcfFgSbSlSXdEi&wrap=1)
+-   Additional tips from Eric
+    +   Remember that people may not be carefully be reading your cover letter from top to bottom. Design your cover letter so that it still makes sence if someone skims it.
+    
+### Sample Analysis
+
+-   While not required, I recommend you start with something you've been working on
+    +   If you have a side project, you that
+    +   If not, I recommend starting with one of your homeworks
+-   Your data analysis should do the following
+    +   Tell a coherent story and narrative. If you start with a homework, make sure you take out all of my narrative and the exercise headings.
+    +   Include something similar to the following sections:
+        -   Introduction outlining and motivating the problem
+        -   Exploratory data analysis and pre-process/feature engineering
+        -   Modeling or Model Selection
+        -   Performance Analysis
+        -   Conclusion summarizing your results
+    +   Strike a balance between addressing all of the relevant *technical* qualifications listed in the job ad without feeling like you're just doing a bunch of unnecessary a non-relevant work. Keep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data.
+    +   Be professional and be grammatically correct and devoid of typos.
+-   Things to avoid:
+    +   Walls of code without context. You should be explaining what you do every time you write code. However, don't put too much detail. Assume the reader is familiar with machine learning. For example, say "We now fit the logistic regression model to the training data." instead of "A logistic regression model is a machine learning model that blah, blah, blah".
+    +   Walls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don't need to include that in your final report. Make sure that anything you display is done **with purpose** and that you're talking about that purpose.
+    +   Talking about functions rather than what code is doing. For example, say "We now fit the logistic regression model to the training data." instead of "We not use the `fit` function to fit the logistic regression model to the training data."
+    +   Ensure all plots have professional axis labels.
+    +   When talking about your variables, mostly refer to them by what the represent rather than their name. For example say "We will be predicting whether a customer will default on their loan." instead of "We will be using `default` as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.
+    +   Including a bunch of unnecessary analysis steps to prove that you can do them. If the project you've chosen does not call of more advanced analysis steps, choose a different one.
