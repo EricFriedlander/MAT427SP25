@@ -13,7 +13,7 @@ title: "Job Application Resources"
 -   [CofI Career Prep Resources](https://cofi.instructure.com/courses/14763/pages/career-prep-resources)
 -   General Tips from Eric:
     +   Always customize your application materials to the job you're applying to.
-    +   The first people who read your application may be HR recruiters with no expertise in the job you're appling for so write your application accordingly. Alternatively, it could be an AI filtering software so make sure to include any important keywords.
+    +   The first people who read your application may be HR recruiters with no expertise in the job you're applying for so write your application accordingly. Alternatively, it could be an AI filtering software so make sure to include any important keywords.
     +   The first people who read your application may be HR recruiters who are grumpy baby boomers who care deeply about "professionalism". Make sure there is nothing on your job application that is unprofessional. This includes but is not limited to typos & grammar and GitHub handles or usernames that are anything other than a variation on your name. Furthermore, make sure there is nothing on your social media that could be disqualifying like pictures or videos of you partying/drinking.
     +   Be prepared to discuss anything on your resume in a job interview.
     +   Jobs care A LOT about communication and teamwork skills. Anything you can do emphasize your skills in this area is worth including in your application.
@@ -26,9 +26,9 @@ title: "Job Application Resources"
 -   Additional tips from Eric
     +   DON'T GO MORE THAN 1 PAGE. You should only ever go more than 1 page if you have don't a lot of stuff. As college students, you haven't... It may feel like you have... but you haven't.
     +   CUSTOMIZE YOUR RESUME TO THE JOB AD!
-    +   Rename "Skills" as "Technical Skills" and indicate level of prociency next to each. You can include programming languages (e.g. R (Proficient)) and major packages (e.g. `tidyverse` (proficient)). It is ok to a A LITTLE BIT optimistic about your skills. However, DO NOT LIE. If you claim you're proficient they may put you through a coding interview. A good rule of thumb is to ask yourself "What level of proficiency could I reach with one weekend of HARD studying?"
+    +   Rename "Skills" as "Technical Skills" and indicate level of proficiency next to each. You can include programming languages (e.g. R (Proficient)) and major packages (e.g. `tidyverse` (proficient)). It is OK to a A LITTLE BIT optimistic about your skills. However, DO NOT LIE. If you claim you're proficient they may put you through a coding interview. A good rule of thumb is to ask yourself "What level of proficiency could I reach with one weekend of HARD studying?"
     +   Add a link to your personal website and GitHub to your resume.
-    +   I like listing relvant coursework near the top.
+    +   I like listing relevant coursework near the top.
     +   You resume may first go through an AI filter or be reviewed by an HR hiring manager without expertise in the field you're applying for. Make sure you include important key words in your resume that match what's in the job description. For example, if the job ad says they want expertise in `tidymodels`, say `tidymodels` in your resume.
     +   Think of the "preferred qualifications" as a wishlist rather than a list of necessary skills. Remember... you miss 100% of the shots you don't take.
     +   When possible, quantify your achievements. An example from my old resume (emphasis added): "Devised cache replacement policy for Video-on-Demand settings which takes advantage of "chunked" files and achieves a **32% improvement** install duration compared to the LRU policy; **work published in peer-reviewed article**."
@@ -39,7 +39,7 @@ title: "Job Application Resources"
 
 -   Start with [Cover Letter Template](https://cofi.instructure.com/courses/14763/files/1316820?verifier=A7l5P4axxJRpXFIRQLojylqCjEWcfFgSbSlSXdEi&wrap=1)
 -   Additional tips from Eric
-    +   Remember that people may not be carefully be reading your cover letter from top to bottom. Design your cover letter so that it still makes sence if someone skims it.
+    +   Remember that people may not be carefully be reading your cover letter from top to bottom. Design your cover letter so that it still makes sense if someone skims it.
     
 ### Sample Analysis
 

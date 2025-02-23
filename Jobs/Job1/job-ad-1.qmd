@@ -1,5 +1,5 @@
 ---
-title: "Job 1"
+title: "Job 1 Advertisement"
 ---
 
 ## Disclaimer
@@ -34,7 +34,7 @@ As a Data Analyst at Micron, you will play a crucial role in analyzing data to h
 - Bachelor's degree in Data Science, Statistics, Computer Science, or a related field.
 - Well-versed in data manipulation and visualization using R.
 - Expertise in statistical inference and basic statistical models.
-- Proficiency in basic machine learning (e.g. regression & classification problems, pre-processing and feature engineering, model evaluation)
+- Familiarity and experience with basic machine learning techniques and terminology including regression & classification problems, pre-processing and feature engineering, modeling building, and model evaluation
 - Excellent communication, presentation, and teamwork skills.
 - Ability to work independently and as part of a team using Git.
 
