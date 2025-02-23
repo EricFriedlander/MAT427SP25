@@ -92,42 +92,42 @@
   {
     "objectID": "slides/10-cross-validation.html#computational-set-up",
     "href": "slides/10-cross-validation.html#computational-set-up",
-    "title": "MATH 427: Evaluating Classification Models",
+    "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Computational Set-Up",
     "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(gridExtra)\nlibrary(janitor) # for next contingency tables\nlibrary(kableExtra)\nlibrary(ISLR2)\n\ntidymodels_prefer()"
   },
   {
     "objectID": "slides/10-cross-validation.html#review-logistic-regression-vs-knn",
     "href": "slides/10-cross-validation.html#review-logistic-regression-vs-knn",
-    "title": "MATH 427: Evaluating Classification Models",
+    "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Review: Logistic Regression vs KNN",
     "text": "Review: Logistic Regression vs KNN\n\nLogistic regression \\(\\implies\\) parametric , KNN \\(\\implies\\) non-parametric.\nLogistic regression \\(\\implies\\) only for classification problems (\\(Y\\) categorical), KNN \\(\\implies\\) both regression and classification.\nLogistic regression is (more) interpretable, KNN is not.\nLogistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.\nPrediction: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality."
   },
   {
     "objectID": "slides/10-cross-validation.html#classification-metrics-app",
     "href": "slides/10-cross-validation.html#classification-metrics-app",
-    "title": "MATH 427: Evaluating Classification Models",
+    "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Classification Metrics App",
     "text": "Classification Metrics App\n\nDr. F will split you into four groups\nOn one of your computers connect to a tv and open this app\nDo the following based on your group number:\n\n1: Choose plane on the first screen\n2: Choose circle on the first screen\n3: Choose parabola on the first screen\n4: Choose sine curve on the first screen\n\nWe will generate data from this population… do you think KNN or logistic regression will yield a better classifier? Why?"
   },
   {
     "objectID": "slides/10-cross-validation.html#classification-metrics-app-1",
     "href": "slides/10-cross-validation.html#classification-metrics-app-1",
-    "title": "MATH 427: Evaluating Classification Models",
+    "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Classification Metrics App",
     "text": "Classification Metrics App\n\nOn the second tab generate a small test and training set\nOn the third tab fit a KNN model with 5 neighbors and then a logistic regression model\nWhich model do you think will perform better based on the plots you see?\nChoose the better model, click fit, and click on the fourth tab\nFor each of the metrics try to reconcile the performance metrics with the plots"
   },
   {
     "objectID": "slides/10-cross-validation.html#data-splitting-discussion",
     "href": "slides/10-cross-validation.html#data-splitting-discussion",
-    "title": "MATH 427: Evaluating Classification Models",
+    "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Data Splitting: Discussion",
     "text": "Data Splitting: Discussion\n\n\nWhy do we split our data before fitting a model?\n\nTo prevent overfitting\n\nWhat are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or \\(k = 1, 2, \\ldots, 100\\) neighbors)\n\nWe open ourselves up to information leakage\n\nPotential solution… three way split (training/validation/test)\nBetter solution… cross validation and resampling"
   },
   {
     "objectID": "slides/10-cross-validation.html#cross-validation-cv",
     "href": "slides/10-cross-validation.html#cross-validation-cv",
-    "title": "MATH 427: Evaluating Classification Models",
+    "title": "MATH 427: Cross Validation and Resmpling",
     "section": "Cross-Validation (CV)",
     "text": "Cross-Validation (CV)\n\n\nPartition your data\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
@@ -2455,5 +2455,19 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "slides/10-cross-validation.html#resampling",
+    "href": "slides/10-cross-validation.html#resampling",
+    "title": "MATH 427: Cross Validation and Resmpling",
+    "section": "Resampling",
+    "text": "Resampling\n\nFigure 10.1 from TMWR"
+  },
+  {
+    "objectID": "slides/10-cross-validation.html#k--fold-cross-validation-cv",
+    "href": "slides/10-cross-validation.html#k--fold-cross-validation-cv",
+    "title": "MATH 427: Cross Validation and Resmpling",
+    "section": "K- Fold Cross-Validation (CV)",
+    "text": "K- Fold Cross-Validation (CV)\n\n\nPartition your data into \\(K\\) pieces\nL\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]

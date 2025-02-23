@@ -1,5 +1,5 @@
 ---
-title: 'MATH 427: Evaluating Classification Models'
+title: 'MATH 427: Cross Validation and Resmpling'
 author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
@@ -62,7 +62,7 @@ tidymodels_prefer()
 -   For each of the metrics try to reconcile the performance metrics with the plots
 
 
-# Cross Validation
+# Resampling & Cross Validation
 
 ## Data Splitting: Discussion
 
@@ -75,10 +75,24 @@ tidymodels_prefer()
 -   Better solution... cross validation and resampling
 :::
 
-## Cross-Validation (CV)
+## Resampling
+
+![Figure 10.1 from TMWR](images/09/resampling.svg)
+## Cross-Validation Terminology
+
+-   Divide training set into two sets
+    +   Analysis set: fit the model (similar to training set)
+    +   Assessment set: evaluation the model (similar to test set)
+
+## K-Fold Cross-Validation (CV)
 
 :::{.incremental}
--   Partition your data 
+-   Partition your data into $K$ non-overlapping "folds"
+  +   Folds don't overlap and every training observation is in one fold
+  +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+  +   Treat fold $k$ as the assessment set
+  +   Treat all folds except for $k$ as the assessment set
 :::
 
 <!-- ## Resampling Methods -->
