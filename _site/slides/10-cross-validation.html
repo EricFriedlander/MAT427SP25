@@ -407,67 +407,15 @@ Eric Friedlander
 <section id="computational-set-up" class="slide level2">
 <h2>Computational Set-Up</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.2.0 ──
-✔ broom        1.0.6     ✔ rsample      1.2.1
-✔ dials        1.3.0     ✔ tune         1.2.1
-✔ infer        1.0.7     ✔ workflows    1.1.4
-✔ modeldata    1.4.0     ✔ workflowsets 1.1.0
-✔ parsnip      1.2.1     ✔ yardstick    1.3.1
-✔ recipes      1.1.0     
-── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-✖ scales::discard() masks purrr::discard()
-✖ dplyr::filter()   masks stats::filter()
-✖ recipes::fixed()  masks stringr::fixed()
-✖ dplyr::lag()      masks stats::lag()
-✖ yardstick::spec() masks readr::spec()
-✖ recipes::step()   masks stats::step()
-• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'gridExtra'
-
-The following object is masked from 'package:dplyr':
-
-    combine</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(janitor) <span class="co"># for next contingency tables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'janitor'
-
-The following objects are masked from 'package:stats':
-
-    chisq.test, fisher.test</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'kableExtra'
-
-The following object is masked from 'package:dplyr':
-
-    group_rows</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(ISLR2)</span>
-<span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-4"><a></a><span class="fu">library</span>(janitor) <span class="co"># for next contingency tables</span></span>
+<span id="cb1-5"><a></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-6"><a></a><span class="fu">library</span>(modeldata) <span class="co"># for ames data</span></span>
+<span id="cb1-7"><a></a></span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="review-logistic-regression-vs-knn" class="slide level2 smaller">
@@ -538,7 +486,7 @@ The following object is masked from 'package:dplyr':
 </ul></li>
 </ul>
 </section>
-<section id="k-fold-cross-validation-cv" class="slide level2">
+<section id="k-fold-cross-validation-cv" class="slide level2 smaller">
 <h2>K-Fold Cross-Validation (CV)</h2>
 <div>
 <ul>
@@ -547,68 +495,115 @@ The following object is masked from 'package:dplyr':
 <li class="fragment">Each fold contained <span class="math inline">\(1/K\)</span> of the training data</li>
 <li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:</li>
 <li class="fragment">Treat fold <span class="math inline">\(k\)</span> as the assessment set</li>
-<li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the assessment set</li>
+<li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the analysis set</li>
+<li class="fragment">Fit model to analysis set (use whole modeling workflow)</li>
+<li class="fragment">Compute error metrics on assessment set</li>
+<li class="fragment">After loop, you will have <span class="math inline">\(K\)</span> copies of each error metrics</li>
+<li class="fragment">Average them together to get performance estimate</li>
+<li class="fragment">Can also look at distribution of performance metrics</li>
 </ul>
 </div>
-<!-- ## Resampling Methods -->
-<!-- * **Idea:** Repeatedly draw samples from the training data and refit a model on each sample, and evaluate its performance on the other parts. -->
-<!-- * **Objective:** To obtain additional information about the fitted model. -->
-<!-- * **Cross-Validation (CV)** is probably the most widely used resampling method. It is a general approach that can be applied to almost any statistical learning method. -->
-<!-- ## Cross-Validation (CV) -->
-<!-- Used for -->
-<!-- * **model selection**: select the optimum level of flexibility (tune hyperparameters) or compare different models to choose the best one -->
-<!-- * **model assessment**: evaluate the performance of a model (estimate the error and variability) -->
-<!-- We will talk about -->
-<!-- <!-- * Validation Set Approach -->
-<p>–&gt;</p>
-<!-- * Leave-One-Out Cross-Validation (LOOCV) -->
-<!-- * $k$-Fold Cross-Validation -->
-<!-- <!-- ## Training Error vs Test Error -->
-<p>–&gt;</p>
-<!-- <!-- * **Training Error**: Calculated by applying the statistical learning method to the observations used in its training. -->
-<p>–&gt;</p>
-<!-- <!-- * **Test Error**: Average error that results from using a -->
-<p>–&gt; <!-- <!-- statistical learning method to predict the response on a new unseen observation. --> –&gt;</p>
-<!-- <!-- **Test Error Estimates** -->
-<p>–&gt;</p>
-<!-- <!-- * From a large designated test set. -->
-<p>–&gt;</p>
-<!-- <!-- * Making a mathematical adjustment to the training error. (Chapter 6) -->
-<p>–&gt;</p>
-<!-- <!-- * By **holding out** a subset of the training dataset, then assessing model performance on the held out observations. -->
-<p>–&gt;</p>
-<!-- <!-- ## Training Error vs Test Error -->
-<p>–&gt;</p>
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/SL_C5_1.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Validation Set Approach -->
-<p>–&gt;</p>
-<!-- <!-- * Randomly divide the available set of observations into: a **training set** and a **validation/hold-out set**. -->
-<p>–&gt;</p>
-<!-- <!-- * Model fit on the training set. Fitted model is used to predict the responses for the observations in the -->
-<p>–&gt; <!-- <!-- validation set. --> –&gt;</p>
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/5.1.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Validation Set Approach -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, echo=FALSE, fig.align='center'} -->
-<p>–&gt; <!-- <!-- data("Auto") --> –&gt; <!-- <!-- plot(Auto$horsepower,Auto$mpg,ylab="mpg",xlab="horsepower") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- Randomly split the 392 observations into two sets, a training set containing 196 data points, and a validation set containing the remaining 196 observations. -->
-<p>–&gt;</p>
-<!-- <!-- ## Validation Set Approach -->
-<p>–&gt;</p>
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/5.2.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- Potential drawbacks: -->
-<p>–&gt;</p>
-<!-- <!-- * The validation set estimate of the test error can be highly variable. -->
-<p>–&gt;</p>
-<!-- <!-- * Only a subset of the observations (those that are in the training set) are used to fit the model. This suggests that the validation set error may tend to overestimate the test error for the model fit on the entire data set. -->
-<p>–&gt;</p>
-<!-- <!-- * Yields different results due to randomness in training and validation datasets. -->
-<p>–&gt;</p>
+</section></section>
+<section>
+<section id="cv-workflow-in-r" class="title-slide slide level1 center">
+<h1>CV Workflow in R</h1>
+
+</section>
+<section id="data-ames-housing-prices" class="slide level2 smaller">
+<h2>Data: Ames Housing Prices</h2>
+<p>A data set from De Cock (2011) has 82 fields were recorded for 2,930 properties in Ames IA. This version is copies from the AmesHousing package but does not include a few quality columns that appear to be outcomes rather than predictors.</p>
+<p>Goal: Predict <code>Sale_Price</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,930
+Columns: 74
+$ MS_SubClass        &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_1946…
+$ MS_Zoning          &lt;fct&gt; Residential_Low_Density, Residential_High_Density, …
+$ Lot_Frontage       &lt;dbl&gt; 141, 80, 81, 93, 74, 78, 41, 43, 39, 60, 75, 0, 63,…
+$ Lot_Area           &lt;int&gt; 31770, 11622, 14267, 11160, 13830, 9978, 4920, 5005…
+$ Street             &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pav…
+$ Alley              &lt;fct&gt; No_Alley_Access, No_Alley_Access, No_Alley_Access, …
+$ Lot_Shape          &lt;fct&gt; Slightly_Irregular, Regular, Slightly_Irregular, Re…
+$ Land_Contour       &lt;fct&gt; Lvl, Lvl, Lvl, Lvl, Lvl, Lvl, Lvl, HLS, Lvl, Lvl, L…
+$ Utilities          &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, All…
+$ Lot_Config         &lt;fct&gt; Corner, Inside, Corner, Corner, Inside, Inside, Ins…
+$ Land_Slope         &lt;fct&gt; Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, G…
+$ Neighborhood       &lt;fct&gt; North_Ames, North_Ames, North_Ames, North_Ames, Gil…
+$ Condition_1        &lt;fct&gt; Norm, Feedr, Norm, Norm, Norm, Norm, Norm, Norm, No…
+$ Condition_2        &lt;fct&gt; Norm, Norm, Norm, Norm, Norm, Norm, Norm, Norm, Nor…
+$ Bldg_Type          &lt;fct&gt; OneFam, OneFam, OneFam, OneFam, OneFam, OneFam, Twn…
+$ House_Style        &lt;fct&gt; One_Story, One_Story, One_Story, One_Story, Two_Sto…
+$ Overall_Cond       &lt;fct&gt; Average, Above_Average, Above_Average, Average, Ave…
+$ Year_Built         &lt;int&gt; 1960, 1961, 1958, 1968, 1997, 1998, 2001, 1992, 199…
+$ Year_Remod_Add     &lt;int&gt; 1960, 1961, 1958, 1968, 1998, 1998, 2001, 1992, 199…
+$ Roof_Style         &lt;fct&gt; Hip, Gable, Hip, Hip, Gable, Gable, Gable, Gable, G…
+$ Roof_Matl          &lt;fct&gt; CompShg, CompShg, CompShg, CompShg, CompShg, CompSh…
+$ Exterior_1st       &lt;fct&gt; BrkFace, VinylSd, Wd Sdng, BrkFace, VinylSd, VinylS…
+$ Exterior_2nd       &lt;fct&gt; Plywood, VinylSd, Wd Sdng, BrkFace, VinylSd, VinylS…
+$ Mas_Vnr_Type       &lt;fct&gt; Stone, None, BrkFace, None, None, BrkFace, None, No…
+$ Mas_Vnr_Area       &lt;dbl&gt; 112, 0, 108, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6…
+$ Exter_Cond         &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…
+$ Foundation         &lt;fct&gt; CBlock, CBlock, CBlock, CBlock, PConc, PConc, PConc…
+$ Bsmt_Cond          &lt;fct&gt; Good, Typical, Typical, Typical, Typical, Typical, …
+$ Bsmt_Exposure      &lt;fct&gt; Gd, No, No, No, No, No, Mn, No, No, No, No, No, No,…
+$ BsmtFin_Type_1     &lt;fct&gt; BLQ, Rec, ALQ, ALQ, GLQ, GLQ, GLQ, ALQ, GLQ, Unf, U…
+$ BsmtFin_SF_1       &lt;dbl&gt; 2, 6, 1, 1, 3, 3, 3, 1, 3, 7, 7, 1, 7, 3, 3, 1, 3, …
+$ BsmtFin_Type_2     &lt;fct&gt; Unf, LwQ, Unf, Unf, Unf, Unf, Unf, Unf, Unf, Unf, U…
+$ BsmtFin_SF_2       &lt;dbl&gt; 0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1120, 0…
+$ Bsmt_Unf_SF        &lt;dbl&gt; 441, 270, 406, 1045, 137, 324, 722, 1017, 415, 994,…
+$ Total_Bsmt_SF      &lt;dbl&gt; 1080, 882, 1329, 2110, 928, 926, 1338, 1280, 1595, …
+$ Heating            &lt;fct&gt; GasA, GasA, GasA, GasA, GasA, GasA, GasA, GasA, Gas…
+$ Heating_QC         &lt;fct&gt; Fair, Typical, Typical, Excellent, Good, Excellent,…
+$ Central_Air        &lt;fct&gt; Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, …
+$ Electrical         &lt;fct&gt; SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SB…
+$ First_Flr_SF       &lt;int&gt; 1656, 896, 1329, 2110, 928, 926, 1338, 1280, 1616, …
+$ Second_Flr_SF      &lt;int&gt; 0, 0, 0, 0, 701, 678, 0, 0, 0, 776, 892, 0, 676, 0,…
+$ Gr_Liv_Area        &lt;int&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616…
+$ Bsmt_Full_Bath     &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, …
+$ Bsmt_Half_Bath     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Full_Bath          &lt;int&gt; 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 3, 2, …
+$ Half_Bath          &lt;int&gt; 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, …
+$ Bedroom_AbvGr      &lt;int&gt; 3, 2, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 2, 1, 4, 4, …
+$ Kitchen_AbvGr      &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ TotRms_AbvGrd      &lt;int&gt; 7, 5, 6, 8, 6, 7, 6, 5, 5, 7, 7, 6, 7, 5, 4, 12, 8,…
+$ Functional         &lt;fct&gt; Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, T…
+$ Fireplaces         &lt;int&gt; 2, 0, 0, 2, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, …
+$ Garage_Type        &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Att…
+$ Garage_Finish      &lt;fct&gt; Fin, Unf, Unf, Fin, Fin, Fin, Fin, RFn, RFn, Fin, F…
+$ Garage_Cars        &lt;dbl&gt; 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, …
+$ Garage_Area        &lt;dbl&gt; 528, 730, 312, 522, 482, 470, 582, 506, 608, 442, 4…
+$ Garage_Cond        &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…
+$ Paved_Drive        &lt;fct&gt; Partial_Pavement, Paved, Paved, Paved, Paved, Paved…
+$ Wood_Deck_SF       &lt;int&gt; 210, 140, 393, 0, 212, 360, 0, 0, 237, 140, 157, 48…
+$ Open_Porch_SF      &lt;int&gt; 62, 0, 36, 0, 34, 36, 0, 82, 152, 60, 84, 21, 75, 0…
+$ Enclosed_Porch     &lt;int&gt; 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Three_season_porch &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Screen_Porch       &lt;int&gt; 0, 120, 0, 0, 0, 0, 0, 144, 0, 0, 0, 0, 0, 0, 140, …
+$ Pool_Area          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Pool_QC            &lt;fct&gt; No_Pool, No_Pool, No_Pool, No_Pool, No_Pool, No_Poo…
+$ Fence              &lt;fct&gt; No_Fence, Minimum_Privacy, No_Fence, No_Fence, Mini…
+$ Misc_Feature       &lt;fct&gt; None, None, Gar2, None, None, None, None, None, Non…
+$ Misc_Val           &lt;int&gt; 0, 0, 12500, 0, 0, 0, 0, 0, 0, 0, 0, 500, 0, 0, 0, …
+$ Mo_Sold            &lt;int&gt; 5, 6, 6, 4, 3, 6, 4, 1, 3, 6, 4, 3, 5, 2, 6, 6, 6, …
+$ Year_Sold          &lt;int&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 201…
+$ Sale_Type          &lt;fct&gt; WD , WD , WD , WD , WD , WD , WD , WD , WD , WD , W…
+$ Sale_Condition     &lt;fct&gt; Normal, Normal, Normal, Normal, Normal, Normal, Nor…
+$ Sale_Price         &lt;int&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213…
+$ Longitude          &lt;dbl&gt; -93.61975, -93.61976, -93.61939, -93.61732, -93.638…
+$ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.06090, 4…</code></pre>
+</div>
+</div>
+</section>
+<section id="initial-data-split" class="slide level2">
+<h2>Initial Data Split</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">strata =</span> <span class="st">"Sale_Price"</span>)</span>
+<span id="cb4-4"><a></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb4-5"><a></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
 <!-- <!-- * Closely related to the validation set approach. Attempts to address its drawbacks. -->
 <p>–&gt;</p>
@@ -1184,6 +1179,82 @@ The following object is masked from 'package:dplyr':
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

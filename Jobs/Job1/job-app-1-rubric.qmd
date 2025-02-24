@@ -1,5 +1,7 @@
 ---
 title: "Job Application 1 Rubric"
+draft: true
+draft-mode: true
 ---
 
 # Overall Grade

@@ -28,7 +28,8 @@ library(tidymodels)
 library(gridExtra)
 library(janitor) # for next contingency tables
 library(kableExtra)
-library(ISLR2)
+library(modeldata) # for ames data
+
 
 tidymodels_prefer()
 ```
@@ -84,7 +85,7 @@ tidymodels_prefer()
     +   Analysis set: fit the model (similar to training set)
     +   Assessment set: evaluation the model (similar to test set)
 
-## K-Fold Cross-Validation (CV)
+## K-Fold Cross-Validation (CV) {.smaller}
 
 :::{.incremental}
 -   Partition your data into $K$ non-overlapping "folds"
@@ -92,133 +93,75 @@ tidymodels_prefer()
   +   Each fold contained $1/K$ of the training data
 -   Looping through the folds $k = 1, \ldots, K$:
   +   Treat fold $k$ as the assessment set
-  +   Treat all folds except for $k$ as the assessment set
+  +   Treat all folds except for $k$ as the analysis set
+  +   Fit model to analysis set (use whole modeling workflow)
+  +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
 :::
 
-<!-- ## Resampling Methods -->
+## <span style="color:blue">Your Turn!!!</span>
 
-<!-- * **Idea:** Repeatedly draw samples from the training data and refit a model on each sample, and evaluate its performance on the other parts. -->
+Suppose you start with a data set with $n=1000$ observations. You are trying to predict a numerical variable and your target metric is MSE.
 
-<!-- * **Objective:** To obtain additional information about the fitted model. -->
+1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
 
-<!-- * **Cross-Validation (CV)** is probably the most widely used resampling method. It is a general approach that can be applied to almost any statistical learning method. -->
+2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
 
-<!-- ## Cross-Validation (CV) -->
+3. Do you analysis set's overlap? Do your assessment sets overlap?
 
-<!-- Used for -->
+4. How many times will you fit your model? How many different MSE's will you have?
 
-<!-- * **model selection**: select the optimum level of flexibility (tune hyperparameters) or compare different models to choose the best one -->
+# CV Workflow in R
 
-<!-- * **model assessment**: evaluate the performance of a model (estimate the error and variability) -->
+## Data: Ames Housing Prices {.smaller}
 
-<!-- We will talk about -->
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is copies from the `AmesHousing` package but does not include a few quality columns that appear to be outcomes rather than predictors.
 
-<!-- <!-- * Validation Set Approach -->
+Goal: Predict `Sale_Price`.
 
---\>
+```{r}
+ames |> glimpse()
+```
 
-<!-- * Leave-One-Out Cross-Validation (LOOCV) -->
+## Initial Data Split
 
-<!-- * $k$-Fold Cross-Validation -->
+```{r}
+set.seed(427)
 
-<!-- <!-- ## Training Error vs Test Error -->
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
 
---\>
+## Define Folds
 
-<!-- <!-- * **Training Error**: Calculated by applying the statistical learning method to the observations used in its training. -->
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10)
+ames_folds |> kable()
+```
 
---\>
+## Define Model(s)
 
-<!-- <!-- * **Test Error**: Average error that results from using a -->
+```{r}
+lm_model <- linear_reg() |> 
+  set_engine('lm')
 
---\>
-<!-- <!-- statistical learning method to predict the response on a new unseen observation. -->
---\>
+knn5_model <- nearest_neighbor(neighbors = 5) |> 
+  set_engine("kknn") |> 
+  set_mode("regression")
 
-<!-- <!-- **Test Error Estimates** -->
+knn10_model <- nearest_neighbor(neighbors = 10) |> 
+  set_engine("kknn") |> 
+  set_mode("regression")
+```
 
---\>
+## Define Preprocessing
 
-<!-- <!-- * From a large designated test set. -->
+```{r}
 
---\>
-
-<!-- <!-- * Making a mathematical adjustment to the training error. (Chapter 6) -->
-
---\>
-
-<!-- <!-- * By **holding out** a subset of the training dataset, then assessing model performance on the held out observations. -->
-
---\>
-
-<!-- <!-- ## Training Error vs Test Error -->
-
---\>
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
-
---\> <!-- <!-- knitr::include_graphics("EFT/SL_C5_1.PNG") --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Validation Set Approach -->
-
---\>
-
-<!-- <!-- * Randomly divide the available set of observations into: a **training set** and a **validation/hold-out set**. -->
-
---\>
-
-<!-- <!-- * Model fit on the training set. Fitted model is used to predict the responses for the observations in the -->
-
---\> <!-- <!-- validation set. --> --\>
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
-
---\> <!-- <!-- knitr::include_graphics("EFT/5.1.PNG") --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Validation Set Approach -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r, echo=FALSE, fig.align='center'} -->
-
---\> <!-- <!-- data("Auto") --> --\>
-<!-- <!-- plot(Auto$horsepower,Auto$mpg,ylab="mpg",xlab="horsepower") -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- Randomly split the 392 observations into two sets, a training set containing 196 data points, and a validation set containing the remaining 196 observations. -->
-
---\>
-
-<!-- <!-- ## Validation Set Approach -->
-
---\>
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
-
---\> <!-- <!-- knitr::include_graphics("EFT/5.2.PNG") --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- Potential drawbacks: -->
-
---\>
-
-<!-- <!-- * The validation set estimate of the test error can be highly variable. -->
-
---\>
-
-<!-- <!-- * Only a subset of the observations (those that are in the training set) are used to fit the model. This suggests that the validation set error may tend to overestimate the test error for the model fit on the entire data set. -->
-
---\>
-
-<!-- <!-- * Yields different results due to randomness in training and validation datasets. -->
-
---\>
+```
 
 <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
 

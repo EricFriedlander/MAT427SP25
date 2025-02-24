@@ -1,5 +1,7 @@
 ---
 title: "Job Application Resources"
+draft: true
+draft-mode: true
 ---
 
 ## Building a Website
