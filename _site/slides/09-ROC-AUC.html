@@ -404,6 +404,21 @@ Eric Friedlander
 </div>
 
 </section>
+<section id="announcements" class="slide level2 smaller">
+<h2>Announcements</h2>
+<p>On March 5th at 10am in JAAC, Kyle Mayer will be guest lecturing to talk about his role as a data analyst at Micron. Kyle has a Bachelors in Engineering and a Masters in Physics.</p>
+<p>Bio: Kyle Mayer is a Senior Data Analytics Engineer at Micron Technology with over 15 years of experience. He currently supports the Global Quality organization with engineering and data science projects. Kyle specializes in modeling complex physical processes, delivering insights that drive business value. Leveraging his expertise in semiconductor manufacturing, Kyle has developed tools and processes that have prevented over $100M in lost revenue. His passion for applying artificial intelligence to solve complex problems and develop automated systems highlights his commitment to innovation. In his spare time, Kyle enjoys spending time with his kids and going on hikes.</p>
+</section>
+<section id="job-application-1" class="slide level2">
+<h2>Job Application 1</h2>
+<ul>
+<li><a href="https://cofi.instructure.com/courses/17021/assignments/210575">Job Ad</a></li>
+<li><a href="../jobs/job-app-resources.html">Directions and Resources</a></li>
+<li><a href="../jobs/job1/job-app-1-rubric.html">Rubic (in progress)</a></li>
+<li>Due Next Friday: CV and Cover Letter</li>
+<li>Due Friday March 21st: whole application</li>
+</ul>
+</section>
 <section id="computational-set-up" class="slide level2">
 <h2>Computational Set-Up</h2>
 <div class="cell">
@@ -1683,80 +1698,42 @@ Eric Friedlander
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {

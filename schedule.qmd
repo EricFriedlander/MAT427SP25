@@ -81,11 +81,18 @@ d |>
       )
     }
   ) |>
+  text_transform(cells_body(columns = c(job)),
+    fn = function(x) {
+      ifelse(is.na(x), fontawesome::fa("briefcase", fill_opacity = 0.1),
+        glue::glue("<a href = {x}>{fontawesome::fa('briefcase')}</a>")
+      )
+    }
+  ) |>
   fmt_date(columns = date, date_style = 30) |>
   sub_missing(columns = c(date, topic, notes), missing_text = "") |>
   cols_align(
     align = "center", 
-    columns = c(lecture, dow, week, prepare, slides, hw,project)
+    columns = c(lecture, dow, week, prepare, slides, hw, project, job)
     ) |>
   cols_align(
     align = "left", 
@@ -98,7 +105,7 @@ d |>
       style = "solid"
     ),
     locations = cells_body(
-      columns = c(week, topic, slides, project)
+      columns = c(week, topic, slides, job)
     )
   )
 ```

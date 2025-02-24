@@ -139,29 +139,29 @@ ames_test  <- testing(data_split)
 
 ```{r}
 ames_folds <- vfold_cv(ames_train, v = 10)
-ames_folds |> kable()
+ames_folds
 ```
 
 ## Define Model(s)
 
 ```{r}
-lm_model <- linear_reg() |> 
+lm_model <- linear_reg() |>
   set_engine('lm')
 
-knn5_model <- nearest_neighbor(neighbors = 5) |> 
-  set_engine("kknn") |> 
+knn5_model <- nearest_neighbor(neighbors = 5) |>
+  set_engine("kknn") |>
   set_mode("regression")
 
-knn10_model <- nearest_neighbor(neighbors = 10) |> 
-  set_engine("kknn") |> 
+knn10_model <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
   set_mode("regression")
 ```
 
-## Define Preprocessing
+<!-- ## Define Preprocessing -->
 
-```{r}
+<!-- ```{r} -->
 
-```
+<!-- ``` -->
 
 <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
 

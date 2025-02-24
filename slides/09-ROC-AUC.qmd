@@ -20,6 +20,20 @@ knitr:
     width: 200
 ---
 
+## Announcements {.smaller}
+
+On March 5th at 10am in JAAC, Kyle Mayer will be guest lecturing to talk about his role as a data analyst at Micron. Kyle has a Bachelors in Engineering and a Masters in Physics. 
+
+Bio: Kyle Mayer is a Senior Data Analytics Engineer at Micron Technology with over 15 years of experience. He currently supports the Global Quality organization with engineering and data science projects. Kyle specializes in modeling complex physical processes, delivering insights that drive business value. Leveraging his expertise in semiconductor manufacturing, Kyle has developed tools and processes that have prevented over $100M in lost revenue. His passion for applying artificial intelligence to solve complex problems and develop automated systems highlights his commitment to innovation. In his spare time, Kyle enjoys spending time with his kids and going on hikes.
+
+## Job Application 1
+
+- [Job Ad](https://cofi.instructure.com/courses/17021/assignments/210575)
+- [Directions and Resources](/jobs/job-app-resources.qmd)
+- [Rubic (in progress)](/jobs/job1/job-app-1-rubric.qmd)
+- Due Next Friday: CV and Cover Letter
+- Due Friday March 21st: whole application
+
 ## Computational Set-Up
 
 ```{r}

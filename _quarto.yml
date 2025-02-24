@@ -46,11 +46,12 @@ website:
         - href: computing-access.qmd
         - href: computing-r-resources.qmd
           text: R resources
-      # - section: Job Applications & Interviews
-      #   contents:
-      #   - jobs/job-app-resources.qmd
-      #   - jobs/job1/job-ad-1.qmd
-      #   - jobs/job1/job-app-1-rubric.qmd
+      - section: Job Applications & Interviews
+        contents:
+        - jobs/job-app-resources.qmd
+        - href: https://cofi.instructure.com/courses/17021/assignments/210575
+          text: "Job Advertisement 1"
+        - jobs/job1/job-app-1-rubric.qmd
     #   - section: Project
     #     contents:
     #     - href: project/project-instructions.qmd
