@@ -1030,350 +1030,350 @@
   {
     "objectID": "slides/11-cross-validation.html#computational-set-up",
     "href": "slides/11-cross-validation.html#computational-set-up",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(tidymodels)\n\n── Attaching packages ────────────────────────────────────── tidymodels 1.2.0 ──\n✔ broom        1.0.7     ✔ rsample      1.2.1\n✔ dials        1.3.0     ✔ tune         1.2.1\n✔ infer        1.0.7     ✔ workflows    1.1.4\n✔ modeldata    1.4.0     ✔ workflowsets 1.1.0\n✔ parsnip      1.2.1     ✔ yardstick    1.3.2\n✔ recipes      1.1.0     \n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ scales::discard() masks purrr::discard()\n✖ dplyr::filter()   masks stats::filter()\n✖ recipes::fixed()  masks stringr::fixed()\n✖ dplyr::lag()      masks stats::lag()\n✖ yardstick::spec() masks readr::spec()\n✖ recipes::step()   masks stats::step()\n• Learn how to get started at https://www.tidymodels.org/start/\n\nlibrary(knitr)\nlibrary(janitor) # for contingency tables\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(ISLR2)\nlibrary(ggforce) # sina plots\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(janitor) # for contingency tables\nlibrary(ISLR2)\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/11-cross-validation.html#default-dataset",
     "href": "slides/11-cross-validation.html#default-dataset",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Default Dataset",
     "text": "Default Dataset\n\n\nA simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.\n\nhead(Default) |&gt; kable()  # print first six observations\n\n\n\n\ndefault\nstudent\nbalance\nincome\n\n\n\n\nNo\nNo\n729.5265\n44361.625\n\n\nNo\nYes\n817.1804\n12106.135\n\n\nNo\nNo\n1073.5492\n31767.139\n\n\nNo\nNo\n529.2506\n35704.494\n\n\nNo\nNo\n785.6559\n38463.496\n\n\nNo\nYes\n919.5885\n7491.559\n\n\n\n\n\n\nResponse Variable: default\n\nDefault |&gt; \n  tabyl(default) |&gt;  # class frequencies\n  kable()           # Make it look nice\n\n\n\n\ndefault\nn\npercent\n\n\n\n\nNo\n9667\n0.9667\n\n\nYes\n333\n0.0333"
   },
   {
     "objectID": "slides/11-cross-validation.html#split-the-data",
     "href": "slides/11-cross-validation.html#split-the-data",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Split the data",
     "text": "Split the data\n\nset.seed(427)\n\ndefault_split &lt;- initial_split(Default, prop = 0.6, strata = default)\ndefault_split\n\n&lt;Training/Testing/Total&gt;\n&lt;6000/4000/10000&gt;\n\ndefault_train &lt;- training(default_split)\ndefault_test &lt;- testing(default_split)"
   },
   {
     "objectID": "slides/11-cross-validation.html#k-nearest-neighbors-classifier-build-model",
     "href": "slides/11-cross-validation.html#k-nearest-neighbors-classifier-build-model",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "K-Nearest Neighbors Classifier: Build Model",
     "text": "K-Nearest Neighbors Classifier: Build Model\n\nResponse (\\(Y\\)): default\nPredictor (\\(X\\)): balance\n\n\nknnfit &lt;- nearest_neighbor(neighbors = 10) |&gt; \n  set_engine(\"kknn\") |&gt; \n  set_mode(\"classification\") |&gt;  \n  fit(default ~ balance, data = default_train)   # fit 10-nn model"
   },
   {
     "objectID": "slides/11-cross-validation.html#k-nearest-neighbors-classifier-predictions",
     "href": "slides/11-cross-validation.html#k-nearest-neighbors-classifier-predictions",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "K-Nearest Neighbors Classifier: Predictions",
     "text": "K-Nearest Neighbors Classifier: Predictions\n\nClass labelsProbabilities\n\n\n\npredict(knnfit, new_data = default_test, type = \"class\") |&gt; head() |&gt; kable()   # obtain predictions as classes\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\nNo\n\n\n\n\n\n\n\n\nPredicts class w/ maximum probability\n\n\npredict(knnfit, new_data = default_test, type = \"prob\") |&gt; head() |&gt; kable() # obtain predictions as probabilities\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0\n\n\n1\n0"
   },
   {
     "objectID": "slides/11-cross-validation.html#fitting-a-logistic-regression",
     "href": "slides/11-cross-validation.html#fitting-a-logistic-regression",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Fitting a logistic regression",
     "text": "Fitting a logistic regression\nFitting a logistic regression model with default as the response and balance as the predictor:\n\nlogregfit &lt;- logistic_reg() |&gt; \n  set_engine(\"glm\") |&gt; \n  fit(default ~ balance, data = default_train)   # fit logistic regression model\n\ntidy(logregfit) |&gt; kable()  # obtain results\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-10.6926385\n0.4659035\n-22.95033\n0\n\n\nbalance\n0.0055327\n0.0002841\n19.47329\n0"
   },
   {
     "objectID": "slides/11-cross-validation.html#making-predictions-in-r",
     "href": "slides/11-cross-validation.html#making-predictions-in-r",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Making predictions in R",
     "text": "Making predictions in R\n\nClass LabelsLog-OddsProbabilities\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"class\") |&gt; kable()   # obtain class predictions\n\n\n\n\n.pred_class\n\n\n\n\nNo\n\n\n\n\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"raw\") |&gt; kable()   # obtain log-odds predictions\n\n\n\n\nx\n\n\n\n\n-6.819727\n\n\n\n\n\n\n\n\npredict(logregfit, new_data = tibble(balance = 700), type = \"prob\") |&gt; kable()  # obtain probability predictions\n\n\n\n\n.pred_No\n.pred_Yes\n\n\n\n\n0.9989092\n0.0010908"
   },
   {
     "objectID": "slides/11-cross-validation.html#binary-classifiers",
     "href": "slides/11-cross-validation.html#binary-classifiers",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Binary Classifiers",
     "text": "Binary Classifiers\n\nStart with binary classification scenarios\nWith binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”\n\nIf relevant to your problem: “Positive” should be the thing you’re trying to predict/care more about\nNote: “Positive” \\(\\neq\\) “Good”\nFor default: “Yes” is Positive\n\nSome metrics weight “Positives” more and viceversa"
   },
   {
     "objectID": "slides/11-cross-validation.html#last-time",
     "href": "slides/11-cross-validation.html#last-time",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Last Time",
     "text": "Last Time\n\nConfusion Matrix\nMetrics based on confusion matrix\n\nAccuracy\nRecall/Sensitivity\nPrecision/PPV\nSpecificity\nNPV\nMCC\nF-Measure\n\nToday: ROC and AUC"
   },
   {
     "objectID": "slides/11-cross-validation.html#using-a-threshold",
     "href": "slides/11-cross-validation.html#using-a-threshold",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Using a threshold",
     "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\n\n\ndefault_test_wprobs &lt;- default_test |&gt;\n  mutate(\n    knn_probs = predict(knnfit, new_data = default_test, type = \"prob\") |&gt; pull(.pred_Yes),\n    logistic_probs = predict(logregfit, new_data = default_test, type = \"prob\") |&gt; pull(.pred_Yes)\n  )\n\ndefault_test_wprobs |&gt; head() |&gt; kable()   # obtain probability predictions\n\n\n\n\ndefault\nstudent\nbalance\nincome\nknn_probs\nlogistic_probs\n\n\n\n\nNo\nNo\n729.5265\n44361.63\n0\n0.0012842\n\n\nNo\nYes\n808.6675\n17600.45\n0\n0.0019883\n\n\nNo\nYes\n1220.5838\n13268.56\n0\n0.0190870\n\n\nNo\nNo\n237.0451\n28251.70\n0\n0.0000843\n\n\nNo\nNo\n606.7423\n44994.56\n0\n0.0006514\n\n\nNo\nNo\n286.2326\n45042.41\n0\n0.0001107"
   },
   {
     "objectID": "slides/11-cross-validation.html#using-a-threshold-1",
     "href": "slides/11-cross-validation.html#using-a-threshold-1",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Using a threshold",
     "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\nStep 2: Set a threshold to obtain class labels (0.5 below)\n\n\nthreshold &lt;- 0.5   # set threshold\ndefault_test_wprobs &lt;- default_test_wprobs |&gt;\n  mutate(knn_preds = as_factor(if_else(knn_probs &gt; threshold, \"Yes\", \"No\")),\n         logistic_preds = as_factor(if_else(logistic_probs &gt; threshold, \"Yes\", \"No\"))\n  )\n\ndefault_test_wprobs |&gt; head() |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndefault\nstudent\nbalance\nincome\nknn_probs\nlogistic_probs\nknn_preds\nlogistic_preds\n\n\n\n\nNo\nNo\n729.5265\n44361.63\n0\n0.0012842\nNo\nNo\n\n\nNo\nYes\n808.6675\n17600.45\n0\n0.0019883\nNo\nNo\n\n\nNo\nYes\n1220.5838\n13268.56\n0\n0.0190870\nNo\nNo\n\n\nNo\nNo\n237.0451\n28251.70\n0\n0.0000843\nNo\nNo\n\n\nNo\nNo\n606.7423\n44994.56\n0\n0.0006514\nNo\nNo\n\n\nNo\nNo\n286.2326\n45042.41\n0\n0.0001107\nNo\nNo"
   },
   {
     "objectID": "slides/11-cross-validation.html#using-a-threshold-2",
     "href": "slides/11-cross-validation.html#using-a-threshold-2",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Using a threshold",
     "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\nStep 2: Set a threshold to obtain class labels (0.5 below)\n\n\nthreshold &lt;- 0.5   # set threshold\ndefault_test_wprobs &lt;- default_test_wprobs |&gt;\n  mutate(knn_preds = as_factor(if_else(knn_probs &gt; threshold, \"Yes\", \"No\")),\n         logistic_preds = as_factor(if_else(logistic_probs &gt; threshold, \"Yes\", \"No\")))\n\ndefault_test_wprobs |&gt; head() |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndefault\nstudent\nbalance\nincome\nknn_probs\nlogistic_probs\nknn_preds\nlogistic_preds\n\n\n\n\nNo\nNo\n729.5265\n44361.63\n0\n0.0012842\nNo\nNo\n\n\nNo\nYes\n808.6675\n17600.45\n0\n0.0019883\nNo\nNo\n\n\nNo\nYes\n1220.5838\n13268.56\n0\n0.0190870\nNo\nNo\n\n\nNo\nNo\n237.0451\n28251.70\n0\n0.0000843\nNo\nNo\n\n\nNo\nNo\n606.7423\n44994.56\n0\n0.0006514\nNo\nNo\n\n\nNo\nNo\n286.2326\n45042.41\n0\n0.0001107\nNo\nNo"
   },
   {
     "objectID": "slides/11-cross-validation.html#performance",
     "href": "slides/11-cross-validation.html#performance",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Performance",
     "text": "Performance\n\nroc_metrics &lt;- metric_set(accuracy, sensitivity, specificity)\nroc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = \"second\") |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\naccuracy\nbinary\n0.9717500\n\n\nsensitivity\nbinary\n0.3565891\n\n\nspecificity\nbinary\n0.9922501"
   },
   {
     "objectID": "slides/11-cross-validation.html#low-threshold",
     "href": "slides/11-cross-validation.html#low-threshold",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Low Threshold",
     "text": "Low Threshold\n\nthreshold &lt;- 0.1   # set threshold\ndefault_test_wprobs &lt;- default_test_wprobs |&gt;\n  mutate(knn_preds = as_factor(if_else(knn_probs &gt; threshold, \"Yes\", \"No\")))\n\nroc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = \"second\")  |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\naccuracy\nbinary\n0.9060000\n\n\nsensitivity\nbinary\n0.7364341\n\n\nspecificity\nbinary\n0.9116507"
   },
   {
     "objectID": "slides/11-cross-validation.html#high-threshold",
     "href": "slides/11-cross-validation.html#high-threshold",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "High Threshold",
     "text": "High Threshold\n\nthreshold &lt;- 0.9   # set threshold\ndefault_test_wprobs &lt;- default_test_wprobs |&gt;\n  mutate(knn_preds = as_factor(if_else(knn_probs &gt; threshold, \"Yes\", \"No\"))\n  )\n\nroc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = \"second\") |&gt; kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\naccuracy\nbinary\n0.9685000\n\n\nsensitivity\nbinary\n0.0310078\n\n\nspecificity\nbinary\n0.9997417"
   },
   {
     "objectID": "slides/11-cross-validation.html#question",
     "href": "slides/11-cross-validation.html#question",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Question",
     "text": "Question\n\nIf I want to improve Recall/Sensitivity should I increase or decrease my threshold?\nIf I want to improve my Precision/PPV should I increase or decrease my threshold?"
   },
   {
     "objectID": "slides/11-cross-validation.html#roc-curve-and-auc",
     "href": "slides/11-cross-validation.html#roc-curve-and-auc",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "ROC Curve and AUC",
     "text": "ROC Curve and AUC\n\nROC (Receiver Operating Characteristics) curve: popular graphic for comparing different classifiers across all possible thresholds\n\nPlots the (1-Specificity) along the x-axis and the Sensitivity (true positive rate) along the y-axis\n\nAUC: area under the AUC curve\n\nIdeal ROC curve will hug the top left corner\n\nIdea: How well is my classifier separating positives from negatives"
   },
   {
     "objectID": "slides/11-cross-validation.html#roc-curve-1",
     "href": "slides/11-cross-validation.html#roc-curve-1",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "ROC Curve",
     "text": "ROC Curve\n\nroc_curve(default_test_wprobs, truth = default, knn_probs, event_level = \"second\") |&gt;\n  head() |&gt;\n  kable()\n\n\n\n\n.threshold\nspecificity\nsensitivity\n\n\n\n\n-Inf\n0.0000000\n1.0000000\n\n\n0.0000\n0.0000000\n1.0000000\n\n\n0.0145\n0.8796177\n0.8217054\n\n\n0.0415\n0.8858176\n0.8139535\n\n\n0.0560\n0.8971842\n0.7829457\n\n\n0.0655\n0.8979592\n0.7751938"
   },
   {
     "objectID": "slides/11-cross-validation.html#roc-curve-plot",
     "href": "slides/11-cross-validation.html#roc-curve-plot",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "ROC Curve: Plot",
     "text": "ROC Curve: Plot\n\nroc_curve(default_test_wprobs, truth = default, knn_probs, event_level = \"second\") |&gt;\n  autoplot()"
   },
   {
     "objectID": "slides/11-cross-validation.html#auc",
     "href": "slides/11-cross-validation.html#auc",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "AUC",
     "text": "AUC\n\nAUC: Area under the curve (ROC Curve that is)\nMeasures how good your model is at separating categories\nOnly for binary classification"
   },
   {
     "objectID": "slides/11-cross-validation.html#auc-in-r",
     "href": "slides/11-cross-validation.html#auc-in-r",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "AUC in R",
     "text": "AUC in R\n\nroc_auc(default_test_wprobs, truth = default, knn_probs, event_level = \"second\") |&gt;\n  kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nroc_auc\nbinary\n0.8757397"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-1",
     "href": "slides/11-cross-validation.html#pathological-example-1",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 1",
     "text": "Pathological Example 1"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-1-1",
     "href": "slides/11-cross-validation.html#pathological-example-1-1",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 1",
     "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{100}{100} = 1\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-1-2",
     "href": "slides/11-cross-validation.html#pathological-example-1-2",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 1",
     "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{55}{100} = 0.55\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-1-3",
     "href": "slides/11-cross-validation.html#pathological-example-1-3",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 1",
     "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{0}{100} = 0\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-1-4",
     "href": "slides/11-cross-validation.html#pathological-example-1-4",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 1",
     "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{56}{100} = 0.56\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{0}{100} = 0\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-1-5",
     "href": "slides/11-cross-validation.html#pathological-example-1-5",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 1",
     "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{0}{100} = 0\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{0}{100} = 0\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-2",
     "href": "slides/11-cross-validation.html#pathological-example-2",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 2",
     "text": "Pathological Example 2"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-3",
     "href": "slides/11-cross-validation.html#pathological-example-3",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 3",
     "text": "Pathological Example 3"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-3-1",
     "href": "slides/11-cross-validation.html#pathological-example-3-1",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 3",
     "text": "Pathological Example 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{100}{100} = 1\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-3-2",
     "href": "slides/11-cross-validation.html#pathological-example-3-2",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 3",
     "text": "Pathological Example 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{62}{100} = 0.62\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-3-3",
     "href": "slides/11-cross-validation.html#pathological-example-3-3",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 3",
     "text": "Pathological Example 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{99}{100} = 0.99\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{58}{100} = 0.58\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-3-4",
     "href": "slides/11-cross-validation.html#pathological-example-3-4",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 3",
     "text": "Pathological Example 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{75}{100} = 0.75\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{29}{100} = 0.29\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-3-5",
     "href": "slides/11-cross-validation.html#pathological-example-3-5",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 3",
     "text": "Pathological Example 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Greens Above Line}}{\\text{All Greens}} = \\frac{37}{100} = 0.37\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Reds Above Line}}{\\text{All Reds}} = \\frac{0}{100} = 0\\]"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-4",
     "href": "slides/11-cross-validation.html#pathological-example-4",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 4",
     "text": "Pathological Example 4"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-5",
     "href": "slides/11-cross-validation.html#pathological-example-5",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 5",
     "text": "Pathological Example 5"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-6",
     "href": "slides/11-cross-validation.html#pathological-example-6",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 6",
     "text": "Pathological Example 6"
   },
   {
     "objectID": "slides/11-cross-validation.html#pathological-example-7",
     "href": "slides/11-cross-validation.html#pathological-example-7",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Pathological Example 7",
     "text": "Pathological Example 7"
   },
   {
     "objectID": "slides/11-cross-validation.html#auc-questions",
     "href": "slides/11-cross-validation.html#auc-questions",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "AUC Questions",
     "text": "AUC Questions\n\nWhat should be the minimum AUC?\nWhat should be that maximum possible AUC?"
   },
   {
     "objectID": "slides/11-cross-validation.html#review-logistic-regression-vs-knn",
     "href": "slides/11-cross-validation.html#review-logistic-regression-vs-knn",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Review: Logistic Regression vs KNN",
     "text": "Review: Logistic Regression vs KNN\n\nLogistic regression \\(\\implies\\) parametric , KNN \\(\\implies\\) non-parametric.\nLogistic regression \\(\\implies\\) only for classification problems (\\(Y\\) categorical), KNN \\(\\implies\\) both regression and classification.\nLogistic regression is (more) interpretable, KNN is not.\nLogistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.\nPrediction: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality."
   },
   {
     "objectID": "slides/11-cross-validation.html#classification-metrics-app",
     "href": "slides/11-cross-validation.html#classification-metrics-app",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Classification Metrics App",
     "text": "Classification Metrics App\n\nDr. F will split you into four groups\nOn one of your computers connect to a tv and open this app\nDo the following based on your group number:\n\n1: Choose plane on the first screen\n2: Choose circle on the first screen\n3: Choose parabola on the first screen\n4: Choose sine curve on the first screen\n\nWe will generate data from this population… do you think KNN or logistic regression will yield a better classifier? Why?"
   },
   {
     "objectID": "slides/11-cross-validation.html#classification-metrics-app-1",
     "href": "slides/11-cross-validation.html#classification-metrics-app-1",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Classification Metrics App",
     "text": "Classification Metrics App\n\nOn the second tab generate a small test and training set\nOn the third tab fit a KNN model with 5 neighbors and then a logistic regression model\nWhich model do you think will perform better based on the plots you see?\nChoose the better model, click fit, and click on the fourth tab\nFor each of the metrics try to reconcile the performance metrics with the plots"
   },
   {
     "objectID": "slides/11-cross-validation.html#data-splitting-discussion",
     "href": "slides/11-cross-validation.html#data-splitting-discussion",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Data Splitting: Discussion",
     "text": "Data Splitting: Discussion\n\n\nWhy do we split our data before fitting a model?\n\nTo prevent overfitting\n\nWhat are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or \\(k = 1, 2, \\ldots, 100\\) neighbors)\n\nWe open ourselves up to information leakage\n\nPotential solution… three way split (training/validation/test)\nBetter solution… cross validation and resampling"
   },
   {
     "objectID": "slides/11-cross-validation.html#resampling",
     "href": "slides/11-cross-validation.html#resampling",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Resampling",
     "text": "Resampling\n ## Cross-Validation Terminology\n\nDivide training set into two sets\n\nAnalysis set: fit the model (similar to training set)\nAssessment set: evaluation the model (similar to test set)"
   },
   {
     "objectID": "slides/11-cross-validation.html#k-fold-cross-validation-cv",
     "href": "slides/11-cross-validation.html#k-fold-cross-validation-cv",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "K-Fold Cross-Validation (CV)",
     "text": "K-Fold Cross-Validation (CV)\n\n\nPartition your data into \\(K\\) non-overlapping “folds”\nFolds don’t overlap and every training observation is in one fold\nEach fold contained \\(1/K\\) of the training data\nLooping through the folds \\(k = 1, \\ldots, K\\):\nTreat fold \\(k\\) as the assessment set\nTreat all folds except for \\(k\\) as the analysis set\nFit model to analysis set (use whole modeling workflow)\nCompute error metrics on assessment set\nAfter loop, you will have \\(K\\) copies of each error metrics\nAverage them together to get performance estimate\nCan also look at distribution of performance metrics"
   },
   {
     "objectID": "slides/11-cross-validation.html#your-turn",
     "href": "slides/11-cross-validation.html#your-turn",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Your Turn!!!",
     "text": "Your Turn!!!\nSuppose you start with a data set with \\(n=1000\\) observations. You are trying to predict a numerical variable and your target metric is MSE.\n\nYou start with an initial 70/30 training/test split. How many observations are in your training and test set?\nYou then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?\nDo you analysis set’s overlap? Do your assessment sets overlap?\nHow many times will you fit your model? How many different MSE’s will you have?"
   },
   {
     "objectID": "slides/11-cross-validation.html#data-ames-housing-prices",
     "href": "slides/11-cross-validation.html#data-ames-housing-prices",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Data: Ames Housing Prices",
     "text": "Data: Ames Housing Prices\nA data set from De Cock (2011) has 82 fields were recorded for 2,930 properties in Ames IA. This version is copies from the AmesHousing package but does not include a few quality columns that appear to be outcomes rather than predictors.\nGoal: Predict Sale_Price.\n\names |&gt; glimpse()\n\nRows: 2,930\nColumns: 74\n$ MS_SubClass        &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_1946…\n$ MS_Zoning          &lt;fct&gt; Residential_Low_Density, Residential_High_Density, …\n$ Lot_Frontage       &lt;dbl&gt; 141, 80, 81, 93, 74, 78, 41, 43, 39, 60, 75, 0, 63,…\n$ Lot_Area           &lt;int&gt; 31770, 11622, 14267, 11160, 13830, 9978, 4920, 5005…\n$ Street             &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pav…\n$ Alley              &lt;fct&gt; No_Alley_Access, No_Alley_Access, No_Alley_Access, …\n$ Lot_Shape          &lt;fct&gt; Slightly_Irregular, Regular, Slightly_Irregular, Re…\n$ Land_Contour       &lt;fct&gt; Lvl, Lvl, Lvl, Lvl, Lvl, Lvl, Lvl, HLS, Lvl, Lvl, L…\n$ Utilities          &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, All…\n$ Lot_Config         &lt;fct&gt; Corner, Inside, Corner, Corner, Inside, Inside, Ins…\n$ Land_Slope         &lt;fct&gt; Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, G…\n$ Neighborhood       &lt;fct&gt; North_Ames, North_Ames, North_Ames, North_Ames, Gil…\n$ Condition_1        &lt;fct&gt; Norm, Feedr, Norm, Norm, Norm, Norm, Norm, Norm, No…\n$ Condition_2        &lt;fct&gt; Norm, Norm, Norm, Norm, Norm, Norm, Norm, Norm, Nor…\n$ Bldg_Type          &lt;fct&gt; OneFam, OneFam, OneFam, OneFam, OneFam, OneFam, Twn…\n$ House_Style        &lt;fct&gt; One_Story, One_Story, One_Story, One_Story, Two_Sto…\n$ Overall_Cond       &lt;fct&gt; Average, Above_Average, Above_Average, Average, Ave…\n$ Year_Built         &lt;int&gt; 1960, 1961, 1958, 1968, 1997, 1998, 2001, 1992, 199…\n$ Year_Remod_Add     &lt;int&gt; 1960, 1961, 1958, 1968, 1998, 1998, 2001, 1992, 199…\n$ Roof_Style         &lt;fct&gt; Hip, Gable, Hip, Hip, Gable, Gable, Gable, Gable, G…\n$ Roof_Matl          &lt;fct&gt; CompShg, CompShg, CompShg, CompShg, CompShg, CompSh…\n$ Exterior_1st       &lt;fct&gt; BrkFace, VinylSd, Wd Sdng, BrkFace, VinylSd, VinylS…\n$ Exterior_2nd       &lt;fct&gt; Plywood, VinylSd, Wd Sdng, BrkFace, VinylSd, VinylS…\n$ Mas_Vnr_Type       &lt;fct&gt; Stone, None, BrkFace, None, None, BrkFace, None, No…\n$ Mas_Vnr_Area       &lt;dbl&gt; 112, 0, 108, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6…\n$ Exter_Cond         &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…\n$ Foundation         &lt;fct&gt; CBlock, CBlock, CBlock, CBlock, PConc, PConc, PConc…\n$ Bsmt_Cond          &lt;fct&gt; Good, Typical, Typical, Typical, Typical, Typical, …\n$ Bsmt_Exposure      &lt;fct&gt; Gd, No, No, No, No, No, Mn, No, No, No, No, No, No,…\n$ BsmtFin_Type_1     &lt;fct&gt; BLQ, Rec, ALQ, ALQ, GLQ, GLQ, GLQ, ALQ, GLQ, Unf, U…\n$ BsmtFin_SF_1       &lt;dbl&gt; 2, 6, 1, 1, 3, 3, 3, 1, 3, 7, 7, 1, 7, 3, 3, 1, 3, …\n$ BsmtFin_Type_2     &lt;fct&gt; Unf, LwQ, Unf, Unf, Unf, Unf, Unf, Unf, Unf, Unf, U…\n$ BsmtFin_SF_2       &lt;dbl&gt; 0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1120, 0…\n$ Bsmt_Unf_SF        &lt;dbl&gt; 441, 270, 406, 1045, 137, 324, 722, 1017, 415, 994,…\n$ Total_Bsmt_SF      &lt;dbl&gt; 1080, 882, 1329, 2110, 928, 926, 1338, 1280, 1595, …\n$ Heating            &lt;fct&gt; GasA, GasA, GasA, GasA, GasA, GasA, GasA, GasA, Gas…\n$ Heating_QC         &lt;fct&gt; Fair, Typical, Typical, Excellent, Good, Excellent,…\n$ Central_Air        &lt;fct&gt; Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, …\n$ Electrical         &lt;fct&gt; SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SB…\n$ First_Flr_SF       &lt;int&gt; 1656, 896, 1329, 2110, 928, 926, 1338, 1280, 1616, …\n$ Second_Flr_SF      &lt;int&gt; 0, 0, 0, 0, 701, 678, 0, 0, 0, 776, 892, 0, 676, 0,…\n$ Gr_Liv_Area        &lt;int&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616…\n$ Bsmt_Full_Bath     &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, …\n$ Bsmt_Half_Bath     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …\n$ Full_Bath          &lt;int&gt; 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 3, 2, …\n$ Half_Bath          &lt;int&gt; 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, …\n$ Bedroom_AbvGr      &lt;int&gt; 3, 2, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 2, 1, 4, 4, …\n$ Kitchen_AbvGr      &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ TotRms_AbvGrd      &lt;int&gt; 7, 5, 6, 8, 6, 7, 6, 5, 5, 7, 7, 6, 7, 5, 4, 12, 8,…\n$ Functional         &lt;fct&gt; Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, T…\n$ Fireplaces         &lt;int&gt; 2, 0, 0, 2, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, …\n$ Garage_Type        &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Att…\n$ Garage_Finish      &lt;fct&gt; Fin, Unf, Unf, Fin, Fin, Fin, Fin, RFn, RFn, Fin, F…\n$ Garage_Cars        &lt;dbl&gt; 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, …\n$ Garage_Area        &lt;dbl&gt; 528, 730, 312, 522, 482, 470, 582, 506, 608, 442, 4…\n$ Garage_Cond        &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…\n$ Paved_Drive        &lt;fct&gt; Partial_Pavement, Paved, Paved, Paved, Paved, Paved…\n$ Wood_Deck_SF       &lt;int&gt; 210, 140, 393, 0, 212, 360, 0, 0, 237, 140, 157, 48…\n$ Open_Porch_SF      &lt;int&gt; 62, 0, 36, 0, 34, 36, 0, 82, 152, 60, 84, 21, 75, 0…\n$ Enclosed_Porch     &lt;int&gt; 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ Three_season_porch &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …\n$ Screen_Porch       &lt;int&gt; 0, 120, 0, 0, 0, 0, 0, 144, 0, 0, 0, 0, 0, 0, 140, …\n$ Pool_Area          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …\n$ Pool_QC            &lt;fct&gt; No_Pool, No_Pool, No_Pool, No_Pool, No_Pool, No_Poo…\n$ Fence              &lt;fct&gt; No_Fence, Minimum_Privacy, No_Fence, No_Fence, Mini…\n$ Misc_Feature       &lt;fct&gt; None, None, Gar2, None, None, None, None, None, Non…\n$ Misc_Val           &lt;int&gt; 0, 0, 12500, 0, 0, 0, 0, 0, 0, 0, 0, 500, 0, 0, 0, …\n$ Mo_Sold            &lt;int&gt; 5, 6, 6, 4, 3, 6, 4, 1, 3, 6, 4, 3, 5, 2, 6, 6, 6, …\n$ Year_Sold          &lt;int&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 201…\n$ Sale_Type          &lt;fct&gt; WD , WD , WD , WD , WD , WD , WD , WD , WD , WD , W…\n$ Sale_Condition     &lt;fct&gt; Normal, Normal, Normal, Normal, Normal, Normal, Nor…\n$ Sale_Price         &lt;int&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213…\n$ Longitude          &lt;dbl&gt; -93.61975, -93.61976, -93.61939, -93.61732, -93.638…\n$ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.06090, 4…"
   },
   {
     "objectID": "slides/11-cross-validation.html#initial-data-split",
     "href": "slides/11-cross-validation.html#initial-data-split",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Initial Data Split",
     "text": "Initial Data Split\n\nset.seed(427)\n\ndata_split &lt;- initial_split(ames, strata = \"Sale_Price\")\names_train &lt;- training(data_split)\names_test  &lt;- testing(data_split)"
   },
   {
     "objectID": "slides/11-cross-validation.html#define-folds",
     "href": "slides/11-cross-validation.html#define-folds",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Define Folds",
     "text": "Define Folds\n\names_folds &lt;- vfold_cv(ames_train, v = 10)\names_folds\n\n#  10-fold cross-validation \n# A tibble: 10 × 2\n   splits             id    \n   &lt;list&gt;             &lt;chr&gt; \n 1 &lt;split [1977/220]&gt; Fold01\n 2 &lt;split [1977/220]&gt; Fold02\n 3 &lt;split [1977/220]&gt; Fold03\n 4 &lt;split [1977/220]&gt; Fold04\n 5 &lt;split [1977/220]&gt; Fold05\n 6 &lt;split [1977/220]&gt; Fold06\n 7 &lt;split [1977/220]&gt; Fold07\n 8 &lt;split [1978/219]&gt; Fold08\n 9 &lt;split [1978/219]&gt; Fold09\n10 &lt;split [1978/219]&gt; Fold10"
   },
   {
     "objectID": "slides/11-cross-validation.html#define-models",
     "href": "slides/11-cross-validation.html#define-models",
-    "title": "MATH 427: Cross Validation and Resmpling",
+    "title": "MATH 427: Cross Validation and Resampling",
     "section": "Define Model(s)",
     "text": "Define Model(s)\n\nlm_model &lt;- linear_reg() |&gt;\n  set_engine('lm')\n\nknn5_model &lt;- nearest_neighbor(neighbors = 5) |&gt;\n  set_engine(\"kknn\") |&gt;\n  set_mode(\"regression\")\n\nknn10_model &lt;- nearest_neighbor(neighbors = 10) |&gt;\n  set_engine(\"kknn\") |&gt;\n  set_mode(\"regression\")\n\n\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n–&gt;\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
