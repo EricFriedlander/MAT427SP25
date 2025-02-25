@@ -1,0 +1,1766 @@
+---
+title: 'MATH 427: Cross Validation and Resmpling'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(janitor) # for contingency tables
+library(ISLR2)
+library(ggforce) # sina plots
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+
+## Default Dataset {.smaller}
+
+::: columns
+::: column
+A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.
+
+```{r}
+#| message: FALSE
+head(Default) |> kable()  # print first six observations
+```
+:::
+
+::: column
+**Response Variable**: `default`
+
+```{r}
+Default |> 
+  tabyl(default) |>  # class frequencies
+  kable()           # Make it look nice
+```
+:::
+:::
+
+## Split the data
+
+```{r}
+set.seed(427)
+
+default_split <- initial_split(Default, prop = 0.6, strata = default)
+default_split
+
+default_train <- training(default_split)
+default_test <- testing(default_split)
+```
+
+## [K-Nearest Neighbors Classifier: Build Model]{.r-fit-text}
+
+-   **Response** ($Y$): `default`
+-   **Predictor** ($X$): `balance`
+
+```{r}
+knnfit <- nearest_neighbor(neighbors = 10) |> 
+  set_engine("kknn") |> 
+  set_mode("classification") |>  
+  fit(default ~ balance, data = default_train)   # fit 10-nn model
+```
+
+## [K-Nearest Neighbors Classifier: Predictions]{.r-fit-text} {.smaller}
+
+::: panel-tabset
+## Class labels
+
+```{r}
+predict(knnfit, new_data = default_test, type = "class") |> head() |> kable()   # obtain predictions as classes
+```
+
+## Probabilities
+
+-   Predicts class w/ maximum probability
+
+```{r}
+predict(knnfit, new_data = default_test, type = "prob") |> head() |> kable() # obtain predictions as probabilities
+```
+:::
+
+## Fitting a logistic regression
+
+Fitting a logistic regression model with `default` as the response and `balance` as the predictor:
+
+```{r}
+logregfit <- logistic_reg() |> 
+  set_engine("glm") |> 
+  fit(default ~ balance, data = default_train)   # fit logistic regression model
+
+tidy(logregfit) |> kable()  # obtain results
+```
+
+## Making predictions in R
+
+::: panel-tabset
+
+## Class Labels
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "class") |> kable()   # obtain class predictions
+```
+
+## Log-Odds
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "raw") |> kable()   # obtain log-odds predictions
+```
+
+## Probabilities
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  # obtain probability predictions
+```
+
+:::
+
+## Binary Classifiers
+
+-   Start with binary classification scenarios
+-   With binary classification, designate one category as "Success/Positive" and the other as "Failure/Negative"
+    +   If relevant to your problem: "Positive" should be the thing you're trying to predict/care more about
+    +   Note: "Positive" $\neq$ "Good"
+    +   For `default`: "Yes" is Positive
+-   Some metrics weight "Positives" more and viceversa
+
+## Last Time {.smaller}
+
+-   Confusion Matrix
+-   Metrics based on confusion matrix
+    +   Accuracy
+    +   Recall/Sensitivity
+    +   Precision/PPV
+    +   Specificity
+    +   NPV
+    +   MCC
+    +   F-Measure
+-   Today: ROC and AUC
+    
+# Thresholding
+
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+
+```{r}
+default_test_wprobs <- default_test |>
+  mutate(
+    knn_probs = predict(knnfit, new_data = default_test, type = "prob") |> pull(.pred_Yes),
+    logistic_probs = predict(logregfit, new_data = default_test, type = "prob") |> pull(.pred_Yes)
+  )
+
+default_test_wprobs |> head() |> kable()   # obtain probability predictions
+```
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+
+```{r}
+threshold <- 0.5   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
+         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No"))
+  )
+
+default_test_wprobs |> head() |> kable()
+```
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+
+```{r}
+threshold <- 0.5   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
+         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No")))
+
+default_test_wprobs |> head() |> kable()
+```
+
+## Performance
+
+```{r}
+roc_metrics <- metric_set(accuracy, sensitivity, specificity)
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second") |> kable()
+```
+
+## Low Threshold
+
+```{r}
+threshold <- 0.1   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")))
+
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second")  |> kable()
+```
+
+## High Threshold
+
+```{r}
+threshold <- 0.9   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No"))
+  )
+
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second") |> kable()
+```
+
+## Question
+
+-   If I want to improve Recall/Sensitivity should I increase or decrease my threshold?
+-   If I want to improve my Precision/PPV should I increase or decrease my threshold?
+
+# ROC Curve
+
+## ROC Curve and AUC
+
+- **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds
+  + Plots the (1-Specificity) along the x-axis and the Sensitivity (true positive rate) along the y-axis
+- **AUC**: area under the AUC curve
+  + Ideal ROC curve will hug the top left corner
+- Idea: How well is my classifier separating positives from negatives
+
+## ROC Curve
+
+```{r}
+roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |>
+  head() |>
+  kable()
+```
+
+## ROC Curve: Plot
+
+```{r}
+roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |>
+  autoplot()
+```
+
+
+## AUC
+
+-   AUC: Area under the curve (ROC Curve that is)
+-   Measures how good your model is at separating categories
+-   Only for binary classification
+
+## AUC in R
+
+
+```{r}
+roc_auc(default_test_wprobs, truth = default, knn_probs, event_level = "second") |>
+  kable()
+```
+
+
+## Pathological Example 1
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+set.seed(427)
+example1 <- tibble(prob = c(runif(100, 0, 0.1), runif(100, 0.9, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 1 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 1, y = 1, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{100}{100} = 1$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{100}{100} = 1$$
+
+## Pathological Example 1 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.05
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0.55, y = 1, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{100}{100} = 1$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{55}{100} = 0.55$$
+
+## Pathological Example 1 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.5
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0, y = 1, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{100}{100} = 1$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{0}{100} = 0$$
+
+## Pathological Example 1 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.95
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0, y = 0.56, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{56}{100} = 0.56$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{0}{100} = 0$$
+
+## Pathological Example 1 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 1
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0, y = 0, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{0}{100} = 0$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{0}{100} = 0$$
+
+## Pathological Example 2
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+set.seed(427)
+example1 <- tibble(prob = c(runif(100, 0, 0.5), runif(100, 0.5, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 3
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+set.seed(427)
+example1 <- tibble(prob = c(runif(100, 0, 0.7), runif(100, 0.3, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot()  +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 3 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 1, y = 1, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{100}{100} = 1$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{100}{100} = 1$$
+
+## Pathological Example 3 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.25
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0.62, y = 1, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{100}{100} = 1$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{62}{100} = 0.62$$
+
+## Pathological Example 3 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.31
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0.58, y = 0.99, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{99}{100} = 0.99$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{58}{100} = 0.58$$
+
+## Pathological Example 3 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.5
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0.29, y = 0.75, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{75}{100} = 0.75$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{29}{100} = 0.29$$
+
+## Pathological Example 3 {.smaller}
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+
+threshold <- 0.75
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  geom_hline(yintercept = threshold, color = "red") +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%")) +
+  annotate("point", x = 0, y = 0.37, color = "red")
+```
+:::
+::::
+
+$$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Greens Above Line}}{\text{All Greens}} = \frac{37}{100} = 0.37$$
+$$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Reds Above Line}}{\text{All Reds}} = \frac{0}{100} = 0$$
+
+## Pathological Example 4
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+example1 <- tibble(prob = c(runif(100, 0, 1), runif(100, 0, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot()
+```
+:::
+::::
+
+## Pathological Example 5
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+multiplier <- 1
+a <- 1 * multiplier
+b <- 3 * multiplier
+example1 <- tibble(prob = c(rbeta(100, a, b), rbeta(100, b, a)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 6
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+multiplier <- 1
+a <- 2 * multiplier
+b <- 3 * multiplier
+example1 <- tibble(prob = c(rbeta(100, a, b), rbeta(100, b, a)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+::: 
+:::: 
+
+## Pathological Example 7
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+multiplier <- 20
+a <- 2 * multiplier
+b <- 3 * multiplier
+example1 <- tibble(prob = c(rbeta(100, a, b), rbeta(100, b, a)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## AUC Questions
+
+-   What should be the minimum AUC?
+-   What should be that maximum possible AUC?
+
+# Review of Classification Metrics
+
+## Review: Logistic Regression vs KNN {.smaller}
+
+- Logistic regression $\implies$ parametric , KNN $\implies$ non-parametric.
+- Logistic regression $\implies$ only for classification problems ($Y$ categorical), KNN $\implies$ both regression and classification.
+- Logistic regression is (more) interpretable, KNN is not.
+- Logistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.
+- Prediction: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - curse of dimensionality.
+
+## Classification Metrics App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetricsv2/)
+-   Do the following based on your group number:
+    +   1: Choose plane on the first screen
+    +   2: Choose circle on the first screen
+    +   3: Choose parabola on the first screen
+    +   4: Choose sine curve on the first screen
+-   We will generate data from this population... do you think KNN or logistic regression will yield a better classifier? Why?
+
+## Classification Metrics App {.smaller}
+
+-   On the second tab generate a small test and training set
+-   On the third tab fit a KNN model with 5 neighbors and then a logistic regression model
+-   Which model do you think will perform better based on the plots you see?
+-   Choose the better model, click fit, and click on the fourth tab
+-   For each of the metrics try to reconcile the performance metrics with the plots
+
+
+# Resampling & Cross Validation
+
+## Data Splitting: Discussion
+
+:::{.incremental}
+-   Why do we split our data before fitting a model?
+    +   To prevent overfitting
+-   What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or $k = 1, 2, \ldots, 100$ neighbors)
+    +   We open ourselves up to information leakage
+-   Potential solution... three way split (training/validation/test)
+-   Better solution... cross validation and resampling
+:::
+
+## Resampling
+
+![Figure 10.1 from TMWR](images/09/resampling.svg)
+## Cross-Validation Terminology
+
+-   Divide training set into two sets
+    +   Analysis set: fit the model (similar to training set)
+    +   Assessment set: evaluation the model (similar to test set)
+
+## K-Fold Cross-Validation (CV) {.smaller}
+
+:::{.incremental}
+-   Partition your data into $K$ non-overlapping "folds"
+  +   Folds don't overlap and every training observation is in one fold
+  +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+  +   Treat fold $k$ as the assessment set
+  +   Treat all folds except for $k$ as the analysis set
+  +   Fit model to analysis set (use whole modeling workflow)
+  +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
+:::
+
+## <span style="color:blue">Your Turn!!!</span>
+
+Suppose you start with a data set with $n=1000$ observations. You are trying to predict a numerical variable and your target metric is MSE.
+
+1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
+
+2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
+
+3. Do you analysis set's overlap? Do your assessment sets overlap?
+
+4. How many times will you fit your model? How many different MSE's will you have?
+
+# CV Workflow in R
+
+## Data: Ames Housing Prices {.smaller}
+
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is copies from the `AmesHousing` package but does not include a few quality columns that appear to be outcomes rather than predictors.
+
+Goal: Predict `Sale_Price`.
+
+```{r}
+ames |> glimpse()
+```
+
+## Initial Data Split
+
+```{r}
+set.seed(427)
+
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
+
+## Define Folds
+
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10)
+ames_folds
+```
+
+## Define Model(s)
+
+```{r}
+lm_model <- linear_reg() |>
+  set_engine('lm')
+
+knn5_model <- nearest_neighbor(neighbors = 5) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+
+knn10_model <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+```
+
+<!-- ## Define Preprocessing -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+<!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
+
+<!-- <!-- * Closely related to the validation set approach. Attempts to address its drawbacks. -->
+
+--\>
+
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+
+<!-- knitr::include_graphics("EFT/5.3.PNG") -->
+
+<!-- ``` -->
+
+<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
+
+<!-- Suppose you implement LOOCV on a dataset with $n=100$ observations. -->
+
+<!-- 1. What is the size (number of observations) of each training set? -->
+
+<!-- 2. What is the size of each validation set? -->
+
+<!-- 3. How many steps/iterations are required to complete the overall LOOCV process? -->
+
+<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '30%'} -->
+
+--\> <!-- <!-- knitr::include_graphics("EFT/e5.1.PNG") --> --\>
+<!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
+
+--\>
+
+<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+
+--\>
+<!-- <!-- # comparing 4 polynomial (regression) models with LOOCV (response: 'mpg', predictor: 'horsepower') -->
+--\>
+
+<!-- <!-- ggplot(data = Auto, aes(x = horsepower, y = mpg)) +   # quick visual check -->
+
+--\> <!-- <!--   geom_point() --> --\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
+
+--\>
+
+<!-- <!-- ```{r,message=FALSE} -->
+
+--\> <!-- <!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- Consider `Sale_Price` as the response variable. Split the data into training and test data. -->
+
+--\>
+
+<!-- <!-- ```{r, message = FALSE} -->
+
+--\>
+<!-- <!-- set.seed(012423)  # fix the random number generator for reproducibility -->
+--\>
+
+<!-- <!-- library(caret)  # load library -->
+
+--\>
+
+<!-- <!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
+
+--\>
+
+<!-- <!-- ames_train <- ames[train_index,]   # training data, use this dataset to build model -->
+
+--\>
+
+<!-- <!-- ames_test <- ames[-train_index,]   # test data, use this dataset to evaluate model's performance -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
+
+--\>
+
+<!-- <!-- Define CV specifications. -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- cv_specs_loocv <- trainControl(method = "LOOCV")   # specify CV method -->
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- We will compare the following three linear regression models: -->
+
+--\>
+
+<!-- <!-- * with `Garage_Area` as the only predictor; -->
+
+--\>
+
+<!-- <!-- * with `Overall_Qual` as the only predictor; -->
+
+--\>
+
+<!-- <!-- * with `Garage_Area`, `Year_Built`, and `Overall_Qual` as predictors. -->
+
+--\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
+
+--\>
+
+<!-- <!-- Implement LOOCV with the first model. -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- m1 <- train(form = Sale_Price ~ Garage_Area,    # specify model -->
+--\> <!-- <!--             data = ames_train,   # specify dataset -->
+--\>
+<!-- <!--             method = "lm",       # specify type of model -->
+--\>
+<!-- <!--             trControl = cv_specs_loocv, # CV specifications -->
+--\>
+<!-- <!--             metric = "RMSE")   # metric to evaluate model -->
+--\>
+
+<!-- <!-- m1   # summary of LOOCV -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
+
+--\>
+
+<!-- <!-- Implement LOOCV with the second model. -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\> <!-- <!-- m2 <- train(form = Sale_Price ~ Overall_Qual,   --> --\>
+<!-- <!--             data = ames_train,           --> --\>
+<!-- <!--             method = "lm",               --> --\>
+<!-- <!--             trControl = cv_specs_loocv,        --> --\>
+<!-- <!--             metric = "RMSE")            --> --\>
+
+<!-- <!-- m2 -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
+
+--\>
+
+<!-- <!-- Implement LOOCV with the third model. -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- m3 <- train(form = Sale_Price ~ Garage_Area + Year_Built + Overall_Qual,   -->
+--\> <!-- <!--             data = ames_train, --> --\>
+<!-- <!--             method = "lm", --> --\>
+<!-- <!--             trControl = cv_specs_loocv, --> --\>
+<!-- <!--             metric = "RMSE") --> --\>
+
+<!-- <!-- m3 -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Results -->
+
+--\>
+
+<!-- <!-- Compare LOOCV results for different models. -->
+
+--\>
+
+<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+
+--\> <!-- <!-- # create data frame to plot results --> --\>
+
+<!-- <!-- df <- data.frame(model_number = 1:3, RMSE = c(m1$results$RMSE,   -->
+
+--\>
+<!-- <!--                                              m2$results$RMSE, -->
+--\>
+<!-- <!--                                              m3$results$RMSE)) -->
+--\>
+
+<!-- <!-- # plot results from LOOCV -->
+
+--\>
+
+<!-- <!-- ggplot(data = df, aes(x = model_number, y =  RMSE)) +    -->
+
+--\> <!-- <!--   geom_point() + geom_line() --> --\>
+
+<!-- <!-- ``` -->
+
+--\>
+
+<!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
+
+<!-- **Advantages** -->
+
+<!-- * LOOCV will give approximately unbiased estimates of the test error, since each training set contains $n−1$ observations, which is almost as many as the number of observations in the full training dataset. -->
+
+<!-- <!-- * Has far less bias than the validation set approach, since the training sets (used to fit the model) are almost as big as the original dataset. -->
+
+--\>
+
+<!-- * Performing LOOCV multiple times will always yield the same results. -->
+
+<!-- **Disadvantages** -->
+
+<!-- * Can be potentially expensive to implement, specially for large $n$. -->
+
+<!-- * LOOCV error estimate can have high variance.  -->
+
+<!-- ## $k$-Fold Cross-Validation -->
+
+<!-- * Randomly divide the training data into $k$ groups or **folds** (approximately equal size). -->
+
+<!-- * Consider one of these folds as the validation set. Fit the model on the remaining $k-1$ folds combined, and obtain predictions for the $k^{th}$ fold. Repeat for all $k$ folds. -->
+
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+
+<!-- knitr::include_graphics("EFT/5.5.PNG") -->
+
+<!-- ``` -->
+
+<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
+
+<!-- Suppose you implement 10-fold CV on a dataset with $n=100$ observations. -->
+
+<!-- 1. What is the size (number of observations) of each training set? -->
+
+<!-- 2. What is the size of each validation set? -->
+
+<!-- 3. How many steps/iterations are required to complete the overall CV process? -->
+
+<!-- ## $k$-Fold Cross-Validation: Implementation -->
+
+<!-- **Ames Housing dataset** -->
+
+<!-- <!-- ```{r,message=FALSE} -->
+
+--\> <!-- <!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
+--\> <!-- <!-- ``` --> --\>
+
+<!-- Consider `Sale_Price` as the response variable. We will compare the following three linear regression models: -->
+
+<!-- * with `Garage_Area` as the only predictor; -->
+
+<!-- * with `Year_Built` as the only predictor; -->
+
+<!-- * with `Garage_Area` and `Year_Built` as predictors. -->
+
+<!-- <!-- ## $k$-Fold Cross-Validation: Implementation -->
+
+--\>
+
+<!-- <!-- **Ames Housing dataset** -->
+
+--\>
+
+<!-- <!-- Split the data into training and test data. -->
+
+--\>
+
+<!-- <!-- ```{r, message = FALSE} -->
+
+--\>
+<!-- <!-- set.seed(042023)  # fix the random number generator for reproducibility -->
+--\>
+
+<!-- <!-- library(caret)  # load library -->
+
+--\>
+
+<!-- <!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
+
+--\>
+
+<!-- <!-- ames_train <- ames[train_index,]   # training data -->
+
+--\>
+
+<!-- <!-- ames_test <- ames[-train_index,]   # test data -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- ## $k$-Fold Cross-Validation: Implementation -->
+
+<!-- **Ames Housing dataset** -->
+
+<!-- Define CV specifications. -->
+
+<!-- ```{r} -->
+
+<!-- cv_specs <- trainControl(method = "repeatedcv",   # CV method -->
+
+<!--                          number = 10,    # number of folds -->
+
+<!--                          repeats = 5)     # number of repeats -->
+
+<!-- ``` -->
+
+<!-- ## $k$-Fold Cross-Validation: Implementation -->
+
+<!-- **Ames Housing dataset** - Implement 10-fold CV with the first model. -->
+
+<!-- ```{r} -->
+
+<!-- set.seed(041824) -->
+
+<!-- m1 <- train(form = Sale_Price ~ Garage_Area,    # specify model -->
+
+<!--             data = ames_train,   # specify dataset -->
+
+<!--             method = "lm",       # specify type of model -->
+
+<!--             trControl = cv_specs, # CV specifications -->
+
+<!--             metric = "RMSE")   # metric to evaluate model -->
+
+<!-- m1   # summary of CV -->
+
+<!-- m1$results  # estimate and variability of metrics -->
+
+<!-- ``` -->
+
+<!-- ## $k$-Fold Cross-Validation: Implementation -->
+
+<!-- **Ames Housing dataset** - Implement 10-fold CV with the second model. -->
+
+<!-- ```{r} -->
+
+<!-- set.seed(041824) -->
+
+<!-- m2 <- train(form = Sale_Price ~ Year_Built,   -->
+
+<!--             data = ames_train,           -->
+
+<!--             method = "lm",               -->
+
+<!--             trControl = cv_specs,        -->
+
+<!--             metric = "RMSE")            -->
+
+<!-- m2 -->
+
+<!-- m2$results -->
+
+<!-- ``` -->
+
+<!-- ## $k$-Fold Cross-Validation: Implementation -->
+
+<!-- **Ames Housing dataset** - Implement 10-fold CV with the third model. -->
+
+<!-- ```{r} -->
+
+<!-- set.seed(041824) -->
+
+<!-- m3 <- train(form = Sale_Price ~ Garage_Area + Year_Built,   -->
+
+<!--             data = ames_train, -->
+
+<!--             method = "lm", -->
+
+<!--             trControl = cv_specs, -->
+
+<!--             metric = "RMSE") -->
+
+<!-- m3 -->
+
+<!-- m3$results -->
+
+<!-- ``` -->
+
+<!-- ## $k$-Fold Cross-Validation: Results  -->
+
+<!-- **Ames Housing dataset** -->
+
+<!-- Compare CV results for different models. -->
+
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+
+<!-- # create data frame to plot results -->
+
+<!-- df <- data.frame(model_number = 1:3, RMSE = c(m1$results$RMSE,   -->
+
+<!--                                              m2$results$RMSE, -->
+
+<!--                                              m3$results$RMSE)) -->
+
+<!-- # plot results from CV -->
+
+<!-- ggplot(data = df, aes(x = model_number, y =  RMSE)) +    -->
+
+<!--   geom_point() + geom_line() -->
+
+<!-- ``` -->
+
+<!-- <!-- ## $k$-Fold Cross-Validation -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- # comparing 4 polynomial (regression) models with k-fold CV (response: 'mpg', predictor: 'horsepower') -->
+--\>
+
+<!-- <!-- set.seed(041920221)   # fix the random number generator for reproducibility -->
+
+--\>
+
+<!-- <!-- # CV specifications (method, number of folds k, number of repetitions) -->
+
+--\>
+<!-- <!-- cv_specs <- trainControl(method = "repeatedcv", number = 10, repeats = 5)  -->
+--\>
+
+<!-- <!-- m1 <- train(mpg ~ horsepower,   # model: y = beta_0 + beta_1 x -->
+
+--\> <!-- <!--             data = Auto_train, --> --\>
+<!-- <!--             method = "lm", --> --\>
+<!-- <!--             trControl = cv_specs, --> --\>
+<!-- <!--             metric = "RMSE") --> --\>
+
+<!-- <!-- m1   # summary of model with LOOCV -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## $k$-Fold Cross-Validation -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- m2 <- train(mpg ~ poly(horsepower,2),   # model: y = beta_0 + beta_1 x + beta_2 x^2 -->
+--\> <!-- <!--             data = Auto_train, --> --\>
+<!-- <!--             method = "lm", --> --\>
+<!-- <!--             trControl = cv_specs, --> --\>
+<!-- <!--             metric = "RMSE") --> --\>
+
+<!-- <!-- m3 <- train(mpg ~ poly(horsepower, 3),   # model: y = beta_0 + beta_1 x + beta_2 x^2 + beta_3 x^3 -->
+
+--\> <!-- <!--             data = Auto_train, --> --\>
+<!-- <!--             method = "lm", --> --\>
+<!-- <!--             trControl = cv_specs, --> --\>
+<!-- <!--             metric = "RMSE") --> --\>
+
+<!-- <!-- m4 <- train(mpg ~ poly(horsepower, 4),   # model: y = beta_0 + beta_1 x + beta_2 x^2 + beta_3 x^3 + beta_4 x^4 -->
+
+--\> <!-- <!--             data = Auto_train, --> --\>
+<!-- <!--             method = "lm", --> --\>
+<!-- <!--             trControl = cv_specs, --> --\>
+<!-- <!--             metric = "RMSE") --> --\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## $k$-Fold Cross-Validation -->
+
+--\>
+
+<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+
+--\>
+<!-- <!-- df <- data.frame(poly_degree = 1:4, RMSE = c(m1$results$RMSE,   # create data frame to plot results -->
+--\>
+<!-- <!--                                              m2$results$RMSE, -->
+--\>
+<!-- <!--                                              m3$results$RMSE, -->
+--\>
+<!-- <!--                                              m4$results$RMSE)) -->
+--\>
+
+<!-- <!-- ggplot(data = df, aes(x = poly_degree, y =  RMSE)) +    # plot results from LOOCV -->
+
+--\> <!-- <!--   geom_point() + geom_line() --> --\> <!-- <!-- ``` -->
+--\>
+
+<!-- ## Final Model and Prediction Error Estimate -->
+
+<!-- **Ames Housing dataset** -->
+
+<!-- ```{r} -->
+
+<!-- # after choosing final (optimal) model, refit final model using ALL training data -->
+
+<!-- m3$finalModel     -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- # obtain estimate of prediction error from test data -->
+
+<!-- final_model_preds <- predict(m3, newdata = ames_test)   # obtain predictions on test data -->
+
+<!-- pred_error_est <- sqrt(mean((ames_test$Sale_Price - final_model_preds)^2))    # calculate RMSE (estimate of prediction error) from test data -->
+
+<!-- pred_error_est   # test set RMSE -->
+
+<!-- ``` -->
+
+<!-- <!-- ## Variable Importance -->
+
+--\>
+
+<!-- <!-- **Ames Housing dataset** -->
+
+--\>
+
+<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+
+--\> <!-- <!-- # variable importance --> --\>
+
+<!-- <!-- library(vip) -->
+
+--\>
+
+<!-- <!-- vip(object = m3,         # CV object  -->
+
+--\>
+<!-- <!--     num_features = 20,   # maximum number of predictors to show importance for -->
+--\>
+<!-- <!--     method = "model")            # model-specific VI scores -->
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## $k$-Fold Cross-Validation -->
+
+--\>
+
+<!-- <!-- Let $n_i$ be the number of observations in  $i^{th}, (i=1,\ldots,k)$ fold. If $n$ is a multiple of $k$, then $n_i=\frac{n}{k}$. -->
+
+--\>
+
+<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+
+--\> <!-- <!-- knitr::include_graphics("EFT/e5.3.PNG") --> --\>
+<!-- <!-- ``` --> --\>
+
+<!-- <!-- If the folds are not of equal size, -->
+
+--\>
+
+<!-- <!-- $$CV_{(k)}=\displaystyle \sum_{i=1}^k \dfrac{n_i}{n} MSE_{i}$$ -->
+
+--\>
+
+<!-- <!-- A good choice is $k=5$ or $10$. LOOCV is a special case of $k$-fold CV. -->
+
+--\>
+
+<!-- <!-- ## LOOCV and $k$-Fold CV -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+
+--\> <!-- <!-- knitr::include_graphics("EFT/5.4.PNG") --> --\>
+<!-- <!-- ``` --> --\>
+
+<!-- <!-- ## Performance of LOOCV and $k$-Fold CV -->
+
+--\>
+
+<!-- <!-- <!-- **Figures 2.9-2.11 in Chapter 2** -->
+
+--\>
+
+<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+
+--\> <!-- <!-- knitr::include_graphics("EFT/5.6.PNG") --> --\>
+<!-- <!-- ``` --> --\>
+
+<!-- ## Bias-Variance Trade-off for LOOCV and $k$-fold CV -->
+
+<!-- * LOOCV has very less bias. Using $k=5$ or $10$ yields more bias than LOOCV. -->
+
+<!-- <!-- , but less than validation set approach. -->
+
+--\>
+
+<!-- * For LOOCV, the error estimates for each fold are highly (positively) correlated. $k$-fold CV error estimates are somewhat less correlated. LOOCV error estimate has higher variance than $k$-fold CV error estimate. -->
+
+<!-- * Typically, $k=5$ or $10$ is chosen. -->
+
+<!-- <!-- ## CV to Tune Hyperparameter -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r,message=FALSE} -->
+
+--\> <!-- <!-- library(ISLR2)  # load library --> --\>
+
+<!-- <!-- data("Auto")   # load dataset -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- We will consider `mpg` as the response and `horsepower` as the predictor.  -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\> <!-- <!-- # select the variables to work with --> --\>
+
+<!-- <!-- Auto <- Auto %>% select(mpg, horsepower) -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## CV to Tune Hyperparameter -->
+
+--\>
+
+<!-- <!-- **Objective**: Find the optimum choice of $K$ in the KNN approach with 5-fold CV repeated 5 times. We will use the following steps. -->
+
+--\>
+
+<!-- <!-- * Perform EDA (Exploratory Data Analysis) -->
+
+--\>
+
+<!-- <!-- * Split the data into training and test data (80-20 split). -->
+
+--\>
+
+<!-- <!-- * Specify CV specifications using **trainControl**. -->
+
+--\>
+
+<!-- <!-- * Create an object **k_grid** using the following code. -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- k_grid <- expand.grid(k = seq(1, 100, by = 1))  # creates a grid of k values to be used (1 to 100 in this case) -->
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- * Use the **train** function to run CV. Use **method = "knn"**, **tuneGrid = k_grid**, and **metric = "RMSE"**. -->
+
+--\>
+
+<!-- <!-- * Obtain the results and plot them. What is the optimum $k$ chosen? -->
+
+--\>
+
+<!-- <!-- * Create the final model using the optimum $k$ and estimate its prediction error from the test data. -->
+
+--\>
+
+<!-- <!-- ## CV to Tune Hyperparameter: EDA {.smaller} -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\> <!-- <!-- summary(Auto)   # summary of the variables --> --\>
+<!-- <!-- ``` --> --\>
+
+<!-- <!-- ```{r, fig.align='center', fig.height=4, fig.width=4} -->
+
+--\> <!-- <!-- library(GGally) --> --\>
+<!-- <!-- ggpairs(Auto)    # correlation plot --> --\> <!-- <!-- ``` -->
+--\>
+
+<!-- <!-- ## CV to Tune Hyperparameter: Split Data -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r, message = FALSE} -->
+
+--\>
+<!-- <!-- set.seed(041824)  # fix the random number generator for reproducibility -->
+--\>
+
+<!-- <!-- library(caret)  # load library -->
+
+--\>
+
+<!-- <!-- train_index <- createDataPartition(y = Auto$mpg, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
+
+--\>
+
+<!-- <!-- Auto_train <- Auto[train_index,]   # training data -->
+
+--\>
+
+<!-- <!-- Auto_test <- Auto[-train_index,]   # test data -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## CV to Tune Hyperparameter: Perform CV -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\>
+<!-- <!-- set.seed(041824)  # fix the random number generator for reproducibility -->
+--\>
+
+<!-- <!-- # CV specifications -->
+
+--\>
+<!-- <!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5) -->
+--\>
+
+<!-- <!-- # specify grid of 'k' values to search over -->
+
+--\> <!-- <!-- k_grid <- expand.grid(k = seq(1, 100, by = 1)) --> --\>
+
+<!-- <!-- # train the KNN model using CV  to find optimal 'k' -->
+
+--\> <!-- <!-- knn_cv <- train(form = mpg ~ horsepower, --> --\>
+<!-- <!--                  data = Auto_train, --> --\>
+<!-- <!--                  method = "knn", --> --\>
+<!-- <!--                  trControl = cv_specs, --> --\>
+<!-- <!--                  tuneGrid = k_grid, --> --\>
+<!-- <!--                  metric = "RMSE") --> --\> <!-- <!-- ``` -->
+--\>
+
+<!-- <!-- ## CV to Tune Hyperparameter: Compare CV Results -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r, eval=FALSE} -->
+
+--\> <!-- <!-- knn_cv   # CV results, shows RMSE for all K --> --\>
+<!-- <!-- ``` --> --\>
+
+<!-- <!-- ```{r, fig.align='center'} -->
+
+--\> <!-- <!-- ggplot(knn_cv)   # plot CV results for different 'k' -->
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ## CV to Tune Hyperparameter: Final Model -->
+
+--\>
+
+<!-- <!-- **Auto dataset** -->
+
+--\>
+
+<!-- <!-- ```{r} -->
+
+--\> <!-- <!-- # final model with optimal 'k' chosen from CV --> --\>
+
+<!-- <!-- knn_cv$bestTune     # optimal value of K -->
+
+--\>
+
+<!-- <!-- knn_cv$finalModel   # final model -->
+
+--\> <!-- <!-- ``` --> --\>
+
+<!-- <!-- ```{r} -->
+
+--\> <!-- <!-- # obtain predictions on test data --> --\>
+<!-- <!-- final_model_preds <- predict(knn_cv, newdata = Auto_test) -->
+--\>
+
+<!-- <!-- # estimate test set prediction error -->
+
+--\>
+<!-- <!-- sqrt(mean((Auto_test$mpg - final_model_preds)^2))    # test set RMSE -->
+--\> <!-- <!-- ``` --> --\>
