@@ -556,9 +556,198 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <span id="cb7-9"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb7-10"><a></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<!-- ## Define Preprocessing -->
-<!-- ```{r} -->
-<!-- ``` -->
+</section>
+<section id="define-preprocessing-linear-regression" class="slide level2">
+<h2>Define Preprocessing: Linear regression</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>lm_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames_train) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> <span class="co"># Convert categorical data into dummy variables</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> <span class="co"># remove zero-variance predictors (i.e. predictors with one value)</span></span>
+<span id="cb8-4"><a></a>  <span class="fu">step_corr</span>(<span class="fu">all_predictors</span>(), <span class="at">threshold =</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> <span class="co"># remove highly correlated predictors</span></span>
+<span id="cb8-5"><a></a>  <span class="fu">step_lincomb</span>(<span class="fu">all_predictors</span>()) <span class="co"># remove variables that have exact linear combinations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-preprocessing-knn" class="slide level2">
+<h2>Define Preprocessing: KNN</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>knn_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames_train) <span class="sc">|&gt;</span> <span class="co"># only uses ames_train for data types</span></span>
+<span id="cb9-2"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="co"># Convert categorical data into dummy variables</span></span>
+<span id="cb9-3"><a></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> <span class="co"># remove zero-variance predictors (i.e. predictors with one value)</span></span>
+<span id="cb9-4"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-workflows" class="slide level2">
+<h2>Define Workflows</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>lm_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_model</span>(lm_model) <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(lm_preproc)</span>
+<span id="cb10-2"><a></a>knn5_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_model</span>(knn5_model) <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(knn_preproc)</span>
+<span id="cb10-3"><a></a>knn10_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_model</span>(knn10_model) <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(knn_preproc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-metrics" class="slide level2">
+<h2>Define Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ames_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, rsq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fit-and-assess-models" class="slide level2">
+<h2>Fit and Assess Models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>lm_results <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
+<span id="cb12-2"><a></a>knn5_results <span class="ot">&lt;-</span> knn5_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
+<span id="cb12-3"><a></a>knn10_results <span class="ot">&lt;-</span> knn10_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="what-does-this-create" class="slide level2">
+<h2>What does this create</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>lm_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Resampling results
+# 10-fold cross-validation 
+# A tibble: 10 × 4
+   splits             id     .metrics         .notes          
+   &lt;list&gt;             &lt;chr&gt;  &lt;list&gt;           &lt;list&gt;          
+ 1 &lt;split [1977/220]&gt; Fold01 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 2 &lt;split [1977/220]&gt; Fold02 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 3 &lt;split [1977/220]&gt; Fold03 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 4 &lt;split [1977/220]&gt; Fold04 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 5 &lt;split [1977/220]&gt; Fold05 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 6 &lt;split [1977/220]&gt; Fold06 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 7 &lt;split [1977/220]&gt; Fold07 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 8 &lt;split [1978/219]&gt; Fold08 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 9 &lt;split [1978/219]&gt; Fold09 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;
+10 &lt;split [1978/219]&gt; Fold10 &lt;tibble [2 × 4]&gt; &lt;tibble [0 × 3]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="collecting-metrics" class="slide level2 smaller">
+<h2>Collecting Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">collect_metrics</span>(lm_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 4%">
+<col style="width: 18%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.214504e+04</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1501.9928830</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">8.413166e-01</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.0070533</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">collect_metrics</span>(knn5_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 4%">
+<col style="width: 19%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">39821.01836</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2031.0935396</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">0.75573</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.0200233</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">collect_metrics</span>(knn10_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 19%">
+<col style="width: 4%">
+<col style="width: 17%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.809082e+04</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1842.876508</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.814575e-01</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.014159</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
 <!-- <!-- * Closely related to the validation set approach. Attempts to address its drawbacks. -->
 <p>–&gt;</p>

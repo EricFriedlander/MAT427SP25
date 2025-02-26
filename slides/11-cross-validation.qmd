@@ -14,6 +14,7 @@ format:
 execute:
   freeze: auto
   echo: true
+  cache: true
 knitr:
   opts_chunk: 
     R.options:      
@@ -78,11 +79,60 @@ knn10_model <- nearest_neighbor(neighbors = 10) |>
   set_mode("regression")
 ```
 
-<!-- ## Define Preprocessing -->
+## Define Preprocessing: Linear regression
 
-<!-- ```{r} -->
+```{r}
+lm_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_dummy(all_nominal_predictors()) |> # Convert categorical data into dummy variables
+  step_zv(all_predictors()) |> # remove zero-variance predictors (i.e. predictors with one value)
+  step_corr(all_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_predictors()) # remove variables that have exact linear combinations
+```
 
-<!-- ``` -->
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> # only uses ames_train for data types
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |> # Convert categorical data into dummy variables
+  step_zv(all_predictors()) |> # remove zero-variance predictors (i.e. predictors with one value)
+  step_normalize(all_predictors())
+```
+
+## Define Workflows
+
+```{r}
+lm_wf <- workflow() |> add_model(lm_model) |> add_recipe(lm_preproc)
+knn5_wf <- workflow() |> add_model(knn5_model) |> add_recipe(knn_preproc)
+knn10_wf <- workflow() |> add_model(knn10_model) |> add_recipe(knn_preproc)
+```
+
+## Define Metrics
+
+```{r}
+ames_metrics <- metric_set(rmse, rsq)
+```
+
+## Fit and Assess Models
+
+```{r}
+lm_results <- lm_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn5_results <- knn5_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn10_results <- knn10_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+```
+
+## What does this create
+
+```{r}
+lm_results
+```
+
+## Collecting Metrics {.smaller}
+
+```{r}
+collect_metrics(lm_results) |> kable()
+collect_metrics(knn5_results) |> kable()
+collect_metrics(knn10_results) |> kable()
+```
 
 <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
 

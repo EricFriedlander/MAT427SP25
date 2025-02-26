@@ -1,5 +1,5 @@
 ---
-title: 'MATH 427: Cross Validation and Resmpling'
+title: 'MATH 427: ROC and AUC'
 author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
