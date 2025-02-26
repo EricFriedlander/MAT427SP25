@@ -759,7 +759,14 @@
     "href": "slides/10-roc-auc.html#classification-metrics-app-1",
     "title": "MATH 427: ROC and AUC",
     "section": "Classification Metrics App",
-    "text": "Classification Metrics App\n\nOn the second tab generate a small test and training set\nOn the third tab fit a KNN model with 5 neighbors and then a logistic regression model\nWhich model do you think will perform better based on the plots you see?\nChoose the better model, click fit, and click on the fourth tab\nFor each of the metrics try to reconcile the performance metrics with the plots\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Classification Metrics App\n\nOn the second tab generate a small test and training set\nOn the third tab fit a KNN model with 5 neighbors and then a logistic regression model\nWhich model do you think will perform better based on the plots you see?\nChoose the better model, click fit, and click on the fourth tab"
+  },
+  {
+    "objectID": "slides/10-roc-auc.html#questions",
+    "href": "slides/10-roc-auc.html#questions",
+    "title": "MATH 427: ROC and AUC",
+    "section": "Questions",
+    "text": "Questions\nUsing the app, try and answer the following questions:\n\nWhich of the metrics are most and least impacted by:\n\nSample size\nImbalanced data (i.e. proportion positive near 0 or 1)\nHigh noise\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
     "objectID": "slides/03-SLR-Gradient_Desc.html#concept-check",
