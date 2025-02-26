@@ -862,6 +862,13 @@ example1 |>
 -   On the third tab fit a KNN model with 5 neighbors and then a logistic regression model
 -   Which model do you think will perform better based on the plots you see?
 -   Choose the better model, click fit, and click on the fourth tab
--   For each of the metrics try to reconcile the performance metrics with the plots
 
+## Questions
+
+Using the app, try and answer the following questions:
+
+- Which of the metrics are most and least impacted by:
+  - Sample size
+  - Imbalanced data (i.e. proportion positive near 0 or 1)
+  - High noise
 

@@ -407,53 +407,16 @@ Eric Friedlander
 <section id="computational-set-up" class="slide level2">
 <h2>Computational Set-Up</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.4     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.2.0 ──
-✔ broom        1.0.7     ✔ rsample      1.2.1
-✔ dials        1.3.0     ✔ tune         1.2.1
-✔ infer        1.0.7     ✔ workflows    1.1.4
-✔ modeldata    1.4.0     ✔ workflowsets 1.1.0
-✔ parsnip      1.2.1     ✔ yardstick    1.3.2
-✔ recipes      1.1.0     
-── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-✖ scales::discard() masks purrr::discard()
-✖ dplyr::filter()   masks stats::filter()
-✖ recipes::fixed()  masks stringr::fixed()
-✖ dplyr::lag()      masks stats::lag()
-✖ yardstick::spec() masks readr::spec()
-✖ recipes::step()   masks stats::step()
-• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(knitr)</span>
-<span id="cb5-2"><a></a><span class="fu">library</span>(janitor) <span class="co"># for contingency tables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'janitor'
-
-The following objects are masked from 'package:stats':
-
-    chisq.test, fisher.test</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(ISLR2)</span>
-<span id="cb7-2"><a></a><span class="fu">library</span>(ggforce) <span class="co"># sina plots</span></span>
-<span id="cb7-3"><a></a></span>
-<span id="cb7-4"><a></a><span class="fu">tidymodels_prefer</span>()</span>
-<span id="cb7-5"><a></a></span>
-<span id="cb7-6"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a></a><span class="fu">library</span>(janitor) <span class="co"># for contingency tables</span></span>
+<span id="cb1-5"><a></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb1-6"><a></a><span class="fu">library</span>(ggforce) <span class="co"># sina plots</span></span>
+<span id="cb1-7"><a></a></span>
+<span id="cb1-8"><a></a><span class="fu">tidymodels_prefer</span>()</span>
+<span id="cb1-9"><a></a></span>
+<span id="cb1-10"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="default-dataset" class="slide level2 smaller">
@@ -462,7 +425,7 @@ The following objects are masked from 'package:stats':
 <div class="column">
 <p>A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">head</span>(Default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">head</span>(Default) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># print first six observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -517,9 +480,9 @@ The following objects are masked from 'package:stats':
 </div><div class="column">
 <p><strong>Response Variable</strong>: <code>default</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>Default <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a></a>  <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span>  <span class="co"># class frequencies</span></span>
-<span id="cb9-3"><a></a>  <span class="fu">kable</span>()           <span class="co"># Make it look nice</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>Default <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a></a>  <span class="fu">tabyl</span>(default) <span class="sc">|&gt;</span>  <span class="co"># class frequencies</span></span>
+<span id="cb3-3"><a></a>  <span class="fu">kable</span>()           <span class="co"># Make it look nice</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -549,16 +512,16 @@ The following objects are masked from 'package:stats':
 <section id="split-the-data" class="slide level2">
 <h2>Split the data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>default_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(Default, <span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">strata =</span> default)</span>
-<span id="cb10-4"><a></a>default_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>default_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(Default, <span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">strata =</span> default)</span>
+<span id="cb4-4"><a></a>default_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;Training/Testing/Total&gt;
 &lt;6000/4000/10000&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>default_train <span class="ot">&lt;-</span> <span class="fu">training</span>(default_split)</span>
-<span id="cb12-2"><a></a>default_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(default_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>default_train <span class="ot">&lt;-</span> <span class="fu">training</span>(default_split)</span>
+<span id="cb6-2"><a></a>default_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(default_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="k-nearest-neighbors-classifier-build-model" class="slide level2">
@@ -568,10 +531,10 @@ The following objects are masked from 'package:stats':
 <li><strong>Predictor</strong> (<span class="math inline">\(X\)</span>): <code>balance</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>knnfit <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb13-4"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit 10-nn model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>knnfit <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb7-4"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit 10-nn model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="k-nearest-neighbors-classifier-predictions" class="slide level2 smaller">
@@ -581,7 +544,7 @@ The following objects are masked from 'package:stats':
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain predictions as classes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain predictions as classes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -618,7 +581,7 @@ The following objects are masked from 'package:stats':
 <li>Predicts class w/ maximum probability</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="co"># obtain predictions as probabilities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="co"># obtain predictions as probabilities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -664,11 +627,11 @@ The following objects are masked from 'package:stats':
 <h2>Fitting a logistic regression</h2>
 <p>Fitting a logistic regression model with <code>default</code> as the response and <code>balance</code> as the predictor:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>logregfit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit logistic regression model</span></span>
-<span id="cb16-4"><a></a></span>
-<span id="cb16-5"><a></a><span class="fu">tidy</span>(logregfit) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>logregfit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a></a>  <span class="fu">fit</span>(default <span class="sc">~</span> balance, <span class="at">data =</span> default_train)   <span class="co"># fit logistic regression model</span></span>
+<span id="cb10-4"><a></a></span>
+<span id="cb10-5"><a></a><span class="fu">tidy</span>(logregfit) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -707,7 +670,7 @@ The following objects are masked from 'package:stats':
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain class predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"class"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain class predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -726,7 +689,7 @@ The following objects are masked from 'package:stats':
 </div>
 <div id="tabset-2-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"raw"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain log-odds predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"raw"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain log-odds predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -745,7 +708,7 @@ The following objects are masked from 'package:stats':
 </div>
 <div id="tabset-2-3">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">balance =</span> <span class="dv">700</span>), <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()  <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -808,13 +771,13 @@ The following objects are masked from 'package:stats':
 <li>Step 1: Predict <strong>probabilities</strong> for all observations</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-3"><a></a>    <span class="at">knn_probs =</span> <span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.pred_Yes),</span>
-<span id="cb20-4"><a></a>    <span class="at">logistic_probs =</span> <span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.pred_Yes)</span>
-<span id="cb20-5"><a></a>  )</span>
-<span id="cb20-6"><a></a></span>
-<span id="cb20-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a></a>    <span class="at">knn_probs =</span> <span class="fu">predict</span>(knnfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.pred_Yes),</span>
+<span id="cb14-4"><a></a>    <span class="at">logistic_probs =</span> <span class="fu">predict</span>(logregfit, <span class="at">new_data =</span> default_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.pred_Yes)</span>
+<span id="cb14-5"><a></a>  )</span>
+<span id="cb14-6"><a></a></span>
+<span id="cb14-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()   <span class="co"># obtain probability predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -888,13 +851,13 @@ The following objects are masked from 'package:stats':
 <li>Step 2: Set a threshold to obtain <strong>class labels</strong> (0.5 below)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
-<span id="cb21-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)),</span>
-<span id="cb21-4"><a></a>         <span class="at">logistic_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(logistic_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
-<span id="cb21-5"><a></a>  )</span>
-<span id="cb21-6"><a></a></span>
-<span id="cb21-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
+<span id="cb15-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)),</span>
+<span id="cb15-4"><a></a>         <span class="at">logistic_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(logistic_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb15-5"><a></a>  )</span>
+<span id="cb15-6"><a></a></span>
+<span id="cb15-7"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
@@ -992,12 +955,12 @@ The following objects are masked from 'package:stats':
 <li>Step 2: Set a threshold to obtain <strong>class labels</strong> (0.5 below)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
-<span id="cb22-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)),</span>
-<span id="cb22-4"><a></a>         <span class="at">logistic_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(logistic_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)))</span>
-<span id="cb22-5"><a></a></span>
-<span id="cb22-6"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
+<span id="cb16-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)),</span>
+<span id="cb16-4"><a></a>         <span class="at">logistic_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(logistic_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)))</span>
+<span id="cb16-5"><a></a></span>
+<span id="cb16-6"><a></a>default_test_wprobs <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
@@ -1091,8 +1054,8 @@ The following objects are masked from 'package:stats':
 <section id="performance" class="slide level2">
 <h2>Performance</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>roc_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sensitivity, specificity)</span>
-<span id="cb23-2"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>roc_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sensitivity, specificity)</span>
+<span id="cb17-2"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1126,11 +1089,11 @@ The following objects are masked from 'package:stats':
 <section id="low-threshold" class="slide level2">
 <h2>Low Threshold</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.1</span>   <span class="co"># set threshold</span></span>
-<span id="cb24-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)))</span>
-<span id="cb24-4"><a></a></span>
-<span id="cb24-5"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>)  <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.1</span>   <span class="co"># set threshold</span></span>
+<span id="cb18-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>)))</span>
+<span id="cb18-4"><a></a></span>
+<span id="cb18-5"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>)  <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1164,12 +1127,12 @@ The following objects are masked from 'package:stats':
 <section id="high-threshold" class="slide level2">
 <h2>High Threshold</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.9</span>   <span class="co"># set threshold</span></span>
-<span id="cb25-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
-<span id="cb25-4"><a></a>  )</span>
-<span id="cb25-5"><a></a></span>
-<span id="cb25-6"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.9</span>   <span class="co"># set threshold</span></span>
+<span id="cb19-2"><a></a>default_test_wprobs <span class="ot">&lt;-</span> default_test_wprobs <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a></a>  <span class="fu">mutate</span>(<span class="at">knn_preds =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(knn_probs <span class="sc">&gt;</span> threshold, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb19-4"><a></a>  )</span>
+<span id="cb19-5"><a></a></span>
+<span id="cb19-6"><a></a><span class="fu">roc_metrics</span>(default_test_wprobs, <span class="at">truth =</span> default, <span class="at">estimate =</span> knn_preds, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1229,9 +1192,9 @@ The following objects are masked from 'package:stats':
 <section id="roc-curve-1" class="slide level2">
 <h2>ROC Curve</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">roc_curve</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">roc_curve</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1280,11 +1243,11 @@ The following objects are masked from 'package:stats':
 <section id="roc-curve-plot" class="slide level2">
 <h2>ROC Curve: Plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">roc_curve</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">roc_curve</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-roc-auc_files/figure-html/unnamed-chunk-19-1.png" width="672" class="r-stretch"></section>
+<img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
 <section id="auc" class="slide level2">
 <h2>AUC</h2>
 <ul>
@@ -1296,8 +1259,8 @@ The following objects are masked from 'package:stats':
 <section id="auc-in-r" class="slide level2">
 <h2>AUC in R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">roc_auc</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">roc_auc</span>(default_test_wprobs, <span class="at">truth =</span> default, knn_probs, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1326,7 +1289,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1336,7 +1299,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1351,7 +1314,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1361,7 +1324,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-24-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1377,7 +1340,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1387,7 +1350,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1403,7 +1366,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-27-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1413,7 +1376,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1429,7 +1392,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-29-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1439,7 +1402,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-30-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1455,7 +1418,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-31-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1465,7 +1428,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1481,7 +1444,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-33-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1491,7 +1454,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-34-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1506,7 +1469,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-35-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1516,7 +1479,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-36-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1531,7 +1494,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-37-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1541,7 +1504,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-38-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1557,7 +1520,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-39-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-39-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1567,7 +1530,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-40-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-40-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1583,7 +1546,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-41-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-41-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1593,7 +1556,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-42-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-42-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1609,7 +1572,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-43-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-43-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1619,7 +1582,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-44-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-44-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1635,7 +1598,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-45-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-45-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1645,7 +1608,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-46-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-46-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1661,7 +1624,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-47-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-47-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1671,7 +1634,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-48-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-48-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1686,7 +1649,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-49-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1696,7 +1659,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-50-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-50-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1711,7 +1674,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-51-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-51-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1721,7 +1684,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-52-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-52-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1736,7 +1699,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-53-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-53-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1746,7 +1709,7 @@ The following objects are masked from 'package:stats':
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-html/unnamed-chunk-54-1.png" width="672"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/unnamed-chunk-54-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1797,7 +1760,18 @@ The following objects are masked from 'package:stats':
 <li>On the third tab fit a KNN model with 5 neighbors and then a logistic regression model</li>
 <li>Which model do you think will perform better based on the plots you see?</li>
 <li>Choose the better model, click fit, and click on the fourth tab</li>
-<li>For each of the metrics try to reconcile the performance metrics with the plots</li>
+</ul>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions</h2>
+<p>Using the app, try and answer the following questions:</p>
+<ul>
+<li>Which of the metrics are most and least impacted by:
+<ul>
+<li>Sample size</li>
+<li>Imbalanced data (i.e.&nbsp;proportion positive near 0 or 1)</li>
+<li>High noise</li>
+</ul></li>
 </ul>
 
 <div class="quarto-auto-generated-content">
@@ -2019,6 +1993,82 @@ The following objects are masked from 'package:stats':
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
