@@ -35,6 +35,56 @@ tidymodels_prefer()
 set.seed(427)
 ```
 
+# Resampling & Cross Validation
+
+## Data Splitting: Discussion
+
+:::{.incremental}
+-   Why do we split our data before fitting a model?
+    +   To prevent overfitting
+-   What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or $k = 1, 2, \ldots, 100$ neighbors)
+    +   We open ourselves up to information leakage
+-   Potential solution... three way split (training/validation/test)
+-   Better solution... cross validation and resampling
+:::
+
+## Resampling
+
+![Figure 10.1 from TMWR](images/09/resampling.svg)
+## Cross-Validation Terminology
+
+-   Divide training set into two sets
+    +   Analysis set: fit the model (similar to training set)
+    +   Assessment set: evaluation the model (similar to test set)
+
+## K-Fold Cross-Validation (CV) {.smaller}
+
+:::{.incremental}
+-   Partition your data into $K$ randomly selected non-overlapping "folds"
+  +   Folds don't overlap and every training observation is in one fold
+  +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+  +   Treat fold $k$ as the assessment set
+  +   Treat all folds except for $k$ as the analysis set
+  +   Fit model to analysis set (use whole modeling workflow)
+  +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
+:::
+
+## <span style="color:blue">Your Turn!!!</span>
+
+Suppose you start with a data set with $n=1000$ observations. You are trying to predict a numerical variable and your target metric is MSE.
+
+1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
+
+2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
+
+3. Do you analysis set's overlap? Do your assessment sets overlap?
+
+4. How many times will you fit your model? How many different MSE's will you have?
+
 # CV Workflow in R
 
 ## Data: Ames Housing Prices {.smaller}
@@ -134,602 +184,78 @@ collect_metrics(knn5_results) |> kable()
 collect_metrics(knn10_results) |> kable()
 ```
 
-<!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
+## Questions
 
-<!-- <!-- * Closely related to the validation set approach. Attempts to address its drawbacks. -->
+1. How many time did we train a model?
+2. Which model formulation was the best?
 
---\>
+## Final Model
 
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+- After choosing best model/workflow, fit on full training set and assess on test set
 
-<!-- knitr::include_graphics("EFT/5.3.PNG") -->
+```{r}
+final_fit <- lm_wf |> fit(data = ames_train)
+final_fit |> 
+  predict(new_data = ames_test) |> 
+  bind_cols(ames_test) |> 
+  ames_metrics(truth = Sale_Price, estimate = .pred)
+```
 
-<!-- ``` -->
+## Leave-One-Out Cross-Validation (LOOCV) {.smaller}
 
-<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
+-  $n$-Fold cross validation
+-  Iterate through training set
+    +   Treat observation $i$ has assessment set
+    +   Treat other $n-1$ observations as analysis set
+    
+Suppose you implement LOOCV on a dataset with $n=100$ observations.
 
-<!-- Suppose you implement LOOCV on a dataset with $n=100$ observations. -->
+1. What is the size (number of observations) of each analysis set?
 
-<!-- 1. What is the size (number of observations) of each training set? -->
+2. What is the size of each assessment set?
 
-<!-- 2. What is the size of each validation set? -->
+3. How many times must you fit a model to complete the overall LOOCV process?
 
-<!-- 3. How many steps/iterations are required to complete the overall LOOCV process? -->
 
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '30%'} -->
 
---\> <!-- <!-- knitr::include_graphics("EFT/e5.1.PNG") --> --\>
-<!-- <!-- ``` --> --\>
+## LOOCV vs. K-Fold CV
 
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
+-   Typically we use 5-Fold or 10-Fold CV
+-   $K$-Fold is much less computationally expensive
+-   $K$ actually gives better estimates of your test error... Why?
+-   Bias-Variance Trade-Off
+-   LOOCV has the lowest level of bias but highest level of variance
+-   5- and 10-Fold CV have medium levels of bias but lower variance
 
---\>
+# Repeated Cross-Validation
 
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+## Repeated K-Fold Cross-Validation (CV) {.smaller}
 
---\>
-<!-- <!-- # comparing 4 polynomial (regression) models with LOOCV (response: 'mpg', predictor: 'horsepower') -->
---\>
+:::{.incremental}
+-   Partition your data into $K$ randomly selected non-overlapping "folds"
+  +   Folds don't overlap and every training observation is in one fold
+  +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+  +   Treat fold $k$ as the assessment set
+  +   Treat all folds except for $k$ as the analysis set
+  +   Fit model to analysis set (use whole modeling workflow)
+  +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
+-   Repeat this process from the beginning selected $K$ different randomly chosen folds
+:::
 
-<!-- <!-- ggplot(data = Auto, aes(x = horsepower, y = mpg)) +   # quick visual check -->
+-   If we want more accurate estimate you can perform repeated CV with different randomly chosen folds
 
---\> <!-- <!--   geom_point() --> --\> <!-- <!-- ``` --> --\>
+## Define Folds
 
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10, repeats = 10)
+ames_folds
+```
 
---\>
 
-<!-- <!-- ```{r,message=FALSE} -->
-
---\> <!-- <!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- Consider `Sale_Price` as the response variable. Split the data into training and test data. -->
-
---\>
-
-<!-- <!-- ```{r, message = FALSE} -->
-
---\>
-<!-- <!-- set.seed(012423)  # fix the random number generator for reproducibility -->
---\>
-
-<!-- <!-- library(caret)  # load library -->
-
---\>
-
-<!-- <!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
-
---\>
-
-<!-- <!-- ames_train <- ames[train_index,]   # training data, use this dataset to build model -->
-
---\>
-
-<!-- <!-- ames_test <- ames[-train_index,]   # test data, use this dataset to evaluate model's performance -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-
---\>
-
-<!-- <!-- Define CV specifications. -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- cv_specs_loocv <- trainControl(method = "LOOCV")   # specify CV method -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- We will compare the following three linear regression models: -->
-
---\>
-
-<!-- <!-- * with `Garage_Area` as the only predictor; -->
-
---\>
-
-<!-- <!-- * with `Overall_Qual` as the only predictor; -->
-
---\>
-
-<!-- <!-- * with `Garage_Area`, `Year_Built`, and `Overall_Qual` as predictors. -->
-
---\>
-
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-
---\>
-
-<!-- <!-- Implement LOOCV with the first model. -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- m1 <- train(form = Sale_Price ~ Garage_Area,    # specify model -->
---\> <!-- <!--             data = ames_train,   # specify dataset -->
---\>
-<!-- <!--             method = "lm",       # specify type of model -->
---\>
-<!-- <!--             trControl = cv_specs_loocv, # CV specifications -->
---\>
-<!-- <!--             metric = "RMSE")   # metric to evaluate model -->
---\>
-
-<!-- <!-- m1   # summary of LOOCV -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-
---\>
-
-<!-- <!-- Implement LOOCV with the second model. -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\> <!-- <!-- m2 <- train(form = Sale_Price ~ Overall_Qual,   --> --\>
-<!-- <!--             data = ames_train,           --> --\>
-<!-- <!--             method = "lm",               --> --\>
-<!-- <!--             trControl = cv_specs_loocv,        --> --\>
-<!-- <!--             metric = "RMSE")            --> --\>
-
-<!-- <!-- m2 -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-
---\>
-
-<!-- <!-- Implement LOOCV with the third model. -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- m3 <- train(form = Sale_Price ~ Garage_Area + Year_Built + Overall_Qual,   -->
---\> <!-- <!--             data = ames_train, --> --\>
-<!-- <!--             method = "lm", --> --\>
-<!-- <!--             trControl = cv_specs_loocv, --> --\>
-<!-- <!--             metric = "RMSE") --> --\>
-
-<!-- <!-- m3 -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Results -->
-
---\>
-
-<!-- <!-- Compare LOOCV results for different models. -->
-
---\>
-
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-
---\> <!-- <!-- # create data frame to plot results --> --\>
-
-<!-- <!-- df <- data.frame(model_number = 1:3, RMSE = c(m1$results$RMSE,   -->
-
---\>
-<!-- <!--                                              m2$results$RMSE, -->
---\>
-<!-- <!--                                              m3$results$RMSE)) -->
---\>
-
-<!-- <!-- # plot results from LOOCV -->
-
---\>
-
-<!-- <!-- ggplot(data = df, aes(x = model_number, y =  RMSE)) +    -->
-
---\> <!-- <!--   geom_point() + geom_line() --> --\>
-
-<!-- <!-- ``` -->
-
---\>
-
-<!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
-
-<!-- **Advantages** -->
-
-<!-- * LOOCV will give approximately unbiased estimates of the test error, since each training set contains $n−1$ observations, which is almost as many as the number of observations in the full training dataset. -->
-
-<!-- <!-- * Has far less bias than the validation set approach, since the training sets (used to fit the model) are almost as big as the original dataset. -->
-
---\>
-
-<!-- * Performing LOOCV multiple times will always yield the same results. -->
-
-<!-- **Disadvantages** -->
-
-<!-- * Can be potentially expensive to implement, specially for large $n$. -->
-
-<!-- * LOOCV error estimate can have high variance.  -->
-
-<!-- ## $k$-Fold Cross-Validation -->
-
-<!-- * Randomly divide the training data into $k$ groups or **folds** (approximately equal size). -->
-
-<!-- * Consider one of these folds as the validation set. Fit the model on the remaining $k-1$ folds combined, and obtain predictions for the $k^{th}$ fold. Repeat for all $k$ folds. -->
-
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
-
-<!-- knitr::include_graphics("EFT/5.5.PNG") -->
-
-<!-- ``` -->
-
-<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
-
-<!-- Suppose you implement 10-fold CV on a dataset with $n=100$ observations. -->
-
-<!-- 1. What is the size (number of observations) of each training set? -->
-
-<!-- 2. What is the size of each validation set? -->
-
-<!-- 3. How many steps/iterations are required to complete the overall CV process? -->
-
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-
-<!-- **Ames Housing dataset** -->
-
-<!-- <!-- ```{r,message=FALSE} -->
-
---\> <!-- <!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- Consider `Sale_Price` as the response variable. We will compare the following three linear regression models: -->
-
-<!-- * with `Garage_Area` as the only predictor; -->
-
-<!-- * with `Year_Built` as the only predictor; -->
-
-<!-- * with `Garage_Area` and `Year_Built` as predictors. -->
-
-<!-- <!-- ## $k$-Fold Cross-Validation: Implementation -->
-
---\>
-
-<!-- <!-- **Ames Housing dataset** -->
-
---\>
-
-<!-- <!-- Split the data into training and test data. -->
-
---\>
-
-<!-- <!-- ```{r, message = FALSE} -->
-
---\>
-<!-- <!-- set.seed(042023)  # fix the random number generator for reproducibility -->
---\>
-
-<!-- <!-- library(caret)  # load library -->
-
---\>
-
-<!-- <!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
-
---\>
-
-<!-- <!-- ames_train <- ames[train_index,]   # training data -->
-
---\>
-
-<!-- <!-- ames_test <- ames[-train_index,]   # test data -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-
-<!-- **Ames Housing dataset** -->
-
-<!-- Define CV specifications. -->
-
-<!-- ```{r} -->
-
-<!-- cv_specs <- trainControl(method = "repeatedcv",   # CV method -->
-
-<!--                          number = 10,    # number of folds -->
-
-<!--                          repeats = 5)     # number of repeats -->
-
-<!-- ``` -->
-
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-
-<!-- **Ames Housing dataset** - Implement 10-fold CV with the first model. -->
-
-<!-- ```{r} -->
-
-<!-- set.seed(041824) -->
-
-<!-- m1 <- train(form = Sale_Price ~ Garage_Area,    # specify model -->
-
-<!--             data = ames_train,   # specify dataset -->
-
-<!--             method = "lm",       # specify type of model -->
-
-<!--             trControl = cv_specs, # CV specifications -->
-
-<!--             metric = "RMSE")   # metric to evaluate model -->
-
-<!-- m1   # summary of CV -->
-
-<!-- m1$results  # estimate and variability of metrics -->
-
-<!-- ``` -->
-
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-
-<!-- **Ames Housing dataset** - Implement 10-fold CV with the second model. -->
-
-<!-- ```{r} -->
-
-<!-- set.seed(041824) -->
-
-<!-- m2 <- train(form = Sale_Price ~ Year_Built,   -->
-
-<!--             data = ames_train,           -->
-
-<!--             method = "lm",               -->
-
-<!--             trControl = cv_specs,        -->
-
-<!--             metric = "RMSE")            -->
-
-<!-- m2 -->
-
-<!-- m2$results -->
-
-<!-- ``` -->
-
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-
-<!-- **Ames Housing dataset** - Implement 10-fold CV with the third model. -->
-
-<!-- ```{r} -->
-
-<!-- set.seed(041824) -->
-
-<!-- m3 <- train(form = Sale_Price ~ Garage_Area + Year_Built,   -->
-
-<!--             data = ames_train, -->
-
-<!--             method = "lm", -->
-
-<!--             trControl = cv_specs, -->
-
-<!--             metric = "RMSE") -->
-
-<!-- m3 -->
-
-<!-- m3$results -->
-
-<!-- ``` -->
-
-<!-- ## $k$-Fold Cross-Validation: Results  -->
-
-<!-- **Ames Housing dataset** -->
-
-<!-- Compare CV results for different models. -->
-
-<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-
-<!-- # create data frame to plot results -->
-
-<!-- df <- data.frame(model_number = 1:3, RMSE = c(m1$results$RMSE,   -->
-
-<!--                                              m2$results$RMSE, -->
-
-<!--                                              m3$results$RMSE)) -->
-
-<!-- # plot results from CV -->
-
-<!-- ggplot(data = df, aes(x = model_number, y =  RMSE)) +    -->
-
-<!--   geom_point() + geom_line() -->
-
-<!-- ``` -->
-
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- # comparing 4 polynomial (regression) models with k-fold CV (response: 'mpg', predictor: 'horsepower') -->
---\>
-
-<!-- <!-- set.seed(041920221)   # fix the random number generator for reproducibility -->
-
---\>
-
-<!-- <!-- # CV specifications (method, number of folds k, number of repetitions) -->
-
---\>
-<!-- <!-- cv_specs <- trainControl(method = "repeatedcv", number = 10, repeats = 5)  -->
---\>
-
-<!-- <!-- m1 <- train(mpg ~ horsepower,   # model: y = beta_0 + beta_1 x -->
-
---\> <!-- <!--             data = Auto_train, --> --\>
-<!-- <!--             method = "lm", --> --\>
-<!-- <!--             trControl = cv_specs, --> --\>
-<!-- <!--             metric = "RMSE") --> --\>
-
-<!-- <!-- m1   # summary of model with LOOCV -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- m2 <- train(mpg ~ poly(horsepower,2),   # model: y = beta_0 + beta_1 x + beta_2 x^2 -->
---\> <!-- <!--             data = Auto_train, --> --\>
-<!-- <!--             method = "lm", --> --\>
-<!-- <!--             trControl = cv_specs, --> --\>
-<!-- <!--             metric = "RMSE") --> --\>
-
-<!-- <!-- m3 <- train(mpg ~ poly(horsepower, 3),   # model: y = beta_0 + beta_1 x + beta_2 x^2 + beta_3 x^3 -->
-
---\> <!-- <!--             data = Auto_train, --> --\>
-<!-- <!--             method = "lm", --> --\>
-<!-- <!--             trControl = cv_specs, --> --\>
-<!-- <!--             metric = "RMSE") --> --\>
-
-<!-- <!-- m4 <- train(mpg ~ poly(horsepower, 4),   # model: y = beta_0 + beta_1 x + beta_2 x^2 + beta_3 x^3 + beta_4 x^4 -->
-
---\> <!-- <!--             data = Auto_train, --> --\>
-<!-- <!--             method = "lm", --> --\>
-<!-- <!--             trControl = cv_specs, --> --\>
-<!-- <!--             metric = "RMSE") --> --\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-
---\>
-
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-
---\>
-<!-- <!-- df <- data.frame(poly_degree = 1:4, RMSE = c(m1$results$RMSE,   # create data frame to plot results -->
---\>
-<!-- <!--                                              m2$results$RMSE, -->
---\>
-<!-- <!--                                              m3$results$RMSE, -->
---\>
-<!-- <!--                                              m4$results$RMSE)) -->
---\>
-
-<!-- <!-- ggplot(data = df, aes(x = poly_degree, y =  RMSE)) +    # plot results from LOOCV -->
-
---\> <!-- <!--   geom_point() + geom_line() --> --\> <!-- <!-- ``` -->
---\>
-
-<!-- ## Final Model and Prediction Error Estimate -->
-
-<!-- **Ames Housing dataset** -->
-
-<!-- ```{r} -->
-
-<!-- # after choosing final (optimal) model, refit final model using ALL training data -->
-
-<!-- m3$finalModel     -->
-
-<!-- ``` -->
-
-<!-- ```{r} -->
-
-<!-- # obtain estimate of prediction error from test data -->
-
-<!-- final_model_preds <- predict(m3, newdata = ames_test)   # obtain predictions on test data -->
-
-<!-- pred_error_est <- sqrt(mean((ames_test$Sale_Price - final_model_preds)^2))    # calculate RMSE (estimate of prediction error) from test data -->
-
-<!-- pred_error_est   # test set RMSE -->
-
-<!-- ``` -->
-
-<!-- <!-- ## Variable Importance -->
-
---\>
-
-<!-- <!-- **Ames Housing dataset** -->
-
---\>
-
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-
---\> <!-- <!-- # variable importance --> --\>
-
-<!-- <!-- library(vip) -->
-
---\>
-
-<!-- <!-- vip(object = m3,         # CV object  -->
-
---\>
-<!-- <!--     num_features = 20,   # maximum number of predictors to show importance for -->
---\>
-<!-- <!--     method = "model")            # model-specific VI scores -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-
---\>
-
-<!-- <!-- Let $n_i$ be the number of observations in  $i^{th}, (i=1,\ldots,k)$ fold. If $n$ is a multiple of $k$, then $n_i=\frac{n}{k}$. -->
-
---\>
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
-
---\> <!-- <!-- knitr::include_graphics("EFT/e5.3.PNG") --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- If the folds are not of equal size, -->
-
---\>
-
-<!-- <!-- $$CV_{(k)}=\displaystyle \sum_{i=1}^k \dfrac{n_i}{n} MSE_{i}$$ -->
-
---\>
-
-<!-- <!-- A good choice is $k=5$ or $10$. LOOCV is a special case of $k$-fold CV. -->
-
---\>
-
-<!-- <!-- ## LOOCV and $k$-Fold CV -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
-
---\> <!-- <!-- knitr::include_graphics("EFT/5.4.PNG") --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- ## Performance of LOOCV and $k$-Fold CV -->
-
---\>
-
-<!-- <!-- <!-- **Figures 2.9-2.11 in Chapter 2** -->
-
---\>
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
-
---\> <!-- <!-- knitr::include_graphics("EFT/5.6.PNG") --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- ## Bias-Variance Trade-off for LOOCV and $k$-fold CV -->
-
-<!-- * LOOCV has very less bias. Using $k=5$ or $10$ yields more bias than LOOCV. -->
-
-<!-- <!-- , but less than validation set approach. -->
-
---\>
-
-<!-- * For LOOCV, the error estimates for each fold are highly (positively) correlated. $k$-fold CV error estimates are somewhat less correlated. LOOCV error estimate has higher variance than $k$-fold CV error estimate. -->
-
-<!-- * Typically, $k=5$ or $10$ is chosen. -->
 
 <!-- <!-- ## CV to Tune Hyperparameter -->
 

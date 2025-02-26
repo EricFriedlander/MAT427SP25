@@ -748,19 +748,30 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 </table>
 </div>
 </div>
-<!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
-<!-- <!-- * Closely related to the validation set approach. Attempts to address its drawbacks. -->
-<p>–&gt;</p>
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
-<!-- knitr::include_graphics("EFT/5.3.PNG") -->
-<!-- ``` -->
-<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
-<!-- Suppose you implement LOOCV on a dataset with $n=100$ observations. -->
-<!-- 1. What is the size (number of observations) of each training set? -->
-<!-- 2. What is the size of each validation set? -->
-<!-- 3. How many steps/iterations are required to complete the overall LOOCV process? -->
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '30%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/e5.1.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions</h2>
+<ol type="1">
+<li>How many time did we train a model?</li>
+<li>Which model formulation was the best?</li>
+</ol>
+</section>
+<section id="leave-one-out-cross-validation-loocv" class="slide level2 smaller">
+<h2>Leave-One-Out Cross-Validation (LOOCV)</h2>
+<ul>
+<li><span class="math inline">\(n\)</span>-Fold cross validation</li>
+<li>Iterate through training set
+<ul>
+<li>Treat observation <span class="math inline">\(i\)</span> has assessment set</li>
+<li>Treat other <span class="math inline">\(n-1\)</span> observations as analysis set</li>
+</ul></li>
+</ul>
+<p>Suppose you implement LOOCV on a dataset with <span class="math inline">\(n=100\)</span> observations.</p>
+<ol type="1">
+<li><p>What is the size (number of observations) of each training set?</p></li>
+<li><p>What is the size of each validation set?</p></li>
+<li><p>How many steps/iterations are required to complete the overall LOOCV process?</p></li>
+</ol>
 <!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
 <p>–&gt;</p>
 <!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
