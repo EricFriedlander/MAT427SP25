@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-12.html</loc>
-    <lastmod>2025-02-27T17:55:55.856Z</lastmod>
+    <lastmod>2025-02-28T20:03:54.659Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-09.html</loc>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/11-cross-validation.html</loc>
-    <lastmod>2025-02-28T20:01:57.821Z</lastmod>
+    <lastmod>2025-02-28T20:03:54.660Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/09-job-app-intro-roc.html</loc>
@@ -139,5 +139,9 @@
   <url>
     <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
     <lastmod>2025-02-03T17:52:13.313Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/12-preproc-missing-cv.html</loc>
+    <lastmod>2025-02-28T21:42:31.393Z</lastmod>
   </url>
 </urlset>

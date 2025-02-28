@@ -1,0 +1,125 @@
+---
+title: 'MATH 427: Preprocessing, Missing Data, and Resampling'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(janitor) # for contingency tables
+library(ISLR2)
+library(AmesHousing)
+
+tidymodels_prefer()
+
+ames <- make_ames()
+
+set.seed(427)
+```
+
+```{r}
+#| echo: FALSE
+
+ames <- ames |> 
+  mutate(Overall_Cond = factor(Overall_Cond, levels = sample(levels(Overall_Cond))))
+```
+
+
+# Pre-processing
+
+## Data: Ames Housing Prices {.smaller}
+
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is the original from the `AmesHousing` package.
+
+Goal: Predict `Sale_Price`.
+
+```{r}
+ames |> glimpse()
+```
+## Today
+
+Well cover some common pre-processing tasks:
+
+- Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables
+- Imputing missing entries
+- Label encoding ordinal categorical variables
+- Standardizing (centering and scaling) numeric predictors
+- Lumping predictors
+- One-hot/dummy encoding categorical predictor
+
+## Pre-Split Cleaning
+
+- Before you split your data: make sure data is in correct format
+- This may mean different things for different data sets
+- Common examples:
+  + Fixing names of columns
+  + Ensure all variable types are correct
+  + Ensure all factor levels are correct and in order (if applicable)
+  + Remove any variables that are not important to your analysis
+  + Ensure missing values are coded as such (i.e. as `NA` instead of 0 or -1 or "missing")
+  + Filling in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
+
+## Example: Factor Levels in Wrong Order
+
+```{r}
+ames |> pull(Overall_Cond) |> levels()
+```
+
+## Re-Factoring
+
+```{r}
+ames <- ames |> 
+  mutate(Overall_Cond = factor(Overall_Cond, levels = c("Very_Poor", "Poor", 
+                                                        "Fair", "Below_Average",
+                                                        "Average", "Above_Average", 
+                                                        "Good", "Very_Good",
+                                                        "Excellent", "Very_Excellent")))
+ames |> pull(Overall_Cond) |> levels()
+```
+
+## Initial Data Split
+
+```{r}
+set.seed(427)
+
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
+
+## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables {.smaller}
+
+Heuristic for detecting near-zero variance features is:
+
+- The fraction of unique values over the sample size is low (say ≤ 10%).
+- The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent
+value is large (say ≥ 20%).
+
+```{r}
+library(caret)
+
+nearZeroVar(ames_train, saveMetrics = TRUE) |> kable()
+```
