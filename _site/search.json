@@ -1042,6 +1042,13 @@
     "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nknnfit10 &lt;- nearest_neighbor(neighbors = 10) |&gt;   # 10-nn regression\n  set_engine(\"kknn\") |&gt; \n  set_mode(\"regression\") |&gt; \n  fit(price ~ size_scaled + num_bedrooms_scaled, data = ames_train_scaled)\n\n\nTest Point: Gr_Liv_area = 2000 square feet, and Bedroom_AbvGr = 3, then\n\n\n# obtain 10-nn prediction\n\npredict(knnfit10, new_data = tibble(size_scaled = (2000 - mean(ames_train$Gr_Liv_Area))/sd(ames_train$Gr_Liv_Area),\n                                     num_bedrooms_scaled = (3 - mean(ames_train$Bedroom_AbvGr))/sd(ames_train$Bedroom_AbvGr)))\n\n# A tibble: 1 × 1\n   .pred\n   &lt;dbl&gt;\n1 256380\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
+    "objectID": "slides/11-cross-validation.html#announcement",
+    "href": "slides/11-cross-validation.html#announcement",
+    "title": "MATH 427: Cross Validation and Resampling",
+    "section": "Announcement",
+    "text": "Announcement\nOn March 5th at 10am in JAAC, Kyle Mayer will be guest lecturing to talk about his role as a data analyst at Micron. Kyle has a Bachelors in Engineering and a Masters in Physics.\nLocation: Basement of the library."
+  },
+  {
     "objectID": "slides/11-cross-validation.html#computational-set-up",
     "href": "slides/11-cross-validation.html#computational-set-up",
     "title": "MATH 427: Cross Validation and Resampling",

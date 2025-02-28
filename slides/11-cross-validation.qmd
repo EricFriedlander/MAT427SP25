@@ -21,6 +21,12 @@ knitr:
     width: 200
 ---
 
+## Announcement
+
+On March 5th at 10am in JAAC, Kyle Mayer will be guest lecturing to talk about his role as a data analyst at Micron. Kyle has a Bachelors in Engineering and a Masters in Physics. 
+
+Location: Basement of the library.
+
 ## Computational Set-Up
 
 ```{r}
