@@ -186,7 +186,7 @@ collect_metrics(knn10_results) |> kable()
 
 ## Questions
 
-1. How many time did we train a model?
+1. How many times did we train a model?
 2. Which model formulation was the best?
 
 ## Final Model
@@ -244,9 +244,10 @@ Suppose you implement LOOCV on a dataset with $n=100$ observations.
 -   Average them together to get performance estimate
 -   Can also look at distribution of performance metrics
 -   Repeat this process from the beginning selected $K$ different randomly chosen folds
+-   If we want more accurate estimate you can perform repeated CV with different randomly chosen folds
+
 :::
 
--   If we want more accurate estimate you can perform repeated CV with different randomly chosen folds
 
 ## Define Folds
 
@@ -255,207 +256,80 @@ ames_folds <- vfold_cv(ames_train, v = 10, repeats = 10)
 ames_folds
 ```
 
-
-
-<!-- <!-- ## CV to Tune Hyperparameter -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r,message=FALSE} -->
-
---\> <!-- <!-- library(ISLR2)  # load library --> --\>
-
-<!-- <!-- data("Auto")   # load dataset -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- We will consider `mpg` as the response and `horsepower` as the predictor.  -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\> <!-- <!-- # select the variables to work with --> --\>
-
-<!-- <!-- Auto <- Auto %>% select(mpg, horsepower) -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## CV to Tune Hyperparameter -->
-
---\>
-
-<!-- <!-- **Objective**: Find the optimum choice of $K$ in the KNN approach with 5-fold CV repeated 5 times. We will use the following steps. -->
-
---\>
-
-<!-- <!-- * Perform EDA (Exploratory Data Analysis) -->
-
---\>
-
-<!-- <!-- * Split the data into training and test data (80-20 split). -->
-
---\>
-
-<!-- <!-- * Specify CV specifications using **trainControl**. -->
-
---\>
-
-<!-- <!-- * Create an object **k_grid** using the following code. -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- k_grid <- expand.grid(k = seq(1, 100, by = 1))  # creates a grid of k values to be used (1 to 100 in this case) -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- * Use the **train** function to run CV. Use **method = "knn"**, **tuneGrid = k_grid**, and **metric = "RMSE"**. -->
-
---\>
-
-<!-- <!-- * Obtain the results and plot them. What is the optimum $k$ chosen? -->
-
---\>
-
-<!-- <!-- * Create the final model using the optimum $k$ and estimate its prediction error from the test data. -->
-
---\>
-
-<!-- <!-- ## CV to Tune Hyperparameter: EDA {.smaller} -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\> <!-- <!-- summary(Auto)   # summary of the variables --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- ```{r, fig.align='center', fig.height=4, fig.width=4} -->
-
---\> <!-- <!-- library(GGally) --> --\>
-<!-- <!-- ggpairs(Auto)    # correlation plot --> --\> <!-- <!-- ``` -->
---\>
-
-<!-- <!-- ## CV to Tune Hyperparameter: Split Data -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r, message = FALSE} -->
-
---\>
-<!-- <!-- set.seed(041824)  # fix the random number generator for reproducibility -->
---\>
-
-<!-- <!-- library(caret)  # load library -->
-
---\>
-
-<!-- <!-- train_index <- createDataPartition(y = Auto$mpg, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
-
---\>
-
-<!-- <!-- Auto_train <- Auto[train_index,]   # training data -->
-
---\>
-
-<!-- <!-- Auto_test <- Auto[-train_index,]   # test data -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## CV to Tune Hyperparameter: Perform CV -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\>
-<!-- <!-- set.seed(041824)  # fix the random number generator for reproducibility -->
---\>
-
-<!-- <!-- # CV specifications -->
-
---\>
-<!-- <!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5) -->
---\>
-
-<!-- <!-- # specify grid of 'k' values to search over -->
-
---\> <!-- <!-- k_grid <- expand.grid(k = seq(1, 100, by = 1)) --> --\>
-
-<!-- <!-- # train the KNN model using CV  to find optimal 'k' -->
-
---\> <!-- <!-- knn_cv <- train(form = mpg ~ horsepower, --> --\>
-<!-- <!--                  data = Auto_train, --> --\>
-<!-- <!--                  method = "knn", --> --\>
-<!-- <!--                  trControl = cv_specs, --> --\>
-<!-- <!--                  tuneGrid = k_grid, --> --\>
-<!-- <!--                  metric = "RMSE") --> --\> <!-- <!-- ``` -->
---\>
-
-<!-- <!-- ## CV to Tune Hyperparameter: Compare CV Results -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r, eval=FALSE} -->
-
---\> <!-- <!-- knn_cv   # CV results, shows RMSE for all K --> --\>
-<!-- <!-- ``` --> --\>
-
-<!-- <!-- ```{r, fig.align='center'} -->
-
---\> <!-- <!-- ggplot(knn_cv)   # plot CV results for different 'k' -->
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ## CV to Tune Hyperparameter: Final Model -->
-
---\>
-
-<!-- <!-- **Auto dataset** -->
-
---\>
-
-<!-- <!-- ```{r} -->
-
---\> <!-- <!-- # final model with optimal 'k' chosen from CV --> --\>
-
-<!-- <!-- knn_cv$bestTune     # optimal value of K -->
-
---\>
-
-<!-- <!-- knn_cv$finalModel   # final model -->
-
---\> <!-- <!-- ``` --> --\>
-
-<!-- <!-- ```{r} -->
-
---\> <!-- <!-- # obtain predictions on test data --> --\>
-<!-- <!-- final_model_preds <- predict(knn_cv, newdata = Auto_test) -->
---\>
-
-<!-- <!-- # estimate test set prediction error -->
-
---\>
-<!-- <!-- sqrt(mean((Auto_test$mpg - final_model_preds)^2))    # test set RMSE -->
---\> <!-- <!-- ``` --> --\>
+## Fit and Assess Models
+
+```{r}
+lm_results <- lm_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn5_results <- knn5_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn10_results <- knn10_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+```
+
+
+## Collecting Metrics {.smaller}
+
+```{r}
+collect_metrics(lm_results) |> kable()
+collect_metrics(knn5_results) |> kable()
+collect_metrics(knn10_results) |> kable()
+```
+
+## Questions
+
+1. How many times did we train a model?
+2. Which model formulation was the best?
+3. How can we make sure our analysis is reproducible? I.e. How can we make sure we get the same results from CV every time we repeat our analysis?
+
+## Final Model
+
+- After choosing best model/workflow, fit on full training set and assess on test set
+
+```{r}
+final_fit <- lm_wf |> fit(data = ames_train)
+final_fit_perf <- final_fit |> 
+  predict(new_data = ames_test) |> 
+  bind_cols(ames_test) |> 
+  ames_metrics(truth = Sale_Price, estimate = .pred)
+
+final_fit_perf |> kable()
+```
+
+## Extracting CV Metrics
+
+-   `collect_metrics` averages over all 100 models
+-   set `summarize = FALSE` to get all the individual errors
+
+```{r}
+collect_metrics(lm_results, summarize = FALSE) |> head() |> kable()
+```
+
+## Combining CV Metrics
+
+```{r}
+all_metrics <- bind_cols(method = "lm", collect_metrics(lm_results, summarize = FALSE)) |>
+  bind_rows(bind_cols(method = "knn5", collect_metrics(knn5_results, summarize = FALSE))) |>
+  bind_rows(bind_cols(method = "knn10", collect_metrics(knn10_results, summarize = FALSE)))
+```
+
+## Visualizing CV Metrics
+
+:::: columns
+::: column
+```{r}
+all_metrics |> 
+  filter(.metric == "rmse") |> 
+  ggplot(aes(x = method, y = .estimate)) +
+  geom_boxplot() +
+  geom_hline(yintercept=final_fit_perf |> filter(.metric == "rmse") |> pull(.estimate), color = "red")
+```
+:::
+
+::: column
+```{r}
+all_metrics |> 
+  filter(.metric == "rsq") |> 
+  ggplot(aes(x = method, y = .estimate)) +
+  geom_boxplot() +
+  geom_hline(yintercept=final_fit_perf |> filter(.metric == "rsq") |> pull(.estimate), color = "red")
+```
+:::
+::::

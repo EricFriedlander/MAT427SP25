@@ -419,6 +419,67 @@ Eric Friedlander
 </div>
 </section>
 <section>
+<section id="resampling-cross-validation" class="title-slide slide level1 center">
+<h1>Resampling &amp; Cross Validation</h1>
+
+</section>
+<section id="data-splitting-discussion" class="slide level2">
+<h2>Data Splitting: Discussion</h2>
+<div>
+<ul>
+<li class="fragment">Why do we split our data before fitting a model?
+<ul>
+<li class="fragment">To prevent overfitting</li>
+</ul></li>
+<li class="fragment">What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or <span class="math inline">\(k = 1, 2, \ldots, 100\)</span> neighbors)
+<ul>
+<li class="fragment">We open ourselves up to information leakage</li>
+</ul></li>
+<li class="fragment">Potential solution… three way split (training/validation/test)</li>
+<li class="fragment">Better solution… cross validation and resampling</li>
+</ul>
+</div>
+</section>
+<section id="resampling" class="slide level2">
+<h2>Resampling</h2>
+<p><img data-src="images/09/resampling.svg" alt="Figure 10.1 from TMWR"> ## Cross-Validation Terminology</p>
+<ul>
+<li>Divide training set into two sets
+<ul>
+<li>Analysis set: fit the model (similar to training set)</li>
+<li>Assessment set: evaluation the model (similar to test set)</li>
+</ul></li>
+</ul>
+</section>
+<section id="k-fold-cross-validation-cv" class="slide level2 smaller">
+<h2>K-Fold Cross-Validation (CV)</h2>
+<div>
+<ul>
+<li class="fragment">Partition your data into <span class="math inline">\(K\)</span> randomly selected non-overlapping “folds”</li>
+<li class="fragment">Folds don’t overlap and every training observation is in one fold</li>
+<li class="fragment">Each fold contained <span class="math inline">\(1/K\)</span> of the training data</li>
+<li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:</li>
+<li class="fragment">Treat fold <span class="math inline">\(k\)</span> as the assessment set</li>
+<li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the analysis set</li>
+<li class="fragment">Fit model to analysis set (use whole modeling workflow)</li>
+<li class="fragment">Compute error metrics on assessment set</li>
+<li class="fragment">After loop, you will have <span class="math inline">\(K\)</span> copies of each error metrics</li>
+<li class="fragment">Average them together to get performance estimate</li>
+<li class="fragment">Can also look at distribution of performance metrics</li>
+</ul>
+</div>
+</section>
+<section id="your-turn" class="slide level2">
+<h2><span style="color:blue">Your Turn!!!</span></h2>
+<p>Suppose you start with a data set with <span class="math inline">\(n=1000\)</span> observations. You are trying to predict a numerical variable and your target metric is MSE.</p>
+<ol type="1">
+<li><p>You start with an initial 70/30 training/test split. How many observations are in your training and test set?</p></li>
+<li><p>You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?</p></li>
+<li><p>Do you analysis set’s overlap? Do your assessment sets overlap?</p></li>
+<li><p>How many times will you fit your model? How many different MSE’s will you have?</p></li>
+</ol>
+</section></section>
+<section>
 <section id="cv-workflow-in-r" class="title-slide slide level1 center">
 <h1>CV Workflow in R</h1>
 
@@ -752,9 +813,29 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <section id="questions" class="slide level2">
 <h2>Questions</h2>
 <ol type="1">
-<li>How many time did we train a model?</li>
+<li>How many times did we train a model?</li>
 <li>Which model formulation was the best?</li>
 </ol>
+</section>
+<section id="final-model" class="slide level2">
+<h2>Final Model</h2>
+<ul>
+<li>After choosing best model/workflow, fit on full training set and assess on test set</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>final_fit <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
+<span id="cb18-2"><a></a>final_fit <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ames_test) <span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a></a>  <span class="fu">bind_cols</span>(ames_test) <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a></a>  <span class="fu">ames_metrics</span>(<span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard   39804.   
+2 rsq     standard       0.761</code></pre>
+</div>
+</div>
 </section>
 <section id="leave-one-out-cross-validation-loocv" class="slide level2 smaller">
 <h2>Leave-One-Out Cross-Validation (LOOCV)</h2>
@@ -768,352 +849,377 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 </ul>
 <p>Suppose you implement LOOCV on a dataset with <span class="math inline">\(n=100\)</span> observations.</p>
 <ol type="1">
-<li><p>What is the size (number of observations) of each training set?</p></li>
-<li><p>What is the size of each validation set?</p></li>
-<li><p>How many steps/iterations are required to complete the overall LOOCV process?</p></li>
+<li><p>What is the size (number of observations) of each analysis set?</p></li>
+<li><p>What is the size of each assessment set?</p></li>
+<li><p>How many times must you fit a model to complete the overall LOOCV process?</p></li>
 </ol>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-<p>–&gt; <!-- <!-- # comparing 4 polynomial (regression) models with LOOCV (response: 'mpg', predictor: 'horsepower') --> –&gt;</p>
-<!-- <!-- ggplot(data = Auto, aes(x = horsepower, y = mpg)) +   # quick visual check -->
-<p>–&gt; <!-- <!--   geom_point() --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-<p>–&gt;</p>
-<!-- <!-- ```{r,message=FALSE} -->
-<p>–&gt; <!-- <!-- ames <- readRDS("AmesHousing.rds")   # load dataset --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- Consider `Sale_Price` as the response variable. Split the data into training and test data. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, message = FALSE} -->
-<p>–&gt; <!-- <!-- set.seed(012423)  # fix the random number generator for reproducibility --> –&gt;</p>
-<!-- <!-- library(caret)  # load library -->
-<p>–&gt;</p>
-<!-- <!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
-<p>–&gt;</p>
-<!-- <!-- ames_train <- ames[train_index,]   # training data, use this dataset to build model -->
-<p>–&gt;</p>
-<!-- <!-- ames_test <- ames[-train_index,]   # test data, use this dataset to evaluate model's performance -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-<p>–&gt;</p>
-<!-- <!-- Define CV specifications. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- cv_specs_loocv <- trainControl(method = "LOOCV")   # specify CV method --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- We will compare the following three linear regression models: -->
-<p>–&gt;</p>
-<!-- <!-- * with `Garage_Area` as the only predictor; -->
-<p>–&gt;</p>
-<!-- <!-- * with `Overall_Qual` as the only predictor; -->
-<p>–&gt;</p>
-<!-- <!-- * with `Garage_Area`, `Year_Built`, and `Overall_Qual` as predictors. -->
-<p>–&gt;</p>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-<p>–&gt;</p>
-<!-- <!-- Implement LOOCV with the first model. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- m1 <- train(form = Sale_Price ~ Garage_Area,    # specify model --> –&gt; <!-- <!--             data = ames_train,   # specify dataset --> –&gt; <!-- <!--             method = "lm",       # specify type of model --> –&gt; <!-- <!--             trControl = cv_specs_loocv, # CV specifications --> –&gt; <!-- <!--             metric = "RMSE")   # metric to evaluate model --> –&gt;</p>
-<!-- <!-- m1   # summary of LOOCV -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-<p>–&gt;</p>
-<!-- <!-- Implement LOOCV with the second model. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- m2 <- train(form = Sale_Price ~ Overall_Qual,   --> –&gt; <!-- <!--             data = ames_train,           --> –&gt; <!-- <!--             method = "lm",               --> –&gt; <!-- <!--             trControl = cv_specs_loocv,        --> –&gt; <!-- <!--             metric = "RMSE")            --> –&gt;</p>
-<!-- <!-- m2 -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Implementation -->
-<p>–&gt;</p>
-<!-- <!-- Implement LOOCV with the third model. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- m3 <- train(form = Sale_Price ~ Garage_Area + Year_Built + Overall_Qual,   --> –&gt; <!-- <!--             data = ames_train, --> –&gt; <!-- <!--             method = "lm", --> –&gt; <!-- <!--             trControl = cv_specs_loocv, --> –&gt; <!-- <!--             metric = "RMSE") --> –&gt;</p>
-<!-- <!-- m3 -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Leave-One-Out Cross-Validation (LOOCV): Results -->
-<p>–&gt;</p>
-<!-- <!-- Compare LOOCV results for different models. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-<p>–&gt; <!-- <!-- # create data frame to plot results --> –&gt;</p>
-<!-- <!-- df <- data.frame(model_number = 1:3, RMSE = c(m1$results$RMSE,   -->
-<p>–&gt; <!-- <!--                                              m2$results$RMSE, --> –&gt; <!-- <!--                                              m3$results$RMSE)) --> –&gt;</p>
-<!-- <!-- # plot results from LOOCV -->
-<p>–&gt;</p>
-<!-- <!-- ggplot(data = df, aes(x = model_number, y =  RMSE)) +    -->
-<p>–&gt; <!-- <!--   geom_point() + geom_line() --> –&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- ## Leave-One-Out Cross-Validation (LOOCV) -->
-<!-- **Advantages** -->
-<!-- * LOOCV will give approximately unbiased estimates of the test error, since each training set contains $n−1$ observations, which is almost as many as the number of observations in the full training dataset. -->
-<!-- <!-- * Has far less bias than the validation set approach, since the training sets (used to fit the model) are almost as big as the original dataset. -->
-<p>–&gt;</p>
-<!-- * Performing LOOCV multiple times will always yield the same results. -->
-<!-- **Disadvantages** -->
-<!-- * Can be potentially expensive to implement, specially for large $n$. -->
-<!-- * LOOCV error estimate can have high variance.  -->
-<!-- ## $k$-Fold Cross-Validation -->
-<!-- * Randomly divide the training data into $k$ groups or **folds** (approximately equal size). -->
-<!-- * Consider one of these folds as the validation set. Fit the model on the remaining $k-1$ folds combined, and obtain predictions for the $k^{th}$ fold. Repeat for all $k$ folds. -->
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
-<!-- knitr::include_graphics("EFT/5.5.PNG") -->
-<!-- ``` -->
-<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
-<!-- Suppose you implement 10-fold CV on a dataset with $n=100$ observations. -->
-<!-- 1. What is the size (number of observations) of each training set? -->
-<!-- 2. What is the size of each validation set? -->
-<!-- 3. How many steps/iterations are required to complete the overall CV process? -->
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-<!-- **Ames Housing dataset** -->
-<!-- <!-- ```{r,message=FALSE} -->
-<p>–&gt; <!-- <!-- ames <- readRDS("AmesHousing.rds")   # load dataset --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- Consider `Sale_Price` as the response variable. We will compare the following three linear regression models: -->
-<!-- * with `Garage_Area` as the only predictor; -->
-<!-- * with `Year_Built` as the only predictor; -->
-<!-- * with `Garage_Area` and `Year_Built` as predictors. -->
-<!-- <!-- ## $k$-Fold Cross-Validation: Implementation -->
-<p>–&gt;</p>
-<!-- <!-- **Ames Housing dataset** -->
-<p>–&gt;</p>
-<!-- <!-- Split the data into training and test data. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, message = FALSE} -->
-<p>–&gt; <!-- <!-- set.seed(042023)  # fix the random number generator for reproducibility --> –&gt;</p>
-<!-- <!-- library(caret)  # load library -->
-<p>–&gt;</p>
-<!-- <!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
-<p>–&gt;</p>
-<!-- <!-- ames_train <- ames[train_index,]   # training data -->
-<p>–&gt;</p>
-<!-- <!-- ames_test <- ames[-train_index,]   # test data -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-<!-- **Ames Housing dataset** -->
-<!-- Define CV specifications. -->
-<!-- ```{r} -->
-<!-- cv_specs <- trainControl(method = "repeatedcv",   # CV method -->
-<!--                          number = 10,    # number of folds -->
-<!--                          repeats = 5)     # number of repeats -->
-<!-- ``` -->
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-<!-- **Ames Housing dataset** - Implement 10-fold CV with the first model. -->
-<!-- ```{r} -->
-<!-- set.seed(041824) -->
-<!-- m1 <- train(form = Sale_Price ~ Garage_Area,    # specify model -->
-<!--             data = ames_train,   # specify dataset -->
-<!--             method = "lm",       # specify type of model -->
-<!--             trControl = cv_specs, # CV specifications -->
-<!--             metric = "RMSE")   # metric to evaluate model -->
-<!-- m1   # summary of CV -->
-<!-- m1$results  # estimate and variability of metrics -->
-<!-- ``` -->
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-<!-- **Ames Housing dataset** - Implement 10-fold CV with the second model. -->
-<!-- ```{r} -->
-<!-- set.seed(041824) -->
-<!-- m2 <- train(form = Sale_Price ~ Year_Built,   -->
-<!--             data = ames_train,           -->
-<!--             method = "lm",               -->
-<!--             trControl = cv_specs,        -->
-<!--             metric = "RMSE")            -->
-<!-- m2 -->
-<!-- m2$results -->
-<!-- ``` -->
-<!-- ## $k$-Fold Cross-Validation: Implementation -->
-<!-- **Ames Housing dataset** - Implement 10-fold CV with the third model. -->
-<!-- ```{r} -->
-<!-- set.seed(041824) -->
-<!-- m3 <- train(form = Sale_Price ~ Garage_Area + Year_Built,   -->
-<!--             data = ames_train, -->
-<!--             method = "lm", -->
-<!--             trControl = cv_specs, -->
-<!--             metric = "RMSE") -->
-<!-- m3 -->
-<!-- m3$results -->
-<!-- ``` -->
-<!-- ## $k$-Fold Cross-Validation: Results  -->
-<!-- **Ames Housing dataset** -->
-<!-- Compare CV results for different models. -->
-<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-<!-- # create data frame to plot results -->
-<!-- df <- data.frame(model_number = 1:3, RMSE = c(m1$results$RMSE,   -->
-<!--                                              m2$results$RMSE, -->
-<!--                                              m3$results$RMSE)) -->
-<!-- # plot results from CV -->
-<!-- ggplot(data = df, aes(x = model_number, y =  RMSE)) +    -->
-<!--   geom_point() + geom_line() -->
-<!-- ``` -->
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- # comparing 4 polynomial (regression) models with k-fold CV (response: 'mpg', predictor: 'horsepower') --> –&gt;</p>
-<!-- <!-- set.seed(041920221)   # fix the random number generator for reproducibility -->
-<p>–&gt;</p>
-<!-- <!-- # CV specifications (method, number of folds k, number of repetitions) -->
-<p>–&gt; <!-- <!-- cv_specs <- trainControl(method = "repeatedcv", number = 10, repeats = 5)  --> –&gt;</p>
-<!-- <!-- m1 <- train(mpg ~ horsepower,   # model: y = beta_0 + beta_1 x -->
-<p>–&gt; <!-- <!--             data = Auto_train, --> –&gt; <!-- <!--             method = "lm", --> –&gt; <!-- <!--             trControl = cv_specs, --> –&gt; <!-- <!--             metric = "RMSE") --> –&gt;</p>
-<!-- <!-- m1   # summary of model with LOOCV -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- m2 <- train(mpg ~ poly(horsepower,2),   # model: y = beta_0 + beta_1 x + beta_2 x^2 --> –&gt; <!-- <!--             data = Auto_train, --> –&gt; <!-- <!--             method = "lm", --> –&gt; <!-- <!--             trControl = cv_specs, --> –&gt; <!-- <!--             metric = "RMSE") --> –&gt;</p>
-<!-- <!-- m3 <- train(mpg ~ poly(horsepower, 3),   # model: y = beta_0 + beta_1 x + beta_2 x^2 + beta_3 x^3 -->
-<p>–&gt; <!-- <!--             data = Auto_train, --> –&gt; <!-- <!--             method = "lm", --> –&gt; <!-- <!--             trControl = cv_specs, --> –&gt; <!-- <!--             metric = "RMSE") --> –&gt;</p>
-<!-- <!-- m4 <- train(mpg ~ poly(horsepower, 4),   # model: y = beta_0 + beta_1 x + beta_2 x^2 + beta_3 x^3 + beta_4 x^4 -->
-<p>–&gt; <!-- <!--             data = Auto_train, --> –&gt; <!-- <!--             method = "lm", --> –&gt; <!-- <!--             trControl = cv_specs, --> –&gt; <!-- <!--             metric = "RMSE") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-<p>–&gt; <!-- <!-- df <- data.frame(poly_degree = 1:4, RMSE = c(m1$results$RMSE,   # create data frame to plot results --> –&gt; <!-- <!--                                              m2$results$RMSE, --> –&gt; <!-- <!--                                              m3$results$RMSE, --> –&gt; <!-- <!--                                              m4$results$RMSE)) --> –&gt;</p>
-<!-- <!-- ggplot(data = df, aes(x = poly_degree, y =  RMSE)) +    # plot results from LOOCV -->
-<p>–&gt; <!-- <!--   geom_point() + geom_line() --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- ## Final Model and Prediction Error Estimate -->
-<!-- **Ames Housing dataset** -->
-<!-- ```{r} -->
-<!-- # after choosing final (optimal) model, refit final model using ALL training data -->
-<!-- m3$finalModel     -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- # obtain estimate of prediction error from test data -->
-<!-- final_model_preds <- predict(m3, newdata = ames_test)   # obtain predictions on test data -->
-<!-- pred_error_est <- sqrt(mean((ames_test$Sale_Price - final_model_preds)^2))    # calculate RMSE (estimate of prediction error) from test data -->
-<!-- pred_error_est   # test set RMSE -->
-<!-- ``` -->
-<!-- <!-- ## Variable Importance -->
-<p>–&gt;</p>
-<!-- <!-- **Ames Housing dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
-<p>–&gt; <!-- <!-- # variable importance --> –&gt;</p>
-<!-- <!-- library(vip) -->
-<p>–&gt;</p>
-<!-- <!-- vip(object = m3,         # CV object  -->
-<p>–&gt; <!-- <!--     num_features = 20,   # maximum number of predictors to show importance for --> –&gt; <!-- <!--     method = "model")            # model-specific VI scores --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## $k$-Fold Cross-Validation -->
-<p>–&gt;</p>
-<!-- <!-- Let $n_i$ be the number of observations in  $i^{th}, (i=1,\ldots,k)$ fold. If $n$ is a multiple of $k$, then $n_i=\frac{n}{k}$. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/e5.3.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- If the folds are not of equal size, -->
-<p>–&gt;</p>
-<!-- <!-- $$CV_{(k)}=\displaystyle \sum_{i=1}^k \dfrac{n_i}{n} MSE_{i}$$ -->
-<p>–&gt;</p>
-<!-- <!-- A good choice is $k=5$ or $10$. LOOCV is a special case of $k$-fold CV. -->
-<p>–&gt;</p>
-<!-- <!-- ## LOOCV and $k$-Fold CV -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/5.4.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## Performance of LOOCV and $k$-Fold CV -->
-<p>–&gt;</p>
-<!-- <!-- <!-- **Figures 2.9-2.11 in Chapter 2** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/5.6.PNG") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- ## Bias-Variance Trade-off for LOOCV and $k$-fold CV -->
-<!-- * LOOCV has very less bias. Using $k=5$ or $10$ yields more bias than LOOCV. -->
-<!-- <!-- , but less than validation set approach. -->
-<p>–&gt;</p>
-<!-- * For LOOCV, the error estimates for each fold are highly (positively) correlated. $k$-fold CV error estimates are somewhat less correlated. LOOCV error estimate has higher variance than $k$-fold CV error estimate. -->
-<!-- * Typically, $k=5$ or $10$ is chosen. -->
-<!-- <!-- ## CV to Tune Hyperparameter -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r,message=FALSE} -->
-<p>–&gt; <!-- <!-- library(ISLR2)  # load library --> –&gt;</p>
-<!-- <!-- data("Auto")   # load dataset -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- We will consider `mpg` as the response and `horsepower` as the predictor.  -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- # select the variables to work with --> –&gt;</p>
-<!-- <!-- Auto <- Auto %>% select(mpg, horsepower) -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## CV to Tune Hyperparameter -->
-<p>–&gt;</p>
-<!-- <!-- **Objective**: Find the optimum choice of $K$ in the KNN approach with 5-fold CV repeated 5 times. We will use the following steps. -->
-<p>–&gt;</p>
-<!-- <!-- * Perform EDA (Exploratory Data Analysis) -->
-<p>–&gt;</p>
-<!-- <!-- * Split the data into training and test data (80-20 split). -->
-<p>–&gt;</p>
-<!-- <!-- * Specify CV specifications using **trainControl**. -->
-<p>–&gt;</p>
-<!-- <!-- * Create an object **k_grid** using the following code. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- k_grid <- expand.grid(k = seq(1, 100, by = 1))  # creates a grid of k values to be used (1 to 100 in this case) --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- * Use the **train** function to run CV. Use **method = "knn"**, **tuneGrid = k_grid**, and **metric = "RMSE"**. -->
-<p>–&gt;</p>
-<!-- <!-- * Obtain the results and plot them. What is the optimum $k$ chosen? -->
-<p>–&gt;</p>
-<!-- <!-- * Create the final model using the optimum $k$ and estimate its prediction error from the test data. -->
-<p>–&gt;</p>
-<!-- <!-- ## CV to Tune Hyperparameter: EDA {.smaller} -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- summary(Auto)   # summary of the variables --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ```{r, fig.align='center', fig.height=4, fig.width=4} -->
-<p>–&gt; <!-- <!-- library(GGally) --> –&gt; <!-- <!-- ggpairs(Auto)    # correlation plot --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## CV to Tune Hyperparameter: Split Data -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, message = FALSE} -->
-<p>–&gt; <!-- <!-- set.seed(041824)  # fix the random number generator for reproducibility --> –&gt;</p>
-<!-- <!-- library(caret)  # load library -->
-<p>–&gt;</p>
-<!-- <!-- train_index <- createDataPartition(y = Auto$mpg, p = 0.8, list = FALSE) # split available data into 80% training and 20% test datasets -->
-<p>–&gt;</p>
-<!-- <!-- Auto_train <- Auto[train_index,]   # training data -->
-<p>–&gt;</p>
-<!-- <!-- Auto_test <- Auto[-train_index,]   # test data -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## CV to Tune Hyperparameter: Perform CV -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- set.seed(041824)  # fix the random number generator for reproducibility --> –&gt;</p>
-<!-- <!-- # CV specifications -->
-<p>–&gt; <!-- <!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5) --> –&gt;</p>
-<!-- <!-- # specify grid of 'k' values to search over -->
-<p>–&gt; <!-- <!-- k_grid <- expand.grid(k = seq(1, 100, by = 1)) --> –&gt;</p>
-<!-- <!-- # train the KNN model using CV  to find optimal 'k' -->
-<p>–&gt; <!-- <!-- knn_cv <- train(form = mpg ~ horsepower, --> –&gt; <!-- <!--                  data = Auto_train, --> –&gt; <!-- <!--                  method = "knn", --> –&gt; <!-- <!--                  trControl = cv_specs, --> –&gt; <!-- <!--                  tuneGrid = k_grid, --> –&gt; <!-- <!--                  metric = "RMSE") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## CV to Tune Hyperparameter: Compare CV Results -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r, eval=FALSE} -->
-<p>–&gt; <!-- <!-- knn_cv   # CV results, shows RMSE for all K --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ```{r, fig.align='center'} -->
-<p>–&gt; <!-- <!-- ggplot(knn_cv)   # plot CV results for different 'k' --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ## CV to Tune Hyperparameter: Final Model -->
-<p>–&gt;</p>
-<!-- <!-- **Auto dataset** -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- # final model with optimal 'k' chosen from CV --> –&gt;</p>
-<!-- <!-- knn_cv$bestTune     # optimal value of K -->
-<p>–&gt;</p>
-<!-- <!-- knn_cv$finalModel   # final model -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- # obtain predictions on test data --> –&gt; <!-- <!-- final_model_preds <- predict(knn_cv, newdata = Auto_test) --> –&gt;</p>
-<!-- <!-- # estimate test set prediction error -->
-<p>–&gt; <!-- <!-- sqrt(mean((Auto_test$mpg - final_model_preds)^2))    # test set RMSE --> –&gt; <!-- <!-- ``` --> –&gt;</p>
+</section>
+<section id="loocv-vs.-k-fold-cv" class="slide level2">
+<h2>LOOCV vs.&nbsp;K-Fold CV</h2>
+<ul>
+<li>Typically we use 5-Fold or 10-Fold CV</li>
+<li><span class="math inline">\(K\)</span>-Fold is much less computationally expensive</li>
+<li><span class="math inline">\(K\)</span> actually gives better estimates of your test error… Why?</li>
+<li>Bias-Variance Trade-Off</li>
+<li>LOOCV has the lowest level of bias but highest level of variance</li>
+<li>5- and 10-Fold CV have medium levels of bias but lower variance</li>
+</ul>
+</section></section>
+<section>
+<section id="repeated-cross-validation" class="title-slide slide level1 center">
+<h1>Repeated Cross-Validation</h1>
+
+</section>
+<section id="repeated-k-fold-cross-validation-cv" class="slide level2 smaller">
+<h2>Repeated K-Fold Cross-Validation (CV)</h2>
+<div>
+<ul>
+<li class="fragment">Partition your data into <span class="math inline">\(K\)</span> randomly selected non-overlapping “folds”</li>
+<li class="fragment">Folds don’t overlap and every training observation is in one fold</li>
+<li class="fragment">Each fold contained <span class="math inline">\(1/K\)</span> of the training data</li>
+<li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:</li>
+<li class="fragment">Treat fold <span class="math inline">\(k\)</span> as the assessment set</li>
+<li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the analysis set</li>
+<li class="fragment">Fit model to analysis set (use whole modeling workflow)</li>
+<li class="fragment">Compute error metrics on assessment set</li>
+<li class="fragment">After loop, you will have <span class="math inline">\(K\)</span> copies of each error metrics</li>
+<li class="fragment">Average them together to get performance estimate</li>
+<li class="fragment">Can also look at distribution of performance metrics</li>
+<li class="fragment">Repeat this process from the beginning selected <span class="math inline">\(K\)</span> different randomly chosen folds</li>
+<li class="fragment">If we want more accurate estimate you can perform repeated CV with different randomly chosen folds</li>
+</ul>
+</div>
+</section>
+<section id="define-folds-1" class="slide level2">
+<h2>Define Folds</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span>
+<span id="cb20-2"><a></a>ames_folds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#  10-fold cross-validation repeated 10 times 
+# A tibble: 100 × 3
+   splits             id       id2   
+   &lt;list&gt;             &lt;chr&gt;    &lt;chr&gt; 
+ 1 &lt;split [1977/220]&gt; Repeat01 Fold01
+ 2 &lt;split [1977/220]&gt; Repeat01 Fold02
+ 3 &lt;split [1977/220]&gt; Repeat01 Fold03
+ 4 &lt;split [1977/220]&gt; Repeat01 Fold04
+ 5 &lt;split [1977/220]&gt; Repeat01 Fold05
+ 6 &lt;split [1977/220]&gt; Repeat01 Fold06
+ 7 &lt;split [1977/220]&gt; Repeat01 Fold07
+ 8 &lt;split [1978/219]&gt; Repeat01 Fold08
+ 9 &lt;split [1978/219]&gt; Repeat01 Fold09
+10 &lt;split [1978/219]&gt; Repeat01 Fold10
+# ℹ 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="fit-and-assess-models-1" class="slide level2">
+<h2>Fit and Assess Models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>lm_results <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
+<span id="cb22-2"><a></a>knn5_results <span class="ot">&lt;-</span> knn5_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
+<span id="cb22-3"><a></a>knn10_results <span class="ot">&lt;-</span> knn10_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="collecting-metrics-1" class="slide level2 smaller">
+<h2>Collecting Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">collect_metrics</span>(lm_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.333273e+04</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">458.7475127</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">8.268154e-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.0046457</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">collect_metrics</span>(knn5_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">4.040839e+04</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">432.9399463</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.465267e-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.0052311</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">collect_metrics</span>(knn10_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.845372e+04</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">399.7092809</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.755718e-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.0041718</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="questions-1" class="slide level2">
+<h2>Questions</h2>
+<ol type="1">
+<li>How many times did we train a model?</li>
+<li>Which model formulation was the best?</li>
+<li>How can we make sure our analysis is reproducible? I.e. How can we make sure we get the same results from CV every time we repeat our analysis?</li>
+</ol>
+</section>
+<section id="final-model-1" class="slide level2">
+<h2>Final Model</h2>
+<ul>
+<li>After choosing best model/workflow, fit on full training set and assess on test set</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>final_fit <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
+<span id="cb26-2"><a></a>final_fit_perf <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ames_test) <span class="sc">|&gt;</span> </span>
+<span id="cb26-4"><a></a>  <span class="fu">bind_cols</span>(ames_test) <span class="sc">|&gt;</span> </span>
+<span id="cb26-5"><a></a>  <span class="fu">ames_metrics</span>(<span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> .pred)</span>
+<span id="cb26-6"><a></a></span>
+<span id="cb26-7"><a></a>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.980410e+04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.609099e-01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="extracting-cv-metrics" class="slide level2">
+<h2>Extracting CV Metrics</h2>
+<ul>
+<li><code>collect_metrics</code> averages over all 100 models</li>
+<li>set <code>summarize = FALSE</code> to get all the individual errors</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">collect_metrics</span>(lm_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">id</th>
+<th style="text-align: left;">id2</th>
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Repeat01</td>
+<td style="text-align: left;">Fold01</td>
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.940956e+04</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Repeat01</td>
+<td style="text-align: left;">Fold01</td>
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.638376e-01</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Repeat01</td>
+<td style="text-align: left;">Fold02</td>
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.241589e+04</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Repeat01</td>
+<td style="text-align: left;">Fold02</td>
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">8.336867e-01</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Repeat01</td>
+<td style="text-align: left;">Fold03</td>
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.865891e+04</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Repeat01</td>
+<td style="text-align: left;">Fold03</td>
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.361886e-01</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="combining-cv-metrics" class="slide level2">
+<h2>Combining CV Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>all_metrics <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="fu">collect_metrics</span>(lm_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">method =</span> <span class="st">"knn5"</span>, <span class="fu">collect_metrics</span>(knn5_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">method =</span> <span class="st">"knn10"</span>, <span class="fu">collect_metrics</span>(knn10_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-cv-metrics" class="slide level2">
+<h2>Visualizing CV Metrics</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>all_metrics <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> .estimate)) <span class="sc">+</span></span>
+<span id="cb29-4"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb29-5"><a></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.estimate), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="11-cross-validation_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>all_metrics <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> .estimate)) <span class="sc">+</span></span>
+<span id="cb30-4"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb30-5"><a></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.estimate), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="11-cross-validation_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
