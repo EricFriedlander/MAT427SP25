@@ -57,6 +57,7 @@ set.seed(427)
 ## Resampling
 
 ![Figure 10.1 from TMWR](images/09/resampling.svg)
+
 ## Cross-Validation Terminology
 
 -   Divide training set into two sets
@@ -67,13 +68,13 @@ set.seed(427)
 
 :::{.incremental}
 -   Partition your data into $K$ randomly selected non-overlapping "folds"
-  +   Folds don't overlap and every training observation is in one fold
-  +   Each fold contained $1/K$ of the training data
+    +   Folds don't overlap and every training observation is in one fold
+    +   Each fold contained $1/K$ of the training data
 -   Looping through the folds $k = 1, \ldots, K$:
-  +   Treat fold $k$ as the assessment set
-  +   Treat all folds except for $k$ as the analysis set
-  +   Fit model to analysis set (use whole modeling workflow)
-  +   Compute error metrics on assessment set
+    +   Treat fold $k$ as the assessment set
+    +   Treat all folds except for $k$ as the analysis set
+    +   Fit model to analysis set (use whole modeling workflow)
+    +   Compute error metrics on assessment set
 -   After loop, you will have $K$ copies of each error metrics
 -   Average them together to get performance estimate
 -   Can also look at distribution of performance metrics
@@ -233,109 +234,3 @@ Suppose you implement LOOCV on a dataset with $n=100$ observations.
 -   LOOCV has the lowest level of bias but highest level of variance
 -   5- and 10-Fold CV have medium levels of bias but lower variance
 
-# Repeated Cross-Validation
-
-## Repeated K-Fold Cross-Validation (CV) {.smaller}
-
-:::{.incremental}
--   Partition your data into $K$ randomly selected non-overlapping "folds"
-  +   Folds don't overlap and every training observation is in one fold
-  +   Each fold contained $1/K$ of the training data
--   Looping through the folds $k = 1, \ldots, K$:
-  +   Treat fold $k$ as the assessment set
-  +   Treat all folds except for $k$ as the analysis set
-  +   Fit model to analysis set (use whole modeling workflow)
-  +   Compute error metrics on assessment set
--   After loop, you will have $K$ copies of each error metrics
--   Average them together to get performance estimate
--   Can also look at distribution of performance metrics
--   Repeat this process from the beginning selected $K$ different randomly chosen folds
--   If we want more accurate estimate you can perform repeated CV with different randomly chosen folds
-
-:::
-
-
-## Define Folds
-
-```{r}
-ames_folds <- vfold_cv(ames_train, v = 10, repeats = 10)
-ames_folds
-```
-
-## Fit and Assess Models
-
-```{r}
-lm_results <- lm_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
-knn5_results <- knn5_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
-knn10_results <- knn10_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
-```
-
-
-## Collecting Metrics {.smaller}
-
-```{r}
-collect_metrics(lm_results) |> kable()
-collect_metrics(knn5_results) |> kable()
-collect_metrics(knn10_results) |> kable()
-```
-
-## Questions
-
-1. How many times did we train a model?
-2. Which model formulation was the best?
-3. How can we make sure our analysis is reproducible? I.e. How can we make sure we get the same results from CV every time we repeat our analysis?
-
-## Final Model
-
-- After choosing best model/workflow, fit on full training set and assess on test set
-
-```{r}
-final_fit <- lm_wf |> fit(data = ames_train)
-final_fit_perf <- final_fit |> 
-  predict(new_data = ames_test) |> 
-  bind_cols(ames_test) |> 
-  ames_metrics(truth = Sale_Price, estimate = .pred)
-
-final_fit_perf |> kable()
-```
-
-## Extracting CV Metrics
-
--   `collect_metrics` averages over all 100 models
--   set `summarize = FALSE` to get all the individual errors
-
-```{r}
-collect_metrics(lm_results, summarize = FALSE) |> head() |> kable()
-```
-
-## Combining CV Metrics
-
-```{r}
-all_metrics <- bind_cols(method = "lm", collect_metrics(lm_results, summarize = FALSE)) |>
-  bind_rows(bind_cols(method = "knn5", collect_metrics(knn5_results, summarize = FALSE))) |>
-  bind_rows(bind_cols(method = "knn10", collect_metrics(knn10_results, summarize = FALSE)))
-```
-
-## Visualizing CV Metrics
-
-:::: columns
-::: column
-```{r}
-all_metrics |> 
-  filter(.metric == "rmse") |> 
-  ggplot(aes(x = method, y = .estimate)) +
-  geom_boxplot() +
-  geom_hline(yintercept=final_fit_perf |> filter(.metric == "rmse") |> pull(.estimate), color = "red")
-```
-:::
-
-::: column
-```{r}
-all_metrics |> 
-  filter(.metric == "rsq") |> 
-  ggplot(aes(x = method, y = .estimate)) +
-  geom_boxplot() +
-  geom_hline(yintercept=final_fit_perf |> filter(.metric == "rsq") |> pull(.estimate), color = "red")
-```
-:::
-::::

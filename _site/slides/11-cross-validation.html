@@ -447,7 +447,10 @@ Eric Friedlander
 </section>
 <section id="resampling" class="slide level2">
 <h2>Resampling</h2>
-<p><img data-src="images/09/resampling.svg" alt="Figure 10.1 from TMWR"> ## Cross-Validation Terminology</p>
+
+<img data-src="images/09/resampling.svg" class="r-stretch quarto-figure-center"><p class="caption">Figure 10.1 from TMWR</p></section>
+<section id="cross-validation-terminology" class="slide level2">
+<h2>Cross-Validation Terminology</h2>
 <ul>
 <li>Divide training set into two sets
 <ul>
@@ -460,14 +463,18 @@ Eric Friedlander
 <h2>K-Fold Cross-Validation (CV)</h2>
 <div>
 <ul>
-<li class="fragment">Partition your data into <span class="math inline">\(K\)</span> randomly selected non-overlapping “folds”</li>
+<li class="fragment">Partition your data into <span class="math inline">\(K\)</span> randomly selected non-overlapping “folds”
+<ul>
 <li class="fragment">Folds don’t overlap and every training observation is in one fold</li>
 <li class="fragment">Each fold contained <span class="math inline">\(1/K\)</span> of the training data</li>
-<li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:</li>
+</ul></li>
+<li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:
+<ul>
 <li class="fragment">Treat fold <span class="math inline">\(k\)</span> as the assessment set</li>
 <li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the analysis set</li>
 <li class="fragment">Fit model to analysis set (use whole modeling workflow)</li>
 <li class="fragment">Compute error metrics on assessment set</li>
+</ul></li>
 <li class="fragment">After loop, you will have <span class="math inline">\(K\)</span> copies of each error metrics</li>
 <li class="fragment">Average them together to get performance estimate</li>
 <li class="fragment">Can also look at distribution of performance metrics</li>
@@ -869,362 +876,6 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <li>LOOCV has the lowest level of bias but highest level of variance</li>
 <li>5- and 10-Fold CV have medium levels of bias but lower variance</li>
 </ul>
-</section></section>
-<section>
-<section id="repeated-cross-validation" class="title-slide slide level1 center">
-<h1>Repeated Cross-Validation</h1>
-
-</section>
-<section id="repeated-k-fold-cross-validation-cv" class="slide level2 smaller">
-<h2>Repeated K-Fold Cross-Validation (CV)</h2>
-<div>
-<ul>
-<li class="fragment">Partition your data into <span class="math inline">\(K\)</span> randomly selected non-overlapping “folds”</li>
-<li class="fragment">Folds don’t overlap and every training observation is in one fold</li>
-<li class="fragment">Each fold contained <span class="math inline">\(1/K\)</span> of the training data</li>
-<li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:</li>
-<li class="fragment">Treat fold <span class="math inline">\(k\)</span> as the assessment set</li>
-<li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the analysis set</li>
-<li class="fragment">Fit model to analysis set (use whole modeling workflow)</li>
-<li class="fragment">Compute error metrics on assessment set</li>
-<li class="fragment">After loop, you will have <span class="math inline">\(K\)</span> copies of each error metrics</li>
-<li class="fragment">Average them together to get performance estimate</li>
-<li class="fragment">Can also look at distribution of performance metrics</li>
-<li class="fragment">Repeat this process from the beginning selected <span class="math inline">\(K\)</span> different randomly chosen folds</li>
-<li class="fragment">If we want more accurate estimate you can perform repeated CV with different randomly chosen folds</li>
-</ul>
-</div>
-</section>
-<section id="define-folds-1" class="slide level2">
-<h2>Define Folds</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span>
-<span id="cb20-2"><a></a>ames_folds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#  10-fold cross-validation repeated 10 times 
-# A tibble: 100 × 3
-   splits             id       id2   
-   &lt;list&gt;             &lt;chr&gt;    &lt;chr&gt; 
- 1 &lt;split [1977/220]&gt; Repeat01 Fold01
- 2 &lt;split [1977/220]&gt; Repeat01 Fold02
- 3 &lt;split [1977/220]&gt; Repeat01 Fold03
- 4 &lt;split [1977/220]&gt; Repeat01 Fold04
- 5 &lt;split [1977/220]&gt; Repeat01 Fold05
- 6 &lt;split [1977/220]&gt; Repeat01 Fold06
- 7 &lt;split [1977/220]&gt; Repeat01 Fold07
- 8 &lt;split [1978/219]&gt; Repeat01 Fold08
- 9 &lt;split [1978/219]&gt; Repeat01 Fold09
-10 &lt;split [1978/219]&gt; Repeat01 Fold10
-# ℹ 90 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="fit-and-assess-models-1" class="slide level2">
-<h2>Fit and Assess Models</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>lm_results <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
-<span id="cb22-2"><a></a>knn5_results <span class="ot">&lt;-</span> knn5_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
-<span id="cb22-3"><a></a>knn10_results <span class="ot">&lt;-</span> knn10_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="collecting-metrics-1" class="slide level2 smaller">
-<h2>Collecting Metrics</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">collect_metrics</span>(lm_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 18%">
-<col style="width: 5%">
-<col style="width: 17%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">std_err</th>
-<th style="text-align: left;">.config</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">3.333273e+04</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">458.7475127</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">8.268154e-01</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">0.0046457</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">collect_metrics</span>(knn5_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 18%">
-<col style="width: 5%">
-<col style="width: 17%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">std_err</th>
-<th style="text-align: left;">.config</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">4.040839e+04</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">432.9399463</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">7.465267e-01</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">0.0052311</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">collect_metrics</span>(knn10_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 18%">
-<col style="width: 5%">
-<col style="width: 17%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">std_err</th>
-<th style="text-align: left;">.config</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">3.845372e+04</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">399.7092809</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">7.755718e-01</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">0.0041718</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="questions-1" class="slide level2">
-<h2>Questions</h2>
-<ol type="1">
-<li>How many times did we train a model?</li>
-<li>Which model formulation was the best?</li>
-<li>How can we make sure our analysis is reproducible? I.e. How can we make sure we get the same results from CV every time we repeat our analysis?</li>
-</ol>
-</section>
-<section id="final-model-1" class="slide level2">
-<h2>Final Model</h2>
-<ul>
-<li>After choosing best model/workflow, fit on full training set and assess on test set</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>final_fit <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
-<span id="cb26-2"><a></a>final_fit_perf <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> </span>
-<span id="cb26-3"><a></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ames_test) <span class="sc">|&gt;</span> </span>
-<span id="cb26-4"><a></a>  <span class="fu">bind_cols</span>(ames_test) <span class="sc">|&gt;</span> </span>
-<span id="cb26-5"><a></a>  <span class="fu">ames_metrics</span>(<span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> .pred)</span>
-<span id="cb26-6"><a></a></span>
-<span id="cb26-7"><a></a>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">3.980410e+04</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">7.609099e-01</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="extracting-cv-metrics" class="slide level2">
-<h2>Extracting CV Metrics</h2>
-<ul>
-<li><code>collect_metrics</code> averages over all 100 models</li>
-<li>set <code>summarize = FALSE</code> to get all the individual errors</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">collect_metrics</span>(lm_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 10%">
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 18%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">id</th>
-<th style="text-align: left;">id2</th>
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-<th style="text-align: left;">.config</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Repeat01</td>
-<td style="text-align: left;">Fold01</td>
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">3.940956e+04</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Repeat01</td>
-<td style="text-align: left;">Fold01</td>
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">7.638376e-01</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Repeat01</td>
-<td style="text-align: left;">Fold02</td>
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">3.241589e+04</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Repeat01</td>
-<td style="text-align: left;">Fold02</td>
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">8.336867e-01</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Repeat01</td>
-<td style="text-align: left;">Fold03</td>
-<td style="text-align: left;">rmse</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">3.865891e+04</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Repeat01</td>
-<td style="text-align: left;">Fold03</td>
-<td style="text-align: left;">rsq</td>
-<td style="text-align: left;">standard</td>
-<td style="text-align: right;">7.361886e-01</td>
-<td style="text-align: left;">Preprocessor1_Model1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="combining-cv-metrics" class="slide level2">
-<h2>Combining CV Metrics</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>all_metrics <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="fu">collect_metrics</span>(lm_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">method =</span> <span class="st">"knn5"</span>, <span class="fu">collect_metrics</span>(knn5_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">method =</span> <span class="st">"knn10"</span>, <span class="fu">collect_metrics</span>(knn10_results, <span class="at">summarize =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="visualizing-cv-metrics" class="slide level2">
-<h2>Visualizing CV Metrics</h2>
-<div class="columns">
-<div class="column">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>all_metrics <span class="sc">|&gt;</span> </span>
-<span id="cb29-2"><a></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> .estimate)) <span class="sc">+</span></span>
-<span id="cb29-4"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb29-5"><a></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.estimate), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="11-cross-validation_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>all_metrics <span class="sc">|&gt;</span> </span>
-<span id="cb30-2"><a></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb30-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> .estimate)) <span class="sc">+</span></span>
-<span id="cb30-4"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb30-5"><a></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.estimate), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="11-cross-validation_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
@@ -1446,42 +1097,80 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {

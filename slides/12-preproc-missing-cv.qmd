@@ -35,10 +35,178 @@ library(AmesHousing)
 
 tidymodels_prefer()
 
-ames <- make_ames()
-
 set.seed(427)
 ```
+
+# Repeated Cross-Validation
+
+## Repeated K-Fold Cross-Validation (CV) {.smaller}
+
+:::{.incremental}
+-   Partition your data into $K$ randomly selected non-overlapping "folds"
+    +   Folds don't overlap and every training observation is in one fold
+    +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+    +   Treat fold $k$ as the assessment set
+    +   Treat all folds except for $k$ as the analysis set
+    +   Fit model to analysis set (use whole modeling workflow)
+    +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
+-   Repeat this process from the beginning selected $K$ different randomly chosen folds
+-   If we want more accurate estimate you can perform repeated CV with different randomly chosen folds
+
+:::
+
+# CV Workflow in R
+
+## Data: Ames Housing Prices {.smaller}
+
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is copies from the `AmesHousing` package but does not include a few quality columns that appear to be outcomes rather than predictors.
+
+Goal: Predict `Sale_Price`.
+
+```{r}
+ames |> glimpse()
+```
+
+## Initial Data Split
+
+```{r}
+set.seed(427)
+
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
+
+## Define Folds
+
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10, repeats = 10)
+ames_folds
+```
+
+## Define Model(s)
+
+```{r}
+lm_model <- linear_reg() |>
+  set_engine('lm')
+
+knn5_model <- nearest_neighbor(neighbors = 5) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+
+knn10_model <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+```
+
+## Define Preprocessing: Linear regression
+
+```{r}
+lm_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_dummy(all_nominal_predictors()) |> # Convert categorical data into dummy variables
+  step_zv(all_predictors()) |> # remove zero-variance predictors (i.e. predictors with one value)
+  step_corr(all_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_predictors()) # remove variables that have exact linear combinations
+```
+
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> # only uses ames_train for data types
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |> # Convert categorical data into dummy variables
+  step_zv(all_predictors()) |> # remove zero-variance predictors (i.e. predictors with one value)
+  step_normalize(all_predictors())
+```
+
+## Define Workflows
+
+```{r}
+lm_wf <- workflow() |> add_model(lm_model) |> add_recipe(lm_preproc)
+knn5_wf <- workflow() |> add_model(knn5_model) |> add_recipe(knn_preproc)
+knn10_wf <- workflow() |> add_model(knn10_model) |> add_recipe(knn_preproc)
+```
+
+## Define Metrics
+
+```{r}
+ames_metrics <- metric_set(rmse, rsq)
+```
+
+## Fit and Assess Models
+
+```{r}
+lm_results <- lm_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn5_results <- knn5_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn10_results <- knn10_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+```
+
+
+## Collecting Metrics {.smaller}
+
+```{r}
+collect_metrics(lm_results) |> kable()
+collect_metrics(knn5_results) |> kable()
+collect_metrics(knn10_results) |> kable()
+```
+
+## Final Model
+
+- After choosing best model/workflow, fit on full training set and assess on test set
+
+```{r}
+final_fit <- lm_wf |> fit(data = ames_train)
+final_fit_perf <- final_fit |> 
+  predict(new_data = ames_test) |> 
+  bind_cols(ames_test) |> 
+  ames_metrics(truth = Sale_Price, estimate = .pred)
+
+final_fit_perf |> kable()
+```
+
+## Extracting CV Metrics
+
+-   `collect_metrics` averages over all 100 models
+-   set `summarize = FALSE` to get all the individual errors
+
+```{r}
+collect_metrics(lm_results, summarize = FALSE) |> head() |> kable()
+```
+
+## Combining CV Metrics
+
+```{r}
+all_metrics <- bind_cols(method = "lm", collect_metrics(lm_results, summarize = FALSE)) |>
+  bind_rows(bind_cols(method = "knn5", collect_metrics(knn5_results, summarize = FALSE))) |>
+  bind_rows(bind_cols(method = "knn10", collect_metrics(knn10_results, summarize = FALSE)))
+```
+
+## Visualizing CV Metrics
+
+:::: columns
+::: column
+```{r}
+all_metrics |> 
+  filter(.metric == "rmse") |> 
+  ggplot(aes(x = method, y = .estimate)) +
+  geom_boxplot() +
+  geom_hline(yintercept=final_fit_perf |> filter(.metric == "rmse") |> pull(.estimate), color = "red")
+```
+:::
+
+::: column
+```{r}
+all_metrics |> 
+  filter(.metric == "rsq") |> 
+  ggplot(aes(x = method, y = .estimate)) +
+  geom_boxplot() +
+  geom_hline(yintercept=final_fit_perf |> filter(.metric == "rsq") |> pull(.estimate), color = "red")
+```
+:::
+::::
 
 ```{r}
 #| echo: FALSE
@@ -50,15 +218,24 @@ ames <- ames |>
 
 # Pre-processing
 
-## Data: Ames Housing Prices {.smaller}
 
-A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is the original from the `AmesHousing` package.
+## Data: Different Ames Housing Prices {.smaller}
+
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is the original (kind of) from the `AmesHousing` package.
 
 Goal: Predict `Sale_Price`.
 
 ```{r}
+ames <- make_ames()
 ames |> glimpse()
 ```
+
+```{r}
+#| echo: FALSE
+ames <- make_ames() |> 
+  mutate(Overall_Cond = factor(Overall_Cond, levels = sample(levels(Overall_Cond))))
+```
+
 ## Today
 
 Well cover some common pre-processing tasks:
@@ -75,12 +252,12 @@ Well cover some common pre-processing tasks:
 - Before you split your data: make sure data is in correct format
 - This may mean different things for different data sets
 - Common examples:
-  + Fixing names of columns
-  + Ensure all variable types are correct
-  + Ensure all factor levels are correct and in order (if applicable)
-  + Remove any variables that are not important to your analysis
-  + Ensure missing values are coded as such (i.e. as `NA` instead of 0 or -1 or "missing")
-  + Filling in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
+    + Fixing names of columns
+    + Ensure all variable types are correct
+    + Ensure all factor levels are correct and in order (if applicable)
+    + Remove any variables that are not important (or harmful) to your analysis
+    + Ensure missing values are coded as such (i.e. as `NA` instead of 0 or -1 or "missing")
+    + Filling in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
 
 ## Example: Factor Levels in Wrong Order
 
@@ -103,8 +280,6 @@ ames |> pull(Overall_Cond) |> levels()
 ## Initial Data Split
 
 ```{r}
-set.seed(427)
-
 data_split <- initial_split(ames, strata = "Sale_Price")
 ames_train <- training(data_split)
 ames_test  <- testing(data_split)
@@ -120,6 +295,53 @@ value is large (say ≥ 20%).
 
 ```{r}
 library(caret)
-
 nearZeroVar(ames_train, saveMetrics = TRUE) |> kable()
 ```
+
+## Missing Data
+
+-   Many times, you can't just drop missing data
+-   Even if you can, dropping missing values can generate *biased* data/models
+-   Sometimes missing data gives you more information
+-   Types of missing data:
+    +   Missing completely at random (MCAR): there is no pattern to your missing values
+    +   Missing at random (MAR): missing values are dependent on other values in the data set
+    +   Missing not at random (MNAR): missing values are dependent on the value that is missing
+-   Structured missingness (SM):  when the missingness of certain values are depends on one another, regardless of whether the missing values are MCAR, MAR, or MNAR
+
+## MCAR: Examples
+
+-   Sensor data: occasionally sensors break so you're missing data randomly
+-   Survey data: sometimes people just randomly skip questions
+-   Survey data: customers are randomly given 5 questions from a bank of 100 questions
+
+## MAR: Examples
+
+-   Men are less likely to respond to surveys about depression
+-   Medical study: patients who miss follow-up appointments are more likely to be young
+-   Survey responses: ESL respondents may be more likely to skip certain questions that are difficult to interpret (only MAR if you know they are ESL)
+-   Measure of student performance: students who score lower are more likely to skip questions
+
+## MNAR: Examples
+
+-   Survey on income: respondent may be less likely to report their income if they are poor
+-   Survey about political beliefs: respondent may be more likely to skip questions when their answer is perceived as undesirable
+-   Customer satisfaction: only customers who feel strongly respond
+-   Medical study: patients refuse to report unhealthy habits
+
+## Structurally Missing: Examples
+
+-   Health survey: all questions related to pregnancy are left blank by males
+-   Bank data set: combination of home, auto, and credit cards... not all customer have all three so have missing data in certain portions
+-   Survey: many respondents by stop the survey early so all questions after a certain point are missing
+-   Netflix: customers may only watch similar movies and TV shows
+
+## Remedies for Missing Data
+
+-   Lot of complicated ways that you can read about
+-   Can drop column of too much of the data is missing
+-   Imputing:
+    +  `step_impute_median`: used for numeric (especially discrete) variables
+    +  `step_impute_mean`: used for numeric variables
+    +  `step_impute_knn`: used for both numeric and categorical variables (computationally expensive)
+    +  `step_impute_mode`: used for nominal (having no order) categorical variable
