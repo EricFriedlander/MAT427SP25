@@ -412,7 +412,7 @@ Eric Friedlander
 <span id="cb1-3"><a></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-4"><a></a><span class="fu">library</span>(janitor) <span class="co"># for contingency tables</span></span>
 <span id="cb1-5"><a></a><span class="fu">library</span>(ISLR2)</span>
-<span id="cb1-6"><a></a><span class="fu">library</span>(AmesHousing)</span>
+<span id="cb1-6"><a></a><span class="fu">library</span>(readODS)</span>
 <span id="cb1-7"><a></a></span>
 <span id="cb1-8"><a></a><span class="fu">tidymodels_prefer</span>()</span>
 <span id="cb1-9"><a></a></span>
@@ -927,95 +927,33 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 </section>
 <section id="data-different-ames-housing-prices" class="slide level2 smaller">
 <h2>Data: Different Ames Housing Prices</h2>
-<p>A data set from <a href="https://jse.amstat.org/v19n3/decock.pdf">De Cock (2011)</a> has 82 fields were recorded for 2,930 properties in Ames IA. This version is the original (kind of) from the <code>AmesHousing</code> package.</p>
 <p>Goal: Predict <code>Sale_Price</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>ames <span class="ot">&lt;-</span> <span class="fu">make_ames</span>()</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>ames <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"../data/AmesHousing.rds"</span>)</span>
 <span id="cb21-2"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 2,930
-Columns: 81
-$ MS_SubClass        &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_1946…
-$ MS_Zoning          &lt;fct&gt; Residential_Low_Density, Residential_High_Density, …
-$ Lot_Frontage       &lt;dbl&gt; 141, 80, 81, 93, 74, 78, 41, 43, 39, 60, 75, 0, 63,…
-$ Lot_Area           &lt;int&gt; 31770, 11622, 14267, 11160, 13830, 9978, 4920, 5005…
-$ Street             &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pav…
-$ Alley              &lt;fct&gt; No_Alley_Access, No_Alley_Access, No_Alley_Access, …
-$ Lot_Shape          &lt;fct&gt; Slightly_Irregular, Regular, Slightly_Irregular, Re…
-$ Land_Contour       &lt;fct&gt; Lvl, Lvl, Lvl, Lvl, Lvl, Lvl, Lvl, HLS, Lvl, Lvl, L…
-$ Utilities          &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, All…
-$ Lot_Config         &lt;fct&gt; Corner, Inside, Corner, Corner, Inside, Inside, Ins…
-$ Land_Slope         &lt;fct&gt; Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, Gtl, G…
-$ Neighborhood       &lt;fct&gt; North_Ames, North_Ames, North_Ames, North_Ames, Gil…
-$ Condition_1        &lt;fct&gt; Norm, Feedr, Norm, Norm, Norm, Norm, Norm, Norm, No…
-$ Condition_2        &lt;fct&gt; Norm, Norm, Norm, Norm, Norm, Norm, Norm, Norm, Nor…
-$ Bldg_Type          &lt;fct&gt; OneFam, OneFam, OneFam, OneFam, OneFam, OneFam, Twn…
-$ House_Style        &lt;fct&gt; One_Story, One_Story, One_Story, One_Story, Two_Sto…
-$ Overall_Qual       &lt;fct&gt; Above_Average, Average, Above_Average, Good, Averag…
-$ Overall_Cond       &lt;fct&gt; Average, Above_Average, Above_Average, Average, Ave…
-$ Year_Built         &lt;int&gt; 1960, 1961, 1958, 1968, 1997, 1998, 2001, 1992, 199…
-$ Year_Remod_Add     &lt;int&gt; 1960, 1961, 1958, 1968, 1998, 1998, 2001, 1992, 199…
-$ Roof_Style         &lt;fct&gt; Hip, Gable, Hip, Hip, Gable, Gable, Gable, Gable, G…
-$ Roof_Matl          &lt;fct&gt; CompShg, CompShg, CompShg, CompShg, CompShg, CompSh…
-$ Exterior_1st       &lt;fct&gt; BrkFace, VinylSd, Wd Sdng, BrkFace, VinylSd, VinylS…
-$ Exterior_2nd       &lt;fct&gt; Plywood, VinylSd, Wd Sdng, BrkFace, VinylSd, VinylS…
-$ Mas_Vnr_Type       &lt;fct&gt; Stone, None, BrkFace, None, None, BrkFace, None, No…
-$ Mas_Vnr_Area       &lt;dbl&gt; 112, 0, 108, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6…
-$ Exter_Qual         &lt;fct&gt; Typical, Typical, Typical, Good, Typical, Typical, …
-$ Exter_Cond         &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…
-$ Foundation         &lt;fct&gt; CBlock, CBlock, CBlock, CBlock, PConc, PConc, PConc…
-$ Bsmt_Qual          &lt;fct&gt; Typical, Typical, Typical, Typical, Good, Typical, …
-$ Bsmt_Cond          &lt;fct&gt; Good, Typical, Typical, Typical, Typical, Typical, …
-$ Bsmt_Exposure      &lt;fct&gt; Gd, No, No, No, No, No, Mn, No, No, No, No, No, No,…
-$ BsmtFin_Type_1     &lt;fct&gt; BLQ, Rec, ALQ, ALQ, GLQ, GLQ, GLQ, ALQ, GLQ, Unf, U…
-$ BsmtFin_SF_1       &lt;dbl&gt; 2, 6, 1, 1, 3, 3, 3, 1, 3, 7, 7, 1, 7, 3, 3, 1, 3, …
-$ BsmtFin_Type_2     &lt;fct&gt; Unf, LwQ, Unf, Unf, Unf, Unf, Unf, Unf, Unf, Unf, U…
-$ BsmtFin_SF_2       &lt;dbl&gt; 0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1120, 0…
-$ Bsmt_Unf_SF        &lt;dbl&gt; 441, 270, 406, 1045, 137, 324, 722, 1017, 415, 994,…
-$ Total_Bsmt_SF      &lt;dbl&gt; 1080, 882, 1329, 2110, 928, 926, 1338, 1280, 1595, …
-$ Heating            &lt;fct&gt; GasA, GasA, GasA, GasA, GasA, GasA, GasA, GasA, Gas…
-$ Heating_QC         &lt;fct&gt; Fair, Typical, Typical, Excellent, Good, Excellent,…
-$ Central_Air        &lt;fct&gt; Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, …
-$ Electrical         &lt;fct&gt; SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SBrkr, SB…
-$ First_Flr_SF       &lt;int&gt; 1656, 896, 1329, 2110, 928, 926, 1338, 1280, 1616, …
-$ Second_Flr_SF      &lt;int&gt; 0, 0, 0, 0, 701, 678, 0, 0, 0, 776, 892, 0, 676, 0,…
-$ Low_Qual_Fin_SF    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ Gr_Liv_Area        &lt;int&gt; 1656, 896, 1329, 2110, 1629, 1604, 1338, 1280, 1616…
-$ Bsmt_Full_Bath     &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, …
-$ Bsmt_Half_Bath     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ Full_Bath          &lt;int&gt; 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 3, 2, …
-$ Half_Bath          &lt;int&gt; 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, …
-$ Bedroom_AbvGr      &lt;int&gt; 3, 2, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 2, 1, 4, 4, …
-$ Kitchen_AbvGr      &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ Kitchen_Qual       &lt;fct&gt; Typical, Typical, Good, Excellent, Typical, Good, G…
-$ TotRms_AbvGrd      &lt;int&gt; 7, 5, 6, 8, 6, 7, 6, 5, 5, 7, 7, 6, 7, 5, 4, 12, 8,…
-$ Functional         &lt;fct&gt; Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, Typ, T…
-$ Fireplaces         &lt;int&gt; 2, 0, 0, 2, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, …
-$ Fireplace_Qu       &lt;fct&gt; Good, No_Fireplace, No_Fireplace, Typical, Typical,…
-$ Garage_Type        &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Att…
-$ Garage_Finish      &lt;fct&gt; Fin, Unf, Unf, Fin, Fin, Fin, Fin, RFn, RFn, Fin, F…
-$ Garage_Cars        &lt;dbl&gt; 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, …
-$ Garage_Area        &lt;dbl&gt; 528, 730, 312, 522, 482, 470, 582, 506, 608, 442, 4…
-$ Garage_Qual        &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…
-$ Garage_Cond        &lt;fct&gt; Typical, Typical, Typical, Typical, Typical, Typica…
-$ Paved_Drive        &lt;fct&gt; Partial_Pavement, Paved, Paved, Paved, Paved, Paved…
-$ Wood_Deck_SF       &lt;int&gt; 210, 140, 393, 0, 212, 360, 0, 0, 237, 140, 157, 48…
-$ Open_Porch_SF      &lt;int&gt; 62, 0, 36, 0, 34, 36, 0, 82, 152, 60, 84, 21, 75, 0…
-$ Enclosed_Porch     &lt;int&gt; 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ Three_season_porch &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ Screen_Porch       &lt;int&gt; 0, 120, 0, 0, 0, 0, 0, 144, 0, 0, 0, 0, 0, 0, 140, …
-$ Pool_Area          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ Pool_QC            &lt;fct&gt; No_Pool, No_Pool, No_Pool, No_Pool, No_Pool, No_Poo…
-$ Fence              &lt;fct&gt; No_Fence, Minimum_Privacy, No_Fence, No_Fence, Mini…
-$ Misc_Feature       &lt;fct&gt; None, None, Gar2, None, None, None, None, None, Non…
-$ Misc_Val           &lt;int&gt; 0, 0, 12500, 0, 0, 0, 0, 0, 0, 0, 0, 500, 0, 0, 0, …
-$ Mo_Sold            &lt;int&gt; 5, 6, 6, 4, 3, 6, 4, 1, 3, 6, 4, 3, 5, 2, 6, 6, 6, …
-$ Year_Sold          &lt;int&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 201…
-$ Sale_Type          &lt;fct&gt; WD , WD , WD , WD , WD , WD , WD , WD , WD , WD , W…
-$ Sale_Condition     &lt;fct&gt; Normal, Normal, Normal, Normal, Normal, Normal, Nor…
-$ Sale_Price         &lt;int&gt; 215000, 105000, 172000, 244000, 189900, 195500, 213…
-$ Longitude          &lt;dbl&gt; -93.61975, -93.61976, -93.61939, -93.61732, -93.638…
-$ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.06090, 4…</code></pre>
+<pre><code>Rows: 881
+Columns: 20
+$ Sale_Price    &lt;int&gt; 244000, 213500, 185000, 394432, 190000, 149000, 149900, …
+$ Gr_Liv_Area   &lt;int&gt; 2110, 1338, 1187, 1856, 1844, NA, NA, 1069, 1940, 1544, …
+$ Garage_Type   &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, …
+$ Garage_Cars   &lt;dbl&gt; 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 2,…
+$ Garage_Area   &lt;dbl&gt; 522, 582, 420, 834, 546, 480, 500, 440, 606, 868, 532, 7…
+$ Street        &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pa…
+$ Utilities     &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, …
+$ Pool_Area     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ Neighborhood  &lt;fct&gt; North_Ames, Stone_Brook, Gilbert, Stone_Brook, Northwest…
+$ Screen_Porch  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 165, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Overall_Qual  &lt;fct&gt; Good, Very_Good, Above_Average, Excellent, Above_Average…
+$ Lot_Area      &lt;int&gt; 11160, 4920, 7980, 11394, 11751, 11241, 12537, 4043, 101…
+$ Lot_Frontage  &lt;dbl&gt; 93, 41, 0, 88, 105, 0, 0, 53, 83, 94, 95, 90, 105, 61, 6…
+$ MS_SubClass   &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_PUD_1946_…
+$ Misc_Val      &lt;int&gt; 0, 0, 500, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Open_Porch_SF &lt;int&gt; 0, 0, 21, 0, 122, 0, 0, 55, 95, 35, 70, 74, 130, 82, 48,…
+$ TotRms_AbvGrd &lt;int&gt; 8, 6, 6, 8, 7, 5, 6, 4, 8, 7, 7, 7, 7, 6, 7, 7, 10, 7, 7…
+$ First_Flr_SF  &lt;int&gt; 2110, 1338, 1187, 1856, 1844, 1004, 1078, 1069, 1940, 15…
+$ Second_Flr_SF &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 563, 0, 886, 656, 11…
+$ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009, 20…</code></pre>
 </div>
 </div>
 </section>
@@ -1031,7 +969,7 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <li>One-hot/dummy encoding categorical predictor</li>
 </ul>
 </section>
-<section id="pre-split-cleaning" class="slide level2">
+<section id="pre-split-cleaning" class="slide level2 smaller">
 <h2>Pre-Split Cleaning</h2>
 <ul>
 <li>Before you split your data: make sure data is in correct format</li>
@@ -1050,11 +988,11 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <section id="example-factor-levels-in-wrong-order" class="slide level2">
 <h2>Example: Factor Levels in Wrong Order</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">pull</span>(Overall_Cond) <span class="sc">|&gt;</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">pull</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Above_Average"  "Very_Excellent" "Very_Poor"      "Very_Good"     
- [5] "Good"           "Excellent"      "Fair"           "Poor"          
- [9] "Average"        "Below_Average" </code></pre>
+<pre><code> [1] "Above_Average"  "Average"        "Below_Average"  "Excellent"     
+ [5] "Fair"           "Good"           "Poor"           "Very_Excellent"
+ [9] "Very_Good"      "Very_Poor"     </code></pre>
 </div>
 </div>
 </section>
@@ -1062,25 +1000,17 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <h2>Re-Factoring</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>ames <span class="ot">&lt;-</span> ames <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Overall_Cond =</span> <span class="fu">factor</span>(Overall_Cond, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very_Poor"</span>, <span class="st">"Poor"</span>, </span>
+<span id="cb25-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Overall_Qual =</span> <span class="fu">factor</span>(Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very_Poor"</span>, <span class="st">"Poor"</span>, </span>
 <span id="cb25-3"><a></a>                                                        <span class="st">"Fair"</span>, <span class="st">"Below_Average"</span>,</span>
 <span id="cb25-4"><a></a>                                                        <span class="st">"Average"</span>, <span class="st">"Above_Average"</span>, </span>
 <span id="cb25-5"><a></a>                                                        <span class="st">"Good"</span>, <span class="st">"Very_Good"</span>,</span>
 <span id="cb25-6"><a></a>                                                        <span class="st">"Excellent"</span>, <span class="st">"Very_Excellent"</span>)))</span>
-<span id="cb25-7"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">pull</span>(Overall_Cond) <span class="sc">|&gt;</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-7"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">pull</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Very_Poor"      "Poor"           "Fair"           "Below_Average" 
  [5] "Average"        "Above_Average"  "Good"           "Very_Good"     
  [9] "Excellent"      "Very_Excellent"</code></pre>
 </div>
-</div>
-</section>
-<section id="initial-data-split-1" class="slide level2">
-<h2>Initial Data Split</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">strata =</span> <span class="st">"Sale_Price"</span>)</span>
-<span id="cb27-2"><a></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
-<span id="cb27-3"><a></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="zero-variance-zv-andor-near-zero-variance-nzv-variables" class="slide level2 smaller">
@@ -1091,8 +1021,8 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <li>The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say ≥ 20%).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(caret)</span>
-<span id="cb28-2"><a></a><span class="fu">nearZeroVar</span>(ames_train, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">library</span>(caret)</span>
+<span id="cb27-2"><a></a><span class="fu">nearZeroVar</span>(ames, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1106,569 +1036,142 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">MS_SubClass</td>
-<td style="text-align: right;">1.827982</td>
-<td style="text-align: right;">0.7282658</td>
+<td style="text-align: left;">Sale_Price</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">55.7321226</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">MS_Zoning</td>
-<td style="text-align: right;">5.059172</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Lot_Frontage</td>
-<td style="text-align: right;">1.781553</td>
-<td style="text-align: right;">5.5530269</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Lot_Area</td>
-<td style="text-align: right;">1.172414</td>
-<td style="text-align: right;">69.4128357</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Street</td>
-<td style="text-align: right;">182.083333</td>
-<td style="text-align: right;">0.0910332</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Alley</td>
-<td style="text-align: right;">22.932584</td>
-<td style="text-align: right;">0.1365498</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Lot_Shape</td>
-<td style="text-align: right;">1.931224</td>
-<td style="text-align: right;">0.1820665</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Land_Contour</td>
-<td style="text-align: right;">22.500000</td>
-<td style="text-align: right;">0.1820665</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Utilities</td>
-<td style="text-align: right;">1097.000000</td>
-<td style="text-align: right;">0.1365498</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Lot_Config</td>
-<td style="text-align: right;">4.213542</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Land_Slope</td>
-<td style="text-align: right;">22.526882</td>
-<td style="text-align: right;">0.1365498</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Neighborhood</td>
-<td style="text-align: right;">1.766498</td>
-<td style="text-align: right;">1.2744652</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Condition_1</td>
-<td style="text-align: right;">16.344828</td>
-<td style="text-align: right;">0.4096495</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Condition_2</td>
-<td style="text-align: right;">241.444444</td>
-<td style="text-align: right;">0.3641329</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bldg_Type</td>
-<td style="text-align: right;">10.567251</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">House_Style</td>
-<td style="text-align: right;">1.670713</td>
-<td style="text-align: right;">0.3641329</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Overall_Qual</td>
-<td style="text-align: right;">1.133455</td>
-<td style="text-align: right;">0.4551661</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Overall_Cond</td>
-<td style="text-align: right;">3.174242</td>
-<td style="text-align: right;">0.4096495</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Year_Built</td>
-<td style="text-align: right;">1.059406</td>
-<td style="text-align: right;">5.2344106</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Year_Remod_Add</td>
-<td style="text-align: right;">1.810811</td>
-<td style="text-align: right;">2.7765134</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Roof_Style</td>
-<td style="text-align: right;">4.136038</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Roof_Matl</td>
-<td style="text-align: right;">120.277778</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Exterior_1st</td>
-<td style="text-align: right;">2.359517</td>
-<td style="text-align: right;">0.7282658</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Exterior_2nd</td>
-<td style="text-align: right;">2.349544</td>
-<td style="text-align: right;">0.7737824</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Mas_Vnr_Type</td>
-<td style="text-align: right;">1.980510</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mas_Vnr_Area</td>
-<td style="text-align: right;">109.916667</td>
-<td style="text-align: right;">17.8425125</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Exter_Qual</td>
-<td style="text-align: right;">1.787234</td>
-<td style="text-align: right;">0.1820665</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Exter_Cond</td>
-<td style="text-align: right;">8.085106</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Foundation</td>
-<td style="text-align: right;">1.038339</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Bsmt_Qual</td>
-<td style="text-align: right;">1.029063</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bsmt_Cond</td>
-<td style="text-align: right;">20.578947</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Bsmt_Exposure</td>
-<td style="text-align: right;">4.674267</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">BsmtFin_Type_1</td>
-<td style="text-align: right;">1.007788</td>
-<td style="text-align: right;">0.3186163</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">BsmtFin_SF_1</td>
-<td style="text-align: right;">1.007788</td>
-<td style="text-align: right;">0.3186163</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">BsmtFin_Type_2</td>
-<td style="text-align: right;">22.926829</td>
-<td style="text-align: right;">0.3186163</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">BsmtFin_SF_2</td>
-<td style="text-align: right;">388.600000</td>
-<td style="text-align: right;">9.5584888</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bsmt_Unf_SF</td>
-<td style="text-align: right;">12.333333</td>
-<td style="text-align: right;">45.1069640</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Total_Bsmt_SF</td>
-<td style="text-align: right;">1.142857</td>
-<td style="text-align: right;">41.9208011</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Heating</td>
-<td style="text-align: right;">113.947368</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Heating_QC</td>
-<td style="text-align: right;">1.748447</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Central_Air</td>
-<td style="text-align: right;">14.581560</td>
-<td style="text-align: right;">0.0910332</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Electrical</td>
-<td style="text-align: right;">15.052239</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">First_Flr_SF</td>
-<td style="text-align: right;">1.590909</td>
-<td style="text-align: right;">43.3773327</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Second_Flr_SF</td>
-<td style="text-align: right;">69.611111</td>
-<td style="text-align: right;">23.8962221</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Low_Qual_Fin_SF</td>
-<td style="text-align: right;">721.666667</td>
-<td style="text-align: right;">1.3199818</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Gr_Liv_Area</td>
-<td style="text-align: right;">1.550000</td>
-<td style="text-align: right;">50.3868912</td>
+<td style="text-align: right;">1.333333</td>
+<td style="text-align: right;">62.9965948</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Bsmt_Full_Bath</td>
-<td style="text-align: right;">1.518044</td>
-<td style="text-align: right;">0.1820665</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Bsmt_Half_Bath</td>
-<td style="text-align: right;">15.132353</td>
-<td style="text-align: right;">0.1365498</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Full_Bath</td>
-<td style="text-align: right;">1.173957</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Half_Bath</td>
-<td style="text-align: right;">1.737107</td>
-<td style="text-align: right;">0.1365498</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bedroom_AbvGr</td>
-<td style="text-align: right;">2.104982</td>
-<td style="text-align: right;">0.3186163</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Kitchen_AbvGr</td>
-<td style="text-align: right;">20.281553</td>
-<td style="text-align: right;">0.1820665</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Kitchen_Qual</td>
-<td style="text-align: right;">1.279043</td>
-<td style="text-align: right;">0.1820665</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TotRms_AbvGrd</td>
-<td style="text-align: right;">1.303719</td>
-<td style="text-align: right;">0.5917160</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Functional</td>
-<td style="text-align: right;">38.074074</td>
-<td style="text-align: right;">0.3641329</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Fireplaces</td>
-<td style="text-align: right;">1.123819</td>
-<td style="text-align: right;">0.2275831</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Fireplace_Qu</td>
-<td style="text-align: right;">1.950820</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Garage_Type</td>
-<td style="text-align: right;">2.203390</td>
-<td style="text-align: right;">0.3186163</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Garage_Finish</td>
-<td style="text-align: right;">1.534768</td>
-<td style="text-align: right;">0.1820665</td>
+<td style="text-align: right;">2.196581</td>
+<td style="text-align: right;">0.6810443</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Garage_Cars</td>
-<td style="text-align: right;">2.165493</td>
-<td style="text-align: right;">0.2730997</td>
+<td style="text-align: right;">1.970213</td>
+<td style="text-align: right;">0.5675369</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Garage_Area</td>
-<td style="text-align: right;">1.573333</td>
-<td style="text-align: right;">24.4879381</td>
+<td style="text-align: right;">2.250000</td>
+<td style="text-align: right;">38.0249716</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Garage_Qual</td>
-<td style="text-align: right;">16.677966</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Garage_Cond</td>
-<td style="text-align: right;">16.949153</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Paved_Drive</td>
-<td style="text-align: right;">12.184049</td>
-<td style="text-align: right;">0.1365498</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Wood_Deck_SF</td>
-<td style="text-align: right;">19.440678</td>
-<td style="text-align: right;">14.8839326</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Open_Porch_SF</td>
-<td style="text-align: right;">25.289474</td>
-<td style="text-align: right;">10.2867547</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Enclosed_Porch</td>
-<td style="text-align: right;">124.733333</td>
-<td style="text-align: right;">7.2371416</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Three_season_porch</td>
-<td style="text-align: right;">1085.000000</td>
-<td style="text-align: right;">1.1834320</td>
+<td style="text-align: left;">Street</td>
+<td style="text-align: right;">219.250000</td>
+<td style="text-align: right;">0.2270148</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Screen_Porch</td>
-<td style="text-align: right;">201.100000</td>
-<td style="text-align: right;">4.4151115</td>
+<td style="text-align: left;">Utilities</td>
+<td style="text-align: right;">880.000000</td>
+<td style="text-align: right;">0.2270148</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Pool_Area</td>
-<td style="text-align: right;">2189.000000</td>
-<td style="text-align: right;">0.4096495</td>
+<td style="text-align: right;">876.000000</td>
+<td style="text-align: right;">0.6810443</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Pool_QC</td>
-<td style="text-align: right;">1094.500000</td>
-<td style="text-align: right;">0.2275831</td>
+<td style="text-align: left;">Neighborhood</td>
+<td style="text-align: right;">1.476744</td>
+<td style="text-align: right;">2.9511918</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Screen_Porch</td>
+<td style="text-align: right;">199.750000</td>
+<td style="text-align: right;">6.6969353</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Overall_Qual</td>
+<td style="text-align: right;">1.119816</td>
+<td style="text-align: right;">1.1350738</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
 <tr class="even">
-<td style="text-align: left;">Fence</td>
-<td style="text-align: right;">7.641026</td>
-<td style="text-align: right;">0.2275831</td>
+<td style="text-align: left;">Lot_Area</td>
+<td style="text-align: right;">1.071429</td>
+<td style="text-align: right;">79.7956867</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Misc_Feature</td>
-<td style="text-align: right;">29.388889</td>
-<td style="text-align: right;">0.2730997</td>
+<td style="text-align: left;">Lot_Frontage</td>
+<td style="text-align: right;">1.617021</td>
+<td style="text-align: right;">11.5777526</td>
 <td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">MS_SubClass</td>
+<td style="text-align: right;">1.959064</td>
+<td style="text-align: right;">1.7026107</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Misc_Val</td>
-<td style="text-align: right;">176.500000</td>
-<td style="text-align: right;">1.5475649</td>
+<td style="text-align: right;">141.833333</td>
+<td style="text-align: right;">1.9296254</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">Open_Porch_SF</td>
+<td style="text-align: right;">23.176471</td>
+<td style="text-align: right;">19.2962543</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
 <tr class="odd">
-<td style="text-align: left;">Mo_Sold</td>
-<td style="text-align: right;">1.101190</td>
-<td style="text-align: right;">0.5461994</td>
+<td style="text-align: left;">TotRms_AbvGrd</td>
+<td style="text-align: right;">1.311225</td>
+<td style="text-align: right;">1.2485812</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Year_Sold</td>
-<td style="text-align: right;">1.061728</td>
-<td style="text-align: right;">0.2275831</td>
+<td style="text-align: left;">First_Flr_SF</td>
+<td style="text-align: right;">1.777778</td>
+<td style="text-align: right;">63.7911464</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sale_Type</td>
-<td style="text-align: right;">10.723164</td>
-<td style="text-align: right;">0.4096495</td>
+<td style="text-align: left;">Second_Flr_SF</td>
+<td style="text-align: right;">64.250000</td>
+<td style="text-align: right;">31.3280363</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Sale_Condition</td>
-<td style="text-align: right;">10.066298</td>
-<td style="text-align: right;">0.2730997</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Sale_Price</td>
-<td style="text-align: right;">1.080000</td>
-<td style="text-align: right;">39.0077378</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Longitude</td>
-<td style="text-align: right;">1.125000</td>
-<td style="text-align: right;">78.3340919</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Latitude</td>
-<td style="text-align: right;">1.285714</td>
-<td style="text-align: right;">73.6003641</td>
+<td style="text-align: left;">Year_Built</td>
+<td style="text-align: right;">1.175000</td>
+<td style="text-align: right;">11.9182747</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">FALSE</td>
 </tr>
@@ -1677,7 +1180,14 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 </div>
 </div>
 </section>
-<section id="missing-data" class="slide level2">
+<section id="recipe-near-zero-variance" class="slide level2">
+<h2>Recipe: Near-Zero Variance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="co"># remove zero or near-zero variable predictors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="missing-data" class="slide level2 smaller">
 <h2>Missing Data</h2>
 <ul>
 <li>Many times, you can’t just drop missing data</li>
@@ -1739,6 +1249,643 @@ $ Latitude           &lt;dbl&gt; 42.05403, 42.05301, 42.05266, 42.05125, 42.0609
 <li><code>step_impute_knn</code>: used for both numeric and categorical variables (computationally expensive)</li>
 <li><code>step_impute_mode</code>: used for nominal (having no order) categorical variable</li>
 </ul></li>
+</ul>
+</section>
+<section id="exploring-missing-data" class="slide level2">
+<h2>Exploring Missing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>ames <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.)))) <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb29-4"><a></a>  <span class="fu">filter</span>(value <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gr_Liv_Area</td>
+<td style="text-align: right;">113</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Garage_Type</td>
+<td style="text-align: right;">54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Year_Built</td>
+<td style="text-align: right;">41</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="missing-data-garage_type" class="slide level2">
+<h2>Missing Data: Garage_Type</h2>
+<ul>
+<li>The reason that <code>Garage_Type</code> is missing is because there is no basement
+<ul>
+<li>Solution: replace <code>NA</code>s with <code>No_Garage</code></li>
+<li>Do this before data splitting</li>
+</ul></li>
+</ul>
+</section>
+<section id="fixing-garage_type" class="slide level2">
+<h2>Fixing Garage_Type</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>ames <span class="ot">&lt;-</span> ames <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Garage_Type =</span> <span class="fu">as_factor</span>(<span class="fu">if_else</span>(<span class="fu">is.na</span>(Garage_Type), <span class="st">"No_Garage"</span>, Garage_Type)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="missing-data-year_built" class="slide level2">
+<h2>Missing Data: Year_Built</h2>
+<ul>
+<li>MCAR
+<ul>
+<li>Solution 1: Impute with mean or median</li>
+<li>Solution 2: Impute with KNN… maybe we can infer what the values are based on other values in the data set?</li>
+</ul></li>
+</ul>
+</section>
+<section id="missing-data-gr_liv_area" class="slide level2">
+<h2>Missing Data: Gr_Liv_Area</h2>
+<ul>
+<li>MCAR
+<ul>
+<li>Solution 1: Impute with mean or median</li>
+<li>Solution 2: Impute with KNN… maybe we can infer what the values are based on other values in the data set?</li>
+</ul></li>
+</ul>
+</section>
+<section id="recipe-missing-data" class="slide level2">
+<h2>Recipe: Missing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb31-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Note: <code>step_imput_knn</code> uses the “Gower’s Distance” so don’t need to worry about normalizing</li>
+</ul>
+</section>
+<section id="encoding-ordinal-features" class="slide level2">
+<h2>Encoding Ordinal Features</h2>
+<p>Two types of categorical features:</p>
+<ul>
+<li>Ordinal (order is important)</li>
+<li>Nominal (order is not important)</li>
+</ul>
+</section>
+<section id="encoding-ordinal-features-1" class="slide level2">
+<h2>Encoding Ordinal Features</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">pull</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Very_Poor"      "Poor"           "Fair"           "Below_Average" 
+ [5] "Average"        "Above_Average"  "Good"           "Very_Good"     
+ [9] "Excellent"      "Very_Excellent"</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Very_Poor</code> = 1, <code>Poor</code> = 2, <code>Fair</code> = 3, etc…</li>
+</ul>
+</section>
+<section id="recipe-encoding-ordinal-features" class="slide level2">
+<h2>Recipe: Encoding Ordinal Features</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb34-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="sc">|&gt;</span>  <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span>
+<span id="cb34-4"><a></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="co"># convert Overall_Qual into ordinal encoding</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="lump-small-categories-together" class="slide level2">
+<h2>Lump Small Categories Together</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">count</span>(Neighborhood) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Neighborhood</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">North_Ames</td>
+<td style="text-align: right;">127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">College_Creek</td>
+<td style="text-align: right;">86</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Old_Town</td>
+<td style="text-align: right;">83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edwards</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Somerset</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Northridge_Heights</td>
+<td style="text-align: right;">52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gilbert</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sawyer</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Northwest_Ames</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sawyer_West</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mitchell</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brookside</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Crawford</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Iowa_DOT_and_Rail_Road</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Timberland</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Northridge</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stone_Brook</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South_and_West_of_Iowa_State_University</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clear_Creek</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Meadow_Village</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Briardale</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bloomington_Heights</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Veenker</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Northpark_Villa</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Blueste</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Greens</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="lump-small-categories-together-1" class="slide level2">
+<h2>Lump Small Categories Together</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>ames <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Neighborhood =</span> <span class="fu">fct_lump_prop</span>(Neighborhood, <span class="fl">0.05</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a></a>  <span class="fu">count</span>(Neighborhood) <span class="sc">|&gt;</span>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Neighborhood</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">North_Ames</td>
+<td style="text-align: right;">127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">College_Creek</td>
+<td style="text-align: right;">86</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Old_Town</td>
+<td style="text-align: right;">83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edwards</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Somerset</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Northridge_Heights</td>
+<td style="text-align: right;">52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gilbert</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sawyer</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">338</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="recipe-lumping-small-factors-together" class="slide level2">
+<h2>Recipe: Lumping Small Factors Together</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb37-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="sc">|&gt;</span>  <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span>
+<span id="cb37-4"><a></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="co"># convert Overall_Qual into ordinal encoding</span></span>
+<span id="cb37-5"><a></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">"Other"</span>) <span class="co"># lump all categories with less than 1% representation into a category called Other for each variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="one-hotdummy-encoding-categorical-predictors" class="slide level2">
+<h2>One-hot/dummy encoding categorical predictors</h2>
+
+<img data-src="images/12/ohe-vs-dummy.png" class="r-stretch quarto-figure-center"><p class="caption">Figure 3.9: <a href="https://bradleyboehmke.github.io/HOML/engineering.html">Machine Learning with R</a></p></section>
+<section id="recipe-dummy-variables" class="slide level2">
+<h2>Recipe: Dummy Variables</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb38-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="sc">|&gt;</span>  <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span>
+<span id="cb38-4"><a></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="co"># convert Overall_Qual into ordinal encoding</span></span>
+<span id="cb38-5"><a></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">"Other"</span>) <span class="sc">|&gt;</span> <span class="co"># lump all categories with less than 1% representation into a category called Other for each variable</span></span>
+<span id="cb38-6"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)  <span class="co"># in general use one_hot unless doing linear regression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="receipe-center-and-scale" class="slide level2">
+<h2>Receipe: Center and scale</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb39-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="sc">|&gt;</span>  <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span>
+<span id="cb39-4"><a></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="co"># convert Overall_Qual into ordinal encoding</span></span>
+<span id="cb39-5"><a></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">"Other"</span>) <span class="sc">|&gt;</span> <span class="co"># lump all categories with less than 1% representation into a category called Other for each variable</span></span>
+<span id="cb39-6"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  <span class="co"># in general use one_hot unless doing linear regression</span></span>
+<span id="cb39-7"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="order-of-preprocessing-step" class="slide level2 smaller">
+<h2>Order of Preprocessing Step</h2>
+<p>Questions to ask:</p>
+<ol type="1">
+<li>Should this be done before or after data splitting?</li>
+<li>If I do step_A first what is the impact on step_B? For example, do you want to encode categorical variables before or after normalizing?</li>
+<li>What data format is required by the model I’m fitting and how will my model react to these changes?</li>
+<li>Is this step part of my “model”? I.e. is this a decision I’m making based on the data or based on subject matter expertise?</li>
+<li>Do I have access to my test predictors?</li>
+</ol>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions</h2>
+<ul>
+<li>Should I lump before or after dummy coding?</li>
+<li>Should I dummy code before or after normalizing?</li>
+<li>Should I lump before my initial split?</li>
+<li>How does ordinal encoding impact linear regression vs.&nbsp;KNN?</li>
+</ul>
+</section></section>
+<section>
+<section id="final-r-workflow" class="title-slide slide level1 center">
+<h1>Final R Workflow</h1>
+
+</section>
+<section id="clean-data-set" class="slide level2">
+<h2>Clean Data Set</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>ames <span class="ot">&lt;-</span> ames <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Overall_Qual =</span> <span class="fu">factor</span>(Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very_Poor"</span>, <span class="st">"Poor"</span>, </span>
+<span id="cb40-3"><a></a>                                                        <span class="st">"Fair"</span>, <span class="st">"Below_Average"</span>,</span>
+<span id="cb40-4"><a></a>                                                        <span class="st">"Average"</span>, <span class="st">"Above_Average"</span>, </span>
+<span id="cb40-5"><a></a>                                                        <span class="st">"Good"</span>, <span class="st">"Very_Good"</span>,</span>
+<span id="cb40-6"><a></a>                                                        <span class="st">"Excellent"</span>, <span class="st">"Very_Excellent"</span>)),</span>
+<span id="cb40-7"><a></a>         <span class="at">Garage_Type =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Garage_Type), <span class="st">"No_Garage"</span>, Garage_Type),</span>
+<span id="cb40-8"><a></a>         <span class="at">Garage_Type =</span> <span class="fu">as_factor</span>(Garage_Type)</span>
+<span id="cb40-9"><a></a>         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="initial-data-split-1" class="slide level2">
+<h2>Initial Data Split</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb41-2"><a></a></span>
+<span id="cb41-3"><a></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">strata =</span> <span class="st">"Sale_Price"</span>)</span>
+<span id="cb41-4"><a></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb41-5"><a></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-folds-1" class="slide level2">
+<h2>Define Folds</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span>
+<span id="cb42-2"><a></a>ames_folds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#  10-fold cross-validation repeated 10 times 
+# A tibble: 100 × 3
+   splits           id       id2   
+   &lt;list&gt;           &lt;chr&gt;    &lt;chr&gt; 
+ 1 &lt;split [594/66]&gt; Repeat01 Fold01
+ 2 &lt;split [594/66]&gt; Repeat01 Fold02
+ 3 &lt;split [594/66]&gt; Repeat01 Fold03
+ 4 &lt;split [594/66]&gt; Repeat01 Fold04
+ 5 &lt;split [594/66]&gt; Repeat01 Fold05
+ 6 &lt;split [594/66]&gt; Repeat01 Fold06
+ 7 &lt;split [594/66]&gt; Repeat01 Fold07
+ 8 &lt;split [594/66]&gt; Repeat01 Fold08
+ 9 &lt;split [594/66]&gt; Repeat01 Fold09
+10 &lt;split [594/66]&gt; Repeat01 Fold10
+# ℹ 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="define-models-1" class="slide level2">
+<h2>Define Model(s)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>lm_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">'lm'</span>)</span>
+<span id="cb44-3"><a></a></span>
+<span id="cb44-4"><a></a>knn5_model <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-5"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-6"><a></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb44-7"><a></a></span>
+<span id="cb44-8"><a></a>knn10_model <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-9"><a></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-10"><a></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-preprocessing-linear-regression-1" class="slide level2">
+<h2>Define Preprocessing: Linear regression</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>lm_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames_train) <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb45-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="sc">|&gt;</span>  <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span>
+<span id="cb45-4"><a></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="co"># convert Overall_Qual into ordinal encoding</span></span>
+<span id="cb45-5"><a></a>  <span class="fu">step_other</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">"Other"</span>) <span class="sc">|&gt;</span> <span class="co"># lump all categories with less than 1% representation into a category called Other for each variable</span></span>
+<span id="cb45-6"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span>  <span class="co"># in general use one_hot unless doing linear regression</span></span>
+<span id="cb45-7"><a></a>  <span class="fu">step_corr</span>(<span class="fu">all_numeric_predictors</span>(), <span class="at">threshold =</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> <span class="co"># remove highly correlated predictors</span></span>
+<span id="cb45-8"><a></a>  <span class="fu">step_lincomb</span>(<span class="fu">all_numeric_predictors</span>()) <span class="co"># remove variables that have exact linear combinations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-preprocessing-knn-1" class="slide level2">
+<h2>Define Preprocessing: KNN</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>knn_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames_train) <span class="sc">|&gt;</span> </span>
+<span id="cb46-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>
+<span id="cb46-3"><a></a>  <span class="fu">step_impute_knn</span>(Year_Built, Gr_Liv_Area) <span class="sc">|&gt;</span>  <span class="co"># impute missing values in Overall_Qual and Year_Built</span></span>
+<span id="cb46-4"><a></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">|&gt;</span> <span class="co"># convert Overall_Qual into ordinal encoding</span></span>
+<span id="cb46-5"><a></a>  <span class="fu">step_other</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">"Other"</span>) <span class="sc">|&gt;</span> <span class="co"># lump all categories with less than 1% representation into a category called Other for each variable</span></span>
+<span id="cb46-6"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  <span class="co"># in general use one_hot unless doing linear regression</span></span>
+<span id="cb46-7"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb46-8"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-workflows-1" class="slide level2">
+<h2>Define Workflows</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>lm_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_model</span>(lm_model) <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(lm_preproc)</span>
+<span id="cb47-2"><a></a>knn5_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_model</span>(knn5_model) <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(knn_preproc)</span>
+<span id="cb47-3"><a></a>knn10_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_model</span>(knn10_model) <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(knn_preproc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-metrics-1" class="slide level2">
+<h2>Define Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>ames_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, rsq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fit-and-assess-models-1" class="slide level2">
+<h2>Fit and Assess Models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>lm_results <span class="ot">&lt;-</span> lm_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
+<span id="cb49-2"><a></a>knn5_results <span class="ot">&lt;-</span> knn5_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span>
+<span id="cb49-3"><a></a>knn10_results <span class="ot">&lt;-</span> knn10_wf <span class="sc">|&gt;</span> <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> ames_folds, <span class="at">metrics =</span> ames_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="collecting-metrics-1" class="slide level2 smaller">
+<h2>Collecting Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="fu">collect_metrics</span>(lm_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.968417e+04</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">764.5524121</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.559368e-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.0088924</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">collect_metrics</span>(knn5_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.999696e+04</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">956.4824660</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.596873e-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.0062576</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">collect_metrics</span>(knn10_results) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 18%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">std_err</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">3.952087e+04</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1008.0467220</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.681888e-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.0065365</td>
+<td style="text-align: left;">Preprocessor1_Model1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="final-evaluate-final-model" class="slide level2">
+<h2>Final &amp; Evaluate Final Model</h2>
+<ul>
+<li>After choosing best model/workflow, fit on full training set and assess on test set</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>final_fit <span class="ot">&lt;-</span> knn10_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
+<span id="cb53-2"><a></a>final_fit_perf <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> </span>
+<span id="cb53-3"><a></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ames_test) <span class="sc">|&gt;</span> </span>
+<span id="cb53-4"><a></a>  <span class="fu">bind_cols</span>(ames_test) <span class="sc">|&gt;</span> </span>
+<span id="cb53-5"><a></a>  <span class="fu">ames_metrics</span>(<span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> .pred)</span>
+<span id="cb53-6"><a></a></span>
+<span id="cb53-7"><a></a>final_fit_perf <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">4.941178e+04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rsq</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">7.181459e-01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="tips" class="slide level2">
+<h2>Tips</h2>
+<ul>
+<li>Can try out different pre-processing to see if it improves your model!</li>
+<li>Process can be intense for you computer, so might take a while</li>
+<li>No 100% correct way to do it, although there are some 100% incorrect ways to do it</li>
 </ul>
 
 <div class="quarto-auto-generated-content">
