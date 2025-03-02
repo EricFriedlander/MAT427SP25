@@ -90,7 +90,7 @@ We will now learn how to create branches and run git from the [command line](htt
 ## Exercise 0.3
 
 ::: {.callout-warning}
-Skip this exercise until everyone has finished the homework. Test
+Skip this exercise until everyone has finished the homework.
 :::
 
 ::: {.callout-tip title="Question"}
