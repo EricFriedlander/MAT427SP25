@@ -8,14 +8,7 @@ format:
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
-library(kableExtra)
-library(splitTools)
-library(broom)
-library(janitor)
-library(caret)
-
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, error=FALSE, fig.align='center', fig.height=4, fig.width=5)
+# load packages here
 ```
 
 # Introduction
@@ -91,9 +84,16 @@ Skip this exercise until everyone has finished the homework. Test 1
 ::: {.callout-tip title="Question"}
 1.  Read the warning above!
 2.  (DO NOT SKIP) Go through all of the questions together, discussing each others solutions to get a good idea of what you want the final submission to look like.
-3.  On any computer, type `git checkout main`. This will move you into your main branch.
+3.  On any computer, type `git checkout main`. This will move you into the main branch.
 4.  Type `git merge name_of_branch_you_want_to_merge` where `name_of_branch_you_want_to_merge` is the name of the branch you want to merge into `main`.
 5.  Do this for each team members branch. Each time you will likely get a merge-conflict that you need to resolve. Resolve them in the same way you did for the previous homework.
+6.  Give your document a once-over, ensuring that you have blended all your work into a coherent format.
+7.  Render, commit, and push one last time.
+
+If you do the following, I will give you a zero until you fix them:
+
+- Put multiple answers for the same problem. E.g. ("Eric's Answer...", "Adam's Answer..."). You must discuss and decide on what the best solution is as a group.
+- Create a final document without merging. I must see each team member merge into the `main` branch even if you don't plan on keeping any of their changes.
 :::
 
 # Logistic Regression
