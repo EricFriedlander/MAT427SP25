@@ -85,7 +85,7 @@ We will now learn how to create branches and run git from the [command line](htt
 ## Exercise 0.3
 
 ::: callout-warning
-Skip this exercise until everyone has finished the homework.
+Skip this exercise until everyone has finished the homework. Test 1
 :::
 
 ::: {.callout-tip title="Question"}
