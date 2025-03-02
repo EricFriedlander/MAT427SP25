@@ -30,7 +30,7 @@ Bio: Kyle Mayer is a Senior Data Analytics Engineer at Micron Technology with ov
 
 - [Job Ad](https://cofi.instructure.com/courses/17021/assignments/210575)
 - [Directions and Resources](/jobs/job-app-resources.qmd)
-- [Rubic (in progress)](/jobs/job1/job-app-1-rubric.qmd)
+- [Rubic (in progress)](/jobs/job-app-1-rubric.qmd)
 - Due Next Friday: CV and Cover Letter
 - Due Friday March 21st: whole application
 
