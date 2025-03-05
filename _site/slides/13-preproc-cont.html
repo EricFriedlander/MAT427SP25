@@ -408,6 +408,8 @@ Eric Friedlander
 <h2>Announcements</h2>
 <ul>
 <li><a href="https://alumni.collegeofidaho.edu/e/coyote-connections-2025">Coyote Connections Thu March 13th 7-9pm</a></li>
+<li>Please print out and bring four copies of your resume and cover letter to class on Friday</li>
+<li>Debrief from talk today</li>
 </ul>
 </section>
 <section id="computational-set-up" class="slide level2">
@@ -1071,8 +1073,8 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 <span id="cb19-6"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)  <span class="co"># in general use one_hot unless doing linear regression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="receipe-center-and-scale" class="slide level2">
-<h2>Receipe: Center and scale</h2>
+<section id="recipe-center-and-scale" class="slide level2">
+<h2>Recipe: Center and scale</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames) <span class="sc">|&gt;</span> </span>
 <span id="cb20-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span>  <span class="co"># remove zero or near-zero variable predictors</span></span>

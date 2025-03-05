@@ -24,6 +24,8 @@ knitr:
 ## Announcements
 
 - [Coyote Connections Thu March 13th 7-9pm](https://alumni.collegeofidaho.edu/e/coyote-connections-2025)
+- Please print out and bring four copies of your resume and cover letter to class on Friday
+- Debrief from talk today
 
 ## Computational Set-Up
 
@@ -277,7 +279,7 @@ preproc <- recipe(Sale_Price ~ ., data = ames) |>
   step_dummy(all_nominal_predictors(), one_hot = TRUE)  # in general use one_hot unless doing linear regression
 ```
 
-## Receipe: Center and scale
+## Recipe: Center and scale
 
 ```{r}
 preproc <- recipe(Sale_Price ~ ., data = ames) |> 
