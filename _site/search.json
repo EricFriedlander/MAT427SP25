@@ -3935,5 +3935,299 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#computational-set-up",
+    "href": "slides/15-selection-regularization-tuning.html#computational-set-up",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(janitor) # for contingency tables\nlibrary(ISLR2)\nlibrary(readODS)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#what-is-feature-selection",
+    "href": "slides/15-selection-regularization-tuning.html#what-is-feature-selection",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "What is feature selection?",
+    "text": "What is feature selection?\n\nHow do we choose what variables to include in our model?\nUp to now… include all of them… probably not the best\nAdvantage of linear regression: interpretability\nIncluding every feature decreases interpretability\nReasons for feature selection:\n\nImprove model performance\nImprove model interpretability\n\nParsimony: simpler models are called more parsimonious\nOccam’s Razor: more parsimonious models are better than less parsimonious models, holding all else constant"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#types-of-feature-selection",
+    "href": "slides/15-selection-regularization-tuning.html#types-of-feature-selection",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Types of feature selection",
+    "text": "Types of feature selection\n\nSubset selection: Forward/Backward/Best-Subset Selection\nShrinkage-based methods: LASSO and Ridge Regression\nDimension reduction: consider linear combinations of predictors"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#exercise",
+    "href": "slides/15-selection-regularization-tuning.html#exercise",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Exercise",
+    "text": "Exercise\n\nWith your group, write out the steps for the following algorithms on the board\nGroup 1: Forward selection\nGroup 2: Backward elimination\nGroup 3: Step-wise selection\nGroup 4: Best-subset selection"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#subset-selection-in-r",
+    "href": "slides/15-selection-regularization-tuning.html#subset-selection-in-r",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Subset Selection in R",
+    "text": "Subset Selection in R\n\ntidymodels does not have an implementation for any subset selection techniques\nregularization (shrinkage-based) methods almost always perform better\ncolino package provides tidymodels implementation\nOther options\n\ncaret package\nolsrr and blorr packages if you don’t care about cross-validation\nimplement yourself"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#data-different-ames-housing-prices",
+    "href": "slides/15-selection-regularization-tuning.html#data-different-ames-housing-prices",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Data: Different Ames Housing Prices",
+    "text": "Data: Different Ames Housing Prices\nGoal: Predict Sale_Price.\n\names &lt;- read_rds(\"../data/AmesHousing.rds\")\names |&gt; glimpse()\n\nRows: 881\nColumns: 20\n$ Sale_Price    &lt;int&gt; 244000, 213500, 185000, 394432, 190000, 149000, 149900, …\n$ Gr_Liv_Area   &lt;int&gt; 2110, 1338, 1187, 1856, 1844, NA, NA, 1069, 1940, 1544, …\n$ Garage_Type   &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, …\n$ Garage_Cars   &lt;dbl&gt; 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 2,…\n$ Garage_Area   &lt;dbl&gt; 522, 582, 420, 834, 546, 480, 500, 440, 606, 868, 532, 7…\n$ Street        &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pa…\n$ Utilities     &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, …\n$ Pool_Area     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ Neighborhood  &lt;fct&gt; North_Ames, Stone_Brook, Gilbert, Stone_Brook, Northwest…\n$ Screen_Porch  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 165, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …\n$ Overall_Qual  &lt;fct&gt; Good, Very_Good, Above_Average, Excellent, Above_Average…\n$ Lot_Area      &lt;int&gt; 11160, 4920, 7980, 11394, 11751, 11241, 12537, 4043, 101…\n$ Lot_Frontage  &lt;dbl&gt; 93, 41, 0, 88, 105, 0, 0, 53, 83, 94, 95, 90, 105, 61, 6…\n$ MS_SubClass   &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_PUD_1946_…\n$ Misc_Val      &lt;int&gt; 0, 0, 500, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ Open_Porch_SF &lt;int&gt; 0, 0, 21, 0, 122, 0, 0, 55, 95, 35, 70, 74, 130, 82, 48,…\n$ TotRms_AbvGrd &lt;int&gt; 8, 6, 6, 8, 7, 5, 6, 4, 8, 7, 7, 7, 7, 6, 7, 7, 10, 7, 7…\n$ First_Flr_SF  &lt;int&gt; 2110, 1338, 1187, 1856, 1844, 1004, 1078, 1069, 1940, 15…\n$ Second_Flr_SF &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 563, 0, 886, 656, 11…\n$ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009, 20…"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#clean-data-set",
+    "href": "slides/15-selection-regularization-tuning.html#clean-data-set",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Clean Data Set",
+    "text": "Clean Data Set\n\names &lt;- ames |&gt; \n  mutate(Overall_Qual = factor(Overall_Qual, levels = c(\"Very_Poor\", \"Poor\", \n                                                        \"Fair\", \"Below_Average\",\n                                                        \"Average\", \"Above_Average\", \n                                                        \"Good\", \"Very_Good\",\n                                                        \"Excellent\", \"Very_Excellent\")),\n         Garage_Type = if_else(is.na(Garage_Type), \"No_Garage\", Garage_Type),\n         Garage_Type = as_factor(Garage_Type)\n         )"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#initial-data-split",
+    "href": "slides/15-selection-regularization-tuning.html#initial-data-split",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Initial Data Split",
+    "text": "Initial Data Split\n\ndata_split &lt;- initial_split(ames, strata = \"Sale_Price\")\names_train &lt;- training(data_split)\names_test  &lt;- testing(data_split)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-folds",
+    "href": "slides/15-selection-regularization-tuning.html#define-folds",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Folds",
+    "text": "Define Folds\n\names_folds &lt;- vfold_cv(ames_train, v = 10, repeats = 10)\names_folds\n\n#  10-fold cross-validation repeated 10 times \n# A tibble: 100 × 3\n   splits           id       id2   \n   &lt;list&gt;           &lt;chr&gt;    &lt;chr&gt; \n 1 &lt;split [594/66]&gt; Repeat01 Fold01\n 2 &lt;split [594/66]&gt; Repeat01 Fold02\n 3 &lt;split [594/66]&gt; Repeat01 Fold03\n 4 &lt;split [594/66]&gt; Repeat01 Fold04\n 5 &lt;split [594/66]&gt; Repeat01 Fold05\n 6 &lt;split [594/66]&gt; Repeat01 Fold06\n 7 &lt;split [594/66]&gt; Repeat01 Fold07\n 8 &lt;split [594/66]&gt; Repeat01 Fold08\n 9 &lt;split [594/66]&gt; Repeat01 Fold09\n10 &lt;split [594/66]&gt; Repeat01 Fold10\n# ℹ 90 more rows"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-models",
+    "href": "slides/15-selection-regularization-tuning.html#define-models",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Model(s)",
+    "text": "Define Model(s)\n\nlm_model &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")\n\nknn5_model &lt;- nearest_neighbor(neighbors = 5) |&gt;\n  set_engine(\"kknn\") |&gt;\n  set_mode(\"regression\")\n\nknn10_model &lt;- nearest_neighbor(neighbors = 10) |&gt;\n  set_engine(\"kknn\") |&gt;\n  set_mode(\"regression\")"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-preprocessing-linear-regression",
+    "href": "slides/15-selection-regularization-tuning.html#define-preprocessing-linear-regression",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Preprocessing: Linear regression",
+    "text": "Define Preprocessing: Linear regression\n\nlm_knnimpute &lt;- recipe(Sale_Price ~ ., data = ames_train) |&gt; \n  step_nzv(all_predictors()) |&gt;  # remove zero or near-zero variable predictors\n  step_impute_knn(Year_Built, Gr_Liv_Area) |&gt;  # impute missing values in Overall_Qual and Year_Built\n  step_integer(Overall_Qual) |&gt; # convert Overall_Qual into ordinal encoding\n  step_other(all_nominal_predictors(), threshold = 0.01, other = \"Other\") |&gt; # lump all categories with less than 1% representation into a category called Other for each variable\n  step_dummy(all_nominal_predictors(), one_hot = FALSE) |&gt;  # in general use one_hot unless doing linear regression\n  step_corr(all_numeric_predictors(), threshold = 0.5) |&gt; # remove highly correlated predictors\n  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-preprocessing-linear-regression-1",
+    "href": "slides/15-selection-regularization-tuning.html#define-preprocessing-linear-regression-1",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Preprocessing: Linear regression",
+    "text": "Define Preprocessing: Linear regression\n\nlm_meanimpute &lt;- recipe(Sale_Price ~ ., data = ames_train) |&gt; \n  step_nzv(all_predictors()) |&gt;  # remove zero or near-zero variable predictors\n  step_impute_mean(Year_Built, Gr_Liv_Area) |&gt;  # impute missing values in Overall_Qual and Year_Built\n  step_integer(Overall_Qual) |&gt; # convert Overall_Qual into ordinal encoding\n  step_other(all_nominal_predictors(), threshold = 0.01, other = \"Other\") |&gt; # lump all categories with less than 1% representation into a category called Other for each variable\n  step_dummy(all_nominal_predictors(), one_hot = FALSE) |&gt;  # in general use one_hot unless doing linear regression\n  step_corr(all_numeric_predictors(), threshold = 0.5) |&gt; # remove highly correlated predictors\n  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-preprocessing-linear-regression-2",
+    "href": "slides/15-selection-regularization-tuning.html#define-preprocessing-linear-regression-2",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Preprocessing: Linear regression",
+    "text": "Define Preprocessing: Linear regression\n\nlm_medianimpute &lt;- recipe(Sale_Price ~ ., data = ames_train) |&gt; \n  step_nzv(all_predictors()) |&gt;  # remove zero or near-zero variable predictors\n  step_impute_median(Year_Built, Gr_Liv_Area) |&gt;  # impute missing values in Overall_Qual and Year_Built\n  step_integer(Overall_Qual) |&gt; # convert Overall_Qual into ordinal encoding\n  step_other(all_nominal_predictors(), threshold = 0.01, other = \"Other\") |&gt; # lump all categories with less than 1% representation into a category called Other for each variable\n  step_dummy(all_nominal_predictors(), one_hot = FALSE) |&gt;  # in general use one_hot unless doing linear regression\n  step_corr(all_numeric_predictors(), threshold = 0.5) |&gt; # remove highly correlated predictors\n  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-preprocessing-knn",
+    "href": "slides/15-selection-regularization-tuning.html#define-preprocessing-knn",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Preprocessing: KNN",
+    "text": "Define Preprocessing: KNN\n\nknn_preproc1 &lt;- recipe(Sale_Price ~ ., data = ames_train) |&gt; \n  step_nzv(all_predictors()) |&gt;  # remove zero or near-zero variable predictors\n  step_impute_knn(Year_Built, Gr_Liv_Area) |&gt;  # impute missing values in Overall_Qual and Year_Built\n  step_integer(Overall_Qual) |&gt; # convert Overall_Qual into ordinal encoding\n  step_other(all_nominal_predictors(), threshold = 0.01, other = \"Other\") |&gt; # lump all categories with less than 1% representation into a category called Other for each variable\n  step_dummy(all_nominal_predictors(), one_hot = TRUE) |&gt;  # in general use one_hot unless doing linear regression\n  step_nzv(all_predictors()) |&gt; \n  step_normalize(all_numeric_predictors())"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-preprocessing-knn-1",
+    "href": "slides/15-selection-regularization-tuning.html#define-preprocessing-knn-1",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Preprocessing: KNN",
+    "text": "Define Preprocessing: KNN\n\nknn_preproc2 &lt;- recipe(Sale_Price ~ ., data = ames_train) |&gt; \n  step_nzv(all_predictors()) |&gt;  # remove zero or near-zero variable predictors\n  step_impute_mean(Year_Built, Gr_Liv_Area) |&gt;  # impute missing values in Overall_Qual and Year_Built\n  step_integer(Overall_Qual) |&gt; # convert Overall_Qual into ordinal encoding\n  step_other(all_nominal_predictors(), threshold = 0.01, other = \"Other\") |&gt; # lump all categories with less than 1% representation into a category called Other for each variable\n  step_dummy(all_nominal_predictors(), one_hot = TRUE) |&gt;  # in general use one_hot unless doing linear regression\n  step_nzv(all_predictors()) |&gt; \n  step_normalize(all_numeric_predictors())"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-preprocessing-knn-2",
+    "href": "slides/15-selection-regularization-tuning.html#define-preprocessing-knn-2",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Preprocessing: KNN",
+    "text": "Define Preprocessing: KNN\n\nknn_preproc3 &lt;- recipe(Sale_Price ~ ., data = ames_train) |&gt; \n  step_nzv(all_predictors()) |&gt;  # remove zero or near-zero variable predictors\n  step_impute_median(Year_Built, Gr_Liv_Area) |&gt;  # impute missing values in Overall_Qual and Year_Built\n  step_integer(Overall_Qual) |&gt; # convert Overall_Qual into ordinal encoding\n  step_other(all_nominal_predictors(), threshold = 0.01, other = \"Other\") |&gt; # lump all categories with less than 1% representation into a category called Other for each variable\n  step_dummy(all_nominal_predictors(), one_hot = TRUE) |&gt;  # in general use one_hot unless doing linear regression\n  step_nzv(all_predictors()) |&gt; \n  step_normalize(all_numeric_predictors())"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#workflow-sets",
+    "href": "slides/15-selection-regularization-tuning.html#workflow-sets",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Workflow Sets",
+    "text": "Workflow Sets\n\nInput lists of models and recipes\nIf cross = TRUE will try out all combinations"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#create-lists",
+    "href": "slides/15-selection-regularization-tuning.html#create-lists",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Create lists",
+    "text": "Create lists\n\nknn_preprocessors &lt;- list(\n  knn_knn_impute = knn_preproc1,\n  knn_mean_impute = knn_preproc2,\n  knn_median_imput = knn_preproc3\n)\n\nknn_models &lt;- list(\n  knn5 = knn5_model,\n  knn10 = knn10_model\n)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#create-lists-1",
+    "href": "slides/15-selection-regularization-tuning.html#create-lists-1",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Create lists",
+    "text": "Create lists\n\nlm_preprocessors &lt;- list(\n  lm_knn_impute = lm_knnimpute,\n  lm_mean_impute = lm_meanimpute,\n  lm_median_imput = lm_medianimpute\n)\n\nlm_models &lt;- list(\n  lm_model = lm_model\n)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-workflow-sets",
+    "href": "slides/15-selection-regularization-tuning.html#define-workflow-sets",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Workflow Sets",
+    "text": "Define Workflow Sets\n\nknn_models &lt;- workflow_set(knn_preprocessors, knn_models, cross = TRUE)\nlm_models &lt;-  workflow_set(lm_preprocessors, lm_models, cross = TRUE)\nall_models &lt;- lm_models |&gt; \n  bind_rows(knn_models)\n  \nall_models\n\n# A workflow set/tibble: 9 × 4\n  wflow_id                 info             option    result    \n  &lt;chr&gt;                    &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    \n1 lm_knn_impute_lm_model   &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n2 lm_mean_impute_lm_model  &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n3 lm_median_imput_lm_model &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n4 knn_knn_impute_knn5      &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n5 knn_knn_impute_knn10     &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n6 knn_mean_impute_knn5     &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n7 knn_mean_impute_knn10    &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n8 knn_median_imput_knn5    &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;\n9 knn_median_imput_knn10   &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#define-metrics",
+    "href": "slides/15-selection-regularization-tuning.html#define-metrics",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Define Metrics",
+    "text": "Define Metrics\n\names_metrics &lt;- metric_set(rmse, rsq)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#fit-resamples",
+    "href": "slides/15-selection-regularization-tuning.html#fit-resamples",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Fit Resamples",
+    "text": "Fit Resamples\n\nall_fits &lt;- all_models |&gt; \n  workflow_map(\"fit_resamples\",\n               resamples = ames_folds,\n               metrics = ames_metrics)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#view-metrics",
+    "href": "slides/15-selection-regularization-tuning.html#view-metrics",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "View Metrics",
+    "text": "View Metrics\n\ncollect_metrics(all_fits) |&gt; \n  filter(.metric == \"rmse\") |&gt; \n  kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nwflow_id\n.config\npreproc\nmodel\n.metric\n.estimator\nmean\nn\nstd_err\n\n\n\n\nlm_knn_impute_lm_model\nPreprocessor1_Model1\nrecipe\nlinear_reg\nrmse\nstandard\n39754.78\n100\n724.5845\n\n\nlm_mean_impute_lm_model\nPreprocessor1_Model1\nrecipe\nlinear_reg\nrmse\nstandard\n40339.76\n100\n790.8570\n\n\nlm_median_imput_lm_model\nPreprocessor1_Model1\nrecipe\nlinear_reg\nrmse\nstandard\n40303.18\n100\n792.2404\n\n\nknn_knn_impute_knn5\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrmse\nstandard\n40865.74\n100\n1168.9516\n\n\nknn_knn_impute_knn10\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrmse\nstandard\n40585.89\n100\n1196.3147\n\n\nknn_mean_impute_knn5\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrmse\nstandard\n40973.29\n100\n1169.1127\n\n\nknn_mean_impute_knn10\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrmse\nstandard\n40749.35\n100\n1197.0999\n\n\nknn_median_imput_knn5\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrmse\nstandard\n40979.23\n100\n1166.2676\n\n\nknn_median_imput_knn10\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrmse\nstandard\n40747.77\n100\n1196.2514"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#view-metrics-1",
+    "href": "slides/15-selection-regularization-tuning.html#view-metrics-1",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "View Metrics",
+    "text": "View Metrics\n\ncollect_metrics(all_fits) |&gt; \n  filter(.metric == \"rsq\") |&gt; \n  kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nwflow_id\n.config\npreproc\nmodel\n.metric\n.estimator\nmean\nn\nstd_err\n\n\n\n\nlm_knn_impute_lm_model\nPreprocessor1_Model1\nrecipe\nlinear_reg\nrsq\nstandard\n0.7728989\n100\n0.0055434\n\n\nlm_mean_impute_lm_model\nPreprocessor1_Model1\nrecipe\nlinear_reg\nrsq\nstandard\n0.7661074\n100\n0.0067038\n\n\nlm_median_imput_lm_model\nPreprocessor1_Model1\nrecipe\nlinear_reg\nrsq\nstandard\n0.7667739\n100\n0.0066014\n\n\nknn_knn_impute_knn5\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrsq\nstandard\n0.7574393\n100\n0.0080339\n\n\nknn_knn_impute_knn10\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrsq\nstandard\n0.7662157\n100\n0.0070608\n\n\nknn_mean_impute_knn5\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrsq\nstandard\n0.7566579\n100\n0.0076762\n\n\nknn_mean_impute_knn10\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrsq\nstandard\n0.7651128\n100\n0.0068290\n\n\nknn_median_imput_knn5\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrsq\nstandard\n0.7568404\n100\n0.0076513\n\n\nknn_median_imput_knn10\nPreprocessor1_Model1\nrecipe\nnearest_neighbor\nrsq\nstandard\n0.7653082\n100\n0.0068162"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#plotting-results",
+    "href": "slides/15-selection-regularization-tuning.html#plotting-results",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Plotting Results",
+    "text": "Plotting Results\n\nlibrary(ggrepel)\nautoplot(all_fits, metric = \"rmse\") +\n  geom_text_repel(aes(label = wflow_id), nudge_x = 1/8, nudge_y = 1/100) +\n  theme(legend.position = \"none\")"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#plotting-results-1",
+    "href": "slides/15-selection-regularization-tuning.html#plotting-results-1",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Plotting Results",
+    "text": "Plotting Results\n\nautoplot(all_fits, metric = \"rsq\") +\n  geom_text_repel(aes(label = wflow_id), nudge_x = 1/8, nudge_y = 1/100) +\n  theme(legend.position = \"none\")"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#feature-selection-in-r",
+    "href": "slides/15-selection-regularization-tuning.html#feature-selection-in-r",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Feature Selection in R",
+    "text": "Feature Selection in R\n\nWhen creating your recipe, don’t need to always include all variables in your recipe:\n\n\nint_recipe &lt;- recipe(pred ~ var1 + var2 + var1*var2, data = training_data) |&gt; \n  step_x(...)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#re-using-recipe-but-changing-formula",
+    "href": "slides/15-selection-regularization-tuning.html#re-using-recipe-but-changing-formula",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Re-using Recipe but changing formula",
+    "text": "Re-using Recipe but changing formula\n\nnoint_recipe2 &lt;- new_recipe |&gt; \n  remove_formula() |&gt; \n  add_formula(pred ~ var1 + var2)"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#question",
+    "href": "slides/15-selection-regularization-tuning.html#question",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Question",
+    "text": "Question\n\nWhat criteria do we use to fit a linear regression model? Write down an equation with \\(\\hat{\\beta_i}\\)’s, \\(x_{ij}\\)’s, and \\(y_j\\)’s in it."
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#basic-idea",
+    "href": "slides/15-selection-regularization-tuning.html#basic-idea",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Basic Idea",
+    "text": "Basic Idea\n\nOrdinary Least Squares Regression:\n\n\\[\n\\begin{aligned}\n\\text{minimize:} \\quad SSE(\\hat{\\beta}) &= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2\n\\end{aligned}\n\\]\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#basic-idea-ols",
+    "href": "slides/15-selection-regularization-tuning.html#basic-idea-ols",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Basic Idea: OLS",
+    "text": "Basic Idea: OLS\n\nOrdinary Least Squares Regression:\n\n\\[\n\\begin{aligned}\n\\hat{\\beta} =\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}SSE(\\hat{\\beta}) &= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2\n\\end{aligned}\n\\]\n\n\\(\\hat{\\beta} = (\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p)\\) is the vector of all my coefficients\n\\(\\operatorname{argmin}\\) is a function that returns the arguments that minimize the quantity it’s being applied to\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#ols",
+    "href": "slides/15-selection-regularization-tuning.html#ols",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "OLS",
+    "text": "OLS\n\nOrdinary Least Squares Regression:\n\n\\[\n\\begin{aligned}\n\\hat{\\beta} =\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}SSE(\\hat{\\beta}) &= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2\n\\end{aligned}\n\\]\n\n\\(\\hat{\\beta} = (\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p)\\) is the vector of all my coefficients\n\\(\\operatorname{argmin}\\) is a function (operator) that returns the arguments that minimize the quantity it’s being applied to"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#shrinkage-method-1-ridge-regression",
+    "href": "slides/15-selection-regularization-tuning.html#shrinkage-method-1-ridge-regression",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Shrinkage Method 1: Ridge Regression",
+    "text": "Shrinkage Method 1: Ridge Regression\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_2^2\\right) \\\\\n&= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\sum_{i=1}^p \\hat{\\beta}_i^2\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\sum_{i=1}^p \\hat{\\beta}_i^2\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#shrinkage-method-2-lasso",
+    "href": "slides/15-selection-regularization-tuning.html#shrinkage-method-2-lasso",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Shrinkage Method 2: LASSO",
+    "text": "Shrinkage Method 2: LASSO\n\nOrdinary Least Squares Regression:\n\n\\[\n\\begin{aligned}\n\\hat{\\beta} =\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}SSE(\\hat{\\beta}) &= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2\n\\end{aligned}\n\\]\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#ridge-regression",
+    "href": "slides/15-selection-regularization-tuning.html#ridge-regression",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Ridge Regression",
+    "text": "Ridge Regression\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_2^2\\right) \\\\\n&= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p \\hat{\\beta}_i^2\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p \\hat{\\beta}_i^2\n\\end{aligned}\n\\]\n\n\\(\\lambda\\) is called a “tuning parameter” and is not estimate from the data (more on this later)\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_2\\) is called the \\(L_2\\)-norm"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#but-but-but-why",
+    "href": "slides/15-selection-regularization-tuning.html#but-but-but-why",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "But… but… but why?!?",
+    "text": "But… but… but why?!?\n\n\nRecall the Bias-Variance Trade-Off\nOur reducible error can partitioned into:\n\nBias: how much \\(\\hat{f}\\) misses \\(f\\) by on average\nVariance: how much \\(\\hat{f}\\) moves around from sample to sample\n\nRidge: increase bias a little bit in exchange for large decrease in variance\nAs we increase \\(\\lambda\\) do we increase or decrease the penalty for large coefficients?\nAs we increase \\(\\lambda\\) do we increase or decrease the flexibility of our model?"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#but-but-but-why-1",
+    "href": "slides/15-selection-regularization-tuning.html#but-but-but-why-1",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "But… but… but why?!?",
+    "text": "But… but… but why?!?\n\nRecall the Bias-Variance Trade-Off\nOur reducible error can partitioned into:\n\nBias: how much \\(\\hat{f}\\) misses \\(f\\) by on average\nVariance: how much \\(\\hat{f}\\) moves around from sample to sample\n\nRidge: increase bias a little bit in exchange for large decrease in variance"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#lasso",
+    "href": "slides/15-selection-regularization-tuning.html#lasso",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "LASSO",
+    "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\\\\n&=\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\n\\end{aligned}\n\\]\n\n\\(\\lambda\\) is called a “tuning parameter” and is not estimate from the data (more on this later)\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#ridge-vs.-lasso",
+    "href": "slides/15-selection-regularization-tuning.html#ridge-vs.-lasso",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Ridge vs. LASSO",
+    "text": "Ridge vs. LASSO\n\n\nRidge has a closed-form solution… how might be calculate it?\nRidge has some nice linear algebra properties that makes is EXTREMELY FAST to fit\nLASSO has no closed-form solution… why?\nLASSO coefficients estimated numerically… how?\n\nGradient descent works but something called coordinate descent is typically better\n\nMOST IMPORTANT PROPERTY OF LASSO: it induces sparsity while Ridge does not"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#sparsity-in-applied-math",
+    "href": "slides/15-selection-regularization-tuning.html#sparsity-in-applied-math",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Sparsity in Applied Math",
+    "text": "Sparsity in Applied Math\n\nsparse typically means “most things are zero”\nExample: sparse matrices are matrices where most entries are zero\n\nfor large matrices this can provide HUGE performance gains\n\nLASSO induces sparsity by setting most of the parameter estimates to zero\n\nthis means it fits the model and does feature selection SIMULTANEOUSLY\n\nLet’s do some board work to see why this is…"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#lasso-and-ridge-in-r",
+    "href": "slides/15-selection-regularization-tuning.html#lasso-and-ridge-in-r",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "LASSO and Ridge in R",
+    "text": "LASSO and Ridge in R\n\nols &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")\nridge_0 &lt;- linear_reg(mixture = 0, penalty = 0) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nridge_1 &lt;- linear_reg(mixture = 0, penalty = 1) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nridge_1000 &lt;- linear_reg(mixture = 0, penalty = 1000) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nlasso_0 &lt;- linear_reg(mixture = 1, penalty = 0) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nlasso_1 &lt;- linear_reg(mixture = 1, penalty = 1) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nlasso_1000 &lt;- linear_reg(mixture = 1, penalty = 1000) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")"
+  },
+  {
+    "objectID": "slides/15-selection-regularization-tuning.html#create-workflow-set",
+    "href": "slides/15-selection-regularization-tuning.html#create-workflow-set",
+    "title": "MATH 427: Workflow Sets, Feature Selection, and Regularization",
+    "section": "Create workflow set",
+    "text": "Create workflow set\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
