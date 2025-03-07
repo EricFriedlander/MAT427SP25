@@ -1,0 +1,148 @@
+---
+title: "HW 04: Preprocessing and Cross Validation" 
+editor: visual
+format:
+  html:
+    embed-resources: true
+---
+
+# Introduction
+
+In this homework you will practice pre-processing data and using cross-validation to evaluate regression models. 
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Use exploratory data analysis to inform feature engineering steps
+-   Pre-process data and impute missing values
+-   Evaluate and compare models using cross-validation
+
+# Getting Started
+
+In last weeks homework, you learned how to share your work using GitHub and to resolve merge conflicts. This week you'll learn about how to create and merge branches.
+
+## Teams & Rules
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW5**. Your group will consist of 2-3 people and has been randomly generated. You have now been exposed to all of the Git concepts that we will talk about in this class. It is up to you to apply them to complete your homework in any way you see fit. Some rules:
+
+1.  You are all responsible for understanding the work that you turn in.
+2.  All team members must make roughly equal contributions to the homework.
+3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+
+## Exercise 0
+
+As in your previous homework's, create your team on GitHub classroom and clone the repository. [Here](https://classroom.github.com/a/VhxbjrFN) is a link to the homework.
+
+
+## Data: LEGOs
+
+The data for this analysis includes information about LEGO sets from themes produced January 1, 2018 and September 11, 2020. The data were originally scraped from Brickset.com, an online LEGO set guide and were obtained for this assignment from Peterson and Zieglar ([2021](https://www.tandfonline.com/doi/full/10.1080/26939169.2021.1946450)).
+
+You will work with data on about 400 randomly selected LEGO sets produced during this time period. The primary variables are interest in this analysis are
+
+-   `Item_Number`: a serial code corresponding to the set.
+-   `Set_Name`: The name of the lego set.
+-   `Theme`: Theme of the LEGO set.
+-   `Pieces`: Number of pieces in the set from brickset.com.
+-   `Amazon_Price`: Amazon price of the set scraped from brickset.com (in U.S. dollars)
+-   `Year` : Year the LEGO set was produced.
+-   `Ages`: Variable stating what aged children the set is appropriate for.
+-   `Pages`: Number of pages in the instruction booklet
+-   `Minifigures`: Number of minifigures (LEGO people) in the set scraped from brickset.com. LEGO sets with no minifigures have been coded as NA. NA's also represent missing data. This is due to how brickset.com reports their data.
+-   `Packaging`: What type of packaging the set came in.
+-   `Weight`: The weight of the set.
+-   `Unique_Pieces`: the number of unique pieces in each set.
+-   `Availability`: Where the set can be purchased.
+-   `Size`: General size of the interlocking bricks (Large = LEGO Duplo sets - which include large brick pieces safe for children ages 1 to 5, Small = LEGO sets which- include the traditional smaller brick pieces created for age groups 5 and - older, e.g., City, Friends).
+
+# Loading & Cleaning the Data
+
+## Exercise 1
+
+The data are contained in `lego-sample.csv`. Use the code below to read in the data, replace the `NA`s in `Minifigure` with 0, and remove any observations that have missing values for the relevant variables.
+
+```{r}
+#| eval: true
+legos <- read_csv("../data/lego-sample.csv") |>
+  select(Size, Pieces, Theme, Amazon_Price, Year, Pages, Minifigures) |>
+  mutate(Minifigures = replace_na(Minifigures, 0)) |>
+  drop_na()
+```
+
+Let's think about the analysis decisions we just made. We decided to drop all observations that have missing values for any of the relevant variables we identified. What are these advantages and disadvantages of doing this? Feel free to Google "structurally missing data". We also replaced ALL of the `NA`s in `Minifigures` with 0's. What are the advantages and disadvantages of doing this? Make sure you read the description of `Minifigures` in the introduction before answering.
+
+## Exercise 2
+
+Visualize the distributions of the predictor variables `Pieces`, `Size`, `Year`, and `Pages`. Neatly arrange the plots using the [patchwork](https://patchwork.data-imaginist.com/index.html) package. Create univariate visualizations not bivariate visualizations.
+
+## Exercise 3
+
+The distribution of `Theme` is shown below. The bars are ordered by the frequency they occur in the data set.
+
+```{r}
+#| eval: true
+legos |>
+  count(Theme) |>
+  mutate(Theme = fct_reorder(Theme, n)) |> 
+gf_col(Theme ~ n) |> 
+    gf_labs(title = "Lego Set Theme", 
+         y = "Theme", 
+         x = "Number of LEGO sets")
+```
+
+Based solely on information that is visible in this plot, what is one reason we should avoid putting the variable `Theme` in a model as is?
+
+## Exercise 4
+
+Create a new variable called `Theme_coarse` that collapses any levels of `Theme` with fewer than 20 observations into a single category called `Other`. Hint: Look into the function `fct_lump_min`. You'll want to use it inside a `mutate` statement.
+
+## Exercise 5
+
+Fit a model that uses the variables `Size`, `Theme_coarse`, and `Pages` to predict `Amazon_Price`. Call this `model1`.
+
+## Exercise 6
+
+Create a new variable called `since2018` that calculates the number of years since 2018 based on the variable `Year`.
+
+## Exercise 7
+
+Now let's consider a new model that includes all the variables used in the model from Exercise 5 along with `since2018`, `Pieces`, and `Minifigures`. Call this `model2`
+
+## Exercise 8
+
+Compute the $R^2$, $R^2_{adj}$, AIC, and BIC for `model1` and `model2`. Based on your results, what model do you believe is the "best" model? Justify your answer citing specific evidence from the values you just generated. Note, they may not all be useful.
+
+## Exercise 9
+
+For whichever model you chose above, determine whether the conditions for inference are met.
+
+## Exercise 10
+
+For the same model, conduct an F-test and interpret your results in the context of the problem. Make sure to:
+
+1.  Identify the null and alternative hypotheses.
+2.  Compute the F-statistic.
+3.  Compute the p-value.
+4.  Interpret the result of your test at a significance level of $\alpha = 0.05$
+
+# Grading (18 points)
+
+| Component             | Points |
+|-----------------------|--------|
+| Ex 1                  | 2      |
+| Ex 2                  | 1      |
+| Ex 3                  | 1      |
+| Ex 4                  | 1      |
+| Ex 5                  | 1      |
+| Ex 6                  | 1      |
+| Ex 7                  | 1      |
+| Ex 8                  | 4      |
+| Ex 9                  | 2      |
+| Ex 10                 | 2      |
+| Grammar & Writing     | 1[^1]  |
+| Workflow & formatting | 1[^2]  |
+
+[^1]: The "Grammar & Writing" grade is decided based on your grammar and writing. This is typically decided by choosing one of the questions and assessing the writing.
+
+[^2]: The "Workflow & formatting" grade is to assess the reproducible workflow and document format. This includes having a neatly organized document with readable code and your name and the date in the YAML.
