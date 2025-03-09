@@ -8,7 +8,7 @@
 
 <meta name="author" content="Your Name">
 
-<title>Homework 3: K-Nearest Neighbors – MAT 427 - Spring 2025</title>
+<title>Homework 05: Preprocessing and Cross Validation – MAT 427 - Spring 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -4891,7 +4891,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Homework 3: <span class="math inline">\(K\)</span>-Nearest Neighbors</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Homework 05: Preprocessing and Cross Validation</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -5008,40 +5008,48 @@ window.Quarto = {
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
   <li><a href="#teams-rules" id="toc-teams-rules" class="nav-link" data-scroll-target="#teams-rules">Teams &amp; Rules</a></li>
-  <li><a href="#clone-the-repo-start-new-rstudio-project" id="toc-clone-the-repo-start-new-rstudio-project" class="nav-link" data-scroll-target="#clone-the-repo-start-new-rstudio-project">Clone the repo &amp; start new RStudio project</a></li>
-  <li><a href="#exercise-0.1" id="toc-exercise-0.1" class="nav-link" data-scroll-target="#exercise-0.1">Exercise 0.1</a></li>
-  <li><a href="#exercise-0.2" id="toc-exercise-0.2" class="nav-link" data-scroll-target="#exercise-0.2">Exercise 0.2</a></li>
+  <li><a href="#exercise-0" id="toc-exercise-0" class="nav-link" data-scroll-target="#exercise-0">Exercise 0</a></li>
+  <li><a href="#data-lego" id="toc-data-lego" class="nav-link" data-scroll-target="#data-lego">Data: LEGO</a></li>
   </ul></li>
-  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="math inline">\(K\)</span>-Nearest Neighbors</a>
+  <li><a href="#loading-cleaning-the-data" id="toc-loading-cleaning-the-data" class="nav-link" data-scroll-target="#loading-cleaning-the-data">Loading &amp; Cleaning the Data</a>
   <ul class="collapse">
-  <li><a href="#knn-for-classification" id="toc-knn-for-classification" class="nav-link" data-scroll-target="#knn-for-classification">KNN for Classification</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
   <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4.1" id="toc-exercise-4.1" class="nav-link" data-scroll-target="#exercise-4.1">Exercise 4.1</a></li>
+  <li><a href="#exercise-4.2" id="toc-exercise-4.2" class="nav-link" data-scroll-target="#exercise-4.2">Exercise 4.2</a></li>
+  <li><a href="#exercise-4.3" id="toc-exercise-4.3" class="nav-link" data-scroll-target="#exercise-4.3">Exercise 4.3</a></li>
+  <li><a href="#exercise-4.4" id="toc-exercise-4.4" class="nav-link" data-scroll-target="#exercise-4.4">Exercise 4.4</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#data-splitting-preprocessing" id="toc-data-splitting-preprocessing" class="nav-link" data-scroll-target="#data-splitting-preprocessing">Data Splitting &amp; Preprocessing</a>
+  <ul class="collapse">
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
   <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
   <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
+  </ul></li>
+  <li><a href="#model-fitting-evaluation" id="toc-model-fitting-evaluation" class="nav-link" data-scroll-target="#model-fitting-evaluation">Model-Fitting &amp; Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#exercise-7-1" id="toc-exercise-7-1" class="nav-link" data-scroll-target="#exercise-7-1">Exercise 7</a></li>
   <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
-  </ul></li>
-  <li><a href="#knn-for-regression" id="toc-knn-for-regression" class="nav-link" data-scroll-target="#knn-for-regression">KNN for Regression</a>
-  <ul class="collapse">
-  <li><a href="#data-dummy-variables" id="toc-data-dummy-variables" class="nav-link" data-scroll-target="#data-dummy-variables">Data &amp; Dummy Variables</a></li>
   <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
-  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11">Exercise 11</a></li>
-  <li><a href="#exercise-12" id="toc-exercise-12" class="nav-link" data-scroll-target="#exercise-12">Exercise 12</a></li>
+  </ul></li>
+  <li><a href="#conceptual-question" id="toc-conceptual-question" class="nav-link" data-scroll-target="#conceptual-question">Conceptual Question</a>
+  <ul class="collapse">
+  <li><a href="#exercise-11-sample-interview-question" id="toc-exercise-11-sample-interview-question" class="nav-link" data-scroll-target="#exercise-11-sample-interview-question">Exercise 11 (Sample interview question)</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/03-hw-knn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/05-hw-preproc-cv.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Homework 3: <span class="math inline">\(K\)</span>-Nearest Neighbors</h1>
+<h1 class="title">Homework 05: Preprocessing and Cross Validation</h1>
 </div>
 
 
@@ -5066,101 +5074,58 @@ window.Quarto = {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In this homework, you will practice applying the <span class="math inline">\(K\)</span>-Nearest Neighbors (KNN) method which is capable of performing both classification and regression. You will also practice collaborating with a team over GitHub.</p>
+<p>In this homework you will practice pre-processing data and using cross-validation to evaluate regression models.</p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
-<p>By the end of the homework, you will…</p>
+<p>In this assignment, you will…</p>
 <ul>
-<li>Be able to work simultaneously with teammates on the same document using GitHub</li>
-<li>Fit and interpret KNN models in both regression and classification settings</li>
-<li>Compare and evaluate different KNN models</li>
+<li>Use exploratory data analysis to inform feature engineering steps</li>
+<li>Pre-process data and impute missing values</li>
+<li>Evaluate and compare models using cross-validation</li>
 </ul>
 </section>
 </section>
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
-<p>In last weeks homework, you learned how to share your work using GitHub but only while working on the same document at different times. This week we will learn how to work on the same document <em>simultaneously</em>.</p>
+<p>In last weeks homework, you learned how to share your work using GitHub and to resolve merge conflicts using branches. From here on out, you are free to use whatever version control strategy you like.</p>
 <section id="teams-rules" class="level2">
 <h2 class="anchored" data-anchor-id="teams-rules">Teams &amp; Rules</h2>
-<p>You can find your team for this assignment on Canvas in the <strong>People</strong> section. The group set is called <strong>HW3</strong>. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:</p>
+<p>You can find your team for this assignment on Canvas in the <strong>People</strong> section. The group set is called <strong>HW5</strong>. Your group will consist of 2-3 people and has been randomly generated. You have now been exposed to all of the Git concepts that we will talk about in this class. It is up to you to apply them to complete your homework in any way you see fit. Some rules:</p>
 <ol type="1">
-<li>You and your team members should be in the same physical room for Exercises 0.1 and 0.2. After that, you are welcome to divide up the work as you see fit. Please note that most of these problems have to be done sequentially except for Exercises 10-12, which can be done apart from 1-9.</li>
 <li>You are all responsible for understanding the work that you turn in.</li>
-<li>In order to receive credit, each team member but make a roughly equal contribution. Since this project has 12 exercises (not including 0), each team member should commit and push at least 4 different exercises.</li>
-<li>If you are working on the same document simultaneously, make sure to render, commit, push, and pull FREQUENTLY.</li>
-<li>If you encounter a merge error that you don’t know how to fix, contact Dr. Friedlander as soon as possible. I recommend starting this assignment early so there is time for Dr. Friedlander to help you resolve any problems before the deadline.</li>
+<li>All team members must make roughly equal contributions to the homework.</li>
+<li>Any work completed by a team member must be committed and pushed to GitHub by that person.</li>
 </ol>
 </section>
-<section id="clone-the-repo-start-new-rstudio-project" class="level2">
-<h2 class="anchored" data-anchor-id="clone-the-repo-start-new-rstudio-project">Clone the repo &amp; start new RStudio project</h2>
-<p>The following directions will guide you through the process of setting up your homework to work as a group.</p>
+<section id="exercise-0" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-0">Exercise 0</h2>
+<p>As in your previous homework’s, create your team on GitHub classroom and clone the repository. <a href="https://classroom.github.com/a/VhxbjrFN">Here</a> is a link to the homework.</p>
 </section>
-<section id="exercise-0.1" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-0.1">Exercise 0.1</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Question">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In your group, decide on a team name. Then have <strong>one member of your group</strong>:</p>
-<ol type="1">
-<li><a href="https://classroom.github.com/a/LEbjScjp">Click this link</a> to accept the assignment and enter your team name.</li>
-<li>Repeat the directions for creating a project from HW 1 with the HW 3 repository.</li>
-</ol>
-<p>Once this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom.</p>
-</div>
-</div>
-</section>
-<section id="exercise-0.2" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-0.2">Exercise 0.2</h2>
-<p>We will now learn how to collaborate on the same document at the same time by creating a <strong>merge conflict</strong>. You can read more about it <a href="https://happygitwithr.com/pull-tricky#pull-tricky">here</a> and <a href="https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch">here</a>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Question">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Have Members 1, 2, and 3 all create write different team names below and Render the document.</li>
-<li>Have Member 1 add, commit, and push changes.</li>
-<li>Have Member 2 add, commit, and push changes. This should cause an error.</li>
-<li>Have Member 2 pull changes from the remote repo which should generate something like this: <code>CONFLICT (content): Merge conflict in 03-hw-knn.qmd</code>.</li>
-<li>Have Member 2 open the <code>.qmd</code> file. You should see something like the third block of code in Section 22.4 of <a href="https://happygitwithr.com/git-branches.html?q=merge#merging-a-branch">this link</a>.</li>
-<li>Have Member edit the document so that it has only their team name, then render, commit, and push. This should not cause an error.</li>
-<li>Have Member 3 repeat steps 3-6.</li>
-<li>Agree on what you want your team name to actually be and have Member 1 repeat steps 3-6.</li>
-<li>Note that you will only generate a merge conflict if you make edits to the same line of code. If you are working on the same document simultaneously but are editing different portions, git should automatically merge for you.</li>
-</ol>
-</div>
-</div>
+<section id="data-lego" class="level2">
+<h2 class="anchored" data-anchor-id="data-lego">Data: LEGO</h2>
+<p>The data for this analysis includes information about LEGO sets from themes produced January 1, 2018 and September 11, 2020. The data were originally scraped from Brickset.com, an online LEGO set guide and were obtained for this assignment from Peterson and Zieglar (<a href="https://www.tandfonline.com/doi/full/10.1080/26939169.2021.1946450">2021</a>).</p>
+<p>You will work with data on about 400 randomly selected LEGO sets produced during this time period. The primary variables are interest in this analysis are:</p>
 <ul>
-<li>Team Name: [Insert Name]</li>
-<li>Member 1: [Insert Name]</li>
-<li>Member 2: [Insert Name]</li>
-<li>Member 3: [Insert Name/Delete line if you only have two members]</li>
+<li><code>Item_Number</code>: a serial code corresponding to the set.</li>
+<li><code>Set_Name</code>: The name of the LEGO set.</li>
+<li><code>Theme</code>: Theme of the LEGO set.</li>
+<li><code>Pieces</code>: Number of pieces in the set from brickset.com.</li>
+<li><code>Amazon_Price</code>: Amazon price of the set scraped from brickset.com (in U.S. dollars).</li>
+<li><code>Year</code> : Year the LEGO set was produced.</li>
+<li><code>Ages</code>: Variable stating what aged children the set is appropriate for.</li>
+<li><code>Pages</code>: Number of pages in the instruction booklet.</li>
+<li><code>Minifigures</code>: Number of minifigures (LEGO people) in the set scraped from brickset.com. LEGO sets with no minifigures have been coded as NA. NA’s also represent missing data. This is due to how brickset.com reports their data.</li>
+<li><code>Packaging</code>: What type of packaging the set came in.</li>
+<li><code>Weight</code>: The weight of the set.</li>
+<li><code>Unique_Pieces</code>: The number of unique pieces in each set.</li>
+<li><code>Availability</code>: Where the set can be purchased.</li>
+<li><code>Size</code>: General size of the interlocking bricks (Large = LEGO Duplo sets - which include large brick pieces safe for children ages 1 to 5, Small = LEGO sets which- include the traditional smaller brick pieces created for age groups 5 and - older, e.g., City, Friends).</li>
 </ul>
+<p>Your ultimate goal will be to predict <code>Amazon_Price</code> from the other features.</p>
 </section>
 </section>
-<section id="k-nearest-neighbors" class="level1">
-<h1><span class="math inline">\(K\)</span>-Nearest Neighbors</h1>
-<p>The basic idea is that predictions are made based on the <span class="math inline">\(K\)</span> observation in the training data which are “closest” to the observation that we’re making a prediction for. While many different <strong>metrics</strong> (i.e. measures of distance) can be used, we will work exclusively with the <strong>Euclidean metric</strong>: <span class="math display">\[\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}\]</span> for vectors <span class="math inline">\(x = (x_1,\ldots, x_p)\)</span> and <span class="math inline">\(y = (y_1,\ldots,y_p)\)</span>.</p>
-<section id="knn-for-classification" class="level2">
-<h2 class="anchored" data-anchor-id="knn-for-classification">KNN for Classification</h2>
-<p>We’ll start by using KNN for classification.</p>
-</section>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>We will be working with the famous <code>iris</code> data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/eugenicist, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software.</p>
-</section>
+<section id="loading-cleaning-the-data" class="level1">
+<h1>Loading &amp; Cleaning the Data</h1>
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
@@ -5173,7 +5138,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Import the <code>datasets</code> package, take a look at the columns of <code>iris</code>, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the <code>strata</code> argument in the <code>initial_split</code> function! Once again, set your seed to 427.</p>
+<p>The data are contained in <code>lego-sample.csv</code>. Load the data.</p>
 </div>
 </div>
 </section>
@@ -5189,7 +5154,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a scatter plot of your training set with <code>Sepal.Width</code> and <code>Petal.Width</code> on the x- and y- axes, respectively, and color the points by <code>Species</code>.</p>
+<p>Two of the variables in the data set shouldn’t be useful because they just serve to identify the different LEGO sets. Which two are they? Remove them.</p>
 </div>
 </div>
 </section>
@@ -5205,7 +5170,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As the name suggests, the <span class="math inline">\(K\)</span>-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If <span class="math inline">\(k &gt; 1\)</span>, then the neighbors essentially “vote” on the classification of the point. Using only your graph, if <span class="math inline">\(k = 1\)</span>, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?</p>
+<p>Notice that the <code>Weight</code> variable is a bit odd… It seems like it should be numeric but it’s a <code>chr</code>. Why? Write code to extract the true numerical weight in either lbs or Kgs (your choice). You are encouraged to use the internet and generative AI to help you figure out how to do this. However, make sure you are able to explain your code once you are done.</p>
 </div>
 </div>
 </section>
@@ -5221,10 +5186,77 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. This should be done by computing the Euclidean distance of (3, 1) to each observation and then sorting the resulting tibble to get the row with the smallest distance. Don’t worry about normalizaing the data.</p>
+<p>For each of the 12 features do the following:</p>
+</div>
+</div>
+<section id="exercise-4.1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.1">Exercise 4.1</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Identify if they are the correct data type. Are categorical variables coded as factors? Are the factor levels in the correct order if necessary? Are numerical variables coded as numbers? You will need to read descriptions of the data to make this determination.</p>
 </div>
 </div>
 </section>
+<section id="exercise-4.2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.2">Exercise 4.2</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Identify any variables with missing values. Identify and then fix any variables for whom missing values (i.e. <code>NA</code>s) indicate something other than that the data is missing (there is at least one). Fill in this missing values appropriately.</p>
+</div>
+</div>
+</section>
+<section id="exercise-4.3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.3">Exercise 4.3</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For all of the categorical variables, identify ones that you think may be problematic because they may have near-zero variance. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate.</p>
+</div>
+</div>
+</section>
+<section id="exercise-4.4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.4">Exercise 4.4</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For all of the categorical variables, identify ones that you think may be problematic because they have many categories that don’t have a lot of observations and likely need to be “lumped”. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-splitting-preprocessing" class="level1">
+<h1>Data Splitting &amp; Preprocessing</h1>
 <section id="exercise-5" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
@@ -5237,7 +5269,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a <code>recipe</code> to center and scale your data sets using the mean and standard deviation from your training set.</p>
+<p>Split your data into training and test sets. Use your own judgement to determine training to test split ratio. Make sure to set a seed.</p>
 </div>
 </div>
 </section>
@@ -5253,15 +5285,8 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a <code>workflow</code> to fit a KNN model that uses <code>weight_func = &quot;rectangular&quot;</code> with 1 neighbor that includes the recipe above and fit the model to your training set.</p>
+<p>Generate at least three different recipes designed to be used with linear regression that treat preprocessing differently. Hint: you’ll likely want to try out different missing value imputation or lumping strategies. It’s also a good idea to include <code>step_lincolm</code>.</p>
 </div>
-</div>
-<p>We would like to understand how the method of <span class="math inline">\(K\)</span>-nearest neighbors will classify points in the plane. That is, we would like to view the <em>decision boundaries</em> of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a data frame called <code>grid</code> consisting of 6.25^{4} points in the plane.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># g1 &lt;- rep((200:450)*(1/100), 250)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># g2 &lt;- rep((0:250)*(1/100), each = 250)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># grid &lt;- tibble(  x1 = g1</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                    , x2 = g2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-7" class="level2">
@@ -5276,7 +5301,30 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uncomment the code above, and change the variable names so that it will work with your model. Classify the points in <code>grid</code> using your training data and <span class="math inline">\(k = 1\)</span>. Then, plot the points in <code>grid</code> colored by their classification. Make sure your code is written so that the grid points are being centered and scaled before predictions are being made for them.</p>
+<p>Generate at least three different recipes designed to be used with <span class="math inline">\(K\)</span>-nearest neighbors that treat preprocessing differently. Hint: you’ll likely want to try out different missing value imputation or lumping strategies.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="model-fitting-evaluation" class="level1">
+<h1>Model-Fitting &amp; Evaluation</h1>
+<section id="exercise-7-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-7-1">Exercise 7</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a <code>workflow_set</code> that contains 12 different workflows:</p>
+<ul>
+<li>three linear regression workflows: one linear regression model with each of the three recipes you created above</li>
+<li>nine different KNN workflows: choose three different <span class="math inline">\(K\)</span>s for you KNN models and create one workflow for each combination of KNN model and preprocessing recipe</li>
+</ul>
 </div>
 </div>
 </section>
@@ -5292,7 +5340,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Notice that the decision boundary between <code>versicolor</code> and <code>virginica</code> looks a little strange. What do you observe? Why do you think this is happening? Does using <span class="math inline">\(k = 2\)</span> make things better or worse? Why do you think that is?</p>
+<p>Use 5 fold CV with 5 repeats to compute the RMSE and R-squared for each of the 12 workflows you created above. Note that this step may take a few minutes to execute.</p>
 </div>
 </div>
 </section>
@@ -5308,18 +5356,9 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Determine which value of <span class="math inline">\(k\)</span>, the number of neighbors selected, gives the highest accuracy on the test set. Test all <span class="math inline">\(k\)</span>s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest <span class="math inline">\(k\)</span> among the ones which are tied. Hint: A for loop may be helpful. What is the accuracy of the model you ended up choosing?</p>
+<p>Plot the results of your cross validation and select your best workflow.</p>
 </div>
 </div>
-<p>Awesome!! Your model probably did pretty well, because KNN performs really well on the <code>iris</code> data set. However, this isn’t a very challenging data set for most classification methods. More challenging data sets have data on different scales and <em>class imbalance</em> where there are very few observations belonging to a particular class.</p>
-</section>
-</section>
-<section id="knn-for-regression" class="level1">
-<h1>KNN for Regression</h1>
-<p>For regression, we can predict the response variable for our point to be the average (or sometimes median) of the response variable for the <span class="math inline">\(K\)</span>-nearest neighbors.</p>
-<section id="data-dummy-variables" class="level2">
-<h2 class="anchored" data-anchor-id="data-dummy-variables">Data &amp; Dummy Variables</h2>
-<p>For this portion of the homework, we’ll use the <code>Carseat</code> data from the <code>ISLR2</code> package. Frequently, when working with categorical data, you will be required to transform that data into <strong>dummy variables</strong>. Namely, you’ll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as <strong>one-hot encoding</strong>.</p>
 </section>
 <section id="exercise-10" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
@@ -5333,12 +5372,15 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look at the <code>Carseat</code> data from the <code>ISLR2</code> package. Then, split the data into a training and test set using a 70-30 split and a seed of 427 (as usual).</p>
+<p>Re-fit your best model on the whole training set and estimate your error metrics on the test set.</p>
 </div>
 </div>
 </section>
-<section id="exercise-11" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-11">Exercise 11</h2>
+</section>
+<section id="conceptual-question" class="level1">
+<h1>Conceptual Question</h1>
+<section id="exercise-11-sample-interview-question" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-11-sample-interview-question">Exercise 11 (Sample interview question)</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Question">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5349,23 +5391,69 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a recipe which first, converts all categorical variables into dummy variables using <code>step_dummy()</code> then centers and scales all of the predictors based on the training data.</p>
+<p>The time to complete cross-validation can be substantially improved by using parallel processing. Below is the output for the copilot prompt “Generate pseudo-code in R to do cross-validation with repetition and multiple models”. Which parts of this code can be run in parallel and which can’t. Note any changes that you might need to make for this to be parallelizable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the number of folds (k) and the number of repetitions (r)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the list of models to evaluate</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">model1 =</span> train_model1,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">model2 =</span> train_model2,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">model3 =</span> train_model3</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a list to store the performance metrics for each model</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>all_performance_metrics <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each model</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (model_name <span class="cf">in</span> <span class="fu">names</span>(models)) {</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a list to store the performance metrics for this model</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    model_performance_metrics <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through each repetition</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (rep <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create k-fold cross-validation indices for this repetition</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(dataset<span class="sc">$</span>target_variable, <span class="at">k =</span> k)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize a list to store the performance metrics for this repetition</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        performance_metrics <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Loop through each fold</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Use the i-th fold as the validation set</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            validation_indices <span class="ot">&lt;-</span> folds[[i]]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            validation_set <span class="ot">&lt;-</span> dataset[validation_indices, ]</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Use the remaining folds as the training set</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            training_set <span class="ot">&lt;-</span> dataset[<span class="sc">-</span>validation_indices, ]</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Train the model on the training set</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            model <span class="ot">&lt;-</span> models[[model_name]](training_set)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Evaluate the model on the validation set</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            performance <span class="ot">&lt;-</span> <span class="fu">evaluate_model</span>(model, validation_set)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store the performance metric</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            performance_metrics[[i]] <span class="ot">&lt;-</span> performance</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the performance metrics for this repetition</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        model_performance_metrics[[rep]] <span class="ot">&lt;-</span> performance_metrics</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store the performance metrics for this model</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    all_performance_metrics[[model_name]] <span class="ot">&lt;-</span> model_performance_metrics</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average performance metric for each model across all repetitions</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>average_performance <span class="ot">&lt;-</span> <span class="fu">sapply</span>(all_performance_metrics, <span class="cf">function</span>(metrics) <span class="fu">mean</span>(<span class="fu">unlist</span>(metrics)))</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the average performance for each model</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Average Performance for each model:&quot;</span>)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(average_performance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section>
-<section id="exercise-12" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-12">Exercise 12</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Question">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Fit a KNN model to predict <code>Sales</code> from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the <span class="math inline">\(R^2\)</span> and RMSE against the number of neighbors you include in your model. You may find that the RMSE and <span class="math inline">\(R^2\)</span> disagree on what the best model is. You will have to make a judgement call on which model is “best”. One thing that can be helpful is looking at plots of your target variables (<code>Sales</code> in this case) against the model residuals.</p>
 </div>
 </div>
 
@@ -5802,7 +5890,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
        
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/03-hw-knn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/05-hw-preproc-cv.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
 </div>
