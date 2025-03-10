@@ -1,0 +1,19 @@
+{
+  "hash": "352b933a966eb4847357f698fc5aeb58",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: 'MATH 427: Model Tuning'\nauthor: Eric Friedlander\nfooter: \"[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)\"\nlogo: \"../images/logo.png\"\nformat: \n  revealjs:\n    theme: slides.scss\n    multiplex: false\n    transition: fade\n    slide-number: false\n    incremental: false \n    chalkboard: true\nexecute:\n  freeze: auto\n  echo: true\n  cache: true\nknitr:\n  opts_chunk: \n    R.options:      \n    width: 200\n---\n\n\n\n## Computational Set-Up\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(fivethirtyeight)\nlibrary(knitr)\ntidymodels_prefer()\n\nset.seed(427)\n```\n:::\n\n\n\n\n## Data: Candy {.smaller}\n\nThe data from this lab comes from the the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.\n\n## Data: Candy {.smaller}\n\nThe data set contains the characteristics and win percentage from 85 candies in the experiment. The variables are\n\n| Variable | Description |\n|------------------|------------------------------------------------------|\n| `chocolate` | Does it contain chocolate? |\n| `fruity` | Is it fruit flavored? |\n| `caramel` | Is there caramel in the candy? |\n| `peanutyalmondy` | Does it contain peanuts, peanut butter or almonds? |\n| `nougat` | Does it contain nougat? |\n| `crispedricewafer` | Does it contain crisped rice, wafers, or a cookie component? |\n| `hard` | Is it a hard candy? |\n| `bar` | Is it a candy bar? |\n| `pluribus` | Is it one of many candies in a bag or box? |\n| `sugarpercent` | The percentile of sugar it falls under within the data set. Values 0 - 1. |\n| `pricepercent` | The unit price percentile compared to the rest of the set. Values 0 - 1. |\n| `winpercent` | The overall win percentage according to 269,000 matchups. Values 0 - 100. |",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,75 @@
+---
+title: 'MATH 427: Model Tuning'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(fivethirtyeight)
+library(knitr)
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+## Data: Candy {.smaller}
+
+The data from this lab comes from the the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
+
+The data set contains 12 characteristics and win percentage from 85 candies in the experiment.
+
+## Data: Candy
+
+```{r}
+glimpse(candy_rankings)
+```
+
+## Data Cleaning
+
+```{r}
+candy_rankings_clean <- candy_rankings |> 
+  select(-competitorname) |> 
+  mutate(sugarpercent = sugarpercent*100,
+         pricepercent = pricepercent*100)
+```
+
+## Data Splitting
+
+```{r}
+candy_split <- initial_split(candy_rankings_clean, strata = winpercent)
+candy_train <- training(candy_split)
+candy_test <- testing(candy_split)
+```
+
+## Pre-processing
+
+```{r}
+lm_preproc <- recipe(winpercent ~ . , data = candy_train) |> 
+  step_nzv(all_predictors()) |> 
+  step_integer(all_logical_predictors()) |> 
+  step_dummy(all_nominal_predictors())
+
+lm_preproc |> prep()
+```

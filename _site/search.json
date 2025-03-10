@@ -4320,5 +4320,26 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/16-model-tuning.html#computational-set-up",
+    "href": "slides/16-model-tuning.html#computational-set-up",
+    "title": "MATH 427: Model Tuning",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(fivethirtyeight)\nlibrary(knitr)\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/16-model-tuning.html#data-candy",
+    "href": "slides/16-model-tuning.html#data-candy",
+    "title": "MATH 427: Model Tuning",
+    "section": "Data: Candy",
+    "text": "Data: Candy\nThe data from this lab comes from the the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese’s vs. Skittles). Click here to check out some of the match ups."
+  },
+  {
+    "objectID": "slides/16-model-tuning.html#data-candy-1",
+    "href": "slides/16-model-tuning.html#data-candy-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Data: Candy",
+    "text": "Data: Candy\nThe data set contains the characteristics and win percentage from 85 candies in the experiment. The variables are\n\n\n\n\n\n\n\nVariable\nDescription\n\n\n\n\nchocolate\nDoes it contain chocolate?\n\n\nfruity\nIs it fruit flavored?\n\n\ncaramel\nIs there caramel in the candy?\n\n\npeanutyalmondy\nDoes it contain peanuts, peanut butter or almonds?\n\n\nnougat\nDoes it contain nougat?\n\n\ncrispedricewafer\nDoes it contain crisped rice, wafers, or a cookie component?\n\n\nhard\nIs it a hard candy?\n\n\nbar\nIs it a candy bar?\n\n\npluribus\nIs it one of many candies in a bag or box?\n\n\nsugarpercent\nThe percentile of sugar it falls under within the data set. Values 0 - 1.\n\n\npricepercent\nThe unit price percentile compared to the rest of the set. Values 0 - 1.\n\n\nwinpercent\nThe overall win percentage according to 269,000 matchups. Values 0 - 100.\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
