@@ -347,8 +347,8 @@ noint_recipe2 <- new_recipe |>
 
 $$
 \begin{aligned}
-\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &= \sum_{j=1}^n(y_j-\hat{y}_j)^2\\
-&=\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
+\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{y}_j)^2\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
 \end{aligned}
 $$
 
@@ -360,8 +360,8 @@ $$
 $$
 \begin{aligned}
 \hat{\beta} &=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_2^2\right) \\
-&= \sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\\
-&=\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2
+&= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)
 \end{aligned}
 $$
 
@@ -387,8 +387,8 @@ $$
 $$
 \begin{aligned}
 \hat{\beta} &=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_1\right) \\
-&= \sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\\
-&=\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|
+&= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)
 \end{aligned}
 $$
 
@@ -405,10 +405,10 @@ $$
 
 ::: incremental
 -   Ridge has a *closed-form solution*... how might be calculate it?
--   Ridge has some nice linear algebra properties that makes is EXTREMELY FAST to fit
+-   Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit
 -   LASSO has no *closed-form solution*... why?
 -   LASSO coefficients estimated *numerically*... how?
-    +   Gradient descent works but something called **coordinate descent** is typically better
+    +   Gradient descent works (kind of) but something called **coordinate descent** is typically better
 -   MOST IMPORTANT PROPERTY OF LASSO: it *induces sparsity* while Ridge does not
 :::
 
@@ -522,7 +522,7 @@ all_coefs |>
 -   Moral: you must understand theory AND application
 :::
 
-## Visualizing Coefficients
+## Visualizing Coefficients: Ridge
 
 ```{r}
 all_coefs |> 
@@ -531,7 +531,7 @@ all_coefs |>
   geom_bar(position = "dodge", stat = "identity")
 ```
 
-## Visualizing Coefficients
+## Visualizing Coefficients: LASSO
 
 ```{r}
 all_coefs |> 

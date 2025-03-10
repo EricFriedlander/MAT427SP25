@@ -1058,8 +1058,8 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &amp;= \sum_{j=1}^n(y_j-\hat{y}_j)^2\\
-&amp;=\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
+\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &amp;= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{y}_j)^2\\
+&amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
 \end{aligned}
 \]</span></p>
 <ul>
@@ -1072,8 +1072,8 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 <p><span class="math display">\[
 \begin{aligned}
 \hat{\beta} &amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_2^2\right) \\
-&amp;= \sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\\
-&amp;=\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2
+&amp;= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)\\
+&amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)
 \end{aligned}
 \]</span></p>
 <ul>
@@ -1104,8 +1104,8 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 <p><span class="math display">\[
 \begin{aligned}
 \hat{\beta} &amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_1\right) \\
-&amp;= \sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\\
-&amp;=\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|
+&amp;= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)\\
+&amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)
 \end{aligned}
 \]</span></p>
 <ul>
@@ -1126,11 +1126,11 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 <div>
 <ul>
 <li class="fragment">Ridge has a <em>closed-form solution</em>… how might be calculate it?</li>
-<li class="fragment">Ridge has some nice linear algebra properties that makes is EXTREMELY FAST to fit</li>
+<li class="fragment">Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit</li>
 <li class="fragment">LASSO has no <em>closed-form solution</em>… why?</li>
 <li class="fragment">LASSO coefficients estimated <em>numerically</em>… how?
 <ul>
-<li class="fragment">Gradient descent works but something called <strong>coordinate descent</strong> is typically better</li>
+<li class="fragment">Gradient descent works (kind of) but something called <strong>coordinate descent</strong> is typically better</li>
 </ul></li>
 <li class="fragment">MOST IMPORTANT PROPERTY OF LASSO: it <em>induces sparsity</em> while Ridge does not</li>
 </ul>
@@ -1261,8 +1261,8 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 </ul>
 </div>
 </section>
-<section id="visualizing-coefficients" class="slide level2">
-<h2>Visualizing Coefficients</h2>
+<section id="visualizing-coefficients-ridge" class="slide level2">
+<h2>Visualizing Coefficients: Ridge</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>all_coefs <span class="sc">|&gt;</span> </span>
 <span id="cb33-2"><a></a>  <span class="fu">filter</span>(model <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ols"</span>, <span class="st">"ridge1000"</span>, <span class="st">"ridge10000"</span>)) <span class="sc">|&gt;</span> </span>
@@ -1271,8 +1271,8 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
 
 </div>
 <img data-src="15-selection-regularization_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section>
-<section id="visualizing-coefficients-1" class="slide level2">
-<h2>Visualizing Coefficients</h2>
+<section id="visualizing-coefficients-lasso" class="slide level2">
+<h2>Visualizing Coefficients: LASSO</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>all_coefs <span class="sc">|&gt;</span> </span>
 <span id="cb34-2"><a></a>  <span class="fu">filter</span>(model <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ols"</span>, <span class="st">"lasso1000"</span>, <span class="st">"lasso10000"</span>)) <span class="sc">|&gt;</span> </span>
@@ -1507,80 +1507,42 @@ $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
