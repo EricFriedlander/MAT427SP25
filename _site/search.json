@@ -1809,13 +1809,6 @@
     "href": "slides/17-model-tuning.html#computational-set-up",
     "title": "MATH 427: Model Tuning",
     "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(fivethirtyeight)\nlibrary(knitr)\ntidymodels_prefer()\n\nset.seed(427)"
-  },
-  {
-    "objectID": "slides/17-model-tuning.html#computational-set-up-1",
-    "href": "slides/17-model-tuning.html#computational-set-up-1",
-    "title": "MATH 427: Model Tuning",
-    "section": "Computational Set-Up",
     "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {

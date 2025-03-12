@@ -21,18 +21,6 @@ knitr:
     width: 200
 ---
 
-## Computational Set-Up
-
-```{r}
-library(tidyverse)
-library(tidymodels)
-library(fivethirtyeight)
-library(knitr)
-tidymodels_prefer()
-
-set.seed(427)
-```
-
 
 ## Computational Set-Up
 
