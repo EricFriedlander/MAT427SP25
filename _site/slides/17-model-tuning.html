@@ -416,6 +416,19 @@ Eric Friedlander
 <span id="cb1-7"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="computational-set-up-1" class="slide level2">
+<h2>Computational Set-Up</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb2-3"><a></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-4"><a></a><span class="fu">library</span>(fivethirtyeight) <span class="co"># for candy rankings data</span></span>
+<span id="cb2-5"><a></a></span>
+<span id="cb2-6"><a></a><span class="fu">tidymodels_prefer</span>()</span>
+<span id="cb2-7"><a></a></span>
+<span id="cb2-8"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="data-candy" class="slide level2 smaller">
 <h2>Data: Candy</h2>
 <p>The data from this lab comes from the the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a> by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g.&nbsp;Reese’s vs.&nbsp;Skittles). Click <a href="http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/">here</a> to check out some of the match ups.</p>
@@ -424,7 +437,7 @@ Eric Friedlander
 <section id="data-candy-1" class="slide level2">
 <h2>Data: Candy</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">glimpse</span>(candy_rankings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">glimpse</span>(candy_rankings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 85
 Columns: 13
@@ -447,30 +460,82 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <section id="data-cleaning" class="slide level2">
 <h2>Data Cleaning</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>candy_rankings_clean <span class="ot">&lt;-</span> candy_rankings <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>competitorname) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a></a>  <span class="fu">mutate</span>(<span class="at">sugarpercent =</span> sugarpercent<span class="sc">*</span><span class="dv">100</span>,</span>
-<span id="cb4-4"><a></a>         <span class="at">pricepercent =</span> pricepercent<span class="sc">*</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>candy_rankings_clean <span class="ot">&lt;-</span> candy_rankings <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>competitorname) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a></a>  <span class="fu">mutate</span>(<span class="at">sugarpercent =</span> sugarpercent<span class="sc">*</span><span class="dv">100</span>, <span class="co"># convert proportions into percentages</span></span>
+<span id="cb5-4"><a></a>         <span class="at">pricepercent =</span> pricepercent<span class="sc">*</span><span class="dv">100</span>, <span class="co"># convert proportions into percentages</span></span>
+<span id="cb5-5"><a></a>         <span class="fu">across</span>(<span class="fu">where</span>(is.logical), <span class="sc">~</span> <span class="fu">factor</span>(.x, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span>, <span class="st">"TRUE"</span>)))) <span class="co"># convert logicals into factors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-cleaning-1" class="slide level2">
+<h2>Data Cleaning</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">glimpse</span>(candy_rankings_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 85
+Columns: 12
+$ chocolate        &lt;fct&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…
+$ fruity           &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE…
+$ caramel          &lt;fct&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…
+$ peanutyalmondy   &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, …
+$ nougat           &lt;fct&gt; FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…
+$ crispedricewafer &lt;fct&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…
+$ hard             &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+$ bar              &lt;fct&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…
+$ pluribus         &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE…
+$ sugarpercent     &lt;dbl&gt; 73.2, 60.4, 1.1, 1.1, 90.6, 46.5, 60.4, 31.3, 90.6, 6…
+$ pricepercent     &lt;dbl&gt; 86.0, 51.1, 11.6, 51.1, 51.1, 76.7, 76.7, 51.1, 32.5,…
+$ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146, 50.…</code></pre>
+</div>
 </div>
 </section>
 <section id="data-splitting" class="slide level2">
 <h2>Data Splitting</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>candy_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(candy_rankings_clean, <span class="at">strata =</span> winpercent)</span>
-<span id="cb5-2"><a></a>candy_train <span class="ot">&lt;-</span> <span class="fu">training</span>(candy_split)</span>
-<span id="cb5-3"><a></a>candy_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(candy_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>candy_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(candy_rankings_clean, <span class="at">strata =</span> winpercent)</span>
+<span id="cb8-2"><a></a>candy_train <span class="ot">&lt;-</span> <span class="fu">training</span>(candy_split)</span>
+<span id="cb8-3"><a></a>candy_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(candy_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="pre-processing" class="slide level2">
-<h2>Pre-processing</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>lm_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(winpercent <span class="sc">~</span> . , <span class="at">data =</span> candy_train) <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">step_integer</span>(<span class="fu">all_logical_predictors</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>())</span>
-<span id="cb6-5"><a></a></span>
-<span id="cb6-6"><a></a>lm_preproc <span class="sc">|&gt;</span> <span class="fu">prep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section>
+<section id="model-tuning" class="title-slide slide level1 center">
+<h1>Model Tuning</h1>
+
+</section>
+<section id="tuning-parameters" class="slide level2">
+<h2>Tuning Parameters</h2>
+<ul>
+<li><strong>Tuning Parameters</strong> or <strong>Hyperparameters</strong> are parameters that cannot (or should not) be estimated when a model is being trained</li>
+<li>These parameters control something about the learning process and changing them will result in a different model when fit to the full training data (i.e.&nbsp;after cross-validation)</li>
+<li>Frequently: tuning parameters control model complexity</li>
+<li>Example: <span class="math inline">\(\lambda\)</span> in LASSO and Ridge regression</li>
+<li>Today: How to choose our tuning parameters?</li>
+</ul>
+</section>
+<section id="question" class="slide level2">
+<h2>Question</h2>
+<ul>
+<li>Which of the following are tuning parameters:
+<ul>
+<li><span class="math inline">\(\beta_0\)</span>: the intercept of linear regression</li>
+<li><span class="math inline">\(k\)</span> in KNN</li>
+<li>step size in gradient descent</li>
+<li>The number of folds in cross-validation</li>
+<li>Type of distance to use in KNN (i.e.&nbsp;rectangular vs.&nbsp;Gower’s vs.&nbsp;weighted etc/)</li>
+</ul></li>
+</ul>
+</section>
+<section id="basic-idea" class="slide level2">
+<h2>Basic Idea</h2>
+<ul>
+<li>Use CV to try out a bunch of different tuning parameters and choose the “best” one</li>
+<li>How do we choose which tuning parameters to try?</li>
+<li>Two general approaches:
+<ul>
+<li>Grid Search</li>
+<li>Iterative Search</li>
+</ul></li>
+</ul>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
@@ -478,7 +543,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <p><a href="https://mat427sp25.netlify.app/schedule">🔗 MAT 427 - Spring 2025 - Schedule</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

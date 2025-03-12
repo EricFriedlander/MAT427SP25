@@ -1812,6 +1812,13 @@
     "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(fivethirtyeight)\nlibrary(knitr)\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
+    "objectID": "slides/17-model-tuning.html#computational-set-up-1",
+    "href": "slides/17-model-tuning.html#computational-set-up-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
     "objectID": "slides/17-model-tuning.html#data-candy",
     "href": "slides/17-model-tuning.html#data-candy",
     "title": "MATH 427: Model Tuning",
@@ -1830,7 +1837,14 @@
     "href": "slides/17-model-tuning.html#data-cleaning",
     "title": "MATH 427: Model Tuning",
     "section": "Data Cleaning",
-    "text": "Data Cleaning\n\ncandy_rankings_clean &lt;- candy_rankings |&gt; \n  select(-competitorname) |&gt; \n  mutate(sugarpercent = sugarpercent*100,\n         pricepercent = pricepercent*100)"
+    "text": "Data Cleaning\n\ncandy_rankings_clean &lt;- candy_rankings |&gt; \n  select(-competitorname) |&gt; \n  mutate(sugarpercent = sugarpercent*100, # convert proportions into percentages\n         pricepercent = pricepercent*100, # convert proportions into percentages\n         across(where(is.logical), ~ factor(.x, levels = c(\"FALSE\", \"TRUE\")))) # convert logicals into factors"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#data-cleaning-1",
+    "href": "slides/17-model-tuning.html#data-cleaning-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Data Cleaning",
+    "text": "Data Cleaning\n\nglimpse(candy_rankings_clean)\n\nRows: 85\nColumns: 12\n$ chocolate        &lt;fct&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…\n$ fruity           &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE…\n$ caramel          &lt;fct&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…\n$ peanutyalmondy   &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, …\n$ nougat           &lt;fct&gt; FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…\n$ crispedricewafer &lt;fct&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…\n$ hard             &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…\n$ bar              &lt;fct&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…\n$ pluribus         &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE…\n$ sugarpercent     &lt;dbl&gt; 73.2, 60.4, 1.1, 1.1, 90.6, 46.5, 60.4, 31.3, 90.6, 6…\n$ pricepercent     &lt;dbl&gt; 86.0, 51.1, 11.6, 51.1, 51.1, 76.7, 76.7, 51.1, 32.5,…\n$ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146, 50.…"
   },
   {
     "objectID": "slides/17-model-tuning.html#data-splitting",
@@ -1840,11 +1854,25 @@
     "text": "Data Splitting\n\ncandy_split &lt;- initial_split(candy_rankings_clean, strata = winpercent)\ncandy_train &lt;- training(candy_split)\ncandy_test &lt;- testing(candy_split)"
   },
   {
-    "objectID": "slides/17-model-tuning.html#pre-processing",
-    "href": "slides/17-model-tuning.html#pre-processing",
+    "objectID": "slides/17-model-tuning.html#tuning-parameters",
+    "href": "slides/17-model-tuning.html#tuning-parameters",
     "title": "MATH 427: Model Tuning",
-    "section": "Pre-processing",
-    "text": "Pre-processing\n\nlm_preproc &lt;- recipe(winpercent ~ . , data = candy_train) |&gt; \n  step_nzv(all_predictors()) |&gt; \n  step_integer(all_logical_predictors()) |&gt; \n  step_dummy(all_nominal_predictors())\n\nlm_preproc |&gt; prep()\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "section": "Tuning Parameters",
+    "text": "Tuning Parameters\n\nTuning Parameters or Hyperparameters are parameters that cannot (or should not) be estimated when a model is being trained\nThese parameters control something about the learning process and changing them will result in a different model when fit to the full training data (i.e. after cross-validation)\nFrequently: tuning parameters control model complexity\nExample: \\(\\lambda\\) in LASSO and Ridge regression\nToday: How to choose our tuning parameters?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#question",
+    "href": "slides/17-model-tuning.html#question",
+    "title": "MATH 427: Model Tuning",
+    "section": "Question",
+    "text": "Question\n\nWhich of the following are tuning parameters:\n\n\\(\\beta_0\\): the intercept of linear regression\n\\(k\\) in KNN\nstep size in gradient descent\nThe number of folds in cross-validation\nType of distance to use in KNN (i.e. rectangular vs. Gower’s vs. weighted etc/)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#basic-idea",
+    "href": "slides/17-model-tuning.html#basic-idea",
+    "title": "MATH 427: Model Tuning",
+    "section": "Basic Idea",
+    "text": "Basic Idea\n\nUse CV to try out a bunch of different tuning parameters and choose the “best” one\nHow do we choose which tuning parameters to try?\nTwo general approaches:\n\nGrid Search\nIterative Search\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
     "objectID": "slides/09-job-app-intro-roc.html#announcements",

@@ -34,6 +34,19 @@ set.seed(427)
 ```
 
 
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(fivethirtyeight) # for candy rankings data
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
 ## Data: Candy {.smaller}
 
 The data from this lab comes from the the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
@@ -51,8 +64,15 @@ glimpse(candy_rankings)
 ```{r}
 candy_rankings_clean <- candy_rankings |> 
   select(-competitorname) |> 
-  mutate(sugarpercent = sugarpercent*100,
-         pricepercent = pricepercent*100)
+  mutate(sugarpercent = sugarpercent*100, # convert proportions into percentages
+         pricepercent = pricepercent*100, # convert proportions into percentages
+         across(where(is.logical), ~ factor(.x, levels = c("FALSE", "TRUE")))) # convert logicals into factors
+```
+
+## Data Cleaning
+
+```{r}
+glimpse(candy_rankings_clean)
 ```
 
 ## Data Splitting
@@ -63,13 +83,29 @@ candy_train <- training(candy_split)
 candy_test <- testing(candy_split)
 ```
 
-## Pre-processing
+# Model Tuning
 
-```{r}
-lm_preproc <- recipe(winpercent ~ . , data = candy_train) |> 
-  step_nzv(all_predictors()) |> 
-  step_integer(all_logical_predictors()) |> 
-  step_dummy(all_nominal_predictors())
+## Tuning Parameters
 
-lm_preproc |> prep()
-```
+-   **Tuning Parameters** or **Hyperparameters** are parameters that cannot (or should not) be estimated when a model is being trained
+-   These parameters control something about the learning process and changing them will result in a different model when fit to the full training data (i.e. after cross-validation)
+-   Frequently: tuning parameters control model complexity
+-   Example: $\lambda$ in LASSO and Ridge regression
+-   Today: How to choose our tuning parameters?
+
+## Question
+
+-   Which of the following are tuning parameters:
+    +   $\beta_0$: the intercept of linear regression
+    +   $k$ in KNN
+    +   step size in gradient descent
+    +   The number of folds in cross-validation
+    +   Type of distance to use in KNN (i.e. rectangular vs. Gower's vs. weighted etc/)
+
+## Basic Idea
+
+-   Use CV to try out a bunch of different tuning parameters and choose the "best" one
+-   How do we choose which tuning parameters to try?
+-   Two general approaches:
+    +   Grid Search
+    +   Iterative Search
