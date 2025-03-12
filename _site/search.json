@@ -2096,7 +2096,7 @@
     "href": "slides/16-selection-regularization.html#data-candy",
     "title": "MATH 427: Feature Selection and Regularization",
     "section": "Data: Candy",
-    "text": "Data: Candy\nThe data from this lab comes from the the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese’s vs. Skittles). Click here to check out some of the match ups.\nThe data set contains 12 characteristics and win percentage from 85 candies in the experiment."
+    "text": "Data: Candy\nThe data for this lecture comes from the the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese’s vs. Skittles). Click here to check out some of the match ups.\nThe data set contains 12 characteristics and win percentage from 85 candies in the experiment."
   },
   {
     "objectID": "slides/16-selection-regularization.html#data-candy-1",
@@ -2124,7 +2124,7 @@
     "href": "slides/16-selection-regularization.html#data-splitting",
     "title": "MATH 427: Feature Selection and Regularization",
     "section": "Data Splitting",
-    "text": "Data Splitting\n\ncandy_split &lt;- initial_split(candy_rankings_clean, strata = winpercent)\ncandy_train &lt;- training(candy_split)\ncandy_test &lt;- testing(candy_split)"
+    "text": "Data Splitting\n\ncandy_split &lt;- initial_split(candy_rankings_clean, prop = 0.75, strata = winpercent)\ncandy_train &lt;- training(candy_split)\ncandy_test &lt;- testing(candy_split)"
   },
   {
     "objectID": "slides/16-selection-regularization.html#what-is-feature-selection",
@@ -2159,14 +2159,14 @@
     "href": "slides/16-selection-regularization.html#feature-selection-in-r",
     "title": "MATH 427: Feature Selection and Regularization",
     "section": "Feature Selection in R",
-    "text": "Feature Selection in R\n\nWhen creating your recipe, don’t need to always include all variables in your recipe:\n\n\nint_recipe &lt;- recipe(pred ~ var1 + var2 + var1*var2, data = training_data) |&gt; \n  step_x(...)"
+    "text": "Feature Selection in R\n\nWhen creating your recipe, don’t need to always include all variables in your recipe:\n\n\nint_recipe &lt;- recipe(resp ~ var1 + var2 + var1*var2, data = training_data) |&gt; \n  step_x(...)"
   },
   {
     "objectID": "slides/16-selection-regularization.html#re-using-recipe-but-changing-formula",
     "href": "slides/16-selection-regularization.html#re-using-recipe-but-changing-formula",
     "title": "MATH 427: Feature Selection and Regularization",
     "section": "Re-using Recipe but changing formula",
-    "text": "Re-using Recipe but changing formula\n\nnoint_recipe2 &lt;- new_recipe |&gt; \n  remove_formula() |&gt; \n  add_formula(pred ~ var1 + var2)"
+    "text": "Re-using Recipe but changing formula\n\nnoint_recipe2 &lt;- new_recipe |&gt; \n  remove_formula() |&gt; \n  add_formula(resp ~ var1 + var2)"
   },
   {
     "objectID": "slides/16-selection-regularization.html#question",
@@ -2201,7 +2201,7 @@
     "href": "slides/16-selection-regularization.html#lasso",
     "title": "MATH 427: Feature Selection and Regularization",
     "section": "LASSO",
-    "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\n\\end{aligned}\n\\]\n\n\\(\\lambda\\) is called a “tuning parameter” and is not estimated from the data (more on this later)\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
+    "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\n\\end{aligned}\n\\]\n\nLASSO: Least Absolute Shrinkage and Selection Operator\n\\(\\lambda\\) is called a “tuning parameter” and is not estimated from the data (more on this later)\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
   },
   {
     "objectID": "slides/16-selection-regularization.html#question-1",
@@ -2215,7 +2215,7 @@
     "href": "slides/16-selection-regularization.html#ridge-vs.-lasso",
     "title": "MATH 427: Feature Selection and Regularization",
     "section": "Ridge vs. LASSO",
-    "text": "Ridge vs. LASSO\n\n\nRidge has a closed-form solution… how might be calculate it?\nRidge has some nice linear algebra properties that makes it EXTREMELY FAST to fit\nLASSO has no closed-form solution… why?\nLASSO coefficients estimated numerically… how?\n\nGradient descent works (kind of) but something called coordinate descent is typically better\n\nMOST IMPORTANT PROPERTY OF LASSO: it induces sparsity while Ridge does not"
+    "text": "Ridge vs. LASSO\n\n\nRidge has a closed-form solution… how might we calculate it?\nRidge has some nice linear algebra properties that makes it EXTREMELY FAST to fit\nLASSO has no closed-form solution… why?\nLASSO coefficients estimated numerically… how?\n\nGradient descent works (kind of) but something called coordinate descent is typically better\n\nMOST IMPORTANT PROPERTY OF LASSO: it induces sparsity while Ridge does not"
   },
   {
     "objectID": "slides/16-selection-regularization.html#sparsity-in-applied-math",

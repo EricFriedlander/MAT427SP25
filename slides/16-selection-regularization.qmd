@@ -36,7 +36,7 @@ set.seed(427)
 
 ## Data: Candy {.smaller}
 
-The data from this lab comes from the the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
+The data for this lecture comes from the the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
 
 The data set contains 12 characteristics and win percentage from 85 candies in the experiment.
 
@@ -65,7 +65,7 @@ glimpse(candy_rankings_clean)
 ## Data Splitting
 
 ```{r}
-candy_split <- initial_split(candy_rankings_clean, strata = winpercent)
+candy_split <- initial_split(candy_rankings_clean, prop = 0.75, strata = winpercent)
 candy_train <- training(candy_split)
 candy_test <- testing(candy_split)
 ```
@@ -117,7 +117,7 @@ candy_test <- testing(candy_split)
 
 ```{r}
 #| eval: FALSE
-int_recipe <- recipe(pred ~ var1 + var2 + var1*var2, data = training_data) |> 
+int_recipe <- recipe(resp ~ var1 + var2 + var1*var2, data = training_data) |> 
   step_x(...)
 ```
 
@@ -127,7 +127,7 @@ int_recipe <- recipe(pred ~ var1 + var2 + var1*var2, data = training_data) |>
 #| eval: FALSE
 noint_recipe2 <- new_recipe |> 
   remove_formula() |> 
-  add_formula(pred ~ var1 + var2)
+  add_formula(resp ~ var1 + var2)
 ```
 
 # Shrinkage/Penalized/Regularization Methods
@@ -187,6 +187,7 @@ $$
 \end{aligned}
 $$
 
+-   LASSO: **L**east **A**bsolute **S**hrinkage and **S**election **O**perator
 -   $\lambda$ is called a "tuning parameter" and is not estimated from the data (more on this later)
 -   Idea: penalize large coefficients
 -   If we penalize large coefficients, what's going to happen to to our estimated coefficients [THEY SHRINK!]{.span style="color:red;"}
@@ -199,7 +200,7 @@ $$
 ## Ridge vs. LASSO
 
 ::: incremental
--   Ridge has a *closed-form solution*... how might be calculate it?
+-   Ridge has a *closed-form solution*... how might we calculate it?
 -   Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit
 -   LASSO has no *closed-form solution*... why?
 -   LASSO coefficients estimated *numerically*... how?

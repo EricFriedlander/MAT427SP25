@@ -419,7 +419,7 @@ Eric Friedlander
 </section>
 <section id="data-candy" class="slide level2 smaller">
 <h2>Data: Candy</h2>
-<p>The data from this lab comes from the the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a> by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g.&nbsp;Reese’s vs.&nbsp;Skittles). Click <a href="http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/">here</a> to check out some of the match ups.</p>
+<p>The data for this lecture comes from the the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a> by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g.&nbsp;Reese’s vs.&nbsp;Skittles). Click <a href="http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/">here</a> to check out some of the match ups.</p>
 <p>The data set contains 12 characteristics and win percentage from 85 candies in the experiment.</p>
 </section>
 <section id="data-candy-1" class="slide level2">
@@ -480,7 +480,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <section id="data-splitting" class="slide level2">
 <h2>Data Splitting</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>candy_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(candy_rankings_clean, <span class="at">strata =</span> winpercent)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>candy_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(candy_rankings_clean, <span class="at">prop =</span> <span class="fl">0.75</span>, <span class="at">strata =</span> winpercent)</span>
 <span id="cb7-2"><a></a>candy_train <span class="ot">&lt;-</span> <span class="fu">training</span>(candy_split)</span>
 <span id="cb7-3"><a></a>candy_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(candy_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -551,7 +551,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <li>When creating your recipe, don’t need to always include all variables in your <code>recipe</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>int_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(pred <span class="sc">~</span> var1 <span class="sc">+</span> var2 <span class="sc">+</span> var1<span class="sc">*</span>var2, <span class="at">data =</span> training_data) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>int_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(resp <span class="sc">~</span> var1 <span class="sc">+</span> var2 <span class="sc">+</span> var1<span class="sc">*</span>var2, <span class="at">data =</span> training_data) <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a></a>  <span class="fu">step_x</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -560,7 +560,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>noint_recipe2 <span class="ot">&lt;-</span> new_recipe <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a></a>  <span class="fu">remove_formula</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a></a>  <span class="fu">add_formula</span>(pred <span class="sc">~</span> var1 <span class="sc">+</span> var2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a></a>  <span class="fu">add_formula</span>(resp <span class="sc">~</span> var1 <span class="sc">+</span> var2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -632,6 +632,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 \end{aligned}
 \]</span></p>
 <ul>
+<li>LASSO: <strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator</li>
 <li><span class="math inline">\(\lambda\)</span> is called a “tuning parameter” and is not estimated from the data (more on this later)</li>
 <li>Idea: penalize large coefficients</li>
 <li>If we penalize large coefficients, what’s going to happen to to our estimated coefficients <span class="span" style="color:red;">THEY SHRINK!</span></li>
@@ -648,7 +649,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <h2>Ridge vs.&nbsp;LASSO</h2>
 <div>
 <ul>
-<li class="fragment">Ridge has a <em>closed-form solution</em>… how might be calculate it?</li>
+<li class="fragment">Ridge has a <em>closed-form solution</em>… how might we calculate it?</li>
 <li class="fragment">Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit</li>
 <li class="fragment">LASSO has no <em>closed-form solution</em>… why?</li>
 <li class="fragment">LASSO coefficients estimated <em>numerically</em>… how?
