@@ -1816,7 +1816,7 @@
     "href": "slides/17-model-tuning.html#data-candy",
     "title": "MATH 427: Model Tuning",
     "section": "Data: Candy",
-    "text": "Data: Candy\nThe data from this lab comes from the the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese’s vs. Skittles). Click here to check out some of the match ups.\nThe data set contains 12 characteristics and win percentage from 85 candies in the experiment."
+    "text": "Data: Candy\nThe data for this lecture comes from the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy match-ups (e.g. Reese’s vs. Skittles). Click here to check out some of the match ups.\nThe data set contains 12 characteristics and win percentage from 85 candies in the experiment."
   },
   {
     "objectID": "slides/17-model-tuning.html#data-candy-1",
@@ -1858,14 +1858,14 @@
     "href": "slides/17-model-tuning.html#question",
     "title": "MATH 427: Model Tuning",
     "section": "Question",
-    "text": "Question\n\nWhich of the following are tuning parameters:\n\n\\(\\beta_0\\): the intercept of linear regression\n\\(k\\) in KNN\nstep size in gradient descent\nThe number of folds in cross-validation\nType of distance to use in KNN (i.e. rectangular vs. Gower’s vs. weighted etc/)"
+    "text": "Question\n\nWhat criteria do we use to fit a linear regression model? Write down an expression with \\(\\hat{\\beta_i}\\)’s, \\(x_{ij}\\)’s, and \\(y_j\\)’s in it."
   },
   {
     "objectID": "slides/17-model-tuning.html#basic-idea",
     "href": "slides/17-model-tuning.html#basic-idea",
     "title": "MATH 427: Model Tuning",
     "section": "Basic Idea",
-    "text": "Basic Idea\n\nUse CV to try out a bunch of different tuning parameters and choose the “best” one\nHow do we choose which tuning parameters to try?\nTwo general approaches:\n\nGrid Search\nIterative Search\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Basic Idea\n\nUse CV to try out a bunch of different tuning parameters and choose the “best” one\nHow do we choose which tuning parameters to try?\nTwo general approaches:\n\nGrid Search\nIterative Search"
   },
   {
     "objectID": "slides/09-job-app-intro-roc.html#announcements",
@@ -4502,5 +4502,278 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#ols",
+    "href": "slides/17-model-tuning.html#ols",
+    "title": "MATH 427: Model Tuning",
+    "section": "OLS",
+    "text": "OLS\n\nOrdinary Least Squares Regression:\n\n\\[\n\\begin{aligned}\n\\hat{\\beta} =\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}SSE(\\hat{\\beta}) &= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\sum_{j=1}^n(y_j-\\hat{y}_j)^2\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2\n\\end{aligned}\n\\]\n\n\\(\\hat{\\beta} = (\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p)\\) is the vector of all my coefficients\n\\(\\operatorname{argmin}\\) is a function (operator) that returns the arguments that minimize the quantity it’s being applied to"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#ridge-regression",
+    "href": "slides/17-model-tuning.html#ridge-regression",
+    "title": "MATH 427: Model Tuning",
+    "section": "Ridge Regression",
+    "text": "Ridge Regression\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_2^2\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p \\hat{\\beta}_i^2\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p \\hat{\\beta}_i^2\\right)\n\\end{aligned}\n\\]\n\n\\(\\lambda\\) is called a “tuning parameter” and is not estimated from the data (more on this later)\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients? THEY SHRINK!\n\\(\\|\\cdot\\|_2\\) is called the \\(L_2\\)-norm"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#but-but-but-why",
+    "href": "slides/17-model-tuning.html#but-but-but-why",
+    "title": "MATH 427: Model Tuning",
+    "section": "But… but… but why?!?",
+    "text": "But… but… but why?!?\n\n\nRecall the Bias-Variance Trade-Off\nOur reducible error can partitioned into:\n\nBias: how much \\(\\hat{f}\\) misses \\(f\\) by on average\nVariance: how much \\(\\hat{f}\\) moves around from sample to sample\n\nRidge: increase bias a little bit in exchange for large decrease in variance\nAs we increase \\(\\lambda\\) do we increase or decrease the penalty for large coefficients?\nAs we increase \\(\\lambda\\) do we increase or decrease the flexibility of our model?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#lasso",
+    "href": "slides/17-model-tuning.html#lasso",
+    "title": "MATH 427: Model Tuning",
+    "section": "LASSO",
+    "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\n\\end{aligned}\n\\]\n\nLASSO: Least Absolute Shrinkage and Selection Operator\n\\(\\lambda\\) is called a “tuning parameter” and is not estimated from the data (more on this later)\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#question-1",
+    "href": "slides/17-model-tuning.html#question-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Question",
+    "text": "Question\n\nWhat should happen to our coefficients as we increase \\(\\lambda\\)?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#ridge-vs.-lasso",
+    "href": "slides/17-model-tuning.html#ridge-vs.-lasso",
+    "title": "MATH 427: Model Tuning",
+    "section": "Ridge vs. LASSO",
+    "text": "Ridge vs. LASSO\n\n\nRidge has a closed-form solution… how might we calculate it?\nRidge has some nice linear algebra properties that makes it EXTREMELY FAST to fit\nLASSO has no closed-form solution… why?\nLASSO coefficients estimated numerically… how?\n\nGradient descent works (kind of) but something called coordinate descent is typically better\n\nMOST IMPORTANT PROPERTY OF LASSO: it induces sparsity while Ridge does not"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#sparsity-in-applied-math",
+    "href": "slides/17-model-tuning.html#sparsity-in-applied-math",
+    "title": "MATH 427: Model Tuning",
+    "section": "Sparsity in Applied Math",
+    "text": "Sparsity in Applied Math\n\nsparse typically means “most things are zero”\nExample: sparse matrices are matrices where most entries are zero\n\nfor large matrices this can provide HUGE performance gains\n\nLASSO induces sparsity by setting most of the parameter estimates to zero\n\nthis means it fits the model and does feature selection SIMULTANEOUSLY\n\nLet’s do some board work to see why this is…"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#lasso-and-ridge-in-r",
+    "href": "slides/17-model-tuning.html#lasso-and-ridge-in-r",
+    "title": "MATH 427: Model Tuning",
+    "section": "LASSO and Ridge in R",
+    "text": "LASSO and Ridge in R\n\nols &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")\nridge_0 &lt;- linear_reg(mixture = 0, penalty = 0) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nridge_1 &lt;- linear_reg(mixture = 0, penalty = 1) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nridge_10 &lt;- linear_reg(mixture = 0, penalty = 10) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nlasso_0 &lt;- linear_reg(mixture = 1, penalty = 0) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nlasso_1 &lt;- linear_reg(mixture = 1, penalty = 1) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\nlasso_10 &lt;- linear_reg(mixture = 1, penalty = 10) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#create-recipe",
+    "href": "slides/17-model-tuning.html#create-recipe",
+    "title": "MATH 427: Model Tuning",
+    "section": "Create Recipe",
+    "text": "Create Recipe\n\nlm_preproc &lt;- recipe(winpercent ~ . , data = candy_train) |&gt; \n  step_dummy(all_nominal_predictors()) |&gt; \n  step_normalize(all_numeric_predictors())"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#question-2",
+    "href": "slides/17-model-tuning.html#question-2",
+    "title": "MATH 427: Model Tuning",
+    "section": "Question",
+    "text": "Question\n\nWhy do we need to normalize our data?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#create-workflows",
+    "href": "slides/17-model-tuning.html#create-workflows",
+    "title": "MATH 427: Model Tuning",
+    "section": "Create workflows",
+    "text": "Create workflows\n\ngeneric_wf &lt;- workflow() |&gt; add_recipe(lm_preproc)\nols_wf &lt;- generic_wf |&gt; add_model(ols)\nridge0_wf &lt;- generic_wf |&gt; add_model(ridge_0)\nridge1_wf &lt;- generic_wf |&gt; add_model(ridge_1)\nridge10_wf &lt;- generic_wf |&gt; add_model(ridge_10)\nlasso0_wf &lt;- generic_wf |&gt; add_model(lasso_0)\nlasso1_wf &lt;- generic_wf |&gt; add_model(lasso_1)\nlasso10_wf &lt;- generic_wf |&gt; add_model(lasso_10)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#fit-models",
+    "href": "slides/17-model-tuning.html#fit-models",
+    "title": "MATH 427: Model Tuning",
+    "section": "Fit Models",
+    "text": "Fit Models\n\nols_fit &lt;- ols_wf |&gt; fit(candy_train)\nridge0_fit &lt;- ridge0_wf |&gt; fit(candy_train)\nridge1_fit &lt;- ridge1_wf |&gt; fit(candy_train)\nridge10_fit &lt;- ridge10_wf |&gt; fit(candy_train)\nlasso0_fit &lt;- lasso0_wf |&gt; fit(candy_train)\nlasso1_fit &lt;- lasso1_wf |&gt; fit(candy_train)\nlasso10_fit &lt;- lasso10_wf |&gt; fit(candy_train)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#collect-coefficients",
+    "href": "slides/17-model-tuning.html#collect-coefficients",
+    "title": "MATH 427: Model Tuning",
+    "section": "Collect coefficients",
+    "text": "Collect coefficients\n\nall_coefs &lt;- bind_cols(model = \"ols\", tidy(ols_fit)) |&gt; \n  bind_rows(bind_cols(model = \"ridge0\", tidy(ridge0_fit))) |&gt; \n  bind_rows(bind_cols(model = \"ridge1\", tidy(ridge1_fit))) |&gt; \n  bind_rows(bind_cols(model = \"ridge10\", tidy(ridge10_fit))) |&gt; \n  bind_rows(bind_cols(model = \"lasso0\", tidy(lasso0_fit))) |&gt; \n  bind_rows(bind_cols(model = \"lasso1\", tidy(lasso1_fit))) |&gt; \n  bind_rows(bind_cols(model = \"lasso10\", tidy(lasso10_fit)))"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#question-3",
+    "href": "slides/17-model-tuning.html#question-3",
+    "title": "MATH 427: Model Tuning",
+    "section": "Question",
+    "text": "Question\n\n\nWhat should we expect from ols, ridge0, and lasso0?\nThey should be the same!"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#visualize",
+    "href": "slides/17-model-tuning.html#visualize",
+    "title": "MATH 427: Model Tuning",
+    "section": "Visualize",
+    "text": "Visualize\n\nall_coefs |&gt; \n  filter(model %in% c(\"ols\", \"ridge0\", \"lasso0\")) |&gt; \n  ggplot(aes(y = term, x = estimate, fill = model, color = model)) +\n  geom_bar(position = \"dodge\", stat = \"identity\")"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#uh-oh",
+    "href": "slides/17-model-tuning.html#uh-oh",
+    "title": "MATH 427: Model Tuning",
+    "section": "Uh-Oh!",
+    "text": "Uh-Oh!\n\n\nThey’re not the same\nAny idea why?\nAlgorithm used to fit model\n\nlm estimates coefficients analytically\nglmnet estimates coefficients numerically using an algorithm named “coordinate-descent”\n\nMoral: you must understand theory AND application"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#visualizing-coefficients-ridge",
+    "href": "slides/17-model-tuning.html#visualizing-coefficients-ridge",
+    "title": "MATH 427: Model Tuning",
+    "section": "Visualizing Coefficients: Ridge",
+    "text": "Visualizing Coefficients: Ridge\n\nall_coefs |&gt; \n  filter(model %in% c(\"ols\", \"ridge1\", \"ridge10\")) |&gt; \n  ggplot(aes(y = term, x = estimate, fill = model, color = model)) +\n  geom_bar(position = \"dodge\", stat = \"identity\")"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#visualizing-coefficients-lasso",
+    "href": "slides/17-model-tuning.html#visualizing-coefficients-lasso",
+    "title": "MATH 427: Model Tuning",
+    "section": "Visualizing Coefficients: LASSO",
+    "text": "Visualizing Coefficients: LASSO\n\nall_coefs |&gt; \n  filter(model %in% c(\"ols\", \"lasso1\", \"lasso10\")) |&gt; \n  ggplot(aes(y = term, x = estimate, fill = model, color = model)) +\n  geom_bar(position = \"dodge\", stat = \"identity\")"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#ridge-coefficients-vs.-penalty-lambda",
+    "href": "slides/17-model-tuning.html#ridge-coefficients-vs.-penalty-lambda",
+    "title": "MATH 427: Model Tuning",
+    "section": "Ridge Coefficients vs. Penalty ( \\(\\lambda\\) )",
+    "text": "Ridge Coefficients vs. Penalty ( \\(\\lambda\\) )\n\nridge0_fit |&gt; extract_fit_engine() |&gt; autoplot()"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#lasso-coefficients-vs.-penalty-lambda",
+    "href": "slides/17-model-tuning.html#lasso-coefficients-vs.-penalty-lambda",
+    "title": "MATH 427: Model Tuning",
+    "section": "LASSO Coefficients vs. Penalty ( \\(\\lambda\\) )",
+    "text": "LASSO Coefficients vs. Penalty ( \\(\\lambda\\) )\n\nlasso0_fit |&gt; extract_fit_engine() |&gt; autoplot()"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#next-time",
+    "href": "slides/17-model-tuning.html#next-time",
+    "title": "MATH 427: Model Tuning",
+    "section": "Next Time",
+    "text": "Next Time\n\nHow do we choose \\(\\lambda\\)?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#why-should-i-learn-math-for-data-science",
+    "href": "slides/17-model-tuning.html#why-should-i-learn-math-for-data-science",
+    "title": "MATH 427: Model Tuning",
+    "section": "Why should I learn math for data science?",
+    "text": "Why should I learn math for data science?\n\nToday:\n\nOrdinary Least Squares: Linear algebra, Calc 3\nLASSO: Calc 3, Geometry, Numerical Analysis\nRidge: Linear Algebra, Calc 3\nBias-Variance Trade-Off: Probability"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#question-4",
+    "href": "slides/17-model-tuning.html#question-4",
+    "title": "MATH 427: Model Tuning",
+    "section": "Question",
+    "text": "Question\n\nHow do you think we should choose \\(\\lambda\\)?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#grid-search",
+    "href": "slides/17-model-tuning.html#grid-search",
+    "title": "MATH 427: Model Tuning",
+    "section": "Grid Search",
+    "text": "Grid Search\n\nCreate a grid of tuning parameters and try out each combination\nTypes of grids:\n\nRegular Grid: tuning parameter values are spaced deterministically using a linear or logarithmic scale and all combinations of parameters are used\nIrregular Grids: tuning parameter values are chosen stochastically"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#question-5",
+    "href": "slides/17-model-tuning.html#question-5",
+    "title": "MATH 427: Model Tuning",
+    "section": "Question",
+    "text": "Question\n\nWhich of the following are tuning parameters:\n\n\\(\\beta_0\\): the intercept of linear regression\n\\(k\\) in KNN\nstep size in gradient descent\nThe number of folds in cross-validation\nType of distance to use in KNN (i.e. rectangular vs. Gower’s vs. weighted etc/)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#grid-search-in-r",
+    "href": "slides/17-model-tuning.html#grid-search-in-r",
+    "title": "MATH 427: Model Tuning",
+    "section": "Grid Search in R",
+    "text": "Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#lasso-and-ridge-in-r-1",
+    "href": "slides/17-model-tuning.html#lasso-and-ridge-in-r-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "LASSO and Ridge in R",
+    "text": "LASSO and Ridge in R\n\nols &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")\n\nridge &lt;- linear_reg(mixture = 0, penalty = tune()) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\n\nlasso &lt;- linear_reg(mixture = 1, penalty = tune()) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#create-recipe-1",
+    "href": "slides/17-model-tuning.html#create-recipe-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Create Recipe",
+    "text": "Create Recipe\n\nNote: no tuning variables in this case\n\n\nlm_preproc &lt;- recipe(winpercent ~ . , data = candy_train) |&gt; \n  step_dummy(all_nominal_predictors()) |&gt; \n  step_normalize(all_numeric_predictors())"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#create-workflows-1",
+    "href": "slides/17-model-tuning.html#create-workflows-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Create workflows",
+    "text": "Create workflows\n\ngeneric_wf &lt;- workflow() |&gt; add_recipe(lm_preproc)\nols_wf &lt;- generic_wf |&gt; add_model(ols)\nridge_wf &lt;- generic_wf |&gt; add_model(ridge)\nlasso_wf &lt;- generic_wf |&gt; add_model(lasso)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#create-metric-set",
+    "href": "slides/17-model-tuning.html#create-metric-set",
+    "title": "MATH 427: Model Tuning",
+    "section": "Create Metric Set",
+    "text": "Create Metric Set\n\ncandy_metrics &lt;- metric_set(rmse, rsq)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#create-folds",
+    "href": "slides/17-model-tuning.html#create-folds",
+    "title": "MATH 427: Model Tuning",
+    "section": "Create Folds",
+    "text": "Create Folds\n\n# Since sample size is so small, not using stratification\ncandy_folds &lt;- vfold_cv(candy_train, v = 5, repeats = 10)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#grid-search-in-r-1",
+    "href": "slides/17-model-tuning.html#grid-search-in-r-1",
+    "title": "MATH 427: Model Tuning",
+    "section": "Grid Search in R",
+    "text": "Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()\nGenerate grid for hyperparameters"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#generate-grid",
+    "href": "slides/17-model-tuning.html#generate-grid",
+    "title": "MATH 427: Model Tuning",
+    "section": "Generate Grid",
+    "text": "Generate Grid\n\n# note that dials treats penalty on a log10 scale\npenalty_grid &lt;- grid_regular(penalty(range = c(-10, 2)), \n                             levels = 100)\n\n\n\n\npenalty_grid |&gt; head() |&gt;  kable(digits = 11, format.args = list(scientific = TRUE))\n\n\n\n\npenalty\n\n\n\n\n1.0e-10\n\n\n1.4e-10\n\n\n1.8e-10\n\n\n2.5e-10\n\n\n3.4e-10\n\n\n4.5e-10\n\n\n\n\n\n\n\npenalty_grid |&gt; tail() |&gt;  kable()\n\n\n\n\npenalty\n\n\n\n\n220.5131\n\n\n298.3647\n\n\n403.7017\n\n\n546.2277\n\n\n739.0722\n\n\n1000.0000"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#regular-grid-search-in-r",
+    "href": "slides/17-model-tuning.html#regular-grid-search-in-r",
+    "title": "MATH 427: Model Tuning",
+    "section": "Regular Grid Search in R",
+    "text": "Regular Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()\nGenerate grid for hyperparameters using grid_regular\nTune your model: fit all hyperparameter combination on resamples using tune_grid"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#tune-models",
+    "href": "slides/17-model-tuning.html#tune-models",
+    "title": "MATH 427: Model Tuning",
+    "section": "Tune Models",
+    "text": "Tune Models\n\ntuning_ridge_results &lt;- tune_grid(\n  ridge_wf,\n  resamples= candy_folds,\n  grid = penalty_grid\n)\n\ntuning_lasso_results &lt;- tune_grid(\n  lasso_wf,\n  resamples = candy_folds,\n  grid = penalty_grid\n)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#visualizing-results-ridge",
+    "href": "slides/17-model-tuning.html#visualizing-results-ridge",
+    "title": "MATH 427: Model Tuning",
+    "section": "Visualizing Results: Ridge",
+    "text": "Visualizing Results: Ridge\n\nautoplot(tuning_ridge_results)"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#visualizing-results-lasso",
+    "href": "slides/17-model-tuning.html#visualizing-results-lasso",
+    "title": "MATH 427: Model Tuning",
+    "section": "Visualizing Results: LASSO",
+    "text": "Visualizing Results: LASSO\n\nautoplot(tuning_lasso_results)\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#selecting-best-model-ridge",
+    "href": "slides/17-model-tuning.html#selecting-best-model-ridge",
+    "title": "MATH 427: Model Tuning",
+    "section": "Selecting Best Model: Ridge",
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_ridge |&gt; kable()\n\n\n\n\npenalty\n.config\n\n\n\n\n8.111308\nPreprocessor1_Model091\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rsq\")\nbest_rsq_ridge |&gt; kable(digits = 11, format.args = list(scientific = TRUE))\n\n\n\n\npenalty\n.config\n\n\n\n\n2.656088e+00\nPreprocessor1_Model087\n\n\n\n\n\n\n\nWhich should be use?"
+  },
+  {
+    "objectID": "slides/17-model-tuning.html#finalize-model",
+    "href": "slides/17-model-tuning.html#finalize-model",
+    "title": "MATH 427: Model Tuning",
+    "section": "Finalize Model",
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)"
   }
 ]

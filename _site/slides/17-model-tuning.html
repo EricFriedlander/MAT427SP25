@@ -419,7 +419,7 @@ Eric Friedlander
 </section>
 <section id="data-candy" class="slide level2 smaller">
 <h2>Data: Candy</h2>
-<p>The data from this lab comes from the the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a> by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g.&nbsp;Reese’s vs.&nbsp;Skittles). Click <a href="http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/">here</a> to check out some of the match ups.</p>
+<p>The data for this lecture comes from the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a> by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy match-ups (e.g.&nbsp;Reese’s vs.&nbsp;Skittles). Click <a href="http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/">here</a> to check out some of the match ups.</p>
 <p>The data set contains 12 characteristics and win percentage from 85 candies in the experiment.</p>
 </section>
 <section id="data-candy-1" class="slide level2">
@@ -486,6 +486,274 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </div>
 </section>
 <section>
+<section id="lasso-ridge-regression" class="title-slide slide level1 center">
+<h1>Lasso &amp; Ridge Regression</h1>
+
+</section>
+<section id="question" class="slide level2">
+<h2>Question</h2>
+<ul>
+<li>What criteria do we use to fit a linear regression model? Write down an expression with <span class="math inline">\(\hat{\beta_i}\)</span>’s, <span class="math inline">\(x_{ij}\)</span>’s, and <span class="math inline">\(y_j\)</span>’s in it.</li>
+</ul>
+</section>
+<section id="ols" class="slide level2 smaller">
+<h2>OLS</h2>
+<ul>
+<li>Ordinary Least Squares Regression:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &amp;= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{y}_j)^2\\
+&amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{\beta} = (\hat{\beta}_0,\ldots, \hat{\beta}_p)\)</span> is the vector of all my coefficients</li>
+<li><span class="math inline">\(\operatorname{argmin}\)</span> is a function (operator) that returns the <em>arguments</em> that minimize the quantity it’s being applied to</li>
+</ul>
+</section>
+<section id="ridge-regression" class="slide level2 smaller">
+<h2>Ridge Regression</h2>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta} &amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_2^2\right) \\
+&amp;= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)\\
+&amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\lambda\)</span> is called a “tuning parameter” and is not estimated from the data (more on this later)</li>
+<li>Idea: penalize large coefficients</li>
+<li>If we penalize large coefficients, what’s going to happen to to our estimated coefficients? <span class="fragment fade-in"><span class="span" style="color:red;">THEY SHRINK!</span></span></li>
+<li><span class="math inline">\(\|\cdot\|_2\)</span> is called the <em><span class="math inline">\(L_2\)</span>-norm</em></li>
+</ul>
+</section>
+<section id="but-but-but-why" class="slide level2 smaller">
+<h2>But… but… but why?!?</h2>
+<div>
+<ul>
+<li class="fragment">Recall the Bias-Variance Trade-Off</li>
+<li class="fragment">Our reducible error can partitioned into:
+<ul>
+<li class="fragment">Bias: how much <span class="math inline">\(\hat{f}\)</span> misses <span class="math inline">\(f\)</span> by <em>on average</em></li>
+<li class="fragment">Variance: how much <span class="math inline">\(\hat{f}\)</span> moves around from sample to sample</li>
+</ul></li>
+<li class="fragment">Ridge: increase bias a little bit in exchange for large decrease in variance</li>
+<li class="fragment">As we increase <span class="math inline">\(\lambda\)</span> do we increase or decrease the penalty for large coefficients?</li>
+<li class="fragment">As we increase <span class="math inline">\(\lambda\)</span> do we increase or decrease the <em>flexibility</em> of our model?</li>
+</ul>
+</div>
+</section>
+<section id="lasso" class="slide level2 smaller">
+<h2>LASSO</h2>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta} &amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_1\right) \\
+&amp;= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)\\
+&amp;=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)
+\end{aligned}
+\]</span></p>
+<ul>
+<li>LASSO: <strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator</li>
+<li><span class="math inline">\(\lambda\)</span> is called a “tuning parameter” and is not estimated from the data (more on this later)</li>
+<li>Idea: penalize large coefficients</li>
+<li>If we penalize large coefficients, what’s going to happen to to our estimated coefficients <span class="span" style="color:red;">THEY SHRINK!</span></li>
+<li><span class="math inline">\(\|\cdot\|_1\)</span> is called the <em><span class="math inline">\(L_1\)</span>-norm</em></li>
+</ul>
+</section>
+<section id="question-1" class="slide level2">
+<h2>Question</h2>
+<ul>
+<li>What should happen to our coefficients as we <em>increase</em> <span class="math inline">\(\lambda\)</span>?</li>
+</ul>
+</section>
+<section id="ridge-vs.-lasso" class="slide level2">
+<h2>Ridge vs.&nbsp;LASSO</h2>
+<div>
+<ul>
+<li class="fragment">Ridge has a <em>closed-form solution</em>… how might we calculate it?</li>
+<li class="fragment">Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit</li>
+<li class="fragment">LASSO has no <em>closed-form solution</em>… why?</li>
+<li class="fragment">LASSO coefficients estimated <em>numerically</em>… how?
+<ul>
+<li class="fragment">Gradient descent works (kind of) but something called <strong>coordinate descent</strong> is typically better</li>
+</ul></li>
+<li class="fragment">MOST IMPORTANT PROPERTY OF LASSO: it <em>induces sparsity</em> while Ridge does not</li>
+</ul>
+</div>
+</section>
+<section id="sparsity-in-applied-math" class="slide level2 smaller">
+<h2>Sparsity in Applied Math</h2>
+<ul>
+<li><strong>sparse</strong> typically means “most things are zero”</li>
+<li>Example: sparse matrices are matrices where most entries are zero
+<ul>
+<li>for large matrices this can provide HUGE performance gains</li>
+</ul></li>
+<li>LASSO <em>induces sparsity</em> by setting most of the parameter estimates to zero
+<ul>
+<li>this means it fits the model and does feature selection SIMULTANEOUSLY</li>
+</ul></li>
+<li>Let’s do some board work to see why this is…</li>
+</ul>
+</section>
+<section id="lasso-and-ridge-in-r" class="slide level2">
+<h2>LASSO and Ridge in R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>ols <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb8-3"><a></a>ridge_0 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">0</span>, <span class="at">penalty =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb8-4"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb8-5"><a></a>ridge_1 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">0</span>, <span class="at">penalty =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb8-6"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb8-7"><a></a>ridge_10 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">0</span>, <span class="at">penalty =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb8-8"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb8-9"><a></a>lasso_0 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">1</span>, <span class="at">penalty =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb8-10"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb8-11"><a></a>lasso_1 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">1</span>, <span class="at">penalty =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb8-12"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb8-13"><a></a>lasso_10 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">1</span>, <span class="at">penalty =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb8-14"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-recipe" class="slide level2">
+<h2>Create Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>lm_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(winpercent <span class="sc">~</span> . , <span class="at">data =</span> candy_train) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="question-2" class="slide level2">
+<h2>Question</h2>
+<ul>
+<li>Why do we need to normalize our data?</li>
+</ul>
+</section>
+<section id="create-workflows" class="slide level2">
+<h2>Create workflows</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>generic_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(lm_preproc)</span>
+<span id="cb10-2"><a></a>ols_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(ols)</span>
+<span id="cb10-3"><a></a>ridge0_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(ridge_0)</span>
+<span id="cb10-4"><a></a>ridge1_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(ridge_1)</span>
+<span id="cb10-5"><a></a>ridge10_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(ridge_10)</span>
+<span id="cb10-6"><a></a>lasso0_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(lasso_0)</span>
+<span id="cb10-7"><a></a>lasso1_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(lasso_1)</span>
+<span id="cb10-8"><a></a>lasso10_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(lasso_10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fit-models" class="slide level2">
+<h2>Fit Models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ols_fit <span class="ot">&lt;-</span> ols_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span>
+<span id="cb11-2"><a></a>ridge0_fit <span class="ot">&lt;-</span> ridge0_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span>
+<span id="cb11-3"><a></a>ridge1_fit <span class="ot">&lt;-</span> ridge1_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span>
+<span id="cb11-4"><a></a>ridge10_fit <span class="ot">&lt;-</span> ridge10_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span>
+<span id="cb11-5"><a></a>lasso0_fit <span class="ot">&lt;-</span> lasso0_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span>
+<span id="cb11-6"><a></a>lasso1_fit <span class="ot">&lt;-</span> lasso1_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span>
+<span id="cb11-7"><a></a>lasso10_fit <span class="ot">&lt;-</span> lasso10_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(candy_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="collect-coefficients" class="slide level2">
+<h2>Collect coefficients</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>all_coefs <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"ols"</span>, <span class="fu">tidy</span>(ols_fit)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"ridge0"</span>, <span class="fu">tidy</span>(ridge0_fit))) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"ridge1"</span>, <span class="fu">tidy</span>(ridge1_fit))) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"ridge10"</span>, <span class="fu">tidy</span>(ridge10_fit))) <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"lasso0"</span>, <span class="fu">tidy</span>(lasso0_fit))) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"lasso1"</span>, <span class="fu">tidy</span>(lasso1_fit))) <span class="sc">|&gt;</span> </span>
+<span id="cb12-7"><a></a>  <span class="fu">bind_rows</span>(<span class="fu">bind_cols</span>(<span class="at">model =</span> <span class="st">"lasso10"</span>, <span class="fu">tidy</span>(lasso10_fit)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="question-3" class="slide level2">
+<h2>Question</h2>
+<div>
+<ul>
+<li class="fragment">What should we expect from <code>ols</code>, <code>ridge0</code>, and <code>lasso0</code>?</li>
+<li class="fragment">They should be the same!</li>
+</ul>
+</div>
+</section>
+<section id="visualize" class="slide level2">
+<h2>Visualize</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>all_coefs <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a></a>  <span class="fu">filter</span>(model <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ols"</span>, <span class="st">"ridge0"</span>, <span class="st">"lasso0"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> term, <span class="at">x =</span> estimate, <span class="at">fill =</span> model, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb13-4"><a></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="uh-oh" class="slide level2">
+<h2>Uh-Oh!</h2>
+<div>
+<ul>
+<li class="fragment">They’re not the same</li>
+<li class="fragment">Any idea why?</li>
+<li class="fragment">Algorithm used to fit model
+<ul>
+<li class="fragment"><code>lm</code> estimates coefficients <em>analytically</em></li>
+<li class="fragment"><code>glmnet</code> estimates coefficients <em>numerically</em> using an algorithm named “coordinate-descent”</li>
+</ul></li>
+<li class="fragment">Moral: you must understand theory AND application</li>
+</ul>
+</div>
+</section>
+<section id="visualizing-coefficients-ridge" class="slide level2">
+<h2>Visualizing Coefficients: Ridge</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>all_coefs <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a></a>  <span class="fu">filter</span>(model <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ols"</span>, <span class="st">"ridge1"</span>, <span class="st">"ridge10"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> term, <span class="at">x =</span> estimate, <span class="at">fill =</span> model, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb14-4"><a></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-coefficients-lasso" class="slide level2">
+<h2>Visualizing Coefficients: LASSO</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>all_coefs <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a></a>  <span class="fu">filter</span>(model <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ols"</span>, <span class="st">"lasso1"</span>, <span class="st">"lasso10"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> term, <span class="at">x =</span> estimate, <span class="at">fill =</span> model, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb15-4"><a></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
+<section id="ridge-coefficients-vs.-penalty-lambda" class="slide level2">
+<h2>Ridge Coefficients vs.&nbsp;Penalty ( <span class="math inline">\(\lambda\)</span> )</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>ridge0_fit <span class="sc">|&gt;</span> <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="lasso-coefficients-vs.-penalty-lambda" class="slide level2">
+<h2>LASSO Coefficients vs.&nbsp;Penalty ( <span class="math inline">\(\lambda\)</span> )</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>lasso0_fit <span class="sc">|&gt;</span> <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="why-should-i-learn-math-for-data-science" class="slide level2">
+<h2>Why should I learn math for data science?</h2>
+<ul>
+<li>Today:
+<ul>
+<li>Ordinary Least Squares: Linear algebra, Calc 3</li>
+<li>LASSO: Calc 3, Geometry, Numerical Analysis</li>
+<li>Ridge: Linear Algebra, Calc 3</li>
+<li>Bias-Variance Trade-Off: Probability</li>
+</ul></li>
+</ul>
+</section>
+<section id="question-4" class="slide level2">
+<h2>Question</h2>
+<ul>
+<li>How do you think we should choose <span class="math inline">\(\lambda\)</span>?</li>
+</ul>
+</section></section>
+<section>
 <section id="model-tuning" class="title-slide slide level1 center">
 <h1>Model Tuning</h1>
 
@@ -500,7 +768,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <li>Today: How to choose our tuning parameters?</li>
 </ul>
 </section>
-<section id="question" class="slide level2">
+<section id="question-5" class="slide level2">
 <h2>Question</h2>
 <ul>
 <li>Which of the following are tuning parameters:
@@ -524,6 +792,269 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <li>Iterative Search</li>
 </ul></li>
 </ul>
+</section>
+<section id="grid-search" class="slide level2">
+<h2>Grid Search</h2>
+<ul>
+<li>Create a grid of tuning parameters and try out each combination</li>
+<li>Types of grids:
+<ul>
+<li>Regular Grid: tuning parameter values are spaced <em>deterministically</em> using a linear or logarithmic scale and all combinations of parameters are used</li>
+<li>Irregular Grids: tuning parameter values are chosen <em>stochastically</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="grid-search-in-r" class="slide level2">
+<h2>Grid Search in R</h2>
+<ul>
+<li>Take advantage of package <code>dials</code> which is part of the <code>tidyverse</code>
+<ul>
+<li>Set every tuning variable equal to <code>tune()</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="lasso-and-ridge-in-r-1" class="slide level2">
+<h2>LASSO and Ridge in R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>ols <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb18-3"><a></a></span>
+<span id="cb18-4"><a></a>ridge <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">0</span>, <span class="at">penalty =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb18-5"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb18-6"><a></a></span>
+<span id="cb18-7"><a></a>lasso <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mixture =</span> <span class="dv">1</span>, <span class="at">penalty =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span> <span class="co"># penalty set's our lambda</span></span>
+<span id="cb18-8"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-recipe-1" class="slide level2">
+<h2>Create Recipe</h2>
+<ul>
+<li>Note: no tuning variables in this case</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>lm_preproc <span class="ot">&lt;-</span> <span class="fu">recipe</span>(winpercent <span class="sc">~</span> . , <span class="at">data =</span> candy_train) <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-workflows-1" class="slide level2">
+<h2>Create workflows</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>generic_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(lm_preproc)</span>
+<span id="cb20-2"><a></a>ols_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(ols)</span>
+<span id="cb20-3"><a></a>ridge_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(ridge)</span>
+<span id="cb20-4"><a></a>lasso_wf <span class="ot">&lt;-</span> generic_wf <span class="sc">|&gt;</span> <span class="fu">add_model</span>(lasso)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-metric-set" class="slide level2">
+<h2>Create Metric Set</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>candy_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, rsq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-folds" class="slide level2">
+<h2>Create Folds</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="co"># Since sample size is so small, not using stratification</span></span>
+<span id="cb22-2"><a></a>candy_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(candy_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="grid-search-in-r-1" class="slide level2">
+<h2>Grid Search in R</h2>
+<ul>
+<li>Take advantage of package <code>dials</code> which is part of the <code>tidyverse</code>
+<ul>
+<li>Set every tuning variable equal to <code>tune()</code></li>
+<li>Generate grid for hyperparameters</li>
+</ul></li>
+</ul>
+</section>
+<section id="generate-grid" class="slide level2">
+<h2>Generate Grid</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># note that dials treats penalty on a log10 scale</span></span>
+<span id="cb23-2"><a></a>penalty_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">penalty</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">2</span>)), </span>
+<span id="cb23-3"><a></a>                             <span class="at">levels =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>penalty_grid <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">11</span>, <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">scientific =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0e-10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1.4e-10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.8e-10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2.5e-10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3.4e-10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.5e-10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>penalty_grid <span class="sc">|&gt;</span> <span class="fu">tail</span>() <span class="sc">|&gt;</span>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">220.5131</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">298.3647</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">403.7017</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">546.2277</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">739.0722</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1000.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</section>
+<section id="regular-grid-search-in-r" class="slide level2">
+<h2>Regular Grid Search in R</h2>
+<ul>
+<li>Take advantage of package <code>dials</code> which is part of the <code>tidyverse</code>
+<ul>
+<li>Set every tuning variable equal to <code>tune()</code></li>
+<li>Generate grid for hyperparameters using <code>grid_regular</code></li>
+<li>Tune your model: fit all hyperparameter combination on resamples using <code>tune_grid</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="tune-models" class="slide level2">
+<h2>Tune Models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>tuning_ridge_results <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb26-2"><a></a>  ridge_wf,</span>
+<span id="cb26-3"><a></a>  <span class="at">resamples=</span> candy_folds,</span>
+<span id="cb26-4"><a></a>  <span class="at">grid =</span> penalty_grid</span>
+<span id="cb26-5"><a></a>)</span>
+<span id="cb26-6"><a></a></span>
+<span id="cb26-7"><a></a>tuning_lasso_results <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb26-8"><a></a>  lasso_wf,</span>
+<span id="cb26-9"><a></a>  <span class="at">resamples =</span> candy_folds,</span>
+<span id="cb26-10"><a></a>  <span class="at">grid =</span> penalty_grid</span>
+<span id="cb26-11"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-results-ridge" class="slide level2">
+<h2>Visualizing Results: Ridge</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">autoplot</span>(tuning_ridge_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
+<section id="selecting-best-model-ridge" class="slide level2">
+<h2>Selecting Best Model: Ridge</h2>
+<div class="columns">
+<div class="column">
+<p>Best RMSE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>best_rmse_ridge <span class="ot">&lt;-</span> tuning_ridge_results <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"rmse"</span>)</span>
+<span id="cb28-3"><a></a>best_rmse_ridge <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">penalty</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">8.111308</td>
+<td style="text-align: left;">Preprocessor1_Model091</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<p>Best <span class="math inline">\(R^2\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>best_rsq_ridge <span class="ot">&lt;-</span> tuning_ridge_results <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"rsq"</span>)</span>
+<span id="cb29-3"><a></a>best_rsq_ridge <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">11</span>, <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">scientific =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">penalty</th>
+<th style="text-align: left;">.config</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2.656088e+00</td>
+<td style="text-align: left;">Preprocessor1_Model087</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+<ul>
+<li>Which should be use?</li>
+</ul>
+</section>
+<section id="finalize-model" class="slide level2">
+<h2>Finalize Model</h2>
+<ul>
+<li>RMSE estimate is less flexible and seems to be sacrificing less <span class="math inline">\(R^2\)</span> than the opposite</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>ridge_rmse_final <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(ridge_wf, best_rmse_ridge)</span>
+<span id="cb30-2"><a></a>ridge_rmse_fit <span class="ot">&lt;-</span> <span class="fu">fit</span>(ridge_rmse_final, <span class="at">data =</span> candy_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-results-lasso" class="slide level2">
+<h2>Visualizing Results: LASSO</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">autoplot</span>(tuning_lasso_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="17-model-tuning_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
