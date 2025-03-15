@@ -4754,5 +4754,418 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#computational-set-up",
+    "href": "slides/18-regularization-tuning.html#computational-set-up",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#data-candy",
+    "href": "slides/18-regularization-tuning.html#data-candy",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Data: Candy",
+    "text": "Data: Candy\nThe data for this lecture comes from the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy match-ups (e.g. Reese’s vs. Skittles). Click here to check out some of the match ups.\nThe data set contains 12 characteristics and win percentage from 85 candies in the experiment."
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#data-candy-1",
+    "href": "slides/18-regularization-tuning.html#data-candy-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Data: Candy",
+    "text": "Data: Candy\n\nglimpse(candy_rankings)\n\nRows: 85\nColumns: 13\n$ competitorname   &lt;chr&gt; \"100 Grand\", \"3 Musketeers\", \"One dime\", \"One quarter…\n$ chocolate        &lt;lgl&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…\n$ fruity           &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE…\n$ caramel          &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…\n$ peanutyalmondy   &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, …\n$ nougat           &lt;lgl&gt; FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…\n$ crispedricewafer &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…\n$ hard             &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…\n$ bar              &lt;lgl&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…\n$ pluribus         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE…\n$ sugarpercent     &lt;dbl&gt; 0.732, 0.604, 0.011, 0.011, 0.906, 0.465, 0.604, 0.31…\n$ pricepercent     &lt;dbl&gt; 0.860, 0.511, 0.116, 0.511, 0.511, 0.767, 0.767, 0.51…\n$ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146, 50.…"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#data-cleaning",
+    "href": "slides/18-regularization-tuning.html#data-cleaning",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Data Cleaning",
+    "text": "Data Cleaning\n\ncandy_rankings_clean &lt;- candy_rankings |&gt; \n  select(-competitorname) |&gt; \n  mutate(sugarpercent = sugarpercent*100, # convert proportions into percentages\n         pricepercent = pricepercent*100, # convert proportions into percentages\n         across(where(is.logical), ~ factor(.x, levels = c(\"FALSE\", \"TRUE\")))) # convert logicals into factors"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#data-cleaning-1",
+    "href": "slides/18-regularization-tuning.html#data-cleaning-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Data Cleaning",
+    "text": "Data Cleaning\n\nglimpse(candy_rankings_clean)\n\nRows: 85\nColumns: 12\n$ chocolate        &lt;fct&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…\n$ fruity           &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE…\n$ caramel          &lt;fct&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…\n$ peanutyalmondy   &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, …\n$ nougat           &lt;fct&gt; FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,…\n$ crispedricewafer &lt;fct&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…\n$ hard             &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…\n$ bar              &lt;fct&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, F…\n$ pluribus         &lt;fct&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE…\n$ sugarpercent     &lt;dbl&gt; 73.2, 60.4, 1.1, 1.1, 90.6, 46.5, 60.4, 31.3, 90.6, 6…\n$ pricepercent     &lt;dbl&gt; 86.0, 51.1, 11.6, 51.1, 51.1, 76.7, 76.7, 51.1, 32.5,…\n$ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146, 50.…"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#data-splitting",
+    "href": "slides/18-regularization-tuning.html#data-splitting",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Data Splitting",
+    "text": "Data Splitting\n\ncandy_split &lt;- initial_split(candy_rankings_clean, strata = winpercent)\ncandy_train &lt;- training(candy_split)\ncandy_test &lt;- testing(candy_split)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#tuning-parameters",
+    "href": "slides/18-regularization-tuning.html#tuning-parameters",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Tuning Parameters",
+    "text": "Tuning Parameters\n\nTuning Parameters or Hyperparameters are parameters that cannot (or should not) be estimated when a model is being trained\nThese parameters control something about the learning process and changing them will result in a different model when fit to the full training data (i.e. after cross-validation)\nFrequently: tuning parameters control model complexity\nExample: \\(\\lambda\\) in LASSO and Ridge regression\nToday: How to choose our tuning parameters?"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#question",
+    "href": "slides/18-regularization-tuning.html#question",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Question",
+    "text": "Question\n\nWhich of the following are tuning parameters:\n\n\\(\\beta_0\\): the intercept of linear regression\n\\(k\\) in KNN\nstep size in gradient descent\nThe number of folds in cross-validation\nType of distance to use in KNN (i.e. rectangular vs. Gower’s vs. weighted etc)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#basic-idea",
+    "href": "slides/18-regularization-tuning.html#basic-idea",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Basic Idea",
+    "text": "Basic Idea\n\nUse CV to try out a bunch of different tuning parameters and choose the “best” one\nHow do we choose which tuning parameters to try?\nTwo general approaches:\n\nGrid Search\nIterative Search"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#grid-search",
+    "href": "slides/18-regularization-tuning.html#grid-search",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Grid Search",
+    "text": "Grid Search\n\nCreate a grid of tuning parameters and try out each combination\nTypes of grids:\n\nRegular Grid: tuning parameter values are spaced deterministically using a linear or logarithmic scale and all combinations of parameters are used (mostly what you want to use in this class)\nIrregular Grids: tuning parameter values are chosen stochastically\n\nUse when you have A LOT of parameters"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#grid-search-in-r",
+    "href": "slides/18-regularization-tuning.html#grid-search-in-r",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Grid Search in R",
+    "text": "Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#lasso-and-ridge-in-r",
+    "href": "slides/18-regularization-tuning.html#lasso-and-ridge-in-r",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "LASSO and Ridge in R",
+    "text": "LASSO and Ridge in R\n\nols &lt;- linear_reg() |&gt; \n  set_engine(\"lm\")\n\nridge &lt;- linear_reg(mixture = 0, penalty = tune()) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")\n\nlasso &lt;- linear_reg(mixture = 1, penalty = tune()) |&gt; # penalty set's our lambda\n  set_engine(\"glmnet\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#create-recipe",
+    "href": "slides/18-regularization-tuning.html#create-recipe",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Create Recipe",
+    "text": "Create Recipe\n\nNote: no tuning variables in this case\n\n\nlm_preproc &lt;- recipe(winpercent ~ . , data = candy_train) |&gt; \n  step_dummy(all_nominal_predictors()) |&gt; \n  step_normalize(all_numeric_predictors())"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#create-workflows",
+    "href": "slides/18-regularization-tuning.html#create-workflows",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Create workflows",
+    "text": "Create workflows\n\ngeneric_wf &lt;- workflow() |&gt; add_recipe(lm_preproc)\nols_wf &lt;- generic_wf |&gt; add_model(ols)\nridge_wf &lt;- generic_wf |&gt; add_model(ridge)\nlasso_wf &lt;- generic_wf |&gt; add_model(lasso)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#create-metric-set",
+    "href": "slides/18-regularization-tuning.html#create-metric-set",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Create Metric Set",
+    "text": "Create Metric Set\n\ncandy_metrics &lt;- metric_set(rmse, rsq)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#create-folds",
+    "href": "slides/18-regularization-tuning.html#create-folds",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Create Folds",
+    "text": "Create Folds\n\n# Since sample size is so small, not using stratification\ncandy_folds &lt;- vfold_cv(candy_train, v = 2, repeats = 10)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#grid-search-in-r-1",
+    "href": "slides/18-regularization-tuning.html#grid-search-in-r-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Grid Search in R",
+    "text": "Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()\nGenerate grid for hyperparameters"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#generate-grid",
+    "href": "slides/18-regularization-tuning.html#generate-grid",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Generate Grid",
+    "text": "Generate Grid\n\n# note that dials treats penalty on a log10 scale\npenalty_grid &lt;- grid_regular(penalty(range = c(-2, 2)), # I had to play around with these \n                             levels = 10)\n\n\n\n\npenalty_grid |&gt; head() |&gt;  kable(digits = 11, format.args = list(scientific = TRUE))\n\n\n\n\npenalty\n\n\n\n\n1.000000e-02\n\n\n2.782559e-02\n\n\n7.742637e-02\n\n\n2.154435e-01\n\n\n5.994843e-01\n\n\n1.668101e+00\n\n\n\n\n\n\n\npenalty_grid |&gt; tail() |&gt;  kable()\n\n\n\n\npenalty\n\n\n\n\n0.5994843\n\n\n1.6681005\n\n\n4.6415888\n\n\n12.9154967\n\n\n35.9381366\n\n\n100.0000000"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#regular-grid-search-in-r",
+    "href": "slides/18-regularization-tuning.html#regular-grid-search-in-r",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Regular Grid Search in R",
+    "text": "Regular Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()\nGenerate grid for hyperparameters using grid_regular\nTune your model: fit all hyperparameter combination on resamples using tune_grid"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#tune-models",
+    "href": "slides/18-regularization-tuning.html#tune-models",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Tune Models",
+    "text": "Tune Models\n\ntuning_ridge_results &lt;- tune_grid(\n  ridge_wf,\n  resamples= candy_folds,\n  grid = penalty_grid\n)\n\ntuning_lasso_results &lt;- tune_grid(\n  lasso_wf,\n  resamples = candy_folds,\n  grid = penalty_grid\n)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#visualizing-results-ridge",
+    "href": "slides/18-regularization-tuning.html#visualizing-results-ridge",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Visualizing Results: Ridge",
+    "text": "Visualizing Results: Ridge\n\nautoplot(tuning_ridge_results)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#selecting-best-model-ridge",
+    "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Selecting Best Model: Ridge",
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n12.92\nPreprocessor1_Model08\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rsq\",)\nbest_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n100\nPreprocessor1_Model10\n\n\n\n\n\n\n\nWhich should be use?"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#finalize-model",
+    "href": "slides/18-regularization-tuning.html#finalize-model",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Finalize Model",
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)\ntidy(ridge_rmse_fit) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n12.9155\n\n\nsugarpercent\n1.2011154\n12.9155\n\n\npricepercent\n0.0055376\n12.9155\n\n\nchocolate_TRUE.\n3.4167196\n12.9155\n\n\nfruity_TRUE.\n-0.3054272\n12.9155\n\n\ncaramel_TRUE.\n0.7392663\n12.9155\n\n\npeanutyalmondy_TRUE.\n2.1187660\n12.9155\n\n\nnougat_TRUE.\n0.5847784\n12.9155\n\n\ncrispedricewafer_TRUE.\n1.2691738\n12.9155\n\n\nhard_TRUE.\n-1.0835752\n12.9155\n\n\nbar_TRUE.\n1.3412128\n12.9155\n\n\npluribus_TRUE.\n-0.0191221\n12.9155"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#visualizing-results-lasso",
+    "href": "slides/18-regularization-tuning.html#visualizing-results-lasso",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Visualizing Results: LASSO",
+    "text": "Visualizing Results: LASSO\n\nautoplot(tuning_lasso_results)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#selecting-best-model-lasso",
+    "href": "slides/18-regularization-tuning.html#selecting-best-model-lasso",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Selecting Best Model: LASSO",
+    "text": "Selecting Best Model: LASSO\n\n\nBest RMSE\n\nbest_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n1.67\nPreprocessor1_Model06\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rsq\")\nbest_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model07\n\n\n\n\n\n\n\nWhich should be use?"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#finalize-model-1",
+    "href": "slides/18-regularization-tuning.html#finalize-model-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Finalize Model",
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nlasso_rmse_final &lt;- finalize_workflow(lasso_wf, best_rmse_lasso)\nlasso_rmse_fit &lt;- fit(lasso_rmse_final, data = candy_train)\ntidy(lasso_rmse_fit) |&gt; \n  filter(estimate != 0) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n1.6681\n\n\nsugarpercent\n0.4225703\n1.6681\n\n\nchocolate_TRUE.\n7.5532522\n1.6681\n\n\npeanutyalmondy_TRUE.\n1.3187008\n1.6681\n\n\ncrispedricewafer_TRUE.\n0.0685750\n1.6681"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#using-parsimony-as-a-tie-breaker",
+    "href": "slides/18-regularization-tuning.html#using-parsimony-as-a-tie-breaker",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Using Parsimony as a Tie-Breaker",
+    "text": "Using Parsimony as a Tie-Breaker\n\nGood heuristic: One-Standard Error Rule\n\nUse resampling to estimate error metrics\nCompute standard error for error metrics\nSelect most parsimonious model that is within one standard error of the best performance metric"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#selecting-best-model-ridge-1",
+    "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Selecting Best Model: Ridge",
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_ose_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbest_ose_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n35.94\nPreprocessor1_Model09\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty))\nbse_ose_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n100\nPreprocessor1_Model10\n\n\n\n\n\n\n\nWhich should be use?"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#visualizing-results-ridge-1",
+    "href": "slides/18-regularization-tuning.html#visualizing-results-ridge-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Visualizing Results: Ridge",
+    "text": "Visualizing Results: Ridge\n\nautoplot(tuning_ridge_results)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#finalize-model-2",
+    "href": "slides/18-regularization-tuning.html#finalize-model-2",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Finalize Model",
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_ose_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)\ntidy(ridge_rmse_fit) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n35.93814\n\n\nsugarpercent\n0.7130522\n35.93814\n\n\npricepercent\n0.3808477\n35.93814\n\n\nchocolate_TRUE.\n1.9776319\n35.93814\n\n\nfruity_TRUE.\n-0.6461222\n35.93814\n\n\ncaramel_TRUE.\n0.5420201\n35.93814\n\n\npeanutyalmondy_TRUE.\n1.2997946\n35.93814\n\n\nnougat_TRUE.\n0.4888567\n35.93814\n\n\ncrispedricewafer_TRUE.\n0.8367198\n35.93814\n\n\nhard_TRUE.\n-0.7723341\n35.93814\n\n\nbar_TRUE.\n1.0423410\n35.93814\n\n\npluribus_TRUE.\n-0.2779179\n35.93814"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#visualizing-results-lasso-1",
+    "href": "slides/18-regularization-tuning.html#visualizing-results-lasso-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Visualizing Results: LASSO",
+    "text": "Visualizing Results: LASSO\n\nautoplot(tuning_lasso_results)"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#selecting-best-model-ridge-2",
+    "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge-2",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Selecting Best Model: Ridge",
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbse_ose_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbse_ose_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model07\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty)) # why are we descending\nbse_ose_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model07\n\n\n\n\n\n\n\nWhich should be use?"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#finalize-model-3",
+    "href": "slides/18-regularization-tuning.html#finalize-model-3",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Finalize Model",
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nlasso_rmse_final &lt;- finalize_workflow(lasso_wf, bse_ose_rmse_lasso)\nlasso_rmse_fit &lt;- fit(lasso_rmse_final, data = candy_train)\ntidy(lasso_rmse_fit) |&gt; \n  filter(estimate != 0) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.822182\n4.641589\n\n\nchocolate_TRUE.\n5.165031\n4.641589"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#using-the-test-set-as-a-tie-breaker",
+    "href": "slides/18-regularization-tuning.html#using-the-test-set-as-a-tie-breaker",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Using the Test Set as a Tie Breaker",
+    "text": "Using the Test Set as a Tie Breaker\n\nOnce you’ve found you “best” candidate from several different classes of model, it’s ok to compare on test set\nIn this case, we have our best ridge and our best lasso model\nMain this to avoid… LOTS of comparisons on your test set"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#using-the-test-set-as-a-tie-breaker-1",
+    "href": "slides/18-regularization-tuning.html#using-the-test-set-as-a-tie-breaker-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Using the Test Set as a Tie Breaker",
+    "text": "Using the Test Set as a Tie Breaker\n\ncandy_test_wpreds &lt;- candy_test |&gt; \n  mutate(ridge_preds = predict(ridge_rmse_fit, new_data = candy_test)$.pred,\n         lasso_preds = predict(lasso_rmse_fit, new_data = candy_test)$.pred)\ncandy_test_wpreds |&gt; rmse(estimate = ridge_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard        11.7\n\ncandy_test_wpreds |&gt; rmse(estimate = lasso_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard        12.0\n\ncandy_test_wpreds |&gt; rsq(estimate = ridge_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rsq     standard       0.425\n\ncandy_test_wpreds |&gt; rsq(estimate = lasso_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rsq     standard       0.341\n\n\n\nRidge Wins!"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#regular-grid-search-in-r-1",
+    "href": "slides/18-regularization-tuning.html#regular-grid-search-in-r-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Regular Grid Search in R",
+    "text": "Regular Grid Search in R\n\nTake advantage of package dials which is part of the tidyverse\n\nSet every tuning variable equal to tune()\nGenerate grid for hyperparameters using grid_regular\nTune your model: fit all hyperparameter combination on resamples using tune_grid\nVisualize and Choose final model"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#good-strategies",
+    "href": "slides/18-regularization-tuning.html#good-strategies",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Good strategies",
+    "text": "Good strategies\n\nFirst use coarse grid with large range to find general area\n\nThen use fine grid with small range to fine tune\nUse iterative method to fine tune"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#brief-overview",
+    "href": "slides/18-regularization-tuning.html#brief-overview",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Brief Overview",
+    "text": "Brief Overview\n\nBasic Idea: iterative select parameter values to choose based on how previous ones have done\nTMWR gives two examples:\n\nBayesian search\nStochastic Annealing\n\nBoth require an understanding of multivariate probability distributions"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search",
+    "href": "slides/18-regularization-tuning.html#bayesian-search",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search",
+    "text": "Bayesian Search\n\n\nAssume performance metrics follow a Gaussian process… dafuq\nConsider two sets of tuning parameters: \\(x_1 = (\\lambda_1, k_1)\\) and \\(x_2 = (\\lambda_2, k_2)\\)\nLet \\(Y_1\\) and \\(Y_2\\) be random variables representing the performance metric at these \\(x\\)’s\nAssume \\(\\Cov(Y_1, Y_2)\\) depends on how far apart \\(x_1\\) and \\(x_2\\)\n\nCovariance should decrease the further apart \\(x_1\\) and \\(x_2\\) are\nThis covariance function is typically parameterized and estimated from an initial tuning grid\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-gp",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-gp",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: GP",
+    "text": "Bayesian Search: GP\n\n\nAssume performance metrics follow a Gaussian process… dafuq\nConsider two sets of tuning parameters: \\(x_1 = (\\lambda_1, k_1)\\) and \\(x_2 = (\\lambda_2, k_2)\\)\nLet \\(Y_1\\) and \\(Y_2\\) be random variables representing the performance metric at these \\(x\\)’s\nAssume \\(\\text{Cov}(Y_1, Y_2)\\) depends on how far apart \\(x_1\\) and \\(x_2\\)\n\nCovariance should decrease the further apart \\(x_1\\) and \\(x_2\\) are\nThis covariance function is typically parameterized and estimated from an initial tuning grid"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-acquisition-function",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-acquisition-function",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: Acquisition Function",
+    "text": "Bayesian Search: Acquisition Function\n\n\nGP process gives us predicted mean and variance of performance metrics\nImagine two scenario’s:\n\n1: Predicted mean is slightly better than current parameter choice and variance is low\n\nLow-Risk, Low-Reward\n\n2: Predicted mean is slightly worst than current parameter choice but variance is high\n\nHigh-Risk, High-Reward\n\n\nHow do we balance?\nTwo competing goals: Exploration (got toward high variance) and Exploitation (go toward best mean)\nAcquisition function: balances these two goals (several to choose from)\ntmwr"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing",
+    "text": "Simulated Annealing\n\n\nDoes anyone know what annealing is in Physics/Material Science?\nStart with initial parameter combination \\(x_0\\)(think gradient descent)\nEmbark on random walk… in each step \\(i\\)\n\nConsider small perturbation from \\(x_{i-1}\\)… let’s call it \\(x_{i-1}^{\\epsilon}\\)\nGet performance for \\(x_{i-1}^\\epsilon\\)\nIf performance is better set \\(x_i = x_{i-1}^\\epsilon\\)\nIf performance is worse set \\(x_i = x_{i-1}^\\epsilon\\) with probability \\(\\exp(-c\\times D_i\\times i)\\)\n\n\\(c\\) is user specified constant called cooling coefficient\n\\(D_i\\) percent difference between old and new\n\nOtherwise \\(x_i = x_{i-1}\\)\n\nIdea:\n\nstart hot: likely to accept suboptimal parameter combinations and move around\ncools over time: decrease number sub-optimal acceptances"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#grid-search-1",
+    "href": "slides/18-regularization-tuning.html#grid-search-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Grid Search",
+    "text": "Grid Search\n\nCreate a grid of tuning parameters and try out each combination\nTypes of grids:\n\nRegular Grid: tuning parameter values are spaced deterministically using a linear or logarithmic scale and all combinations of parameters are used (mostly what you want to use in this class)\nIrregular Grids: tuning parameter values are chosen stochastically\n\nUse when you have A LOT of parameters"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nbayes_ridge &lt;- ridge_wf |&gt; \n  tune_bayes(\n    resamples = candy_folds,\n    metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)\n    initial = tuning_ridge_results,\n    iter = 25\n  )"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-1",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nautoplot(bayes_ridge, type = \"performance\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-2",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-2",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nautoplot(bayes_ridge, type = \"parameters\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-3",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-3",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nshow_best(bayes_ridge) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n12.915497\nrmse\nstandard\n13.18455\n20\n0.2649707\nPreprocessor1_Model08\n0\n\n\n4.641589\nrmse\nstandard\n13.31925\n20\n0.3117199\nPreprocessor1_Model07\n0\n\n\n35.938137\nrmse\nstandard\n13.33690\n20\n0.2825743\nPreprocessor1_Model09\n0\n\n\n1.668100\nrmse\nstandard\n13.59561\n20\n0.3699781\nPreprocessor1_Model06\n0\n\n\n0.010000\nrmse\nstandard\n13.77870\n20\n0.3988692\nPreprocessor1_Model01\n0"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-4",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-4",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nbayes_lasso &lt;- lasso_wf |&gt; \n  tune_bayes(\n    resamples = candy_folds,\n    metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)\n    initial = tuning_lasso_results,\n    iter = 25\n  )"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-5",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-5",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nautoplot(bayes_lasso, type = \"performance\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-6",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-6",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nautoplot(bayes_lasso, type = \"parameters\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-7",
+    "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-7",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Bayesian Search: tidymodels",
+    "text": "Bayesian Search: tidymodels\n\nshow_best(bayes_lasso) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n1.6681005\nrmse\nstandard\n12.89536\n20\n0.3326785\nPreprocessor1_Model06\n0\n\n\n0.9969729\nrmse\nstandard\n13.08461\n20\n0.3757676\nIter6\n6\n\n\n4.6415888\nrmse\nstandard\n13.09389\n20\n0.3774972\nPreprocessor1_Model07\n0\n\n\n0.5994843\nrmse\nstandard\n13.21930\n20\n0.4160972\nPreprocessor1_Model05\n0\n\n\n0.2154435\nrmse\nstandard\n13.73553\n20\n0.4412691\nPreprocessor1_Model04\n0"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing: tidymodels",
+    "text": "Simulated Annealing: tidymodels\n\nlibrary(finetune)\nridge_sim_anneal &lt;- ridge_wf |&gt; \n  tune_sim_anneal(\n    resamples = candy_folds,\n    metrics = candy_metrics, # first metric is what's optimized (rmse in this case)\n    initial = tuning_ridge_results,\n    iter = 50\n  )"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-1",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-1",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing tidymodels",
+    "text": "Simulated Annealing tidymodels\n\nautoplot(ridge_sim_anneal, type = \"performance\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-2",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-2",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing tidymodels",
+    "text": "Simulated Annealing tidymodels\n\nautoplot(ridge_sim_anneal, type = \"parameters\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-3",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-3",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing tidymodels",
+    "text": "Simulated Annealing tidymodels\n\nshow_best(ridge_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n12.915497\nrmse\nstandard\n13.18455\n20\n0.2649707\ninitial_Preprocessor1_Model08\n0\n\n\n4.641589\nrmse\nstandard\n13.31925\n20\n0.3117199\ninitial_Preprocessor1_Model07\n0\n\n\n35.938137\nrmse\nstandard\n13.33690\n20\n0.2825743\ninitial_Preprocessor1_Model09\n0\n\n\n1.668100\nrmse\nstandard\n13.59561\n20\n0.3699781\ninitial_Preprocessor1_Model06\n0\n\n\n1.000000\nrmse\nstandard\n13.74839\n20\n0.3945405\nIter20\n20"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-4",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-4",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing: tidymodels",
+    "text": "Simulated Annealing: tidymodels\n\nlasso_sim_anneal &lt;- ridge_wf |&gt; \n  tune_sim_anneal(\n    resamples = candy_folds,\n    metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)\n    initial = tuning_lasso_results,\n    iter = 50\n  )"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-5",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-5",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing tidymodels",
+    "text": "Simulated Annealing tidymodels\n\nautoplot(lasso_sim_anneal, type = \"performance\")"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-6",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-6",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing tidymodels",
+    "text": "Simulated Annealing tidymodels\n\nautoplot(lasso_sim_anneal, type = \"parameters\") +\n  scale_x_continuous(trans = 'log10')"
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-7",
+    "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-7",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "Simulated Annealing tidymodels",
+    "text": "Simulated Annealing tidymodels\n\nshow_best(lasso_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n1.6681005\nrmse\nstandard\n12.89536\n20\n0.3326785\ninitial_Preprocessor1_Model06\n0\n\n\n4.6415888\nrmse\nstandard\n13.09389\n20\n0.3774972\ninitial_Preprocessor1_Model07\n0\n\n\n0.5994843\nrmse\nstandard\n13.21930\n20\n0.4160972\ninitial_Preprocessor1_Model05\n0\n\n\n0.2154435\nrmse\nstandard\n13.73553\n20\n0.4412691\ninitial_Preprocessor1_Model04\n0\n\n\n0.9700977\nrmse\nstandard\n13.75310\n20\n0.3955048\nIter25\n25\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
