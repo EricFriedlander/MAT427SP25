@@ -14,7 +14,7 @@ format:
 execute:
   freeze: auto
   echo: true
-  cache: false
+  cache: true
 knitr:
   opts_chunk: 
     R.options:      
@@ -168,7 +168,7 @@ candy_folds <- vfold_cv(candy_train, v = 2, repeats = 10)
 
 ```{r}
 # note that dials treats penalty on a log10 scale
-penalty_grid <- grid_regular(penalty(range = c(-2, 2)), # I had to play around with these 
+penalty_grid <- grid_regular(penalty(range = c(-10, 2)), # I had to play around with these 
                              levels = 10)
 ```
 
@@ -466,12 +466,16 @@ candy_test_wpreds |> rsq(estimate = lasso_preds, truth = winpercent)
 ## Bayesian Search: `tidymodels`
 
 ```{r}
+ridge_params <- ridge_wf |> 
+  extract_parameter_set_dials() |> 
+  update(penalty = penalty(c(-2, 1)))
 
 bayes_ridge <- ridge_wf |> 
   tune_bayes(
     resamples = candy_folds,
     metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)
     initial = tuning_ridge_results,
+    param_info = ridge_params,
     iter = 25
   )
 ```
@@ -497,11 +501,16 @@ show_best(bayes_ridge) |> kable()
 ## Bayesian Search: `tidymodels`
 
 ```{r}
+lasso_params <- lasso_wf |> 
+  extract_parameter_set_dials() |> 
+  update(penalty = penalty(c(-2,1)))
+
 bayes_lasso <- lasso_wf |> 
   tune_bayes(
     resamples = candy_folds,
     metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)
     initial = tuning_lasso_results,
+    param_info = lasso_params,
     iter = 25
   )
 ```
@@ -551,6 +560,7 @@ ridge_sim_anneal <- ridge_wf |>
     resamples = candy_folds,
     metrics = candy_metrics, # first metric is what's optimized (rmse in this case)
     initial = tuning_ridge_results,
+    param_info = ridge_params,
     iter = 50
   )
 ```
@@ -581,6 +591,7 @@ lasso_sim_anneal <- ridge_wf |>
     resamples = candy_folds,
     metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)
     initial = tuning_lasso_results,
+    param_info = lasso_params,
     iter = 50
   )
 ```

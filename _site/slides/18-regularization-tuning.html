@@ -613,7 +613,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <h2>Generate Grid</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="co"># note that dials treats penalty on a log10 scale</span></span>
-<span id="cb13-2"><a></a>penalty_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">penalty</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>)), <span class="co"># I had to play around with these </span></span>
+<span id="cb13-2"><a></a>penalty_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">penalty</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">2</span>)), <span class="co"># I had to play around with these </span></span>
 <span id="cb13-3"><a></a>                             <span class="at">levels =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
@@ -629,22 +629,22 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1.000000e-02</td>
+<td style="text-align: right;">1.0e-10</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2.782559e-02</td>
+<td style="text-align: right;">1.4e-10</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">7.742637e-02</td>
+<td style="text-align: right;">2.0e-10</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2.154435e-01</td>
+<td style="text-align: right;">2.8e-10</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">5.994843e-01</td>
+<td style="text-align: right;">4.0e-10</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1.668101e+00</td>
+<td style="text-align: right;">5.7e-10</td>
 </tr>
 </tbody>
 </table>
@@ -662,22 +662,22 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0.5994843</td>
+<td style="text-align: right;">17475.28</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1.6681005</td>
+<td style="text-align: right;">24770.76</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">4.6415888</td>
+<td style="text-align: right;">35111.92</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">12.9154967</td>
+<td style="text-align: right;">49770.24</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">35.9381366</td>
+<td style="text-align: right;">70548.02</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">100.0000000</td>
+<td style="text-align: right;">100000.00</td>
 </tr>
 </tbody>
 </table>
@@ -750,8 +750,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">12.92</td>
-<td style="text-align: left;">Preprocessor1_Model08</td>
+<td style="text-align: right;">4.04</td>
+<td style="text-align: left;">Preprocessor1_Model071</td>
 </tr>
 </tbody>
 </table>
@@ -773,8 +773,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">100</td>
-<td style="text-align: left;">Preprocessor1_Model10</td>
+<td style="text-align: right;">1.42</td>
+<td style="text-align: left;">Preprocessor1_Model068</td>
 </tr>
 </tbody>
 </table>
@@ -808,62 +808,62 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">49.8221817</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">sugarpercent</td>
-<td style="text-align: right;">1.2011154</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">1.6498388</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">pricepercent</td>
-<td style="text-align: right;">0.0055376</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">-1.0162912</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chocolate_TRUE.</td>
-<td style="text-align: right;">3.4167196</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">5.9085920</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">fruity_TRUE.</td>
-<td style="text-align: right;">-0.3054272</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">1.0372003</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">caramel_TRUE.</td>
-<td style="text-align: right;">0.7392663</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">0.9924626</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">peanutyalmondy_TRUE.</td>
-<td style="text-align: right;">2.1187660</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">2.9161854</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">nougat_TRUE.</td>
-<td style="text-align: right;">0.5847784</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">0.4757282</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">crispedricewafer_TRUE.</td>
-<td style="text-align: right;">1.2691738</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">1.6528996</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">hard_TRUE.</td>
-<td style="text-align: right;">-1.0835752</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">-1.2163806</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">bar_TRUE.</td>
-<td style="text-align: right;">1.3412128</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">1.4700130</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">pluribus_TRUE.</td>
-<td style="text-align: right;">-0.0191221</td>
-<td style="text-align: right;">12.9155</td>
+<td style="text-align: right;">0.4863559</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 </tbody>
 </table>
@@ -896,8 +896,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1.67</td>
-<td style="text-align: left;">Preprocessor1_Model06</td>
+<td style="text-align: right;">2.01</td>
+<td style="text-align: left;">Preprocessor1_Model069</td>
 </tr>
 </tbody>
 </table>
@@ -919,8 +919,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">4.64</td>
-<td style="text-align: left;">Preprocessor1_Model07</td>
+<td style="text-align: right;">8.11</td>
+<td style="text-align: left;">Preprocessor1_Model073</td>
 </tr>
 </tbody>
 </table>
@@ -955,27 +955,22 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">49.8221817</td>
-<td style="text-align: right;">1.6681</td>
+<td style="text-align: right;">2.009233</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">sugarpercent</td>
-<td style="text-align: right;">0.4225703</td>
-<td style="text-align: right;">1.6681</td>
+<td style="text-align: right;">0.1171228</td>
+<td style="text-align: right;">2.009233</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chocolate_TRUE.</td>
-<td style="text-align: right;">7.5532522</td>
-<td style="text-align: right;">1.6681</td>
+<td style="text-align: right;">7.3723956</td>
+<td style="text-align: right;">2.009233</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">peanutyalmondy_TRUE.</td>
-<td style="text-align: right;">1.3187008</td>
-<td style="text-align: right;">1.6681</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">crispedricewafer_TRUE.</td>
-<td style="text-align: right;">0.0685750</td>
-<td style="text-align: right;">1.6681</td>
+<td style="text-align: right;">1.0638847</td>
+<td style="text-align: right;">2.009233</td>
 </tr>
 </tbody>
 </table>
@@ -1012,8 +1007,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">35.94</td>
-<td style="text-align: left;">Preprocessor1_Model09</td>
+<td style="text-align: right;">23.1</td>
+<td style="text-align: left;">Preprocessor1_Model076</td>
 </tr>
 </tbody>
 </table>
@@ -1035,8 +1030,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">100</td>
-<td style="text-align: left;">Preprocessor1_Model10</td>
+<td style="text-align: right;">6135.91</td>
+<td style="text-align: left;">Preprocessor1_Model092</td>
 </tr>
 </tbody>
 </table>
@@ -1077,62 +1072,62 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">49.8221817</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">sugarpercent</td>
-<td style="text-align: right;">0.7130522</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">0.9177117</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">pricepercent</td>
-<td style="text-align: right;">0.3808477</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">0.2880581</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chocolate_TRUE.</td>
-<td style="text-align: right;">1.9776319</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">2.5257696</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">fruity_TRUE.</td>
-<td style="text-align: right;">-0.6461222</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">-0.5869128</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">caramel_TRUE.</td>
-<td style="text-align: right;">0.5420201</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">0.6295331</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">peanutyalmondy_TRUE.</td>
-<td style="text-align: right;">1.2997946</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">1.6435408</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">nougat_TRUE.</td>
-<td style="text-align: right;">0.4888567</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">0.5478612</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">crispedricewafer_TRUE.</td>
-<td style="text-align: right;">0.8367198</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">1.0228550</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">hard_TRUE.</td>
-<td style="text-align: right;">-0.7723341</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">-0.9199424</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">bar_TRUE.</td>
-<td style="text-align: right;">1.0423410</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">1.1919258</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">pluribus_TRUE.</td>
-<td style="text-align: right;">-0.2779179</td>
-<td style="text-align: right;">35.93814</td>
+<td style="text-align: right;">-0.2032425</td>
+<td style="text-align: right;">23.1013</td>
 </tr>
 </tbody>
 </table>
@@ -1165,8 +1160,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">4.64</td>
-<td style="text-align: left;">Preprocessor1_Model07</td>
+<td style="text-align: right;">4.04</td>
+<td style="text-align: left;">Preprocessor1_Model071</td>
 </tr>
 </tbody>
 </table>
@@ -1188,8 +1183,8 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">4.64</td>
-<td style="text-align: left;">Preprocessor1_Model07</td>
+<td style="text-align: right;">8.11</td>
+<td style="text-align: left;">Preprocessor1_Model073</td>
 </tr>
 </tbody>
 </table>
@@ -1224,12 +1219,12 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">49.822182</td>
-<td style="text-align: right;">4.641589</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chocolate_TRUE.</td>
-<td style="text-align: right;">5.165031</td>
-<td style="text-align: right;">4.641589</td>
+<td style="text-align: right;">5.774619</td>
+<td style="text-align: right;">4.037017</td>
 </tr>
 </tbody>
 </table>
@@ -1255,21 +1250,21 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 rmse    standard        11.7</code></pre>
+1 rmse    standard        11.4</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>candy_test_wpreds <span class="sc">|&gt;</span> <span class="fu">rmse</span>(<span class="at">estimate =</span> lasso_preds, <span class="at">truth =</span> winpercent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 rmse    standard        12.0</code></pre>
+1 rmse    standard        11.9</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>candy_test_wpreds <span class="sc">|&gt;</span> <span class="fu">rsq</span>(<span class="at">estimate =</span> ridge_preds, <span class="at">truth =</span> winpercent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 rsq     standard       0.425</code></pre>
+1 rsq     standard       0.435</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>candy_test_wpreds <span class="sc">|&gt;</span> <span class="fu">rsq</span>(<span class="at">estimate =</span> lasso_preds, <span class="at">truth =</span> winpercent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1351,13 +1346,18 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <section id="bayesian-search-tidymodels" class="slide level2">
 <h2>Bayesian Search: <code>tidymodels</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>bayes_ridge <span class="ot">&lt;-</span> ridge_wf <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a></a>  <span class="fu">tune_bayes</span>(</span>
-<span id="cb41-3"><a></a>    <span class="at">resamples =</span> candy_folds,</span>
-<span id="cb41-4"><a></a>    <span class="at">metrics =</span> candy_metrics, <span class="co"># first metrics is what's optimized (rmse in this case)</span></span>
-<span id="cb41-5"><a></a>    <span class="at">initial =</span> tuning_ridge_results,</span>
-<span id="cb41-6"><a></a>    <span class="at">iter =</span> <span class="dv">25</span></span>
-<span id="cb41-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>ridge_params <span class="ot">&lt;-</span> ridge_wf <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a></a>  <span class="fu">extract_parameter_set_dials</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a></a>  <span class="fu">update</span>(<span class="at">penalty =</span> <span class="fu">penalty</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>)))</span>
+<span id="cb41-4"><a></a></span>
+<span id="cb41-5"><a></a>bayes_ridge <span class="ot">&lt;-</span> ridge_wf <span class="sc">|&gt;</span> </span>
+<span id="cb41-6"><a></a>  <span class="fu">tune_bayes</span>(</span>
+<span id="cb41-7"><a></a>    <span class="at">resamples =</span> candy_folds,</span>
+<span id="cb41-8"><a></a>    <span class="at">metrics =</span> candy_metrics, <span class="co"># first metrics is what's optimized (rmse in this case)</span></span>
+<span id="cb41-9"><a></a>    <span class="at">initial =</span> tuning_ridge_results,</span>
+<span id="cb41-10"><a></a>    <span class="at">param_info =</span> ridge_params,</span>
+<span id="cb41-11"><a></a>    <span class="at">iter =</span> <span class="dv">25</span></span>
+<span id="cb41-12"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="bayesian-search-tidymodels-1" class="slide level2">
@@ -1381,13 +1381,13 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
-<col style="width: 12%">
+<col style="width: 11%">
 <col style="width: 10%">
 <col style="width: 13%">
 <col style="width: 11%">
 <col style="width: 3%">
 <col style="width: 12%">
-<col style="width: 27%">
+<col style="width: 29%">
 <col style="width: 7%">
 </colgroup>
 <thead>
@@ -1404,53 +1404,53 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">12.915497</td>
+<td style="text-align: right;">4.037017</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.18455</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.2649707</td>
-<td style="text-align: left;">Preprocessor1_Model08</td>
+<td style="text-align: right;">12.13944</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3598869</td>
+<td style="text-align: left;">Preprocessor1_Model071</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4.641589</td>
+<td style="text-align: right;">2.848036</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.31925</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3117199</td>
-<td style="text-align: left;">Preprocessor1_Model07</td>
+<td style="text-align: right;">12.14005</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3641361</td>
+<td style="text-align: left;">Preprocessor1_Model070</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">35.938137</td>
+<td style="text-align: right;">5.722368</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.33690</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.2825743</td>
-<td style="text-align: left;">Preprocessor1_Model09</td>
+<td style="text-align: right;">12.15339</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3530981</td>
+<td style="text-align: left;">Preprocessor1_Model072</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1.668100</td>
+<td style="text-align: right;">2.009233</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.59561</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3699781</td>
-<td style="text-align: left;">Preprocessor1_Model06</td>
+<td style="text-align: right;">12.15687</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3655793</td>
+<td style="text-align: left;">Preprocessor1_Model069</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">0.010000</td>
+<td style="text-align: right;">8.111308</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.77870</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3988692</td>
-<td style="text-align: left;">Preprocessor1_Model01</td>
+<td style="text-align: right;">12.18153</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3446423</td>
+<td style="text-align: left;">Preprocessor1_Model073</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -1461,13 +1461,18 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <section id="bayesian-search-tidymodels-4" class="slide level2">
 <h2>Bayesian Search: <code>tidymodels</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>bayes_lasso <span class="ot">&lt;-</span> lasso_wf <span class="sc">|&gt;</span> </span>
-<span id="cb45-2"><a></a>  <span class="fu">tune_bayes</span>(</span>
-<span id="cb45-3"><a></a>    <span class="at">resamples =</span> candy_folds,</span>
-<span id="cb45-4"><a></a>    <span class="at">metrics =</span> candy_metrics, <span class="co"># first metrics is what's optimized (rmse in this case)</span></span>
-<span id="cb45-5"><a></a>    <span class="at">initial =</span> tuning_lasso_results,</span>
-<span id="cb45-6"><a></a>    <span class="at">iter =</span> <span class="dv">25</span></span>
-<span id="cb45-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>lasso_params <span class="ot">&lt;-</span> lasso_wf <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a></a>  <span class="fu">extract_parameter_set_dials</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a></a>  <span class="fu">update</span>(<span class="at">penalty =</span> <span class="fu">penalty</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>)))</span>
+<span id="cb45-4"><a></a></span>
+<span id="cb45-5"><a></a>bayes_lasso <span class="ot">&lt;-</span> lasso_wf <span class="sc">|&gt;</span> </span>
+<span id="cb45-6"><a></a>  <span class="fu">tune_bayes</span>(</span>
+<span id="cb45-7"><a></a>    <span class="at">resamples =</span> candy_folds,</span>
+<span id="cb45-8"><a></a>    <span class="at">metrics =</span> candy_metrics, <span class="co"># first metrics is what's optimized (rmse in this case)</span></span>
+<span id="cb45-9"><a></a>    <span class="at">initial =</span> tuning_lasso_results,</span>
+<span id="cb45-10"><a></a>    <span class="at">param_info =</span> lasso_params,</span>
+<span id="cb45-11"><a></a>    <span class="at">iter =</span> <span class="dv">25</span></span>
+<span id="cb45-12"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="bayesian-search-tidymodels-5" class="slide level2">
@@ -1497,7 +1502,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <col style="width: 11%">
 <col style="width: 3%">
 <col style="width: 12%">
-<col style="width: 27%">
+<col style="width: 28%">
 <col style="width: 7%">
 </colgroup>
 <thead>
@@ -1514,53 +1519,53 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1.6681005</td>
+<td style="text-align: right;">2.0092330</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">12.89536</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3326785</td>
-<td style="text-align: left;">Preprocessor1_Model06</td>
+<td style="text-align: right;">12.03113</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.2958604</td>
+<td style="text-align: left;">Preprocessor1_Model069</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.9969729</td>
+<td style="text-align: right;">2.8480359</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.08461</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3757676</td>
-<td style="text-align: left;">Iter6</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">12.05929</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.2819560</td>
+<td style="text-align: left;">Preprocessor1_Model070</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">4.6415888</td>
+<td style="text-align: right;">1.4174742</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.09389</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3774972</td>
-<td style="text-align: left;">Preprocessor1_Model07</td>
+<td style="text-align: right;">12.10325</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3104463</td>
+<td style="text-align: left;">Preprocessor1_Model068</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.5994843</td>
+<td style="text-align: right;">0.4977024</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.21930</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.4160972</td>
-<td style="text-align: left;">Preprocessor1_Model05</td>
+<td style="text-align: right;">12.13600</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3471903</td>
+<td style="text-align: left;">Preprocessor1_Model065</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">0.2154435</td>
+<td style="text-align: right;">0.7054802</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.73553</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.4412691</td>
-<td style="text-align: left;">Preprocessor1_Model04</td>
+<td style="text-align: right;">12.17088</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3364533</td>
+<td style="text-align: left;">Preprocessor1_Model066</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -1603,8 +1608,9 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <span id="cb49-4"><a></a>    <span class="at">resamples =</span> candy_folds,</span>
 <span id="cb49-5"><a></a>    <span class="at">metrics =</span> candy_metrics, <span class="co"># first metric is what's optimized (rmse in this case)</span></span>
 <span id="cb49-6"><a></a>    <span class="at">initial =</span> tuning_ridge_results,</span>
-<span id="cb49-7"><a></a>    <span class="at">iter =</span> <span class="dv">50</span></span>
-<span id="cb49-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-7"><a></a>    <span class="at">param_info =</span> ridge_params,</span>
+<span id="cb49-8"><a></a>    <span class="at">iter =</span> <span class="dv">50</span></span>
+<span id="cb49-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="simulated-annealing-tidymodels-1" class="slide level2">
@@ -1628,13 +1634,13 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
-<col style="width: 11%">
+<col style="width: 10%">
 <col style="width: 9%">
 <col style="width: 12%">
 <col style="width: 10%">
 <col style="width: 3%">
 <col style="width: 11%">
-<col style="width: 34%">
+<col style="width: 35%">
 <col style="width: 6%">
 </colgroup>
 <thead>
@@ -1651,54 +1657,54 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">12.915497</td>
+<td style="text-align: right;">4.037017</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.18455</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.2649707</td>
-<td style="text-align: left;">initial_Preprocessor1_Model08</td>
+<td style="text-align: right;">12.13944</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3598869</td>
+<td style="text-align: left;">initial_Preprocessor1_Model071</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4.641589</td>
+<td style="text-align: right;">2.848036</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.31925</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3117199</td>
-<td style="text-align: left;">initial_Preprocessor1_Model07</td>
+<td style="text-align: right;">12.14005</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3641361</td>
+<td style="text-align: left;">initial_Preprocessor1_Model070</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">35.938137</td>
+<td style="text-align: right;">5.722368</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.33690</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.2825743</td>
-<td style="text-align: left;">initial_Preprocessor1_Model09</td>
+<td style="text-align: right;">12.15339</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3530981</td>
+<td style="text-align: left;">initial_Preprocessor1_Model072</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1.668100</td>
+<td style="text-align: right;">2.009233</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.59561</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3699781</td>
-<td style="text-align: left;">initial_Preprocessor1_Model06</td>
+<td style="text-align: right;">12.15687</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3655793</td>
+<td style="text-align: left;">initial_Preprocessor1_Model069</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">8.111308</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.74839</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3945405</td>
-<td style="text-align: left;">Iter20</td>
-<td style="text-align: right;">20</td>
+<td style="text-align: right;">12.18153</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3446423</td>
+<td style="text-align: left;">initial_Preprocessor1_Model073</td>
+<td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
@@ -1713,8 +1719,9 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <span id="cb53-3"><a></a>    <span class="at">resamples =</span> candy_folds,</span>
 <span id="cb53-4"><a></a>    <span class="at">metrics =</span> candy_metrics, <span class="co"># first metrics is what's optimized (rmse in this case)</span></span>
 <span id="cb53-5"><a></a>    <span class="at">initial =</span> tuning_lasso_results,</span>
-<span id="cb53-6"><a></a>    <span class="at">iter =</span> <span class="dv">50</span></span>
-<span id="cb53-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-6"><a></a>    <span class="at">param_info =</span> lasso_params,</span>
+<span id="cb53-7"><a></a>    <span class="at">iter =</span> <span class="dv">50</span></span>
+<span id="cb53-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="simulated-annealing-tidymodels-5" class="slide level2">
@@ -1745,7 +1752,7 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 <col style="width: 10%">
 <col style="width: 3%">
 <col style="width: 11%">
-<col style="width: 34%">
+<col style="width: 35%">
 <col style="width: 6%">
 </colgroup>
 <thead>
@@ -1762,54 +1769,54 @@ $ winpercent       &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1.6681005</td>
+<td style="text-align: right;">2.0092330</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">12.89536</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3326785</td>
-<td style="text-align: left;">initial_Preprocessor1_Model06</td>
+<td style="text-align: right;">12.03113</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.2958604</td>
+<td style="text-align: left;">initial_Preprocessor1_Model069</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4.6415888</td>
+<td style="text-align: right;">2.8480359</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.09389</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3774972</td>
-<td style="text-align: left;">initial_Preprocessor1_Model07</td>
+<td style="text-align: right;">12.05929</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.2819560</td>
+<td style="text-align: left;">initial_Preprocessor1_Model070</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">0.5994843</td>
+<td style="text-align: right;">1.4174742</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.21930</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.4160972</td>
-<td style="text-align: left;">initial_Preprocessor1_Model05</td>
+<td style="text-align: right;">12.10325</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3104463</td>
+<td style="text-align: left;">initial_Preprocessor1_Model068</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0.2154435</td>
+<td style="text-align: right;">0.4977024</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.73553</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.4412691</td>
-<td style="text-align: left;">initial_Preprocessor1_Model04</td>
+<td style="text-align: right;">12.13600</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3471903</td>
+<td style="text-align: left;">initial_Preprocessor1_Model065</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">0.9700977</td>
+<td style="text-align: right;">0.7054802</td>
 <td style="text-align: left;">rmse</td>
 <td style="text-align: left;">standard</td>
-<td style="text-align: right;">13.75310</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.3955048</td>
-<td style="text-align: left;">Iter25</td>
-<td style="text-align: right;">25</td>
+<td style="text-align: right;">12.17088</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3364533</td>
+<td style="text-align: left;">initial_Preprocessor1_Model066</td>
+<td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>

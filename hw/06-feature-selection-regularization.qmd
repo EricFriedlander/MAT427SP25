@@ -37,7 +37,7 @@ You can find your team for this assignment on Canvas in the **People** section. 
 3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
 
 
-## The Data: Communitiees and Crime
+# Dataset 1: Communitiees and Crime
 
 In this lesson we'll be working with the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:
 
@@ -45,6 +45,8 @@ In this lesson we'll be working with the Communities and Crime data set from the
 
 More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized).
 Our goal will be to predict the number of crimes per capita, stored in the column called `ViolentCrimesPerPop`.
+
+## Cleaning and Preprocessing
 
 ## Exercise 1
 
@@ -74,57 +76,41 @@ Use `drop_na` to drop any rows which have a missing value in the `ViolentCrimesP
 How many observation are left? Split the remaining data into a training and test set using an 80-20 split. Use the seed 427.
 :::
 
-## Exercise 4
+## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Use `method = "knnImpute"` in the `preProcess` function from the `caret` package to impute all missing data from your training set. Make sure not to include the target variable when you "fit" your preprocessor. Why? Do not overwrite your original training set. Use `skim` again to verify that there are no more missing values. Once again, do not include the output in your lab report. Other imputation options include `bagImpute` and `medianImpute`. 
+Generate a recipe that can be used for ordinary least squares regression, ridge regression, and LASSO. At a minimum it should include the following steps (not necessarily in this order):
+
+-   Dummy code all factors.
+-   Imputing missing values.
+-   Normalization of all predictors... why?
 :::
 
-# Shrinkage Methods/Penalized Models
+# Initial Model Fits
 
-Ordinary Least Squares (OLS) regression estimates the linear regression coefficients by minimizing the MSE. However, there are two situation in which linear regression either doesn't work or results in a model which is unstable and has a high MSE. The first is if we have more predictors than observations. In this case, it is impossible to use OLS to fit a linear model. The second is if we have groups of highly correlated variables (i.e. multicollinearity). This will result in parameter estimates which have extremely high variance (i.e. they're unstable). Recall the so-called **bias-variance trade-off**. Namely, the MSE can be decomposed into a variance term and a bias term. We can improve the MSE by make these quantities small. Penalized Models add an additional error term to the sum of squared residuals. This results in models which are biased but have lower variance. If the increase in bias is smaller than the decrease in variance, this resulting model will have a lower MSE and make more accurate predictions. We will learn about two penalized methods called **ridge regression** and **LASSO**. These two are special cases of a third type of model called an **elastic net** which is essentially a combination of the two.
+## Exercise 6
 
-## Ridge Regression
+::: {.callout-tip title="Question"}
+Fit two models to the training data, a ridge regression model and a LASSO model. Set the penalty for both to 0. Plot the coefficient estimates against the penalty as in [these](https://mat427sp25.netlify.app/slides/17-regularization#/ridge-coefficients-vs.-penalty-lambda) [plots](https://mat427sp25.netlify.app/slides/17-regularization#/lasso-coefficients-vs.-penalty-lambda). Explain what you see and why. (Practice interview question).
+:::
 
-The first penalized method we'll talk about is called **ridge regression**. Ridge regression works by minimizing the following expression: $$\sum_{i=1}^n(y_i - \hat{y}_i)^2 + \lambda\sum_{i=1}^p\beta_i^2$$
-where $\lambda$ is called a **tuning parameter** and needs to be selected before the model is fit. In practice, we use a validation set or cross-validation to select an optimal $\lambda$. Inclusion of this extra penalty term has the effect of shrinking our coefficients towards zero. This increases the bias of your estimates but also decreases the variance. When you have a lot of variables and/or a high level of multicollinearity this will typically result in a smaller MSE than OLS regression.
+# Tuning your model
 
-5. When fitting a ridge regression we must center and scale our predictors. Depending on which implementation you use, sometimes this will be done by the function and sometimes you will have to do it yourself before fitting your model. Why do you think we need to standardize our data before fitting a ridge regression model but not for an OLS regression?
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Use cross-validation and grid-search to find the best penalty (according to RMSE) for your Ridge and LASSO models. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you're sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of $\lambda$. In addition, make use of [caching](https://quarto.org/docs/computations/caching.html) so you don't need to re-run the cross-validation every time the document is Rendered.
+:::
 
 
-6. Use the `enet` function from the `elasticnet` package to fit a ridge regression model with $\lambda = 1$. Look at the documentation and Chapter 6.5 from APM for details on how to do this. Compute the MSE on the training set. Since this data set has so many variables, it doesn't make sense to write out the full model but make sure you can extract the coefficients and understand what your resulting model looks like.
+# Final Model
 
-Now that you've fit a ridge regression model, let's figure out what the best value of $\lambda$ is.
+## Exercise 8
 
-7. Use 5-fold cross validation to find the best value of $\lambda$. To do this, use CV to estimate the MSE for every $\lambda$ between 0 and 0.5 going up by 0.01. This will take a minute or two to run so you may want to test it out on a smaller grid of $\lambda$s. Note that, ideally, you'd also re-impute your missing values in each fold but, to save time, don't do that here.
+::: {.callout-tip title="Question"}
+Fit your best Ridge, and your best LASSO model to the full training set. Assess both models performance on the test set. Which is better?
+:::
 
-## LASSO
 
-Another penalized model is the *least absolute shrinkage and selection operator* or **LASSO** model. The model is fit by minimizing the following objective function: $$\sum_{i=1}^n(y_i - \hat{y}_i)^2 + \lambda\sum_{i=1}^p|\beta_i|$$
-Similar to ridge regression, this extra penalty term has the effect of shrinking our coefficients, increasing bias but reducing variance which can reduce the RMSE. The cool thing about LASSO is the penalty **induces sparsity** meaning that, in addition to shrinking the coefficient estimates, most of the estimated coefficients will be zero. Essentially the method is simultaneously performing feature selection while fitting the model. VERY COOL!
-
-8. Again, when fitting a LASSO model we must center and scale our predictors. Depending on which implementation you use, sometimes this will be done by the function and sometimes you will have to do it yourself before fitting your model. Looking at the objective function above, why do you think we need to standardize our data before fitting the model?
-
-9. Use the `enet` function from the `elasticnet` package to fit a LASSO model. Note that the `lambda` argument refers to the $\lambda$ for a ridge regression model so you'll want to set `lambda  = 0`. Look at the documentation and Chapter 6.5 from APM for details on how to do this. You don't actually specify the penalty until the predictions step. To control this specify `s = 0.001` and `mode = "fraction"` in your `precict` step. Note that, while `s` controls the value of $\lambda$, `s` is not the same as $\lambda$. Smaller values of $s$ result in larger values of $\lambda$. Compute the MSE on the training set.
-
-10. By setting `type = "coefficients"` in the `predict` function, you can get a list of your model's coefficients. How many non-zero coefficients are there? Write down the resulting model.
-
-Now that you've fit a LASSO model, let's figure out what the best value of $\lambda$ is.
-
-11. Use 5-fold cross validation to find the best value of `s`. To do this, use CV to estimate the MSE for every $s$ between 0 and 0.25 going up by 0.001. A few things to note here: (A) While $s$ will fix a value of $\lambda$ it is not the same as $\lambda$. Smaller values of $s$ result in larger values of $\lambda$. (B) This will take a minute or two to run so you may want to test it out on a smaller grid of $s$'s. (C) You'd usually use a grid that goes from 0 to 1 but to save time only go from 0 to 0.25. Again, you'd, ideally, also re-impute your missing values in each fold but, to save time, don't do that here.
-
-# Partial Least Squares \& Principal Component Regression
-
-Recall Principle Component Analysis (PCA) from Lab 3. PCA was a good method of performing **dimension reduction**. Namely, suppose we have a data set with $n$ observations and $p$ variables, PCA identifies the directions in $p$-dimensional space which maximize the variance of our data. Performing PCA before fitting an OLS regression is called Principle Component Regression (PCR). However, when we fit a PCR, calculation of the PCs occurs without any knowledge of what the target variable is. Partial Least Squares (PLS) is a similar method that finds the direction which maximizes the variance of our target variable (as opposed to our data as a whole).
-
-12. Use the `plsr` and `pcr` functions from the `pls` package to fit PLS and PCR regressions, respectively. Use 5 components for each model. Then compute the MSE on the training set. Which model performs better? Is this surprising? Why?
-
-13. Use 5-Fold CV to find the optimal number of components for each PLS and PCR. Once you find this make a line plot of the MSEs against number of components colored by method. Comment on what you see.
-
-# Conclusion
-
-We have now fit four candidate models where we used CV to find the optimal tuning parameters: (A) Ridge regression, (B) LASSO, (C) PLS, (D) PCR. 
-
-14. Refit each of these using the optimal tuning parameters you estimated above on the whole training set and then compute the MSE on the test set to determine which model is the best. Don't forget to impute the missing values in your test set.
 
 
