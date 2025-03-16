@@ -2447,13 +2447,6 @@
     "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW6. Your group will consist of 2-3 people and has been randomly generated. Rules:\n\nYou are all responsible for understanding the work that you turn in.\nAll team members must make roughly equal contributions to the homework.\nAny work completed by a team member must be committed and pushed to GitHub by that person."
   },
   {
-    "objectID": "hw/06-feature-selection-regularization.html#the-data-communitiees-and-crime",
-    "href": "hw/06-feature-selection-regularization.html#the-data-communitiees-and-crime",
-    "title": "Homework 6: Feature/Model Selection and Regularization",
-    "section": "The Data: Communitiees and Crime",
-    "text": "The Data: Communitiees and Crime\nIn this lesson we’ll be working with the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:\n\n“Communities in the US. Data combines socio-economic data from the ’90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR.”\n\nMore details can be found here. Our goal will be to predict the number of crimes per capita, stored in the column called ViolentCrimesPerPop."
-  },
-  {
     "objectID": "hw/06-feature-selection-regularization.html#cleaning-and-preprocessing",
     "href": "hw/06-feature-selection-regularization.html#cleaning-and-preprocessing",
     "title": "Homework 6: Feature/Model Selection and Regularization",
@@ -2503,11 +2496,18 @@
     "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nFit two models to the training data, a ridge regression model and a LASSO model. Set the penalty for both to 0. Plot the coefficient estimates against the penalty as in these plots. Explain what you see and why. (Practice interview question)."
   },
   {
-    "objectID": "hw/06-feature-selection-regularization.html#lasso",
-    "href": "hw/06-feature-selection-regularization.html#lasso",
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-7",
+    "href": "hw/06-feature-selection-regularization.html#exercise-7",
     "title": "Homework 6: Feature/Model Selection and Regularization",
-    "section": "LASSO",
-    "text": "LASSO\nAnother penalized model is the least absolute shrinkage and selection operator or LASSO model. The model is fit by minimizing the following objective function: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 + \\lambda\\sum_{i=1}^p|\\beta_i|\\] Similar to ridge regression, this extra penalty term has the effect of shrinking our coefficients, increasing bias but reducing variance which can reduce the RMSE. The cool thing about LASSO is the penalty induces sparsity meaning that, in addition to shrinking the coefficient estimates, most of the estimated coefficients will be zero. Essentially the method is simultaneously performing feature selection while fitting the model. VERY COOL!\n\nAgain, when fitting a LASSO model we must center and scale our predictors. Depending on which implementation you use, sometimes this will be done by the function and sometimes you will have to do it yourself before fitting your model. Looking at the objective function above, why do you think we need to standardize our data before fitting the model?\nUse the enet function from the elasticnet package to fit a LASSO model. Note that the lambda argument refers to the \\(\\lambda\\) for a ridge regression model so you’ll want to set lambda  = 0. Look at the documentation and Chapter 6.5 from APM for details on how to do this. You don’t actually specify the penalty until the predictions step. To control this specify s = 0.001 and mode = \"fraction\" in your precict step. Note that, while s controls the value of \\(\\lambda\\), s is not the same as \\(\\lambda\\). Smaller values of \\(s\\) result in larger values of \\(\\lambda\\). Compute the MSE on the training set.\nBy setting type = \"coefficients\" in the predict function, you can get a list of your model’s coefficients. How many non-zero coefficients are there? Write down the resulting model.\n\nNow that you’ve fit a LASSO model, let’s figure out what the best value of \\(\\lambda\\) is.\n\nUse 5-fold cross validation to find the best value of s. To do this, use CV to estimate the MSE for every \\(s\\) between 0 and 0.25 going up by 0.001. A few things to note here: (A) While \\(s\\) will fix a value of \\(\\lambda\\) it is not the same as \\(\\lambda\\). Smaller values of \\(s\\) result in larger values of \\(\\lambda\\). (B) This will take a minute or two to run so you may want to test it out on a smaller grid of \\(s\\)’s. (C) You’d usually use a grid that goes from 0 to 1 but to save time only go from 0 to 0.25. Again, you’d, ideally, also re-impute your missing values in each fold but, to save time, don’t do that here."
+    "section": "Exercise 7",
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nUse cross-validation and grid-search to find the best penalty (according to RMSE) for your Ridge and LASSO models. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you’re sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of \\(\\lambda\\). In addition, make use of caching so you don’t need to re-run the cross-validation every time the document is Rendered."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-8",
+    "href": "hw/06-feature-selection-regularization.html#exercise-8",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 8",
+    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nFit your best Ridge, and your best LASSO model to the full training set. Assess both models performance on the test set. Which is better?"
   },
   {
     "objectID": "hw/04-hw-classification.html",
@@ -5048,19 +5048,5 @@
     "crumbs": [
       "Course support"
     ]
-  },
-  {
-    "objectID": "hw/06-feature-selection-regularization.html#exercise-7",
-    "href": "hw/06-feature-selection-regularization.html#exercise-7",
-    "title": "Homework 6: Feature/Model Selection and Regularization",
-    "section": "Exercise 7",
-    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nUse cross-validation and grid-search to find the best penalty (according to RMSE) for your Ridge and LASSO models. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you’re sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of \\(\\lambda\\). In addition, make use of caching so you don’t need to re-run the cross-validation every time the document is Rendered."
-  },
-  {
-    "objectID": "hw/06-feature-selection-regularization.html#exercise-8",
-    "href": "hw/06-feature-selection-regularization.html#exercise-8",
-    "title": "Homework 6: Feature/Model Selection and Regularization",
-    "section": "Exercise 8",
-    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nFit your best Ridge, and your best LASSO model to the full training set. Assess both models performance on the test set. Which is better?"
   }
 ]
