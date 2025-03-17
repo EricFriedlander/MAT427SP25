@@ -4183,7 +4183,7 @@
     "href": "slides/18-regularization-tuning.html#generate-grid",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Generate Grid",
-    "text": "Generate Grid\n\n# note that dials treats penalty on a log10 scale\npenalty_grid &lt;- grid_regular(penalty(range = c(-10, 2)), # I had to play around with these \n                             levels = 10)\n\n\n\n\npenalty_grid |&gt; head() |&gt;  kable(digits = 11, format.args = list(scientific = TRUE))\n\n\n\n\npenalty\n\n\n\n\n1.0e-10\n\n\n1.4e-10\n\n\n2.0e-10\n\n\n2.8e-10\n\n\n4.0e-10\n\n\n5.7e-10\n\n\n\n\n\n\n\npenalty_grid |&gt; tail() |&gt;  kable()\n\n\n\n\npenalty\n\n\n\n\n17475.28\n\n\n24770.76\n\n\n35111.92\n\n\n49770.24\n\n\n70548.02\n\n\n100000.00"
+    "text": "Generate Grid\n\n# note that dials treats penalty on a log10 scale\npenalty_grid &lt;- grid_regular(penalty(range = c(-10, 2)), # I had to play around with these \n                             levels = 10)\n\n\n\n\npenalty_grid |&gt; head() |&gt;  kable(digits = 11, format.args = list(scientific = TRUE))\n\n\n\n\npenalty\n\n\n\n\n1.000000e-10\n\n\n2.150000e-09\n\n\n4.642000e-08\n\n\n1.000000e-06\n\n\n2.154435e-05\n\n\n4.641589e-04\n\n\n\n\n\n\n\npenalty_grid |&gt; tail() |&gt;  kable()\n\n\n\n\npenalty\n\n\n\n\n0.0000215\n\n\n0.0004642\n\n\n0.0100000\n\n\n0.2154435\n\n\n4.6415888\n\n\n100.0000000"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#regular-grid-search-in-r",
@@ -4218,14 +4218,14 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: Ridge",
-    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.04\nPreprocessor1_Model071\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rsq\",)\nbest_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n1.42\nPreprocessor1_Model068\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model09\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rsq\",)\nbest_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n100\nPreprocessor1_Model10\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#finalize-model",
     "href": "slides/18-regularization-tuning.html#finalize-model",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Finalize Model",
-    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)\ntidy(ridge_rmse_fit) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n4.037017\n\n\nsugarpercent\n1.6498388\n4.037017\n\n\npricepercent\n-1.0162912\n4.037017\n\n\nchocolate_TRUE.\n5.9085920\n4.037017\n\n\nfruity_TRUE.\n1.0372003\n4.037017\n\n\ncaramel_TRUE.\n0.9924626\n4.037017\n\n\npeanutyalmondy_TRUE.\n2.9161854\n4.037017\n\n\nnougat_TRUE.\n0.4757282\n4.037017\n\n\ncrispedricewafer_TRUE.\n1.6528996\n4.037017\n\n\nhard_TRUE.\n-1.2163806\n4.037017\n\n\nbar_TRUE.\n1.4700130\n4.037017\n\n\npluribus_TRUE.\n0.4863559\n4.037017"
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)\ntidy(ridge_rmse_fit) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n4.641589\n\n\nsugarpercent\n1.6105235\n4.641589\n\n\npricepercent\n-0.8755351\n4.641589\n\n\nchocolate_TRUE.\n5.5626786\n4.641589\n\n\nfruity_TRUE.\n0.8290067\n4.641589\n\n\ncaramel_TRUE.\n0.9577679\n4.641589\n\n\npeanutyalmondy_TRUE.\n2.8412296\n4.641589\n\n\nnougat_TRUE.\n0.5018516\n4.641589\n\n\ncrispedricewafer_TRUE.\n1.6202899\n4.641589\n\n\nhard_TRUE.\n-1.2156466\n4.641589\n\n\nbar_TRUE.\n1.4669984\n4.641589\n\n\npluribus_TRUE.\n0.4265386\n4.641589"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#visualizing-results-lasso",
@@ -4239,14 +4239,14 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-lasso",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: LASSO",
-    "text": "Selecting Best Model: LASSO\n\n\nBest RMSE\n\nbest_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n2.01\nPreprocessor1_Model069\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rsq\")\nbest_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n8.11\nPreprocessor1_Model073\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: LASSO\n\n\nBest RMSE\n\nbest_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model09\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rsq\")\nbest_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model09\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#finalize-model-1",
     "href": "slides/18-regularization-tuning.html#finalize-model-1",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Finalize Model",
-    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nlasso_rmse_final &lt;- finalize_workflow(lasso_wf, best_rmse_lasso)\nlasso_rmse_fit &lt;- fit(lasso_rmse_final, data = candy_train)\ntidy(lasso_rmse_fit) |&gt; \n  filter(estimate != 0) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n2.009233\n\n\nsugarpercent\n0.1171228\n2.009233\n\n\nchocolate_TRUE.\n7.3723956\n2.009233\n\n\npeanutyalmondy_TRUE.\n1.0638847\n2.009233"
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nlasso_rmse_final &lt;- finalize_workflow(lasso_wf, best_rmse_lasso)\nlasso_rmse_fit &lt;- fit(lasso_rmse_final, data = candy_train)\ntidy(lasso_rmse_fit) |&gt; \n  filter(estimate != 0) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.822182\n4.641589\n\n\nchocolate_TRUE.\n5.165031\n4.641589"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#using-parsimony-as-a-tie-breaker",
@@ -4260,7 +4260,7 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge-1",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: Ridge",
-    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_ose_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbest_ose_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n23.1\nPreprocessor1_Model076\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty))\nbse_ose_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n6135.91\nPreprocessor1_Model092\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_ose_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbest_ose_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model09\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty))\nbse_ose_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n100\nPreprocessor1_Model10\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#visualizing-results-ridge-1",
@@ -4274,7 +4274,7 @@
     "href": "slides/18-regularization-tuning.html#finalize-model-2",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Finalize Model",
-    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_ose_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)\ntidy(ridge_rmse_fit) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n23.1013\n\n\nsugarpercent\n0.9177117\n23.1013\n\n\npricepercent\n0.2880581\n23.1013\n\n\nchocolate_TRUE.\n2.5257696\n23.1013\n\n\nfruity_TRUE.\n-0.5869128\n23.1013\n\n\ncaramel_TRUE.\n0.6295331\n23.1013\n\n\npeanutyalmondy_TRUE.\n1.6435408\n23.1013\n\n\nnougat_TRUE.\n0.5478612\n23.1013\n\n\ncrispedricewafer_TRUE.\n1.0228550\n23.1013\n\n\nhard_TRUE.\n-0.9199424\n23.1013\n\n\nbar_TRUE.\n1.1919258\n23.1013\n\n\npluribus_TRUE.\n-0.2032425\n23.1013"
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nridge_rmse_final &lt;- finalize_workflow(ridge_wf, best_ose_rmse_ridge)\nridge_rmse_fit &lt;- fit(ridge_rmse_final, data = candy_train)\ntidy(ridge_rmse_fit) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.8221817\n4.641589\n\n\nsugarpercent\n1.6105235\n4.641589\n\n\npricepercent\n-0.8755351\n4.641589\n\n\nchocolate_TRUE.\n5.5626786\n4.641589\n\n\nfruity_TRUE.\n0.8290067\n4.641589\n\n\ncaramel_TRUE.\n0.9577679\n4.641589\n\n\npeanutyalmondy_TRUE.\n2.8412296\n4.641589\n\n\nnougat_TRUE.\n0.5018516\n4.641589\n\n\ncrispedricewafer_TRUE.\n1.6202899\n4.641589\n\n\nhard_TRUE.\n-1.2156466\n4.641589\n\n\nbar_TRUE.\n1.4669984\n4.641589\n\n\npluribus_TRUE.\n0.4265386\n4.641589"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#visualizing-results-lasso-1",
@@ -4288,14 +4288,14 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge-2",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: Ridge",
-    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbse_ose_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbse_ose_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.04\nPreprocessor1_Model071\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty)) # why are we descending\nbse_ose_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n8.11\nPreprocessor1_Model073\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbse_ose_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbse_ose_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model09\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty)) # why are we descending\nbse_ose_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.64\nPreprocessor1_Model09\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#finalize-model-3",
     "href": "slides/18-regularization-tuning.html#finalize-model-3",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Finalize Model",
-    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nlasso_rmse_final &lt;- finalize_workflow(lasso_wf, bse_ose_rmse_lasso)\nlasso_rmse_fit &lt;- fit(lasso_rmse_final, data = candy_train)\ntidy(lasso_rmse_fit) |&gt; \n  filter(estimate != 0) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.822182\n4.037017\n\n\nchocolate_TRUE.\n5.774619\n4.037017"
+    "text": "Finalize Model\n\nRMSE estimate is less flexible and seems to be sacrificing less \\(R^2\\) than the opposite\n\n\nlasso_rmse_final &lt;- finalize_workflow(lasso_wf, bse_ose_rmse_lasso)\nlasso_rmse_fit &lt;- fit(lasso_rmse_final, data = candy_train)\ntidy(lasso_rmse_fit) |&gt; \n  filter(estimate != 0) |&gt; \n  kable()\n\n\n\n\nterm\nestimate\npenalty\n\n\n\n\n(Intercept)\n49.822182\n4.641589\n\n\nchocolate_TRUE.\n5.165031\n4.641589"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#using-the-test-set-as-a-tie-breaker",
@@ -4309,7 +4309,7 @@
     "href": "slides/18-regularization-tuning.html#using-the-test-set-as-a-tie-breaker-1",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Using the Test Set as a Tie Breaker",
-    "text": "Using the Test Set as a Tie Breaker\n\ncandy_test_wpreds &lt;- candy_test |&gt; \n  mutate(ridge_preds = predict(ridge_rmse_fit, new_data = candy_test)$.pred,\n         lasso_preds = predict(lasso_rmse_fit, new_data = candy_test)$.pred)\ncandy_test_wpreds |&gt; rmse(estimate = ridge_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard        11.4\n\ncandy_test_wpreds |&gt; rmse(estimate = lasso_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard        11.9\n\ncandy_test_wpreds |&gt; rsq(estimate = ridge_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rsq     standard       0.435\n\ncandy_test_wpreds |&gt; rsq(estimate = lasso_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rsq     standard       0.341\n\n\n\nRidge Wins!"
+    "text": "Using the Test Set as a Tie Breaker\n\ncandy_test_wpreds &lt;- candy_test |&gt; \n  mutate(ridge_preds = predict(ridge_rmse_fit, new_data = candy_test)$.pred,\n         lasso_preds = predict(lasso_rmse_fit, new_data = candy_test)$.pred)\ncandy_test_wpreds |&gt; rmse(estimate = ridge_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard        10.6\n\ncandy_test_wpreds |&gt; rmse(estimate = lasso_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard        12.0\n\ncandy_test_wpreds |&gt; rsq(estimate = ridge_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rsq     standard       0.476\n\ncandy_test_wpreds |&gt; rsq(estimate = lasso_preds, truth = winpercent)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rsq     standard       0.341\n\n\n\nRidge Wins!"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#good-strategies",
@@ -4365,7 +4365,7 @@
     "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-3",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Bayesian Search: tidymodels",
-    "text": "Bayesian Search: tidymodels\n\nshow_best(bayes_ridge) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n4.037017\nrmse\nstandard\n12.13944\n50\n0.3598869\nPreprocessor1_Model071\n0\n\n\n2.848036\nrmse\nstandard\n12.14005\n50\n0.3641361\nPreprocessor1_Model070\n0\n\n\n5.722368\nrmse\nstandard\n12.15339\n50\n0.3530981\nPreprocessor1_Model072\n0\n\n\n2.009233\nrmse\nstandard\n12.15687\n50\n0.3655793\nPreprocessor1_Model069\n0\n\n\n8.111308\nrmse\nstandard\n12.18153\n50\n0.3446423\nPreprocessor1_Model073\n0"
+    "text": "Bayesian Search: tidymodels\n\nshow_best(bayes_ridge) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n9.999186\nrmse\nstandard\n13.20055\n20\n0.2720582\nIter11\n11\n\n\n9.999034\nrmse\nstandard\n13.20055\n20\n0.2720587\nIter8\n8\n\n\n9.996720\nrmse\nstandard\n13.20057\n20\n0.2720676\nIter7\n7\n\n\n9.996350\nrmse\nstandard\n13.20057\n20\n0.2720690\nIter9\n9\n\n\n9.995326\nrmse\nstandard\n13.20058\n20\n0.2720729\nIter10\n10"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-4",
@@ -4393,7 +4393,7 @@
     "href": "slides/18-regularization-tuning.html#bayesian-search-tidymodels-7",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Bayesian Search: tidymodels",
-    "text": "Bayesian Search: tidymodels\n\nshow_best(bayes_lasso) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n2.0092330\nrmse\nstandard\n12.03113\n50\n0.2958604\nPreprocessor1_Model069\n0\n\n\n2.8480359\nrmse\nstandard\n12.05929\n50\n0.2819560\nPreprocessor1_Model070\n0\n\n\n1.4174742\nrmse\nstandard\n12.10325\n50\n0.3104463\nPreprocessor1_Model068\n0\n\n\n0.4977024\nrmse\nstandard\n12.13600\n50\n0.3471903\nPreprocessor1_Model065\n0\n\n\n0.7054802\nrmse\nstandard\n12.17088\n50\n0.3364533\nPreprocessor1_Model066\n0"
+    "text": "Bayesian Search: tidymodels\n\nshow_best(bayes_lasso) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n2.936401\nrmse\nstandard\n12.76520\n20\n0.3059454\nIter16\n16\n\n\n2.937813\nrmse\nstandard\n12.76520\n20\n0.3059406\nIter20\n20\n\n\n2.934824\nrmse\nstandard\n12.76520\n20\n0.3059506\nIter19\n19\n\n\n2.940832\nrmse\nstandard\n12.76521\n20\n0.3059305\nIter25\n25\n\n\n2.932606\nrmse\nstandard\n12.76521\n20\n0.3059580\nIter22\n22"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#simulated-annealing",
@@ -4428,7 +4428,7 @@
     "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-3",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Simulated Annealing tidymodels",
-    "text": "Simulated Annealing tidymodels\n\nshow_best(ridge_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n4.037017\nrmse\nstandard\n12.13944\n50\n0.3598869\ninitial_Preprocessor1_Model071\n0\n\n\n2.848036\nrmse\nstandard\n12.14005\n50\n0.3641361\ninitial_Preprocessor1_Model070\n0\n\n\n5.722368\nrmse\nstandard\n12.15339\n50\n0.3530981\ninitial_Preprocessor1_Model072\n0\n\n\n2.009233\nrmse\nstandard\n12.15687\n50\n0.3655793\ninitial_Preprocessor1_Model069\n0\n\n\n8.111308\nrmse\nstandard\n12.18153\n50\n0.3446423\ninitial_Preprocessor1_Model073\n0"
+    "text": "Simulated Annealing tidymodels\n\nshow_best(ridge_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n10.000000\nrmse\nstandard\n13.20054\n20\n0.2720551\nIter19\n19\n\n\n9.513817\nrmse\nstandard\n13.20542\n20\n0.2739433\nIter42\n42\n\n\n9.079220\nrmse\nstandard\n13.21026\n20\n0.2758191\nIter31\n31\n\n\n8.818478\nrmse\nstandard\n13.21363\n20\n0.2770621\nIter9\n9\n\n\n8.415657\nrmse\nstandard\n13.21916\n20\n0.2790967\nIter45\n45"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-4",
@@ -4456,7 +4456,7 @@
     "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-7",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Simulated Annealing tidymodels",
-    "text": "Simulated Annealing tidymodels\n\nshow_best(lasso_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n2.0092330\nrmse\nstandard\n12.03113\n50\n0.2958604\ninitial_Preprocessor1_Model069\n0\n\n\n2.8480359\nrmse\nstandard\n12.05929\n50\n0.2819560\ninitial_Preprocessor1_Model070\n0\n\n\n1.4174742\nrmse\nstandard\n12.10325\n50\n0.3104463\ninitial_Preprocessor1_Model068\n0\n\n\n0.4977024\nrmse\nstandard\n12.13600\n50\n0.3471903\ninitial_Preprocessor1_Model065\n0\n\n\n0.7054802\nrmse\nstandard\n12.17088\n50\n0.3364533\ninitial_Preprocessor1_Model066\n0\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Simulated Annealing tidymodels\n\nshow_best(lasso_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n4.641589\nrmse\nstandard\n13.09389\n20\n0.3774972\ninitial_Preprocessor1_Model09\n0\n\n\n9.934398\nrmse\nstandard\n13.20114\n20\n0.2723052\nIter39\n39\n\n\n9.189444\nrmse\nstandard\n13.20896\n20\n0.2752983\nIter25\n25\n\n\n8.786187\nrmse\nstandard\n13.21407\n20\n0.2772191\nIter37\n37\n\n\n8.333199\nrmse\nstandard\n13.22037\n20\n0.2795509\nIter26\n26\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   },
   {
     "objectID": "prepare/prep-15.html",
