@@ -2465,7 +2465,7 @@
     "href": "hw/06-feature-selection-regularization.html#exercise-2",
     "title": "Homework 6: Feature/Model Selection and Regularization",
     "section": "Exercise 2",
-    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nClean the data by:\n\nREADY THE DOCUMENTATION!\nDropping any columns seem like they won’t be helpful to your analysis including all of the “non-predictive” and “potential goal” variables (other than ViolentCrimesPerPop) in the “Additional Variable Information” section in the documentation.\nEnsuring all features have the correct type."
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nClean the data by:\n\nREADY THE DOCUMENTATION!\nDropping any columns that seem like they won’t be helpful to your analysis including all of the “non-predictive” and “potential goal” variables (other than ViolentCrimesPerPop) in the “Additional Variable Information” section in the documentation.\nEnsuring all features have the correct type."
   },
   {
     "objectID": "hw/06-feature-selection-regularization.html#exercise-3",
@@ -5048,5 +5048,82 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#important-notes-about-factor-selection",
+    "href": "hw/06-feature-selection-regularization.html#important-notes-about-factor-selection",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Important notes about factor selection",
+    "text": "Important notes about factor selection\nThe model that uses all 23 columns is hindered by overfitting. It includes too many attributes, some of which lack predictive value, and so the model picks up on patterns created by random noise in the data. As we have seen in previous labs, overfitting is an ever-present issue in any kind of data-driven modeling."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#improving-our-model-one-factor-at-a-time",
+    "href": "hw/06-feature-selection-regularization.html#improving-our-model-one-factor-at-a-time",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Improving our model one factor at a time",
+    "text": "Improving our model one factor at a time\nHaving a decent model with only one factor, we now seek to improve the model by adding other useful factors. If we go back to our list of correlations, we might select the attribute that is the second most correlated with our targets. However, this will add little value if the factor includes much of the same information as the factor already included (e.g., the distance of each field goal in feet would correlate well to Made, but is predictively useless once we include distance in yards).\nFor this reason, it would be better to compute the correlations between each attribute and the residuals (errors) of our existing model. If a factor correlates well with a model’s residuals (the difference between targets and model predictions), then it likely contains information not already included in the model.\n\nUse this method to find a second attribute to include in the model. What is this attribute?\nBuild a new glm on the training set with the these two attributes and record the MSE on the validation set. Is this better or worse than the one factor model?\n(Challenge) Write a for loop to automate this process. Plot your error estimates by number of variables and print out the best model based on the validation set. Finally, compute the MSE on the test set for your best model.\n\nNotice, that this matches the problems with overfitting we described above. The best model on the training data does include all the factors. In fact, every time we add another variable to our model we are guaranteed to improve the model fit to the training data (evaluated by whatever metric we are optimizing when training our model). But, the best model on the testing data turns out to be a simple model that avoids overfitting."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-9",
+    "href": "hw/06-feature-selection-regularization.html#exercise-9",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 9",
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nOpen the data in Excel. Clean up the spreadsheet and save it as a csv so that it can be loaded into R. Load the data, partition the data using a 80-20 split."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-10",
+    "href": "hw/06-feature-selection-regularization.html#exercise-10",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 10",
+    "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nClean the data by:\n\nDropping any columns that seem like they won’t be helpful to your analysis. There is at least one.\nEnsuring all features have the correct type.\nConvert the Made column into a factor with informative levels (e.g. Made, Missed)."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-11",
+    "href": "hw/06-feature-selection-regularization.html#exercise-11",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 11",
+    "text": "Exercise 11\n\n\n\n\n\n\nQuestion\n\n\n\nWhat is proportion of field goals in your training set were made? What does this mean in context of determining a baseline level of accuracy that we want to beat?"
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-12",
+    "href": "hw/06-feature-selection-regularization.html#exercise-12",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 12",
+    "text": "Exercise 12\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate a recipe that can be used for logistic regression with \\(L_1\\)-regularization. At a minimum it should include the following steps (not necessarily in this order):\n\nDummy code all factors.\nNormalization of all predictors… why?"
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-13",
+    "href": "hw/06-feature-selection-regularization.html#exercise-13",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 13",
+    "text": "Exercise 13\n\n\n\n\n\n\nQuestion\n\n\n\nFit a logistic regression model with \\(L_1\\) regularization to the training data. This can be done in the exact same was as with OLS, simply use logisic_reg instead of linear_reg when you start your model and make sure to use glmnet as your engine. Set the penalty to 0. Plot the coefficient estimates against the penalty as in these plots. Explain what you see and why. (Practice interview question)."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-13-1",
+    "href": "hw/06-feature-selection-regularization.html#exercise-13-1",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 13",
+    "text": "Exercise 13\n\n\n\n\n\n\nQuestion\n\n\n\nUse cross-validation and grid-search to find the best penalty (according to accuracy) for your logistic regression model. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you’re sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of \\(\\lambda\\). In addition, make use of caching so you don’t need to re-run the cross-validation every time the document is Rendered."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-14",
+    "href": "hw/06-feature-selection-regularization.html#exercise-14",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 14",
+    "text": "Exercise 14\n\n\n\n\n\n\nQuestion\n\n\n\nFit your final model on the full training set. Assess both models performance on the test set."
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-15-very-long-question",
+    "href": "hw/06-feature-selection-regularization.html#exercise-15-very-long-question",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 15 (Very long question)",
+    "text": "Exercise 15 (Very long question)\n\n\n\n\n\n\nQuestion\n\n\n\nUse grid search and cross-validation to find the best \\(k\\) for a KNN classification model on this data. Fit the final model on the full training set and assess it’s performance on the test set. How does it perform compared to the model from Exercise 14?"
+  },
+  {
+    "objectID": "hw/06-feature-selection-regularization.html#exercise-16-practive-interview-question",
+    "href": "hw/06-feature-selection-regularization.html#exercise-16-practive-interview-question",
+    "title": "Homework 6: Feature/Model Selection and Regularization",
+    "section": "Exercise 16 (Practive Interview Question)",
+    "text": "Exercise 16 (Practive Interview Question)\n\n\n\n\n\n\nQuestion\n\n\n\nWhy doesn’t it make sense to use \\(L_1\\) regularization with KNN?"
   }
 ]

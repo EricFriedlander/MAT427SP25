@@ -4996,6 +4996,21 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   </ul></li>
+  <li><a href="#dataset-2-nfl-field-goals" id="toc-dataset-2-nfl-field-goals" class="nav-link" data-scroll-target="#dataset-2-nfl-field-goals">Dataset 2: NFL Field Goals</a>
+  <ul class="collapse">
+  <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
+  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11">Exercise 11</a></li>
+  </ul></li>
+  <li><a href="#logistic-regression-and-regularization" id="toc-logistic-regression-and-regularization" class="nav-link" data-scroll-target="#logistic-regression-and-regularization">Logistic Regression and Regularization</a>
+  <ul class="collapse">
+  <li><a href="#exercise-12" id="toc-exercise-12" class="nav-link" data-scroll-target="#exercise-12">Exercise 12</a></li>
+  <li><a href="#exercise-13" id="toc-exercise-13" class="nav-link" data-scroll-target="#exercise-13">Exercise 13</a></li>
+  <li><a href="#exercise-13-1" id="toc-exercise-13-1" class="nav-link" data-scroll-target="#exercise-13-1">Exercise 13</a></li>
+  <li><a href="#exercise-14" id="toc-exercise-14" class="nav-link" data-scroll-target="#exercise-14">Exercise 14</a></li>
+  <li><a href="#exercise-15-very-long-question" id="toc-exercise-15-very-long-question" class="nav-link" data-scroll-target="#exercise-15-very-long-question">Exercise 15 (Very long question)</a></li>
+  <li><a href="#exercise-16-practive-interview-question" id="toc-exercise-16-practive-interview-question" class="nav-link" data-scroll-target="#exercise-16-practive-interview-question">Exercise 16 (Practive Interview Question)</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MAT427SP25/edit/main/hw/06-feature-selection-regularization.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MAT427SP25/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -5094,7 +5109,7 @@ Question
 <p>Clean the data by:</p>
 <ol start="0" type="1">
 <li><a href="http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized">READY THE DOCUMENTATION</a>!</li>
-<li>Dropping any columns seem like they won’t be helpful to your analysis including all of the “non-predictive” and “potential goal” variables (other than <code>ViolentCrimesPerPop</code>) in the “Additional Variable Information” section in the documentation.</li>
+<li>Dropping any columns that seem like they won’t be helpful to your analysis including all of the “non-predictive” and “potential goal” variables (other than <code>ViolentCrimesPerPop</code>) in the “Additional Variable Information” section in the documentation.</li>
 <li>Ensuring all features have the correct type.</li>
 </ol>
 </div>
@@ -5207,6 +5222,167 @@ Question
 </div>
 <div class="callout-body-container callout-body">
 <p>Fit your best Ridge, and your best LASSO model to the full training set. Assess both models performance on the test set. Which is better?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="dataset-2-nfl-field-goals" class="level1">
+<h1>Dataset 2: NFL Field Goals</h1>
+<p>In the second part of this homework, you will practice working with a classification problem. The dataset describes NFL field goal attempts. For those of you unfamiliar with American football, this is when the kicker tries to kick the ball through the uprights to score three points, as in <a href="https://www.youtube.com/watch?v=U3L10PoEXvI">this video</a>. This data set contains information about 3000 NFL field goal attempts over three seasons. The column we will be interested in predicting is <code>Made</code>, which has value <code>1</code> or <code>0</code> indicating if the field goal was made or missed. If you want explanations for the other variables, you can look at the notes in the Excel file (the <code>.xlsx</code> file) by hovinging over the variable names.</p>
+<section id="exercise-9" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-9">Exercise 9</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the data in Excel. Clean up the spreadsheet and save it as a csv so that it can be loaded into R. Load the data, partition the data using a 80-20 split.</p>
+</div>
+</div>
+</section>
+<section id="exercise-10" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Clean the data by:</p>
+<ol type="1">
+<li>Dropping any columns that seem like they won’t be helpful to your analysis. There is at least one.</li>
+<li>Ensuring all features have the correct type.</li>
+<li>Convert the <code>Made</code> column into a factor with informative levels (e.g. <code>Made</code>, <code>Missed</code>).</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="exercise-11" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-11">Exercise 11</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is proportion of field goals in your training set were made? What does this mean in context of determining a baseline level of accuracy that we want to beat?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="logistic-regression-and-regularization" class="level1">
+<h1>Logistic Regression and Regularization</h1>
+<p>We will now extend what we’ve learned about <span class="math inline">\(L_1\)</span>-regularization to logistic regression! In the same way that LASSO adds an <span class="math inline">\(L_1\)</span>-norm penalty to the <em>objective</em> function for Ordinary Least Squares regression, we can add an <span class="math inline">\(L_1\)</span>-norm penalty to the objective function for logistic regression. Whereas in OLS, the objective function was the sum of squared errors, the objective function for Logistic Regression is the log-likelihood. Other than this the principle works the same way… by including a regularization term, you induce sparsity.</p>
+<section id="exercise-12" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-12">Exercise 12</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate a recipe that can be used for logistic regression with <span class="math inline">\(L_1\)</span>-regularization. At a minimum it should include the following steps (not necessarily in this order):</p>
+<ul>
+<li>Dummy code all factors.</li>
+<li>Normalization of all predictors… why?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="exercise-13" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-13">Exercise 13</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit a logistic regression model with <span class="math inline">\(L_1\)</span> regularization to the training data. This can be done in the exact same was as with OLS, simply use <code>logisic_reg</code> instead of <code>linear_reg</code> when you start your model and make sure to use <code>glmnet</code> as your engine. Set the penalty to 0. Plot the coefficient estimates against the penalty as in <a href="https://mat427sp25.netlify.app/slides/17-regularization#/ridge-coefficients-vs.-penalty-lambda">these</a> <a href="https://mat427sp25.netlify.app/slides/17-regularization#/lasso-coefficients-vs.-penalty-lambda">plots</a>. Explain what you see and why. (Practice interview question).</p>
+</div>
+</div>
+</section>
+<section id="exercise-13-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-13-1">Exercise 13</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use cross-validation and grid-search to find the best penalty (according to accuracy) for your logistic regression model. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you’re sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of <span class="math inline">\(\lambda\)</span>. In addition, make use of <a href="https://quarto.org/docs/computations/caching.html">caching</a> so you don’t need to re-run the cross-validation every time the document is Rendered.</p>
+</div>
+</div>
+</section>
+<section id="exercise-14" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-14">Exercise 14</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit your final model on the full training set. Assess both models performance on the test set.</p>
+</div>
+</div>
+</section>
+<section id="exercise-15-very-long-question" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-15-very-long-question">Exercise 15 (Very long question)</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use grid search and cross-validation to find the best <span class="math inline">\(k\)</span> for a KNN classification model on this data. Fit the final model on the full training set and assess it’s performance on the test set. How does it perform compared to the model from Exercise 14?</p>
+</div>
+</div>
+</section>
+<section id="exercise-16-practive-interview-question" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-16-practive-interview-question">Exercise 16 (Practive Interview Question)</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why doesn’t it make sense to use <span class="math inline">\(L_1\)</span> regularization with KNN?</p>
 </div>
 </div>
 
