@@ -12,17 +12,17 @@ format:
 
 # insert packages here
 ```
+
 # Introduction
 
-In this homework you will practice we'll practice using regularization and model tuning to select models and features.
+In this homework you will practice using regularization and model tuning to select models and features.
 
 ## Learning goals
 
 In this assignment, you will...
 
--   Use exploratory data analysis to inform feature engineering steps
--   Pre-process data and impute missing values
--   Evaluate and compare models using cross-validation
+-   Fit linear and logistic regression models using regularization
+-   Use grid-based selection techniques to choose tuning parameters
 
 # Getting Started
 
@@ -36,15 +36,13 @@ You can find your team for this assignment on Canvas in the **People** section. 
 2.  All team members must make roughly equal contributions to the homework.
 3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
 
+# Dataset 1: Communities and Crime
 
-# Dataset 1: Communitiees and Crime
-
-In this lesson we'll be working with the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:
+For the first half of this homework, we'll be working with the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:
 
 > "Communities in the US. Data combines socio-economic data from the '90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR."
 
-More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized).
-Our goal will be to predict the number of crimes per capita, stored in the column called `ViolentCrimesPerPop`.
+More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized). Our goal will be to predict the number of crimes per capita, stored in the column called `ViolentCrimesPerPop`.
 
 ## Cleaning and Preprocessing
 
@@ -59,15 +57,15 @@ Load the data set `CommViolPredUnnormalizedDataCleaned.csv`. This data set conta
 ::: {.callout-tip title="Question"}
 Clean the data by:
 
-0. [READY THE DOCUMENTATION](http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized)!
-1. Dropping any columns seem like they won't be helpful to your analysis including all of the "non-predictive" and "potential goal" variables (other than `ViolentCrimesPerPop`) in the "Additional Variable Information" section in the documentation.
-2. Ensuring all features have the correct type.
+0.  [READING THE DOCUMENTATION!](http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized)
+1.  Dropping any columns that seem like they won't be helpful to your analysis including all of the "non-predictive" and "potential goal" variables (other than `ViolentCrimesPerPop`) in the "Additional Variable Information" section in the documentation.
+2.  Ensuring all features have the correct type.
 :::
 
 ## Exercise 3
 
 ::: {.callout-tip title="Question"}
-Use `drop_na` to drop any rows which have a missing value in the `ViolentCrimesPerPop` column, our target variable. Why do we want to do this instead of trying to impute them? 
+Use `drop_na` to drop any rows which have a missing value in the `ViolentCrimesPerPop` column, our target variable. Why do we want to do this instead of trying to impute them?
 :::
 
 ## Exercise 4
@@ -79,7 +77,7 @@ How many observation are left? Split the remaining data into a training and test
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Generate a recipe that can be used for ordinary least squares regression, ridge regression, and LASSO. At a minimum it should include the following steps (not necessarily in this order):
+Generate a recipe that can be used for ridge regression and LASSO. At a minimum it should include the following steps (not necessarily in this order):
 
 -   Dummy code all factors.
 -   Imputing missing values.
@@ -102,7 +100,6 @@ Fit two models to the training data, a ridge regression model and a LASSO model.
 Use cross-validation and grid-search to find the best penalty (according to RMSE) for your Ridge and LASSO models. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you're sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of $\lambda$. In addition, make use of [caching](https://quarto.org/docs/computations/caching.html) so you don't need to re-run the cross-validation every time the document is Rendered.
 :::
 
-
 # Final Model
 
 ## Exercise 8
@@ -110,7 +107,3 @@ Use cross-validation and grid-search to find the best penalty (according to RMSE
 ::: {.callout-tip title="Question"}
 Fit your best Ridge, and your best LASSO model to the full training set. Assess both models performance on the test set. Which is better?
 :::
-
-
-
-

@@ -93,8 +93,8 @@
     "objectID": "slides/18-regularization-tuning.html#computational-set-up",
     "href": "slides/18-regularization-tuning.html#computational-set-up",
     "title": "MATH 427: Regularization & Model Tuning",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#data-candy",
@@ -248,7 +248,7 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: Ridge",
-    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.04\nPreprocessor1_Model071\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rsq\",)\nbest_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n1.42\nPreprocessor1_Model068\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.04\nPreprocessor1_Model071\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_best(metric = \"rsq\",)\nbest_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n1.42\nPreprocessor1_Model068\n\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#finalize-model",
@@ -269,7 +269,7 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-lasso",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: LASSO",
-    "text": "Selecting Best Model: LASSO\n\n\nBest RMSE\n\nbest_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n2.01\nPreprocessor1_Model069\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rsq\")\nbest_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n8.11\nPreprocessor1_Model073\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: LASSO\n\n\nBest RMSE\n\nbest_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rmse\")\nbest_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n2.01\nPreprocessor1_Model069\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbest_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_best(metric = \"rsq\")\nbest_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n8.11\nPreprocessor1_Model073\n\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#finalize-model-1",
@@ -290,7 +290,7 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge-1",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: Ridge",
-    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_ose_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbest_ose_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n23.1\nPreprocessor1_Model076\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty))\nbse_ose_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n6135.91\nPreprocessor1_Model092\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbest_ose_rmse_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbest_ose_rmse_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n23.1\nPreprocessor1_Model076\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_ridge &lt;- tuning_ridge_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty))\nbse_ose_rsq_ridge |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n6135.91\nPreprocessor1_Model092\n\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#visualizing-results-ridge-1",
@@ -318,7 +318,7 @@
     "href": "slides/18-regularization-tuning.html#selecting-best-model-ridge-2",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Selecting Best Model: Ridge",
-    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbse_ose_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbse_ose_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.04\nPreprocessor1_Model071\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty)) # why are we descending\nbse_ose_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n8.11\nPreprocessor1_Model073\n\n\n\n\n\n\n\nWhich should be use?"
+    "text": "Selecting Best Model: Ridge\n\n\nBest RMSE\n\nbse_ose_rmse_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rmse\", desc(penalty)) # why are we descending\nbse_ose_rmse_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n4.04\nPreprocessor1_Model071\n\n\n\n\n\n\nBest \\(R^2\\)\n\nbse_ose_rsq_lasso &lt;- tuning_lasso_results |&gt; \n  select_by_one_std_err(metric = \"rsq\", desc(penalty)) # why are we descending\nbse_ose_rsq_lasso |&gt; kable(digits = 2)\n\n\n\n\npenalty\n.config\n\n\n\n\n8.11\nPreprocessor1_Model073\n\n\n\n\n\n\n\n\nWhich should be use?"
   },
   {
     "objectID": "slides/18-regularization-tuning.html#finalize-model-3",
@@ -486,7 +486,7 @@
     "href": "slides/18-regularization-tuning.html#simulated-annealing-tidymodels-7",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Simulated Annealing tidymodels",
-    "text": "Simulated Annealing tidymodels\n\nshow_best(lasso_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n2.0092330\nrmse\nstandard\n12.03113\n50\n0.2958604\ninitial_Preprocessor1_Model069\n0\n\n\n2.8480359\nrmse\nstandard\n12.05929\n50\n0.2819560\ninitial_Preprocessor1_Model070\n0\n\n\n1.4174742\nrmse\nstandard\n12.10325\n50\n0.3104463\ninitial_Preprocessor1_Model068\n0\n\n\n0.4977024\nrmse\nstandard\n12.13600\n50\n0.3471903\ninitial_Preprocessor1_Model065\n0\n\n\n0.7054802\nrmse\nstandard\n12.17088\n50\n0.3364533\ninitial_Preprocessor1_Model066\n0\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Simulated Annealing tidymodels\n\nshow_best(lasso_sim_anneal) |&gt; kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenalty\n.metric\n.estimator\nmean\nn\nstd_err\n.config\n.iter\n\n\n\n\n2.0092330\nrmse\nstandard\n12.03113\n50\n0.2958604\ninitial_Preprocessor1_Model069\n0\n\n\n2.8480359\nrmse\nstandard\n12.05929\n50\n0.2819560\ninitial_Preprocessor1_Model070\n0\n\n\n1.4174742\nrmse\nstandard\n12.10325\n50\n0.3104463\ninitial_Preprocessor1_Model068\n0\n\n\n0.4977024\nrmse\nstandard\n12.13600\n50\n0.3471903\ninitial_Preprocessor1_Model065\n0\n\n\n0.7054802\nrmse\nstandard\n12.17088\n50\n0.3364533\ninitial_Preprocessor1_Model066\n0"
   },
   {
     "objectID": "slides/16-selection-regularization.html#computational-set-up",
@@ -2430,14 +2430,14 @@
     "href": "hw/06-feature-selection-regularization.html",
     "title": "Homework 6: Feature/Model Selection and Regularization",
     "section": "",
-    "text": "In this homework you will practice we’ll practice using regularization and model tuning to select models and features.\n\n\nIn this assignment, you will…\n\nUse exploratory data analysis to inform feature engineering steps\nPre-process data and impute missing values\nEvaluate and compare models using cross-validation"
+    "text": "In this homework you will practice using regularization and model tuning to select models and features.\n\n\nIn this assignment, you will…\n\nFit linear and logistic regression models using regularization\nUse grid-based selection techniques to choose tuning parameters"
   },
   {
     "objectID": "hw/06-feature-selection-regularization.html#learning-goals",
     "href": "hw/06-feature-selection-regularization.html#learning-goals",
     "title": "Homework 6: Feature/Model Selection and Regularization",
     "section": "",
-    "text": "In this assignment, you will…\n\nUse exploratory data analysis to inform feature engineering steps\nPre-process data and impute missing values\nEvaluate and compare models using cross-validation"
+    "text": "In this assignment, you will…\n\nFit linear and logistic regression models using regularization\nUse grid-based selection techniques to choose tuning parameters"
   },
   {
     "objectID": "hw/06-feature-selection-regularization.html#teams-rules",
@@ -2465,7 +2465,7 @@
     "href": "hw/06-feature-selection-regularization.html#exercise-2",
     "title": "Homework 6: Feature/Model Selection and Regularization",
     "section": "Exercise 2",
-    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nClean the data by:\n\nREADY THE DOCUMENTATION!\nDropping any columns seem like they won’t be helpful to your analysis including all of the “non-predictive” and “potential goal” variables (other than ViolentCrimesPerPop) in the “Additional Variable Information” section in the documentation.\nEnsuring all features have the correct type."
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nClean the data by:\n\nREADING THE DOCUMENTATION!\nDropping any columns that seem like they won’t be helpful to your analysis including all of the “non-predictive” and “potential goal” variables (other than ViolentCrimesPerPop) in the “Additional Variable Information” section in the documentation.\nEnsuring all features have the correct type."
   },
   {
     "objectID": "hw/06-feature-selection-regularization.html#exercise-3",
@@ -2486,7 +2486,7 @@
     "href": "hw/06-feature-selection-regularization.html#exercise-5",
     "title": "Homework 6: Feature/Model Selection and Regularization",
     "section": "Exercise 5",
-    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate a recipe that can be used for ordinary least squares regression, ridge regression, and LASSO. At a minimum it should include the following steps (not necessarily in this order):\n\nDummy code all factors.\nImputing missing values.\nNormalization of all predictors… why?"
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate a recipe that can be used for ridge regression and LASSO. At a minimum it should include the following steps (not necessarily in this order):\n\nDummy code all factors.\nImputing missing values.\nNormalization of all predictors… why?"
   },
   {
     "objectID": "hw/06-feature-selection-regularization.html#exercise-6",
@@ -4810,8 +4810,8 @@
     "objectID": "slides/17-regularization.html#computational-set-up",
     "href": "slides/17-regularization.html#computational-set-up",
     "title": "MATH 427: Regularization & Model Tuning",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/17-regularization.html#data-candy",
@@ -5007,7 +5007,7 @@
     "href": "slides/17-regularization.html#question-4",
     "title": "MATH 427: Regularization & Model Tuning",
     "section": "Question",
-    "text": "Question\n\nHow do you think we should choose \\(\\lambda\\)?\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Question\n\nHow do you think we should choose \\(\\lambda\\)?"
   },
   {
     "objectID": "support.html",
@@ -5048,5 +5048,19 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "slides/18-regularization-tuning.html",
+    "href": "slides/18-regularization-tuning.html",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/17-regularization.html",
+    "href": "slides/17-regularization.html",
+    "title": "MATH 427: Regularization & Model Tuning",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(fivethirtyeight) # for candy rankings data\n\ntidymodels_prefer()\n\nset.seed(427)"
   }
 ]
