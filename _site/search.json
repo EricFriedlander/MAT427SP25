@@ -5111,5 +5111,75 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#computational-set-up",
+    "href": "slides/19-decision-trees.html#computational-set-up",
+    "title": "MATH 427: Decision Trees",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(dsbox) # dcbikeshare data\nlibrary(knitr)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#data-dcbikeshare",
+    "href": "slides/19-decision-trees.html#data-dcbikeshare",
+    "title": "MATH 427: Decision Trees",
+    "section": "Data: dcbikeshare",
+    "text": "Data: dcbikeshare\nBike sharing systems are new generation of traditional bike rentals where whole process from membership, rental and return back has become automatic. Through these systems, user is able to easily rent a bike from a particular position and return back at another position. As of May 2018, there are about over 1600 bike-sharing programs around the world, providing more than 18 million bicycles for public use. Today, there exists great interest in these systems due to their important role in traffic, environmental and health issues. Documentation\n\nglimpse(dcbikeshare)\n\nRows: 731\nColumns: 16\n$ instant    &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …\n$ dteday     &lt;date&gt; 2011-01-01, 2011-01-02, 2011-01-03, 2011-01-04, 2011-01-05…\n$ season     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ yr         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ mnth       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ holiday    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,…\n$ weekday    &lt;dbl&gt; 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4,…\n$ workingday &lt;dbl&gt; 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,…\n$ weathersit &lt;dbl&gt; 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2,…\n$ temp       &lt;dbl&gt; 0.3441670, 0.3634780, 0.1963640, 0.2000000, 0.2269570, 0.20…\n$ atemp      &lt;dbl&gt; 0.3636250, 0.3537390, 0.1894050, 0.2121220, 0.2292700, 0.23…\n$ hum        &lt;dbl&gt; 0.805833, 0.696087, 0.437273, 0.590435, 0.436957, 0.518261,…\n$ windspeed  &lt;dbl&gt; 0.1604460, 0.2485390, 0.2483090, 0.1602960, 0.1869000, 0.08…\n$ casual     &lt;dbl&gt; 331, 131, 120, 108, 82, 88, 148, 68, 54, 41, 43, 25, 38, 54…\n$ registered &lt;dbl&gt; 654, 670, 1229, 1454, 1518, 1518, 1362, 891, 768, 1280, 122…\n$ cnt        &lt;dbl&gt; 985, 801, 1349, 1562, 1600, 1606, 1510, 959, 822, 1321, 126…"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#tree-based-methods",
+    "href": "slides/19-decision-trees.html#tree-based-methods",
+    "title": "MATH 427: Decision Trees",
+    "section": "Tree-Based Methods",
+    "text": "Tree-Based Methods\n\nIdea: stratify or segment the predictor space into simple regions\nSplitting rules used to segment the predictor space form a tree\nCan be used for both classification and regression\nSingle tree called decision tree\n\nSimple and useful for interpretation\nNot the best in terms of prediction accuracy.\n\nMuch more powerful: grow multiple trees and then combine their results\n\nbagging and boosting .\n\nMost powerful methods for tabular data are typically tree-based methods"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#cleaning-the-data",
+    "href": "slides/19-decision-trees.html#cleaning-the-data",
+    "title": "MATH 427: Decision Trees",
+    "section": "Cleaning the Data",
+    "text": "Cleaning the Data\n\ndcbikeshare_clean &lt;- dcbikeshare |&gt; \n  select(-instant, -dteday, -casual, -registered) |&gt; \n  mutate(\n    season = as_factor(case_when(\n      season == 1 ~ \"winter\",\n      season == 2 ~ \"spring\",\n      season == 3 ~ \"summer\",\n      season == 4 ~ \"fall\"\n    )),\n    yr = if_else(yr == 0, 2011, 2012),\n    weathersit = as_factor(weathersit)\n  )"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#terminology-for-trees",
+    "href": "slides/19-decision-trees.html#terminology-for-trees",
+    "title": "MATH 427: Decision Trees",
+    "section": "Terminology for Trees",
+    "text": "Terminology for Trees\n\nEvery split is considered to be a node\nFirst node at the top of the tree: root node (contains all the training data)\nFinal nodes at the bottom of tree called leaves or terminal nodes\nDecision trees typically drawn with root at top and leaves at bottom\nNodes in middle of tree called internal nodes\nThe segments of the trees that connect nodes are known as branches"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#terminology-for-trees-1",
+    "href": "slides/19-decision-trees.html#terminology-for-trees-1",
+    "title": "MATH 427: Decision Trees",
+    "section": "Terminology for Trees",
+    "text": "Terminology for Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: From Hands-On Machine Learning, Boehmke & Greenwell"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#building-a-tree",
+    "href": "slides/19-decision-trees.html#building-a-tree",
+    "title": "MATH 427: Decision Trees",
+    "section": "Building a Tree",
+    "text": "Building a Tree\n\nSelect predictor \\(X_j\\) and cut point \\(s\\) such that splitting the predictor space into the regions \\(\\{X|X_j &lt; s\\}\\) and \\(\\{X|X_j \\geq s\\}\\) leads to the greatest possible reduction in performance metric (e.g. SSE)\nFor any \\(j\\) and \\(s\\), define \\[R_1 = \\{X|X_j &lt; s\\} \\ \\ \\text{and} \\ \\ R_2 = \\{X|X_j \\geq s\\}\\]\nFind \\(j\\) and \\(s\\) that minimize \\[SSE = \\displaystyle \\sum_{i \\in R_1}\\left(y_i - \\hat{y}_{R_1}\\right)^2 + \\sum_{i \\in R_2}\\left(y_i - \\hat{y}_{R_2}\\right)^2\\]\nRepeat process on each the two new regions\nContinue until a stopping criterion is reached"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#prediction",
+    "href": "slides/19-decision-trees.html#prediction",
+    "title": "MATH 427: Decision Trees",
+    "section": "Prediction",
+    "text": "Prediction\n\nFor new observation that falls in region \\(R_j\\):\n\nRegression: the mean response of the training set observations in \\(R_j\\)\nClassificaiton: majority vote response of the training set observations in \\(R_j\\)"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#building-a-tree-and-prediction",
+    "href": "slides/19-decision-trees.html#building-a-tree-and-prediction",
+    "title": "MATH 427: Decision Trees",
+    "section": "Building a Tree and Prediction",
+    "text": "Building a Tree and Prediction\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: From Hands-On Machine Learning, Boehmke & Greenwell"
+  },
+  {
+    "objectID": "slides/19-decision-trees.html#building-a-tree-and-prediction-1",
+    "href": "slides/19-decision-trees.html#building-a-tree-and-prediction-1",
+    "title": "MATH 427: Decision Trees",
+    "section": "Building a Tree and Prediction",
+    "text": "Building a Tree and Prediction\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: From Hands-On Machine Learning, Boehmke & Greenwell\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;\n\n\n–&gt;\n\n\n–&gt;\n\n\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
