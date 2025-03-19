@@ -5377,5 +5377,40 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/20-classification-trees.html#computational-set-up",
+    "href": "slides/20-classification-trees.html#computational-set-up",
+    "title": "MATH 427: Classification Trees",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(dsbox) # dcbikeshare data\nlibrary(knitr)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/20-classification-trees.html#decision-trees",
+    "href": "slides/20-classification-trees.html#decision-trees",
+    "title": "MATH 427: Classification Trees",
+    "section": "Decision Trees",
+    "text": "Decision Trees\n\nAdvantages\n\nEasy to explain and interpret\nClosely mirror human decision-making\nCan be displayed graphically, and are easily interpreted by non-experts\nDoes not require standardization of predictors\nCan handle missing data directly\nCan easily capture non-linear patterns\n\nDisadvantages\n\nDo not have same level of prediction accuracy\nNot very robust"
+  },
+  {
+    "objectID": "slides/20-classification-trees.html#last-time",
+    "href": "slides/20-classification-trees.html#last-time",
+    "title": "MATH 427: Classification Trees",
+    "section": "Last Time",
+    "text": "Last Time\n\n\nRegression Trees: Decision Trees for Regression Problems\nHow are they fit?\nWhat is pruning? Why do we do it?\nWhat tuning parameter did we talk about last time?\nToday: Classification Trees"
+  },
+  {
+    "objectID": "slides/20-classification-trees.html#classification-trees",
+    "href": "slides/20-classification-trees.html#classification-trees",
+    "title": "MATH 427: Classification Trees",
+    "section": "Classification Trees",
+    "text": "Classification Trees\n\nPredictions:\n\nClasses: most common class at terminal node\nProbability: proportion of each class at terminal node\n\nRest of tree: same as regression tree"
+  },
+  {
+    "objectID": "slides/20-classification-trees.html#fitting-classification-trees",
+    "href": "slides/20-classification-trees.html#fitting-classification-trees",
+    "title": "MATH 427: Classification Trees",
+    "section": "Fitting Classification Trees",
+    "text": "Fitting Classification Trees\n\nStill use recursive binary splitting to grow a classification tree\n\\(\\hat{p}_{mk}\\): proportion of training observations in the \\(m^{th}\\) region from the \\(k^{th}\\) class\n\\(SSE\\) can be replaced by\n\nclassification error rate, fraction of the training observations that do not belong to the most common class ($1 - ) \\[E = 1 - \\max_k \\left(\\hat{p}_{mk}\\right)\\]\nGini index, measure of node purity— small valuse indicate that a node is predominantly a single class \\[G = \\displaystyle \\sum_{k=1}^{K} \\hat{p}_{mk}\\left(1-\\hat{p}_{mk}\\right)\\]\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
