@@ -1,0 +1,81 @@
+---
+title: 'MATH 427: Classification Trees'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(dsbox) # dcbikeshare data
+library(knitr)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+
+## Decision Trees
+
+-   Advantages
+    +   Easy to explain and interpret
+    +   Closely mirror human decision-making
+    +   Can be displayed graphically, and are easily interpreted by non-experts
+    +   Does not require standardization of predictors
+    +   Can handle missing data directly
+    +   Can easily capture non-linear patterns
+-   Disadvantages
+    +   Do not have same level of prediction accuracy
+    +   Not very robust
+    
+# Decision Trees for Classification
+
+## Last Time
+
+::: incremental
+-   Regression Trees: Decision Trees for Regression Problems
+-   How are they fit?
+-   What is pruning? Why do we do it?
+-   What tuning parameter did we talk about last time?
+-   Today: Classification Trees
+:::
+
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Fitting Classification Trees {.smaller}
+-   Still use **recursive binary splitting** to grow a classification tree
+-   $\hat{p}_{mk}$: proportion of training observations in the $m^{th}$ region from the $k^{th}$ class
+-   $SSE$ can be replaced by 
+    +   **classification error rate**, fraction of the training observations that do not belong to the most common class ($1 - \text{accuracy}) $$E = 1 - \max_k \left(\hat{p}_{mk}\right)$$
+    +   **Gini index**,  measure of node purity— small valuse indicate that a node is predominantly a single class $$G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
+
+
+
+
