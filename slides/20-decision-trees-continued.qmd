@@ -78,7 +78,26 @@ set.seed(427)
 
 -   Grow a very large tree, and then **prune** it back to obtain a **subtree**.
 -   Terminology: **cost complexity pruning** or **weakest link pruning**
--   Consider the following objective function $$SSE(T) + \alpha \times |T| = SSE(T) = \alpha \times (\text{# of terminal nodes of }T)$$
+-   Consider the following objective function 
+$$
+\begin{aligned}
+&SSE(T) + \alpha \times |T|\\ 
+&\quad= SSE(T) + \alpha \times (\text{# of terminal nodes of }T)
+\end{aligned}
+$$
+
+## Cost-Complexity Pruning
+
+-   Fit full tree $T_0$ to minimise $SSE$
+-   Select **sub-tree** $T\subset T_0$ which minimizes
+$$
+\begin{aligned}
+&SSE(T) + \alpha \times |T|\\ 
+&\quad= SSE(T) + \alpha \times (\text{# of terminal nodes of }T)
+\end{aligned}
+$$
+-   What should happen to the tree as we increase $\alpha$?
+-   What should happen to the bias and variance as we increase $\alpha$?
 -   How should we choose $\alpha$? [Cross Validation]{.fragment}
 
 # Regression Trees in R
@@ -144,6 +163,22 @@ dec_tree_highcc <- decision_tree(cost_complexity = 0.1) |>
 ## Visualize
 
 ```{r}
+#| eval: FALSE
+
+library(rpart.plot)
+workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree_lowcc) |> 
+  fit(bike_train) |>
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+## Visualize
+
+```{r}
+#| echo: FALSE
+
 library(rpart.plot)
 workflow() |> 
   add_recipe(bike_recipe) |> 
@@ -157,6 +192,22 @@ workflow() |>
 ## Visualize
 
 ```{r}
+#| eval: false
+
+library(rpart.plot)
+workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree_highcc) |> 
+  fit(bike_train) |>
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+## Visualize
+
+```{r}
+#| echo: false
+
 library(rpart.plot)
 workflow() |> 
   add_recipe(bike_recipe) |> 
@@ -251,7 +302,7 @@ ose_model |>
 -   Why are both models the same but have different RMSE estimates from CV?
 -   What's the difference between encoding `mnth` as an ordinal variable vs. a one-hot encoding?
 
-## Decision Trees
+## Decision Trees {.smaller}
 
 -   Advantages
     +   Easy to explain and interpret
@@ -271,13 +322,26 @@ ose_model |>
     +   Probability: proportion of each class at terminal node
 -   Rest of tree: same as regression tree
 
-## Fitting Classification Trees {.smaller}
--   Still use **recursive binary splitting** to grow a classification tree
--   $\hat{p}_{ik}$: the predicted probability that observation $i$ is in the $k^{th}$ class
--   $SSE$ can be replaced by 
-    +   **classification error rate**, fraction of the training observations that do not belong to the most common class ($1 - \text{accuracy}$)  $$\sum_{i=1}^N$$
-    +   **Gini index**,  measure of node purity— small value indicate that a node is predominantly a single class $$\sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
-    +   **Negative Cross-Entropy**, $$- sum_{k=1}^{K} \hat{p}_{mk}\log\left(1-\hat{p}_{mk}\right)$$
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose plane on the first screen
+    +   2: Choose circle on the first screen
+    +   3: Choose parabola on the first screen
+    +   4: Choose sine curve on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
+    +   **complexity parameter (cp)**: the larger the number the more pruning
+    +   **Minimum leaf size**: the minimum number of observations from the training data that must be contained in a leaf
+    +   **Max depth**: the maximum number of splits before a terminal node
+-   Write down any interesting observations
 
 ## Data: Voter Frequency
 
@@ -304,22 +368,3 @@ voter_data |>
 -   What should we do with question 29?
 -   What should we do with question 31?
 
-## Cleaning the Data
-
-```{r}
-voter_clean <- voter_data |> 
-  select(-RespId, -weight) |> 
-  mutate(across(Q28_1:Q29_10, ~as_factor(case_when(
-    .x == 1 ~ "Yes",
-    .x == -1 ~ "No",
-    TRUE ~ "Never Asked"
-  ))),
-  Party_ID = as_factor(case_when(
-    Q31 == 1 ~ "Strong Republican",
-    Q31 == 2 ~ "Republican",
-    Q32 == 1  ~ "Strong Democrat",
-    Q32 == 2 ~ "Democrat",
-    Q33 == 1 ~ "Lean Republican",
-    Q33 == 2 ~ "Lean Democrat"
-  )))
-```

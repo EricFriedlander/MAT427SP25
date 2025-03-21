@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Eric Friedlander">
-  <title>MAT 427 - Spring 2025 – MATH 427: Decision Trees Continued</title>
+  <title>MAT 427 - Spring 2025 – MATH 427: Classification Trees</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -393,7 +393,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 427: Decision Trees Continued</h1>
+  <h1 class="title">MATH 427: Classification Trees</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -417,314 +417,6 @@ Eric Friedlander
 <span id="cb1-8"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="building-a-tree-and-prediction" class="slide level2">
-<h2>Building a Tree and Prediction</h2>
-
-<img data-src="images/19/ISLR-tree-1.png" class="r-stretch quarto-figure-center"><p class="caption">From ISLR</p></section>
-<section id="building-a-tree" class="slide level2 smaller">
-<h2>Building a Tree</h2>
-<ul>
-<li>Anyone know what a <strong>greedy algorithm</strong> is?</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Computationally infeasible to consider every possible partition</li>
-<li>Idea: <strong>top-down, greedy</strong> approach known as <strong>recursive binary splitting</strong>.
-<ul>
-<li><strong>top-down</strong> because it begins at the top of the tree</li>
-<li><strong>greedy</strong> because at each step of the tree-building process, the best split is made at that particular step, rather than looking ahead and picking a split that will lead to a better tree in some future step
-<ul>
-<li>Important for determining whether to use a ordinal encoding or not</li>
-</ul></li>
-<li>Stop when each terminal node has fewer than some predetermined number of observations</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="overfitting" class="slide level2">
-<h2>Overfitting</h2>
-<ul>
-<li>This process described above is likely to <strong>overfit</strong> the data</li>
-<li>One solution: require each split to improve performance by some amount
-<ul>
-<li>Bad Idea: sometimes seemingly meaningless cuts early on enable really good cuts later on</li>
-</ul></li>
-<li>Good solution: <strong>pruning</strong>
-<ul>
-<li>Build big tree and the prune off branches that are unnecessary</li>
-</ul></li>
-</ul>
-</section>
-<section id="tree-pruning" class="slide level2">
-<h2>Tree Pruning</h2>
-
-<img data-src="images/19/pruned-tree-1.png" class="r-stretch quarto-figure-center"><p class="caption">From Hands-On Machine Learning, Boehmke &amp; Greenwell</p></section>
-<section id="bias-variance-trade-off" class="slide level2">
-<h2>Bias-Variance Trade-Off</h2>
-<ul>
-<li>How does the bias-variance trade-off relate to the bias-variance trade-off?
-<ul>
-<li>Would larger trees have high or lower bias?</li>
-<li>What about variance?</li>
-</ul></li>
-</ul>
-</section>
-<section id="tree-pruning-1" class="slide level2">
-<h2>Tree Pruning</h2>
-<ul>
-<li>Grow a very large tree, and then <strong>prune</strong> it back to obtain a <strong>subtree</strong>.</li>
-<li>Terminology: <strong>cost complexity pruning</strong> or <strong>weakest link pruning</strong></li>
-<li>Consider the following objective function <span class="math display">\[
-\begin{aligned}
-&amp;SSE(T) + \alpha \times |T|\\
-&amp;\quad= SSE(T) + \alpha \times (\text{# of terminal nodes of }T)
-\end{aligned}
-\]</span></li>
-</ul>
-</section>
-<section id="cost-complexity-pruning" class="slide level2">
-<h2>Cost-Complexity Pruning</h2>
-<ul>
-<li>Fit full tree <span class="math inline">\(T_0\)</span> to minimise <span class="math inline">\(SSE\)</span></li>
-<li>Select <strong>sub-tree</strong> <span class="math inline">\(T\subset T_0\)</span> which minimizes <span class="math display">\[
-\begin{aligned}
-&amp;SSE(T) + \alpha \times |T|\\
-&amp;\quad= SSE(T) + \alpha \times (\text{# of terminal nodes of }T)
-\end{aligned}
-\]</span></li>
-<li>What should happen to the tree as we increase <span class="math inline">\(\alpha\)</span>?</li>
-<li>What should happen to the bias and variance as we increase <span class="math inline">\(\alpha\)</span>?</li>
-<li>How should we choose <span class="math inline">\(\alpha\)</span>? <span class="fragment">Cross Validation</span></li>
-</ul>
-</section>
-<section>
-<section id="regression-trees-in-r" class="title-slide slide level1 center">
-<h1>Regression Trees in R</h1>
-
-</section>
-<section id="data-dcbikeshare" class="slide level2 smaller">
-<h2>Data: <code>dcbikeshare</code></h2>
-<p>Bike sharing systems are new generation of traditional bike rentals where whole process from membership, rental and return back has become automatic. Through these systems, user is able to easily rent a bike from a particular position and return back at another position. As of May 2018, there are about over 1600 bike-sharing programs around the world, providing more than 18 million bicycles for public use. Today, there exists great interest in these systems due to their important role in traffic, environmental and health issues. <a href="https://www.kaggle.com/datasets/marklvl/bike-sharing-dataset">Documentation</a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">glimpse</span>(dcbikeshare)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 731
-Columns: 16
-$ instant    &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
-$ dteday     &lt;date&gt; 2011-01-01, 2011-01-02, 2011-01-03, 2011-01-04, 2011-01-05…
-$ season     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-$ yr         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-$ mnth       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-$ holiday    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,…
-$ weekday    &lt;dbl&gt; 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4,…
-$ workingday &lt;dbl&gt; 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,…
-$ weathersit &lt;dbl&gt; 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2,…
-$ temp       &lt;dbl&gt; 0.3441670, 0.3634780, 0.1963640, 0.2000000, 0.2269570, 0.20…
-$ atemp      &lt;dbl&gt; 0.3636250, 0.3537390, 0.1894050, 0.2121220, 0.2292700, 0.23…
-$ hum        &lt;dbl&gt; 0.805833, 0.696087, 0.437273, 0.590435, 0.436957, 0.518261,…
-$ windspeed  &lt;dbl&gt; 0.1604460, 0.2485390, 0.2483090, 0.1602960, 0.1869000, 0.08…
-$ casual     &lt;dbl&gt; 331, 131, 120, 108, 82, 88, 148, 68, 54, 41, 43, 25, 38, 54…
-$ registered &lt;dbl&gt; 654, 670, 1229, 1454, 1518, 1518, 1362, 891, 768, 1280, 122…
-$ cnt        &lt;dbl&gt; 985, 801, 1349, 1562, 1600, 1606, 1510, 959, 822, 1321, 126…</code></pre>
-</div>
-</div>
-</section>
-<section id="cleaning-the-data" class="slide level2">
-<h2>Cleaning the Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>dcbikeshare_clean <span class="ot">&lt;-</span> dcbikeshare <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>instant, <span class="sc">-</span>dteday, <span class="sc">-</span>casual, <span class="sc">-</span>registered, <span class="sc">-</span>yr) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb4-4"><a></a>    <span class="at">season =</span> <span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
-<span id="cb4-5"><a></a>      season <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"winter"</span>,</span>
-<span id="cb4-6"><a></a>      season <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"spring"</span>,</span>
-<span id="cb4-7"><a></a>      season <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">"summer"</span>,</span>
-<span id="cb4-8"><a></a>      season <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">"fall"</span></span>
-<span id="cb4-9"><a></a>    )),</span>
-<span id="cb4-10"><a></a>    <span class="at">mnth =</span> <span class="fu">as_factor</span>(mnth),</span>
-<span id="cb4-11"><a></a>    <span class="at">weekday =</span> <span class="fu">as_factor</span>(weekday),</span>
-<span id="cb4-12"><a></a>    <span class="at">weathersit =</span> <span class="fu">as_factor</span>(weathersit)</span>
-<span id="cb4-13"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="split-the-data" class="slide level2">
-<h2>Split the Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb5-2"><a></a></span>
-<span id="cb5-3"><a></a>bike_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(dcbikeshare_clean, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> cnt)</span>
-<span id="cb5-4"><a></a>bike_train <span class="ot">&lt;-</span> <span class="fu">training</span>(bike_split)</span>
-<span id="cb5-5"><a></a>bike_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(bike_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="recipe" class="slide level2">
-<h2>Recipe</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>bike_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(cnt <span class="sc">~</span> ., <span class="at">data =</span> bike_train) <span class="sc">|&gt;</span>   <span class="co"># set up recipe</span></span>
-<span id="cb6-2"><a></a>  <span class="fu">step_integer</span>(season, mnth, weekday) <span class="sc">|&gt;</span>   <span class="co"># numeric conversion of levels of the predictors</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)  <span class="co"># one-hot/dummy encode nominal categorical predictors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-model-workflow" class="slide level2">
-<h2>Define Model Workflow</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>dec_tree_lowcc <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(<span class="at">cost_complexity =</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">4</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
-<span id="cb7-4"><a></a></span>
-<span id="cb7-5"><a></a>dec_tree_highcc <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-6"><a></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-7"><a></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="visualize" class="slide level2">
-<h2>Visualize</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb8-2"><a></a><span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a></a>  <span class="fu">add_recipe</span>(bike_recipe) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a></a>  <span class="fu">add_model</span>(dec_tree_lowcc) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a></a>  <span class="fu">fit</span>(bike_train) <span class="sc">|&gt;</span></span>
-<span id="cb8-6"><a></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-7"><a></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="visualize-1" class="slide level2">
-<h2>Visualize</h2>
-
-<img data-src="20-decision-trees-continued_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
-<section id="visualize-2" class="slide level2">
-<h2>Visualize</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb9-2"><a></a><span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a></a>  <span class="fu">add_recipe</span>(bike_recipe) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a></a>  <span class="fu">add_model</span>(dec_tree_highcc) <span class="sc">|&gt;</span> </span>
-<span id="cb9-5"><a></a>  <span class="fu">fit</span>(bike_train) <span class="sc">|&gt;</span></span>
-<span id="cb9-6"><a></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb9-7"><a></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="visualize-3" class="slide level2">
-<h2>Visualize</h2>
-
-<img data-src="20-decision-trees-continued_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
-<section id="defin-model-workflow-with-tuning" class="slide level2">
-<h2>Defin Model Workflow with Tuning</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>dec_tree <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
-<span id="cb10-4"><a></a></span>
-<span id="cb10-5"><a></a>dt_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb10-6"><a></a>  <span class="fu">add_recipe</span>(bike_recipe) <span class="sc">|&gt;</span> </span>
-<span id="cb10-7"><a></a>  <span class="fu">add_model</span>(dec_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-folds-and-tuning-grid" class="slide level2">
-<h2>Define Folds and Tuning Grid</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>bike_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(bike_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span>
-<span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a>cp_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">1</span>)), <span class="co"># I had to play around with these </span></span>
-<span id="cb11-4"><a></a>                             <span class="at">levels =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="tuning-cp" class="slide level2">
-<h2>Tuning CP</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>tuning_cp_results <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
-<span id="cb12-2"><a></a>  dt_wf,</span>
-<span id="cb12-3"><a></a>  <span class="at">resamples=</span> bike_folds,</span>
-<span id="cb12-4"><a></a>  <span class="at">grid =</span> cp_grid</span>
-<span id="cb12-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="plot-results" class="slide level2">
-<h2>Plot Results</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">autoplot</span>(tuning_cp_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="20-decision-trees-continued_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
-<section id="select-best-trees" class="slide level2">
-<h2>Select Best Trees</h2>
-<div class="columns">
-<div class="column">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>best_tree <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tuning_cp_results)</span>
-<span id="cb14-2"><a></a>best_tree <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">cost_complexity</th>
-<th style="text-align: left;">.config</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0.0054556</td>
-<td style="text-align: left;">Preprocessor1_Model12</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div><div class="column">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>ose_tree <span class="ot">&lt;-</span> <span class="fu">select_by_one_std_err</span>(tuning_cp_results, <span class="fu">desc</span>(cost_complexity))</span>
-<span id="cb15-2"><a></a>ose_tree <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">cost_complexity</th>
-<th style="text-align: left;">.config</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0.0078476</td>
-<td style="text-align: left;">Preprocessor1_Model13</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div></div>
-</section>
-<section id="fit-best-tree" class="slide level2">
-<h2>Fit Best Tree</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>best_tree <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tuning_cp_results)</span>
-<span id="cb16-2"><a></a>best_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(dt_wf, best_tree)</span>
-<span id="cb16-3"><a></a>best_model <span class="ot">&lt;-</span> best_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(bike_train)</span>
-<span id="cb16-4"><a></a>best_model <span class="sc">|&gt;</span> </span>
-<span id="cb16-5"><a></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb16-6"><a></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="20-decision-trees-continued_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section>
-<section id="fit-ose-tree" class="slide level2">
-<h2>Fit OSE Tree</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>ose_tree <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tuning_cp_results)</span>
-<span id="cb17-2"><a></a>ose_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(dt_wf, ose_tree)</span>
-<span id="cb17-3"><a></a>ose_model <span class="ot">&lt;-</span> ose_wf <span class="sc">|&gt;</span> <span class="fu">fit</span>(bike_train)</span>
-<span id="cb17-4"><a></a>ose_model <span class="sc">|&gt;</span> </span>
-<span id="cb17-5"><a></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb17-6"><a></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="20-decision-trees-continued_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
-<section id="questions" class="slide level2">
-<h2>Questions</h2>
-<ul>
-<li>Why are both models the same but have different RMSE estimates from CV?</li>
-<li>What’s the difference between encoding <code>mnth</code> as an ordinal variable vs.&nbsp;a one-hot encoding?</li>
-</ul>
-</section>
 <section id="decision-trees" class="slide level2 smaller">
 <h2>Decision Trees</h2>
 <ul>
@@ -744,6 +436,23 @@ $ cnt        &lt;dbl&gt; 985, 801, 1349, 1562, 1600, 1606, 1510, 959, 822, 1321,
 </ul></li>
 </ul>
 </section>
+<section>
+<section id="decision-trees-for-classification" class="title-slide slide level1 center">
+<h1>Decision Trees for Classification</h1>
+
+</section>
+<section id="last-time" class="slide level2">
+<h2>Last Time</h2>
+<div>
+<ul>
+<li class="fragment">Regression Trees: Decision Trees for Regression Problems</li>
+<li class="fragment">How are they fit?</li>
+<li class="fragment">What is pruning? Why do we do it?</li>
+<li class="fragment">What tuning parameter did we talk about last time?</li>
+<li class="fragment">Today: Classification Trees</li>
+</ul>
+</div>
+</section>
 <section id="classification-trees" class="slide level2">
 <h2>Classification Trees</h2>
 <ul>
@@ -753,6 +462,18 @@ $ cnt        &lt;dbl&gt; 985, 801, 1349, 1562, 1600, 1606, 1510, 959, 822, 1321,
 <li>Probability: proportion of each class at terminal node</li>
 </ul></li>
 <li>Rest of tree: same as regression tree</li>
+</ul>
+</section>
+<section id="fitting-classification-trees" class="slide level2 smaller">
+<h2>Fitting Classification Trees</h2>
+<ul>
+<li>Still use <strong>recursive binary splitting</strong> to grow a classification tree</li>
+<li><span class="math inline">\(\hat{p}_{mk}\)</span>: proportion of training observations in the <span class="math inline">\(m^{th}\)</span> region from the <span class="math inline">\(k^{th}\)</span> class</li>
+<li><span class="math inline">\(SSE\)</span> can be replaced by
+<ul>
+<li><strong>classification error rate</strong>, fraction of the training observations that do not belong to the most common class ($1 - ) <span class="math display">\[E = 1 - \max_k \left(\hat{p}_{mk}\right)\]</span></li>
+<li><strong>Gini index</strong>, measure of node purity— small valuse indicate that a node is predominantly a single class <span class="math display">\[G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></li>
+</ul></li>
 </ul>
 </section>
 <section id="exploring-decision-trees-w-app" class="slide level2 smaller">
@@ -788,9 +509,9 @@ $ cnt        &lt;dbl&gt; 985, 801, 1349, 1562, 1600, 1606, 1510, 959, 822, 1321,
 <h2>Data: Voter Frequency</h2>
 <p><a href="https://github.com/fivethirtyeight/data/tree/master/non-voters">Info about data</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>voter_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'</span>)</span>
-<span id="cb18-2"><a></a></span>
-<span id="cb18-3"><a></a><span class="fu">glimpse</span>(voter_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>voter_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'</span>)</span>
+<span id="cb2-2"><a></a></span>
+<span id="cb2-3"><a></a><span class="fu">glimpse</span>(voter_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 5,836
 Columns: 119
@@ -919,10 +640,10 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <section id="cleaning-data-missing-data" class="slide level2">
 <h2>Cleaning Data: Missing Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>voter_data <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span> </span>
-<span id="cb20-3"><a></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb20-4"><a></a>  <span class="fu">filter</span>(value <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>voter_data <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a></a>  <span class="fu">filter</span>(value <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 22 × 2
    name  value
@@ -947,6 +668,39 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <li>What should we do with question 28?</li>
 <li>What should we do with question 29?</li>
 <li>What should we do with question 31?</li>
+</ul>
+</section>
+<section id="cleaning-the-data" class="slide level2">
+<h2>Cleaning the Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>voter_clean <span class="ot">&lt;-</span> voter_data <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>RespId, <span class="sc">-</span>weight) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Q28_1<span class="sc">:</span>Q29_10, <span class="sc">~</span><span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb6-4"><a></a>    .x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb6-5"><a></a>    .x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span> <span class="st">"No"</span>,</span>
+<span id="cb6-6"><a></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Never Asked"</span></span>
+<span id="cb6-7"><a></a>  ))),</span>
+<span id="cb6-8"><a></a>  <span class="at">Party_ID =</span> <span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb6-9"><a></a>    Q31 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Strong Republican"</span>,</span>
+<span id="cb6-10"><a></a>    Q31 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Republican"</span>,</span>
+<span id="cb6-11"><a></a>    Q32 <span class="sc">==</span> <span class="dv">1</span>  <span class="sc">~</span> <span class="st">"Strong Democrat"</span>,</span>
+<span id="cb6-12"><a></a>    Q32 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Democrat"</span>,</span>
+<span id="cb6-13"><a></a>    Q33 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lean Republican"</span>,</span>
+<span id="cb6-14"><a></a>    Q33 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Lean Democrat"</span></span>
+<span id="cb6-15"><a></a>  )))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fitting-classification-trees-1" class="slide level2 smaller">
+<h2>Fitting Classification Trees</h2>
+<ul>
+<li>Still use <strong>recursive binary splitting</strong> to grow a classification tree</li>
+<li><span class="math inline">\(\hat{p}_{ik}\)</span>: the predicted probability that observation <span class="math inline">\(i\)</span> is in the <span class="math inline">\(k^{th}\)</span> class</li>
+<li><span class="math inline">\(SSE\)</span> can be replaced by
+<ul>
+<li><strong>classification error rate</strong>, fraction of the training observations that do not belong to the most common class (<span class="math inline">\(1 - \text{accuracy}\)</span>) <span class="math display">\[\sum_{i=1}^N\]</span></li>
+<li><strong>Gini index</strong>, measure of node purity— small value indicate that a node is predominantly a single class <span class="math display">\[\sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></li>
+<li><strong>Negative Cross-Entropy</strong>, <span class="math display">\[- sum_{k=1}^{K} \hat{p}_{mk}\log\left(1-\hat{p}_{mk}\right)\]</span></li>
+</ul></li>
 </ul>
 
 <div class="quarto-auto-generated-content">

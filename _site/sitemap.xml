@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-21.html</loc>
-    <lastmod>2025-03-19T19:13:41.980Z</lastmod>
+    <lastmod>2025-03-21T15:56:56.455Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-17.html</loc>
@@ -93,48 +93,52 @@
     <lastmod>2025-03-17T17:39:53.525Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/12-preproc-missing-cv.html</loc>
-    <lastmod>2025-03-04T16:04:00.080Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/20-bagging.html</loc>
-    <lastmod>2025-03-19T19:17:30.750Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/15-wfsets-selection.html</loc>
-    <lastmod>2025-03-11T15:27:09.516Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
-    <lastmod>2025-02-04T17:47:19.521Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/19-decision-trees.html</loc>
-    <lastmod>2025-03-18T20:32:02.237Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/08-classification-metrics.html</loc>
-    <lastmod>2025-02-24T19:42:06.994Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/16-selection-regularization.html</loc>
-    <lastmod>2025-03-14T16:16:47.795Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/09-job-app-intro-roc.html</loc>
-    <lastmod>2025-03-04T16:04:00.075Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
-    <lastmod>2025-02-10T21:24:44.985Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/07-classification-logistic.html</loc>
+    <lastmod>2025-02-17T23:42:34.295Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/11-cross-validation.html</loc>
     <lastmod>2025-03-04T16:04:00.080Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/07-classification-logistic.html</loc>
-    <lastmod>2025-02-17T23:42:34.295Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/15-wfsets-selection.html</loc>
+    <lastmod>2025-03-11T15:27:09.516Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/09-job-app-intro-roc.html</loc>
+    <lastmod>2025-03-04T16:04:00.075Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/16-selection-regularization.html</loc>
+    <lastmod>2025-03-14T16:16:47.795Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/08-classification-metrics.html</loc>
+    <lastmod>2025-02-24T19:42:06.994Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/19-decision-trees.html</loc>
+    <lastmod>2025-03-20T20:27:20.875Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
+    <lastmod>2025-02-04T17:47:19.521Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/20-decision-trees-continued.html</loc>
+    <lastmod>2025-03-21T15:56:15.150Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
+    <lastmod>2025-02-10T21:24:44.985Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/12-preproc-missing-cv.html</loc>
+    <lastmod>2025-03-04T16:04:00.080Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/21-classification-trees.html</loc>
+    <lastmod>2025-03-21T15:56:12.687Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/14-CoverLetter-Resume-PeerReview.html</loc>
@@ -170,7 +174,7 @@
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-20.html</loc>
-    <lastmod>2025-03-19T19:15:07.622Z</lastmod>
+    <lastmod>2025-03-19T19:16:55.585Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-19.html</loc>
@@ -223,13 +227,5 @@
   <url>
     <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
     <lastmod>2025-02-03T17:52:13.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/20-classification-trees.html</loc>
-    <lastmod>2025-03-19T19:17:19.568Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/20-decision-trees-continued.html</loc>
-    <lastmod>2025-03-20T20:54:03.391Z</lastmod>
   </url>
 </urlset>
