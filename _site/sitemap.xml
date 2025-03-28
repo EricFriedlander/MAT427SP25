@@ -1,231 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mat427sp25.netlify.app/index.html</loc>
-    <lastmod>2025-02-03T18:04:35.108Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/jobs/job-app-1-rubric.html</loc>
-    <lastmod>2025-03-04T16:04:00.075Z</lastmod>
-  </url>
-  <url>
     <loc>https://mat427sp25.netlify.app/syllabus.html</loc>
-    <lastmod>2025-02-03T17:52:13.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/hw/03-hw-knn.html</loc>
-    <lastmod>2025-02-17T23:42:34.295Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/hw/01-hw-eda.html</loc>
-    <lastmod>2025-03-10T16:19:44.760Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/hw/05-hw-preproc-cv.html</loc>
-    <lastmod>2025-03-10T15:44:42.404Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/schedule.html</loc>
-    <lastmod>2025-02-24T19:42:10.117Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-08.html</loc>
-    <lastmod>2025-02-18T17:04:08.280Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-04.html</loc>
-    <lastmod>2025-02-11T17:33:59.983Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-11.html</loc>
-    <lastmod>2025-02-26T21:01:43.548Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-07.html</loc>
-    <lastmod>2025-02-17T23:42:26.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-21.html</loc>
-    <lastmod>2025-03-21T15:56:56.455Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-17.html</loc>
-    <lastmod>2025-03-11T15:27:09.516Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
-    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-06.html</loc>
-    <lastmod>2025-02-17T23:42:26.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
-    <lastmod>2025-02-07T18:10:49.484Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-14.html</loc>
-    <lastmod>2025-03-05T20:33:02.040Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-10.html</loc>
-    <lastmod>2025-02-24T19:42:06.994Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/13-preproc-cont.html</loc>
-    <lastmod>2025-03-07T18:53:00.641Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/06-knn-workflows.html</loc>
-    <lastmod>2025-02-17T23:42:26.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/04-MultipleRegression.html</loc>
-    <lastmod>2025-02-14T18:19:52.953Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/05-knn.html</loc>
-    <lastmod>2025-02-17T23:42:26.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/17-regularization.html</loc>
-    <lastmod>2025-03-17T17:39:53.525Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/07-classification-logistic.html</loc>
-    <lastmod>2025-02-17T23:42:34.295Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/11-cross-validation.html</loc>
-    <lastmod>2025-03-04T16:04:00.080Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/15-wfsets-selection.html</loc>
-    <lastmod>2025-03-11T15:27:09.516Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/09-job-app-intro-roc.html</loc>
-    <lastmod>2025-03-04T16:04:00.075Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/16-selection-regularization.html</loc>
-    <lastmod>2025-03-14T16:16:47.795Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/08-classification-metrics.html</loc>
-    <lastmod>2025-02-24T19:42:06.994Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/19-decision-trees.html</loc>
-    <lastmod>2025-03-20T20:27:20.875Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
-    <lastmod>2025-02-04T17:47:19.521Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/20-decision-trees-continued.html</loc>
-    <lastmod>2025-03-21T15:56:15.150Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
-    <lastmod>2025-02-10T21:24:44.985Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/slides/12-preproc-missing-cv.html</loc>
-    <lastmod>2025-03-04T16:04:00.080Z</lastmod>
+    <lastmod>2025-02-08T15:33:13.826Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/21-classification-trees.html</loc>
-    <lastmod>2025-03-21T15:56:12.687Z</lastmod>
+    <lastmod>2025-03-27T20:39:40.595Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/14-CoverLetter-Resume-PeerReview.html</loc>
-    <lastmod>2025-03-05T20:33:02.040Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/19-decision-trees.html</loc>
+    <lastmod>2025-03-27T20:39:40.338Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
-    <lastmod>2025-02-04T17:47:19.521Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/17-regularization.html</loc>
+    <lastmod>2025-03-27T20:39:40.024Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/15-wfsets-selection.html</loc>
+    <lastmod>2025-03-27T20:39:39.302Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/13-preproc-cont.html</loc>
+    <lastmod>2025-03-27T20:39:38.132Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/11-cross-validation.html</loc>
+    <lastmod>2025-03-27T20:39:36.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/09-job-app-intro-roc.html</loc>
+    <lastmod>2025-03-27T20:39:36.523Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/07-classification-logistic.html</loc>
+    <lastmod>2025-02-23T17:58:43.277Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/05-knn.html</loc>
+    <lastmod>2025-02-17T20:08:22.975Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/slides/03-SLR-Gradient_Desc.html</loc>
-    <lastmod>2025-02-11T15:00:17.824Z</lastmod>
+    <lastmod>2025-02-12T21:27:01.432Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/10-roc-auc.html</loc>
-    <lastmod>2025-02-26T21:01:43.549Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/slides/01-big-picture.html</loc>
+    <lastmod>2025-02-08T15:33:13.758Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/slides/18-regularization-tuning.html</loc>
-    <lastmod>2025-03-17T20:33:48.873Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-15.html</loc>
-    <lastmod>2025-03-07T18:53:00.641Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-13.html</loc>
-    <lastmod>2025-03-04T16:04:06.688Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-18.html</loc>
-    <lastmod>2025-03-17T17:39:53.525Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/schedule.html</loc>
+    <lastmod>2025-03-27T20:39:36.472Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-20.html</loc>
-    <lastmod>2025-03-19T19:16:55.585Z</lastmod>
+    <lastmod>2025-03-27T20:39:36.462Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-19.html</loc>
-    <lastmod>2025-03-17T17:39:53.525Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-18.html</loc>
+    <lastmod>2025-03-27T20:39:36.459Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-16.html</loc>
-    <lastmod>2025-03-07T18:53:00.641Z</lastmod>
+    <lastmod>2025-03-27T20:39:36.454Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-09.html</loc>
-    <lastmod>2025-02-24T19:42:06.994Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-14.html</loc>
+    <lastmod>2025-03-27T20:39:36.449Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-12.html</loc>
-    <lastmod>2025-02-28T20:03:54.659Z</lastmod>
+    <lastmod>2025-03-27T20:39:36.446Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-10.html</loc>
+    <lastmod>2025-02-23T17:58:43.272Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-08.html</loc>
+    <lastmod>2025-02-23T17:58:43.270Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-06.html</loc>
+    <lastmod>2025-02-17T20:08:22.969Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-04.html</loc>
+    <lastmod>2025-02-12T21:27:01.432Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/prepare/prep-02.html</loc>
-    <lastmod>2025-02-03T17:52:13.330Z</lastmod>
+    <lastmod>2025-02-08T15:33:13.743Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/prepare/prep-05.html</loc>
-    <lastmod>2025-02-14T18:20:00.764Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/jobs/job-interview-resources.html</loc>
+    <lastmod>2025-03-28T22:35:01.581Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>
-    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/hw/04-hw-classification.html</loc>
-    <lastmod>2025-03-04T16:04:00.075Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/jobs/job-app-1-rubric.html</loc>
+    <lastmod>2025-03-27T20:39:36.441Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/hw/06-feature-selection-regularization.html</loc>
-    <lastmod>2025-03-17T17:39:57.360Z</lastmod>
+    <lastmod>2025-03-27T20:39:36.437Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/hw/04-hw-classification.html</loc>
+    <lastmod>2025-03-27T20:39:36.428Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/hw/02-hw-mlr.html</loc>
-    <lastmod>2025-02-12T21:42:49.792Z</lastmod>
+    <lastmod>2025-02-17T20:08:22.966Z</lastmod>
   </url>
   <url>
-    <loc>https://mat427sp25.netlify.app/support.html</loc>
-    <lastmod>2025-02-03T17:52:13.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mat427sp25.netlify.app/jobs/job-app-resources.html</loc>
-    <lastmod>2025-02-25T17:44:08.679Z</lastmod>
+    <loc>https://mat427sp25.netlify.app/computing-r-resources.html</loc>
+    <lastmod>2025-02-08T15:33:13.682Z</lastmod>
   </url>
   <url>
     <loc>https://mat427sp25.netlify.app/computing-access.html</loc>
-    <lastmod>2025-02-03T17:52:13.313Z</lastmod>
+    <lastmod>2025-02-08T15:33:13.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/hw/01-hw-eda.html</loc>
+    <lastmod>2025-02-08T15:33:13.698Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/hw/03-hw-knn.html</loc>
+    <lastmod>2025-02-23T17:58:43.268Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/hw/05-hw-preproc-cv.html</loc>
+    <lastmod>2025-03-27T20:39:36.434Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/index.html</loc>
+    <lastmod>2025-02-08T15:33:13.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/jobs/job-app-resources.html</loc>
+    <lastmod>2025-03-27T20:39:36.442Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-01.html</loc>
+    <lastmod>2025-02-08T15:33:13.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-03.html</loc>
+    <lastmod>2025-02-08T15:33:13.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-05.html</loc>
+    <lastmod>2025-02-17T20:08:22.968Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-07.html</loc>
+    <lastmod>2025-02-17T20:08:22.970Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-09.html</loc>
+    <lastmod>2025-02-23T17:58:43.271Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-11.html</loc>
+    <lastmod>2025-03-27T20:39:36.444Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-13.html</loc>
+    <lastmod>2025-03-27T20:39:36.447Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-15.html</loc>
+    <lastmod>2025-03-27T20:39:36.452Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-17.html</loc>
+    <lastmod>2025-03-27T20:39:36.456Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-19.html</loc>
+    <lastmod>2025-03-27T20:39:36.460Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/prepare/prep-21.html</loc>
+    <lastmod>2025-03-27T20:39:36.466Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/00-welcome.html</loc>
+    <lastmod>2025-02-08T15:33:13.757Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/02-StatisticalLearning.html</loc>
+    <lastmod>2025-02-10T22:07:24.919Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/04-MultipleRegression.html</loc>
+    <lastmod>2025-02-17T20:08:22.973Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/06-knn-workflows.html</loc>
+    <lastmod>2025-02-17T20:08:22.976Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/08-classification-metrics.html</loc>
+    <lastmod>2025-02-23T17:58:43.279Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/10-roc-auc.html</loc>
+    <lastmod>2025-03-27T20:39:36.592Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/12-preproc-missing-cv.html</loc>
+    <lastmod>2025-03-27T20:39:37.448Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/14-CoverLetter-Resume-PeerReview.html</loc>
+    <lastmod>2025-03-27T20:39:38.510Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/16-selection-regularization.html</loc>
+    <lastmod>2025-03-27T20:39:39.541Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/18-regularization-tuning.html</loc>
+    <lastmod>2025-03-27T20:39:40.098Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/slides/20-decision-trees-continued.html</loc>
+    <lastmod>2025-03-27T20:39:40.448Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mat427sp25.netlify.app/support.html</loc>
+    <lastmod>2025-02-08T15:33:13.824Z</lastmod>
   </url>
 </urlset>
