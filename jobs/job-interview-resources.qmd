@@ -2,16 +2,16 @@
 title: "Job Interview Resources"
 ---
 
-As discussed at the beginning of the semester, you will engage in two different Job Interviews this semester, each worth 15% of your grade. This document will guide you through preparing for your first one.
+As discussed at the beginning of the course, you will engage in two different Job Interviews this semester, each worth 15% of your grade. This document will guide you through preparing for your first one.
 
 ## Job Interview Components
 
-You will participate in two rounds of interviews:
+Your interview will simulate the interview process at many companies and include two rounds:
 
--   **First-Round Interview**: Your first round interview will be with Dani Carmack. This interview will last about 15 minutes and will mimic an initial screening interview that you might encounter with an recruiter or HR representative without technical expertise. More information about preparing can be found in the [Screening Interview Preparation](#screen-prep) section below.
+-   **First-Round**: Your first round interview will be with Dani Carmack. This interview will last about 15 minutes and will mimic an initial screening interview that you might encounter with an recruiter or HR representative without technical expertise. More information about preparing can be found in the [Screening Interview Preparation](#screen-prep) section below.
     +   Your first-round interview must be completed by **Friday, April 11th at 5pm**. You may schedule 15 minutes with Dani using [this link](https://calendly.com/danicarmack). Make sure to scroll down and select the option **Friedlander - Screening Interview**. 
     +   *It is your responsibility to schedule your interview in a timely manner. Dani's time is limited and she will run out of time-slots quickly.  Inability to find a time will not be an acceptable excuse for being unable to complete the interview on time, unless the issue is reported before Wednesday, April 3rd.*
--   **Second-Round Interview**: Your second round interview will be with Dr. Friedlander. This interview will last about 45 minutes and will mimic a longer form interview with a hiring manager. This person will typically be your prospective manager (and maybe some colleagues) and have intimate knowledge of the subject matter and skills necessary to be successful in the role you are applying for. More information can be found in the [Second Round Interview Preparation](#second-prep) section below.
+-   **Second-Round**: Your second round interview will be with Dr. Friedlander. This interview will last about 45 minutes and will mimic a longer form interview with a hiring manager. This person will typically be your prospective manager (and maybe some colleagues) and have intimate knowledge of the subject matter and skills necessary to be successful in the role you are applying for. More information can be found in the [Second Round Interview Preparation](#second-prep) section below.
     +   Your second round interview must be completed by the last day of class. Please note that we will be going through a second round of Job Applications and you will be completing a second interview for that job during Finals Week. 
     +   You will be given a link to schedule your second round interview after you complete your first round. Once again, *it is your responsibility to schedule your interview in a timely manner. My time is limited and I may run out of time-slots quickly. Inability to find a time will not be an acceptable excuse for being unable to complete the interview on time. I recommend you schedule a time with me as soon as you receive your link.*
     
@@ -38,7 +38,7 @@ To prepare, review the **Interviewing 101** and **Sample Interview Questions** o
 -   Your second goal should be to demonstrate that you are good at communicating:
     -   Do not speak overly fast. Don't speak overly slow either but I've never seen someone do that.
     -   [Demonstrate awareness of your audience](https://giphy.com/gifs/news-virginia-glenn-youngkin-alexandria-Lrau5Px80dsgZez7Q1). If you are speaking with someone from HR with no technical expertise, do not use technical jargon.
-    -   Do your best not to sounds overly rehearsed. While you should prepare, you shouldn't sound like you're reading off a script. One thing I like to do for interview and presentations is type out an answer to a question, but then don't memorize it. This will help you organize your thoughts and point you toward parts of your answer where you need to think of clever wording or a smooth transition.
+    -   Do your best not to sounds overly rehearsed. While you should prepare, you shouldn't sound like you're reading off a script. One thing I like to do for interviews and presentations is type out an answer to a question, but then don't memorize it. This will help you organize your thoughts and point you toward parts of your answer where you need to think of clever wording or a smooth transition.
     -   Use professional language (i.e. minimal slang) but do not try to use big words and "sound smart".
 -   Assorted tips:
     +   It is OK to take a minute to collect your thoughts. If you need a second to formulate your thoughts just say "Hmm... that's a great question, let me think for a second." Then take 15-30 second to collect your thoughts and give a concise answer.
@@ -55,7 +55,7 @@ Your screening interview will be worth 30 percent of your Job Interview total.
 
 #### Attire and Professionalism
 
-Your attire and professionalism will account for 1/3 of your screen interview grade. The following criteria will be used to determine your grade:
+Your attire and professionalism will account for 1/3 of your screening interview grade. The following criteria will be used to determine your grade:
 
 -   Did the student arrive on time?
 -   Did the student wear business casual attire (including dress shoes)?
@@ -70,7 +70,7 @@ Your attire and professionalism will account for 1/3 of your screen interview gr
 
 #### Preparation and Enthusiasm
 
-The next 1/3 of your screen interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:
+The next 1/3 of your screening interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:
 
 -   Did the student seem prepared to answer all of the questions given in advance?
 -   When answering questions, did the student have examples to point to that re-enforce what they are saying?
@@ -81,7 +81,7 @@ The next 1/3 of your screen interview grade will be based on your preparation an
 
 #### Content and Adaptability
 
-The next 1/3 of your screen interview grade will be based on your how well you actually answer the questions, along with your adaptability to unseen questions. The following criteria will be used to determine your grade:
+The next 1/3 of your screening interview grade will be based on your how well you actually answer the questions, along with your adaptability to unseen questions. The following criteria will be used to determine your grade:
 
 -   Did the student's answers demonstrate that they would be a good fit for the company and role?
 -   Did the student show awareness of their audience? I.e. did they make use of overly technical jargon or did they show awareness that they were talking to someone without technical expertise?
@@ -97,15 +97,15 @@ Your second round interview will mimic a technical interview. It will last 45 mi
 1.  (5 minutes) Your interview will begin with the following two prompts:
     +   Tell me about yourself.
     +   Why are you interested in this role?
-2.  (10 minutes) You will be asked questions about your resume, asking you describe the details of some of the project or job's you have listed. If you don't have any projects or job's that are relevant you will be asked questions about your previous coursework. In real life, it is unlikely that you'd make it to this interview without anything relevant listed on your resume.
+2.  (10 minutes) You will be asked questions about your resume, asking you describe the details of some of the projects or jobs you have listed. If you don't have any projects or job's that are relevant you will be asked questions about your previous coursework. In real life, it is unlikely that you'd make it to this interview without anything relevant listed on your resume.
 3.  (10 minutes) You will be asked questions about the sample data analysis you turned in. For example, "Why do you choose method X instead of method Y?"
 4.  (20 minutes) You will be asked general technical questions related to the role. Each of these questions will fall into one of the following categories:
     +   Questions asking you to explain something you did on your homework.
-    +   Questions similar in style to those asked in Chapter 5-8 of [this book](https://huyenchip.com/ml-interviews-book/). Please note that no content that has not been covered in this class, a pre-requisite for this class, or is listed on your resume will be included. 
+    +   Questions similar in style to those asked in Chapter 5-8 of [this book](https://huyenchip.com/ml-interviews-book/). Please note that only content that has been covered in this class, a pre-requisite for this class, or is listed on your resume will be included with a heavy focus on content from this class. 
       +   Pseudo-coding questions: E.g. "Write pseudo-code to perform gradient-descent".
       +   Theory questions: E.g. "Why do we do cross-validation?"
-      +   Closed Case-Study Questions: E.g. "Suppose you are trying to build an model that classifies pictures of food as either a "hot dog" or "not a hot dog". What metrics would you use to evaluate performance?
-      +   Open-Ended Case-Study Questions: E.g. "Suppose you are tasked with building a model predict whether an employee will leave the company within a year. How would you approach this problem?"
+      +   Closed Case-Study Questions: E.g. "Suppose you are trying to build an model that classifies pictures of food as either a *hot dog* or *not a hot dog*. What metrics would you use to evaluate performance?
+      +   Open-Ended Case-Study Questions: E.g. "Suppose you are tasked with building a model to predict whether an employee will leave the company within a year. How would you approach this problem?"
       
 ### Grading (70% of total grade)
 
@@ -132,18 +132,24 @@ The next 1/14 of your technical interview will be based on your meta-cognition. 
 
 #### Communication (20% of total grade)
 
-The next 4/14 of your screen interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:
+The next 4/14 of your screening interview grade will be based on your communication skills. The following criteria will be used to determine your grade:
 
 -   Did student speak at an appropriate pace (i.e. not too fast or too slow)?
 -   Did student use professional language, avoiding any slang?
 -   Did student stay focused on the question being asked?
 -   Were the student's answers too long or too short?
 -   Were the student's answers clear?
+-   Was the student good and talking through their thought process?
 
 
-#### Content (45% of total grade)
+#### Content (40% of total grade)
 
-The remainder of your grade will be determined based on whether the answers to the questions asked of you are correct. 
+The remainder of your grade will be determined based on whether the answers to the questions asked of you are correct and complete. The following criteria will be used to determine your grade:
+
+-   Were the student's answers correct?
+-   Were the student's answers complete?
+-   For open-ended questions, did the student ask for any good questions and request necessary information?
+-   For open-ended questions, did the student state any assumptions they were making?
 
 ### Some General Tips
 
