@@ -93,8 +93,8 @@
     "objectID": "slides/22-classification-trees.html#computational-set-up",
     "href": "slides/22-classification-trees.html#computational-set-up",
     "title": "MATH 427: Classification Trees",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(dsbox) # dcbikeshare data\nlibrary(knitr)\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(dsbox) # dcbikeshare data\nlibrary(knitr)\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/22-classification-trees.html#decision-trees",
@@ -171,7 +171,7 @@
     "href": "slides/22-classification-trees.html#fitting-classification-trees-1",
     "title": "MATH 427: Classification Trees",
     "section": "Fitting Classification Trees",
-    "text": "Fitting Classification Trees\n\nStill use recursive binary splitting to grow a classification tree\n\\(\\hat{p}_{ik}\\): the predicted probability that observation \\(i\\) is in the \\(k^{th}\\) class\n\\(SSE\\) can be replaced by\n\nclassification error rate, fraction of the training observations that do not belong to the most common class (\\(1 - \\text{accuracy}\\)) \\[\\sum_{i=1}^N\\]\nGini index, measure of node purity— small value indicate that a node is predominantly a single class \\[\\sum_{k=1}^{K} \\hat{p}_{mk}\\left(1-\\hat{p}_{mk}\\right)\\]\nNegative Cross-Entropy, \\[- sum_{k=1}^{K} \\hat{p}_{mk}\\log\\left(1-\\hat{p}_{mk}\\right)\\]\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Fitting Classification Trees\n\nStill use recursive binary splitting to grow a classification tree\n\\(\\hat{p}_{ik}\\): the predicted probability that observation \\(i\\) is in the \\(k^{th}\\) class\n\\(SSE\\) can be replaced by\n\nclassification error rate, fraction of the training observations that do not belong to the most common class (\\(1 - \\text{accuracy}\\)) \\[\\sum_{i=1}^N\\]\nGini index, measure of node purity— small value indicate that a node is predominantly a single class \\[\\sum_{k=1}^{K} \\hat{p}_{mk}\\left(1-\\hat{p}_{mk}\\right)\\]\nNegative Cross-Entropy, \\[- sum_{k=1}^{K} \\hat{p}_{mk}\\log\\left(1-\\hat{p}_{mk}\\right)\\]"
   },
   {
     "objectID": "slides/20-decision-trees-continued.html#computational-set-up",
@@ -5630,8 +5630,8 @@
     "objectID": "slides/21-decision-trees-3.html#announcements",
     "href": "slides/21-decision-trees-3.html#announcements",
     "title": "MATH 427: Decision Trees Continued",
-    "section": "Announcements",
-    "text": "Announcements\n\nJob Application Discussion\nJob Interviews\nAdmissions Data Project"
+    "section": "",
+    "text": "Job Application Discussion\nJob Interviews\nAdmissions Data Project"
   },
   {
     "objectID": "slides/21-decision-trees-3.html#job-application-discussion",
@@ -5841,7 +5841,7 @@
     "href": "slides/21-decision-trees-3.html#cleaning-the-data-q28-29-31",
     "title": "MATH 427: Decision Trees Continued",
     "section": "Cleaning the Data: Q28, 29, 31",
-    "text": "Cleaning the Data: Q28, 29, 31\n\nWhat should we do with question 28?\nWhat should we do with question 29?\nWhat should we do with question 31?\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Cleaning the Data: Q28, 29, 31\n\nWhat should we do with question 28?\nWhat should we do with question 29?\nWhat should we do with question 31?"
   },
   {
     "objectID": "support.html",
@@ -5882,5 +5882,145 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html",
+    "href": "hw/07-hw-regression-trees.html",
+    "title": "Homework 7: Regression Trees",
+    "section": "",
+    "text": "In this homework you will practice fitting regression trees and and using model tuning to select models.\n\n\nIn this assignment, you will…\n\nFit and interpret regression trees\nUse grid-based techniques to choose tuning parameters"
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#learning-goals",
+    "href": "hw/07-hw-regression-trees.html#learning-goals",
+    "title": "Homework 7: Regression Trees",
+    "section": "",
+    "text": "In this assignment, you will…\n\nFit and interpret regression trees\nUse grid-based techniques to choose tuning parameters"
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#teams-rules",
+    "href": "hw/07-hw-regression-trees.html#teams-rules",
+    "title": "Homework 7: Regression Trees",
+    "section": "Teams & Rules",
+    "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW7. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found here. Rules:\n\nYou are all responsible for understanding the work that your team turns in.\nAll team members must make roughly equal contributions to the homework.\nAny work completed by a team member must be committed and pushed to GitHub by that person."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#cleaning-and-preprocessing",
+    "href": "hw/07-hw-regression-trees.html#cleaning-and-preprocessing",
+    "title": "Homework 7: Regression Trees",
+    "section": "Cleaning and Preprocessing",
+    "text": "Cleaning and Preprocessing"
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-1",
+    "href": "hw/07-hw-regression-trees.html#exercise-1",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the data set CommViolPredUnnormalizedDataCleaned.csv and clean it. Hint: review Exercises 1-4 of your previous homework."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-2",
+    "href": "hw/07-hw-regression-trees.html#exercise-2",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nSplit the data into a training and test set using an 80-20 split. Use the seed 427."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-3",
+    "href": "hw/07-hw-regression-trees.html#exercise-3",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate a recipe that can be used with a regression tree."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-4",
+    "href": "hw/07-hw-regression-trees.html#exercise-4",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\n\n\n\n\n\nQuestion\n\n\n\nWhat was the best model from your last homework? Write out the model below in a neat format. What was it’s RMSE and \\(R^2\\)?\n\n\nIdeally we’d like any model we create to make better predictions that this baseline model. Hopefully, we can do better than this model using a regression tree."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-5",
+    "href": "hw/07-hw-regression-trees.html#exercise-5",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 5",
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nBefore you fit any trees, do you think a decision tree will have better performance than the baseline model? Describe the differences between linear models and decision trees including the advantages and disadvantages of each."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-6",
+    "href": "hw/07-hw-regression-trees.html#exercise-6",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 6",
+    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nFind a good Regression Tree to model the data. Use a grid search and cross-validation to find a good complexity parameter."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-7",
+    "href": "hw/07-hw-regression-trees.html#exercise-7",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 7",
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nFit your tree on the entire training set and use the rpart functions from class to display it."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-8",
+    "href": "hw/07-hw-regression-trees.html#exercise-8",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 8",
+    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nBased on your tree, which variable do you think is most important for determining the number of Violent Crimes Per Capita?."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-9",
+    "href": "hw/07-hw-regression-trees.html#exercise-9",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 9",
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nHow many different predictions are possible from your regression tree model? Why? How does this compare with the baseline model you selected in Exercise 4."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-9-1",
+    "href": "hw/07-hw-regression-trees.html#exercise-9-1",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 9",
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nCompute the root mean squared error for your regression tree model applied to the test set."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-10",
+    "href": "hw/07-hw-regression-trees.html#exercise-10",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 10",
+    "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nHow does the test error compare to the baseline model? Which model has better performance? Compare the interpretability of each model."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-11",
+    "href": "hw/07-hw-regression-trees.html#exercise-11",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 11",
+    "text": "Exercise 11\n\n\n\n\n\n\nQuestion\n\n\n\nLook at the documentation for decision_tree by typing ?decision_tree in your console. Notice that there are two other tuning parameters, tree_depth (defaults to 30) and min_n (defaults to 2). Use an irregular grid with at least 100 points and cross-validation to find an optimal combination of your three tuning parameters. Why do you think we want to use an irregular grid, rather than a regular grid here?"
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-12",
+    "href": "hw/07-hw-regression-trees.html#exercise-12",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 12",
+    "text": "Exercise 12\n\n\n\n\n\n\nQuestion\n\n\n\nFit the resulting model to the full training data and estimate it’s performance on the test set."
+  },
+  {
+    "objectID": "hw/07-hw-regression-trees.html#exercise-13-practice-interview-question",
+    "href": "hw/07-hw-regression-trees.html#exercise-13-practice-interview-question",
+    "title": "Homework 7: Regression Trees",
+    "section": "Exercise 13 (Practice interview question)",
+    "text": "Exercise 13 (Practice interview question)\n\n\n\n\n\n\nQuestion\n\n\n\nDescribe how tree_depth and min_n should impact the flexibility and bias-variance trade off of the resulting tree."
+  },
+  {
+    "objectID": "slides/22-classification-trees.html",
+    "href": "slides/22-classification-trees.html",
+    "title": "MATH 427: Classification Trees",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(dsbox) # dcbikeshare data\nlibrary(knitr)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/21-decision-trees-3.html",
+    "href": "slides/21-decision-trees-3.html",
+    "title": "MATH 427: Decision Trees Continued",
+    "section": "",
+    "text": "Job Application Discussion\nJob Interviews\nAdmissions Data Project"
   }
 ]
