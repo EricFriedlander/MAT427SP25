@@ -30,7 +30,7 @@ You are free to use whatever version control strategy you like.
 
 ## Teams & Rules
 
-You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW7**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/aNkAg26g). Rules:
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW7**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/DkTfH-Nj). Rules:
 
 1.  You are all responsible for understanding the work that your team turns in.
 2.  All team members must make roughly equal contributions to the homework.
@@ -66,8 +66,7 @@ Generate a recipe that can be used with a regression tree.
 
 # Baseline Model
 
-Before we start building fancy models, it's helpful to understand
-our data and to have a simple baseline for comparison. 
+Before we start building fancy models, it's helpful to understand our data and to have a simple baseline for comparison.
 
 ## Exercise 4
 
@@ -75,8 +74,7 @@ our data and to have a simple baseline for comparison.
 What was the best model from your last homework? Write out the model below in a neat format. What was it's RMSE and $R^2$?
 :::
 
-Ideally we'd like any model we create to make better predictions that this baseline model.
-Hopefully, we can do better than this model using a regression tree.
+Ideally we'd like any model we create to make better predictions that this baseline model. Hopefully, we can do better than this model using a regression tree.
 
 ## Exercise 5
 
@@ -89,7 +87,7 @@ Before you fit any trees, do you think a decision tree will have better performa
 ## Exercise 6
 
 ::: {.callout-tip title="Question"}
-Find a good Regression Tree to model the data. Use a grid search and cross-validation to find a good complexity parameter. 
+Find a good Regression Tree to model the data. Use a grid search and cross-validation to find a good complexity parameter.
 :::
 
 ## Exercise 7
@@ -101,8 +99,7 @@ Fit your tree on the entire training set and use the `rpart` functions from clas
 ## Exercise 8
 
 ::: {.callout-tip title="Question"}
-Based on your tree, which variable do you think is most important for determining
-the number of Violent Crimes Per Capita?.
+Based on your tree, which variable do you think is most important for determining the number of Violent Crimes Per Capita?.
 :::
 
 ## Exercise 9
@@ -116,8 +113,7 @@ How many different predictions are possible from your regression tree model? Why
 ## Exercise 9
 
 ::: {.callout-tip title="Question"}
-Compute the root mean squared error for your regression tree model applied to
-the test set.
+Compute the root mean squared error for your regression tree model applied to the test set.
 :::
 
 ## Exercise 10
@@ -131,7 +127,6 @@ How does the test error compare to the baseline model? Which model has better pe
 ::: {.callout-tip title="Question"}
 Look at the documentation for `decision_tree` by typing `?decision_tree` in your console. Notice that there are two other tuning parameters, `tree_depth` (defaults to 30) and `min_n` (defaults to 2). Use an [irregular grid](https://www.tmwr.org/grid-search#irregular-grids) with at least 100 points and cross-validation to find an optimal combination of your three tuning parameters. Why do you think we want to use an irregular grid, rather than a regular grid here?
 :::
-
 
 ## Exercise 12
 
