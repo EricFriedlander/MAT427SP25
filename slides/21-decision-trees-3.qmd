@@ -63,7 +63,7 @@ knitr:
 
 -   [Project Instructions](/project/project-instructions.qmd)
 -   Brian Bava visiting on Friday to discuss
--   DO ASAP: Log-in to Canvas and sign data agreement
+-   DO ASAP: Sign data agreement
 -   Do by Wednesday: Load the data and review instructions. We will have a discussion about cleaning the data on Wednesday. You are all expected to contribute.
 -   Do by Friday: Explore the data. You team is expected to bring at least three substantial questions for Brian.
 
