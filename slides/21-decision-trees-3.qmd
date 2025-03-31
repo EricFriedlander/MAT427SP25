@@ -65,7 +65,7 @@ knitr:
 -   Brian Bava visiting on Friday to discuss
 -   DO ASAP: Sign data agreement
 -   Do by Wednesday: Load the data and review instructions. We will have a discussion about cleaning the data on Wednesday. You are all expected to contribute.
--   Do by Friday: Explore the data. You team is expected to bring at least three substantial questions for Brian.
+-   Do by Friday: Explore the data. Your team is expected to bring at least three substantial questions for Brian.
 
 
 ## Computational Set-Up
