@@ -464,16 +464,15 @@ Eric Friedlander
 <li>Rest of tree: same as regression tree</li>
 </ul>
 </section>
-<section id="fitting-classification-trees" class="slide level2 smaller">
-<h2>Fitting Classification Trees</h2>
+<section id="classification-trees-1" class="slide level2">
+<h2>Classification Trees</h2>
 <ul>
-<li>Still use <strong>recursive binary splitting</strong> to grow a classification tree</li>
-<li><span class="math inline">\(\hat{p}_{mk}\)</span>: proportion of training observations in the <span class="math inline">\(m^{th}\)</span> region from the <span class="math inline">\(k^{th}\)</span> class</li>
-<li><span class="math inline">\(SSE\)</span> can be replaced by
+<li>Predictions:
 <ul>
-<li><strong>classification error rate</strong>, fraction of the training observations that do not belong to the most common class ($1 - ) <span class="math display">\[E = 1 - \max_k \left(\hat{p}_{mk}\right)\]</span></li>
-<li><strong>Gini index</strong>, measure of node purity— small valuse indicate that a node is predominantly a single class <span class="math display">\[G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></li>
+<li>Classes: most common class at terminal node</li>
+<li>Probability: proportion of each class at terminal node</li>
 </ul></li>
+<li>Rest of tree: same as regression tree</li>
 </ul>
 </section>
 <section id="exploring-decision-trees-w-app" class="slide level2 smaller">
@@ -492,6 +491,47 @@ Eric Friedlander
 </ul>
 </section>
 <section id="exploring-decision-trees-w-app-1" class="slide level2 smaller">
+<h2>Exploring Decision Trees w/ App</h2>
+<ul>
+<li>Choose one of the populations</li>
+<li>Generate some data</li>
+<li>Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
+<ul>
+<li><strong>complexity parameter (cp)</strong>: the larger the number the more pruning</li>
+<li><strong>Minimum leaf size</strong>: the minimum number of observations from the training data that must be contained in a leaf</li>
+<li><strong>Max depth</strong>: the maximum number of splits before a terminal node</li>
+</ul></li>
+<li>Write down any interesting observations</li>
+</ul>
+</section>
+<section id="fitting-classification-trees" class="slide level2 smaller">
+<h2>Fitting Classification Trees</h2>
+<ul>
+<li>Still use <strong>recursive binary splitting</strong> to grow a classification tree</li>
+<li><span class="math inline">\(\hat{p}_{mk}\)</span>: proportion of training observations in the <span class="math inline">\(m^{th}\)</span> region from the <span class="math inline">\(k^{th}\)</span> class</li>
+<li><span class="math inline">\(SSE\)</span> can be replaced by
+<ul>
+<li><strong>classification error rate</strong>, fraction of the training observations that do not belong to the most common class ($1 - ) <span class="math display">\[E = 1 - \max_k \left(\hat{p}_{mk}\right)\]</span></li>
+<li><strong>Gini index</strong>, measure of node purity— small valuse indicate that a node is predominantly a single class <span class="math display">\[G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="exploring-decision-trees-w-app-2" class="slide level2 smaller">
+<h2>Exploring Decision Trees w/ App</h2>
+<ul>
+<li>Dr.&nbsp;F will split you into four groups</li>
+<li>On one of your computers connect to a tv and <a href="https://efriedlander.shinyapps.io/ClassificationMetrics/">open this app</a></li>
+<li>Do the following based on your group number:
+<ul>
+<li>1: Choose plane on the first screen</li>
+<li>2: Choose circle on the first screen</li>
+<li>3: Choose parabola on the first screen</li>
+<li>4: Choose sine curve on the first screen</li>
+</ul></li>
+<li>We will generate data from this population… do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?</li>
+</ul>
+</section>
+<section id="exploring-decision-trees-w-app-3" class="slide level2 smaller">
 <h2>Exploring Decision Trees w/ App</h2>
 <ul>
 <li>Choose one of the populations</li>
@@ -690,17 +730,57 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <span id="cb6-15"><a></a>  )))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="project" class="slide level2">
+<h2>Project</h2>
+<ul>
+<li>Let’s think about cleaning the project data</li>
+<li>Everyone get with your groups, and open the data sets</li>
+</ul>
+</section></section>
+<section>
+<section id="classification-trees-2" class="title-slide slide level1 center">
+<h1>Classification Trees</h1>
+
+</section>
 <section id="fitting-classification-trees-1" class="slide level2 smaller">
 <h2>Fitting Classification Trees</h2>
 <ul>
 <li>Still use <strong>recursive binary splitting</strong> to grow a classification tree</li>
-<li><span class="math inline">\(\hat{p}_{ik}\)</span>: the predicted probability that observation <span class="math inline">\(i\)</span> is in the <span class="math inline">\(k^{th}\)</span> class</li>
+<li><span class="math inline">\(\hat{p}_{mk}\)</span>: proportion of observation <span class="math inline">\(m\)</span>th region from the <span class="math inline">\(k\)</span>th class</li>
 <li><span class="math inline">\(SSE\)</span> can be replaced by
 <ul>
-<li><strong>classification error rate</strong>, fraction of the training observations that do not belong to the most common class (<span class="math inline">\(1 - \text{accuracy}\)</span>) <span class="math display">\[\sum_{i=1}^N\]</span></li>
-<li><strong>Gini index</strong>, measure of node purity— small value indicate that a node is predominantly a single class <span class="math display">\[\sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></li>
-<li><strong>Negative Cross-Entropy</strong>, <span class="math display">\[- sum_{k=1}^{K} \hat{p}_{mk}\log\left(1-\hat{p}_{mk}\right)\]</span></li>
+<li><strong>classification error rate</strong>, fraction of the training observations that do not belong to the most common class <span class="math display">\[E= 1-\max_{k}(\hat{p}_{mk})\]</span></li>
 </ul></li>
+</ul>
+</section>
+<section id="better-split-metrics" class="slide level2 smaller">
+<h2>Better Split Metrics</h2>
+<ul>
+<li>Two measures of node purity — small value indicate that a node is predominantly a single class
+<ul>
+<li><strong>Gini index</strong>, measure of node purity <span class="math display">\[\sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></li>
+<li><strong>Negative Cross-Entropy</strong>, measure of node purity— small value indicate that a node is predominantly a single class <span class="math display">\[- \sum_{k=1}^{K} \hat{p}_{mk}\log\left(1-\hat{p}_{mk}\right)\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="general-idea" class="slide level2">
+<h2>General Idea</h2>
+<ul>
+<li>Many different implementations so check documentation</li>
+<li>ISLR2 recommendation
+<ul>
+<li>Use Gini or Cross-Entropy to split</li>
+<li>Use classification error rate to prune</li>
+</ul></li>
+<li><code>rpart</code> uses Gini to split and classification error (plus penalty) to prune</li>
+</ul>
+</section>
+<section id="next-time" class="slide level2">
+<h2>Next Time</h2>
+<ul>
+<li>Fitting classification trees in R</li>
+<li>Multi-class performance</li>
+<li>Solutions for imbalanced classes</li>
 </ul>
 
 <div class="quarto-auto-generated-content">

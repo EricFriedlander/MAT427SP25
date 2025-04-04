@@ -69,6 +69,35 @@ set.seed(427)
     +   Probability: proportion of each class at terminal node
 -   Rest of tree: same as regression tree
 
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose plane on the first screen
+    +   2: Choose circle on the first screen
+    +   3: Choose parabola on the first screen
+    +   4: Choose sine curve on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
+    +   **complexity parameter (cp)**: the larger the number the more pruning
+    +   **Minimum leaf size**: the minimum number of observations from the training data that must be contained in a leaf
+    +   **Max depth**: the maximum number of splits before a terminal node
+-   Write down any interesting observations
+
+
 ## Fitting Classification Trees {.smaller}
 -   Still use **recursive binary splitting** to grow a classification tree
 -   $\hat{p}_{mk}$: proportion of training observations in the $m^{th}$ region from the $k^{th}$ class
@@ -142,10 +171,35 @@ voter_clean <- voter_data |>
   )))
 ```
 
+## Project
+
+-   Let's think about cleaning the project data
+-   Everyone get with your groups, and open the data sets
+
+# Classification Trees
+
 ## Fitting Classification Trees {.smaller}
 -   Still use **recursive binary splitting** to grow a classification tree
--   $\hat{p}_{ik}$: the predicted probability that observation $i$ is in the $k^{th}$ class
+-   $\hat{p}_{mk}$: proportion of observation $m$th region from the $k$th class
 -   $SSE$ can be replaced by 
-    +   **classification error rate**, fraction of the training observations that do not belong to the most common class ($1 - \text{accuracy}$)  $$\sum_{i=1}^N$$
-    +   **Gini index**,  measure of node purity— small value indicate that a node is predominantly a single class $$\sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
-    +   **Negative Cross-Entropy**, $$- sum_{k=1}^{K} \hat{p}_{mk}\log\left(1-\hat{p}_{mk}\right)$$
+    +   **classification error rate**, fraction of the training observations that do not belong to the most common class $$E= 1-\max_{k}(\hat{p}_{mk})$$
+    
+## Better Split Metrics {.smaller}
+
+-   Two measures of node purity — small value indicate that a node is predominantly a single class
+    -   **Gini index**,  measure of node purity $$\sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
+    -   **Negative Cross-Entropy**, measure of node purity— small value indicate that a node is predominantly a single class $$- \sum_{k=1}^{K} \hat{p}_{mk}\log\left(1-\hat{p}_{mk}\right)$$
+    
+## General Idea
+
+-   Many different implementations so check documentation
+-   ISLR2 recommendation
+    +   Use Gini or Cross-Entropy to split
+    +   Use classification error rate to prune
+-   `rpart` uses Gini to split and classification error (plus penalty) to prune
+    
+## Next Time
+
+-   Fitting classification trees in R
+-   Multi-class performance
+-   Solutions for imbalanced classes

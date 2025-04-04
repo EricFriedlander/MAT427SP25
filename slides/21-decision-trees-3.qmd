@@ -302,56 +302,5 @@ ose_model |>
     +   Do not have same level of prediction accuracy
     +   Not very robust
 
-## Classification Trees
 
--   Predictions: 
-    +   Classes: most common class at terminal node
-    +   Probability: proportion of each class at terminal node
--   Rest of tree: same as regression tree
-
-## Exploring Decision Trees w/ App {.smaller}
-
--   Dr. F will split you into four groups
--   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
--   Do the following based on your group number:
-    +   1: Choose plane on the first screen
-    +   2: Choose circle on the first screen
-    +   3: Choose parabola on the first screen
-    +   4: Choose sine curve on the first screen
--   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
-
-## Exploring Decision Trees w/ App {.smaller}
-
--   Choose one of the populations
--   Generate some data
--   Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
-    +   **complexity parameter (cp)**: the larger the number the more pruning
-    +   **Minimum leaf size**: the minimum number of observations from the training data that must be contained in a leaf
-    +   **Max depth**: the maximum number of splits before a terminal node
--   Write down any interesting observations
-
-## Data: Voter Frequency
-
-[Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
-
-```{r}
-voter_data <- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv')
-
-glimpse(voter_data)
-```
-
-## Cleaning Data: Missing Data
-
-```{r}
-voter_data |> 
-  summarize(across(everything(), ~sum(is.na(.x)))) |> 
-  pivot_longer(everything()) |> 
-  filter(value > 0)
-```
-
-## Cleaning the Data: Q28, 29, 31
-
--   What should we do with question 28?
--   What should we do with question 29?
--   What should we do with question 31?
 
