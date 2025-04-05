@@ -472,8 +472,8 @@ Eric Friedlander
 </ul>
 </section></section>
 <section>
-<section id="fitting-classification-trees-in-r" class="title-slide slide level1 center">
-<h1>Fitting Classification Trees in R</h1>
+<section id="data-cleaning-side-quest" class="title-slide slide level1 center">
+<h1>Data Cleaning Side-Quest</h1>
 
 </section>
 <section id="data-voter-frequency" class="slide level2">
@@ -615,15 +615,13 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <h2>Cleaning the Data: Straight Forward Stuff</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>voter_clean <span class="ot">&lt;-</span> voter_data <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>RespId, <span class="sc">-</span>weight) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>RespId, <span class="sc">-</span>weight) <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a></a>  <span class="fu">mutate</span>(</span>
 <span id="cb4-4"><a></a>    <span class="at">educ =</span> <span class="fu">factor</span>(educ, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"High school or less"</span>, <span class="st">"Some college"</span>, <span class="st">"College"</span>)),</span>
-<span id="cb4-5"><a></a>    <span class="at">race =</span> <span class="fu">as_factor</span>(race),</span>
-<span id="cb4-6"><a></a>    <span class="at">gender =</span> <span class="fu">as_factor</span>(gender),</span>
-<span id="cb4-7"><a></a>    <span class="at">income_cat =</span> <span class="fu">factor</span>(income_cat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Less than $40k"</span>, <span class="st">"$40-75k "</span>,</span>
-<span id="cb4-8"><a></a>                                               <span class="st">"$75-125k"</span>, <span class="st">"$125k or more"</span>)),</span>
-<span id="cb4-9"><a></a>    <span class="at">voter_category =</span> <span class="fu">factor</span>(voter_category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"rarely/never"</span>, <span class="st">"sporadic"</span>, <span class="st">"always"</span>))</span>
-<span id="cb4-10"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a></a>    <span class="at">income_cat =</span> <span class="fu">factor</span>(income_cat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Less than $40k"</span>, <span class="st">"$40-75k "</span>,</span>
+<span id="cb4-6"><a></a>                                               <span class="st">"$75-125k"</span>, <span class="st">"$125k or more"</span>)),</span>
+<span id="cb4-7"><a></a>    <span class="at">voter_category =</span> <span class="fu">factor</span>(voter_category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"rarely/never"</span>, <span class="st">"sporadic"</span>, <span class="st">"always"</span>))</span>
+<span id="cb4-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="cleaning-data-missing-data" class="slide level2">
@@ -744,19 +742,17 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <section id="cleaning-the-data-q22-28-29-31-32-33" class="slide level2">
 <h2>Cleaning the Data: Q22, 28, 29, 31, 32, 33</h2>
 <ul>
-<li>What should we do with question 22?</li>
-<li>What should we do with question 28?</li>
-<li>What should we do with question 29?</li>
-<li>What should we do with question 31?</li>
+<li>Dealing with missing values should depend on what “missing” means in the context of each variable</li>
 </ul>
 </section>
 <section id="cleaning-the-data-q22" class="slide level2">
 <h2>Cleaning the Data: Q22</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>voter_clean <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a></a>  <span class="fu">count</span>(Q22) <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">kable_paper</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"1050px"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a></a>  <span class="fu">count</span>(Q22) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a></a>  <span class="fu">kable_paper</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"1050px"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:1050px; ">
 <table class="lightable-paper caption-top" data-quarto-postprocess="true" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
@@ -22763,29 +22759,49 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <span id="cb12-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="cleaning-party" class="slide level2">
-<h2>Cleaning Party:</h2>
+<section id="cleaning-q29" class="slide level2">
+<h2>Cleaning Q29</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>voter_clean <span class="ot">&lt;-</span> voter_clean <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a></a><span class="fu">mutate</span>(</span>
-<span id="cb13-3"><a></a>  <span class="at">Party_ID =</span> <span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
-<span id="cb13-4"><a></a>    Q31 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Strong Republican"</span>,</span>
-<span id="cb13-5"><a></a>    Q31 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Republican"</span>,</span>
-<span id="cb13-6"><a></a>    Q32 <span class="sc">==</span> <span class="dv">1</span>  <span class="sc">~</span> <span class="st">"Strong Democrat"</span>,</span>
-<span id="cb13-7"><a></a>    Q32 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Democrat"</span>,</span>
-<span id="cb13-8"><a></a>    Q33 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lean Republican"</span>,</span>
-<span id="cb13-9"><a></a>    Q33 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Lean Democrat"</span></span>
-<span id="cb13-10"><a></a>  )))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_10, <span class="sc">~</span><span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, .x)),</span>
+<span id="cb13-3"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_10, <span class="sc">~</span> <span class="fu">as_factor</span>(.x)),</span>
+<span id="cb13-4"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_8, <span class="sc">~</span><span class="fu">if_else</span>(<span class="fu">is.na</span>(.x) , <span class="st">"Not Asked"</span>, .x))</span>
+<span id="cb13-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cleaning-q31q33-handling-party" class="slide level2">
+<h2>Cleaning Q31:Q33: Handling Party</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>voter_clean <span class="ot">&lt;-</span> voter_clean <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a></a><span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a></a>  <span class="at">Party_ID =</span> <span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb14-4"><a></a>    Q31 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Strong Republican"</span>,</span>
+<span id="cb14-5"><a></a>    Q31 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Republican"</span>,</span>
+<span id="cb14-6"><a></a>    Q32 <span class="sc">==</span> <span class="dv">1</span>  <span class="sc">~</span> <span class="st">"Strong Democrat"</span>,</span>
+<span id="cb14-7"><a></a>    Q32 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Democrat"</span>,</span>
+<span id="cb14-8"><a></a>    Q33 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lean Republican"</span>,</span>
+<span id="cb14-9"><a></a>    Q33 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Lean Democrat"</span>,</span>
+<span id="cb14-10"><a></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
+<span id="cb14-11"><a></a>  )),</span>
+<span id="cb14-12"><a></a>  <span class="at">Party_ID =</span> <span class="fu">factor</span>(Party_ID, <span class="at">levels =</span><span class="fu">c</span>(<span class="st">"Strong Republican"</span>, <span class="st">"Republican"</span>, <span class="st">"Lean Republican"</span>,</span>
+<span id="cb14-13"><a></a>                                          <span class="st">"Other"</span>, <span class="st">"Lean Democrat"</span>, <span class="st">"Democrat"</span>, <span class="st">"Strong Democrat"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="finally-dealing-with--1s" class="slide level2">
+<h2>Finally: Dealing with -1s</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>voter_clean <span class="ot">&lt;-</span> voter_clean <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>ppage, <span class="sc">~</span><span class="fu">as_factor</span>(<span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="cn">NA</span>, .x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="split-data" class="slide level2">
 <h2>Split Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb14-2"><a></a></span>
-<span id="cb14-3"><a></a>voter_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(voter_clean, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> voter_category)</span>
-<span id="cb14-4"><a></a>voter_train <span class="ot">&lt;-</span> <span class="fu">training</span>(voter_splits)</span>
-<span id="cb14-5"><a></a>voter_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(voter_splits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb16-2"><a></a></span>
+<span id="cb16-3"><a></a>voter_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(voter_clean, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> voter_category)</span>
+<span id="cb16-4"><a></a>voter_train <span class="ot">&lt;-</span> <span class="fu">training</span>(voter_splits)</span>
+<span id="cb16-5"><a></a>voter_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(voter_splits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section id="classification-trees-in-r" class="title-slide slide level1 center">

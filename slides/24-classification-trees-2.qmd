@@ -69,7 +69,7 @@ set.seed(427)
     +   Use classification error rate to prune
 -   `rpart` uses Gini to split and classification error (plus penalty) to prune
 
-# Fitting Classification Trees in R
+# Data Cleaning Side-Quest
 
 ## Data: Voter Frequency
 
@@ -86,11 +86,9 @@ glimpse(voter_data)
 
 ```{r}
 voter_clean <- voter_data |> 
-  select(-RespId, -weight) |> 
+  select(-RespId, -weight, -Q1) |>
   mutate(
     educ = factor(educ, levels = c("High school or less", "Some college", "College")),
-    race = as_factor(race),
-    gender = as_factor(gender),
     income_cat = factor(income_cat, levels = c("Less than $40k", "$40-75k ",
                                                "$75-125k", "$125k or more")),
     voter_category = factor(voter_category, levels = c("rarely/never", "sporadic", "always"))
@@ -111,16 +109,14 @@ voter_data |>
 
 ## Cleaning the Data: Q22, 28, 29, 31, 32, 33
 
--   What should we do with question 22?
--   What should we do with question 28?
--   What should we do with question 29?
--   What should we do with question 31?
+-   Dealing with missing values should depend on what "missing" means in the context of each variable
 
 ## Cleaning the Data: Q22
 
 ```{r}
 voter_clean |> 
-  count(Q22) |> kable() |> 
+  count(Q22) |> 
+  kable() |> 
   kable_paper() |> 
   scroll_box(width = "1050px", height = "400px")
 ```
@@ -202,7 +198,18 @@ voter_clean <- voter_clean |>
   )
 ```
 
-## Cleaning Party:
+## Cleaning Q29
+
+```{r}
+voter_clean <- voter_clean |> 
+  mutate(across(Q29_1:Q29_10, ~if_else(.x == -1, 0, .x)),
+         across(Q29_1:Q29_10, ~ as_factor(.x)),
+         across(Q29_1:Q29_8, ~if_else(is.na(.x) , "Not Asked", .x))
+  )
+```
+
+
+## Cleaning Q31:Q33: Handling Party
 
 ```{r}
 voter_clean <- voter_clean |> 
@@ -213,12 +220,21 @@ mutate(
     Q32 == 1  ~ "Strong Democrat",
     Q32 == 2 ~ "Democrat",
     Q33 == 1 ~ "Lean Republican",
-    Q33 == 2 ~ "Lean Democrat"
-  )))
+    Q33 == 2 ~ "Lean Democrat",
+    TRUE ~ "Other"
+  )),
+  Party_ID = factor(Party_ID, levels =c("Strong Republican", "Republican", "Lean Republican",
+                                          "Other", "Lean Democrat", "Democrat", "Strong Democrat")))
 ```
 
+## Finally: Dealing with -1s
 
+```{r}
+voter_clean <- voter_clean |> 
+  mutate(across(!ppage, ~as_factor(if_else(.x == -1, NA, .x))))
+```
 
+# Classification Trees in R
 
 ## Split Data
 
@@ -230,7 +246,47 @@ voter_train <- training(voter_splits)
 voter_test <- testing(voter_splits)
 ```
 
+## Define Model
 
+```{r}
+tree_model <- decision_tree(cost_complexity = tune()) |> 
+  set_engine("rpart") |> 
+  set_mode("classification")
+```
 
-# Classification Trees in R
+## Define Recipe
+
+```{r}
+tree_recipe <- recipe(voter_category ~ . , data = voter_train) |> 
+  step_indicate_na(all_predictors()) |> 
+  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,
+               Q25:Q26) |> 
+  step_impute_median(all_numeric_predictors()) |> 
+  step_impute_mode(all_nominal_predictors()) |> 
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+```
+
+## Define Workflow
+
+```{r}
+tree_wf <- workflow() |> 
+  add_model(tree_model) |> 
+  add_recipe(tree_recipe)
+```
+
+## Tune Model
+
+```{r}
+voter_folds <- vfold_cv(voter_train, v = 2, repeats = 2)
+cp_grid <- grid_regular(cost_complexity(range = c(-10, 0)), levels = 10)
+tuned_model <- tune_grid(tree_wf,
+                         resamples = voter_folds,
+                         grid = cp_grid)
+```
+
+# Plot output
+
+```{r}
+autoplot(tune_res)
+```
 

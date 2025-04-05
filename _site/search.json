@@ -2815,7 +2815,7 @@
     "href": "slides/24-classification-trees-2.html#cleaning-the-data-straight-forward-stuff",
     "title": "MATH 427: Classification Trees",
     "section": "Cleaning the Data: Straight Forward Stuff",
-    "text": "Cleaning the Data: Straight Forward Stuff\n\nvoter_clean &lt;- voter_data |&gt; \n  select(-RespId, -weight) |&gt; \n  mutate(\n    educ = factor(educ, levels = c(\"High school or less\", \"Some college\", \"College\")),\n    race = as_factor(race),\n    gender = as_factor(gender),\n    income_cat = factor(income_cat, levels = c(\"Less than $40k\", \"$40-75k \",\n                                               \"$75-125k\", \"$125k or more\")),\n    voter_category = factor(voter_category, levels = c(\"rarely/never\", \"sporadic\", \"always\"))\n  )"
+    "text": "Cleaning the Data: Straight Forward Stuff\n\nvoter_clean &lt;- voter_data |&gt; \n  select(-RespId, -weight) |&gt;\n  mutate(\n    educ = factor(educ, levels = c(\"High school or less\", \"Some college\", \"College\")),\n    income_cat = factor(income_cat, levels = c(\"Less than $40k\", \"$40-75k \",\n                                               \"$75-125k\", \"$125k or more\")),\n    voter_category = factor(voter_category, levels = c(\"rarely/never\", \"sporadic\", \"always\"))\n  )"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#cleaning-data-missing-data",
@@ -2829,14 +2829,14 @@
     "href": "slides/24-classification-trees-2.html#cleaning-the-data-q22-28-29-31-32-33",
     "title": "MATH 427: Classification Trees",
     "section": "Cleaning the Data: Q22, 28, 29, 31, 32, 33",
-    "text": "Cleaning the Data: Q22, 28, 29, 31, 32, 33\n\nWhat should we do with question 22?\nWhat should we do with question 28?\nWhat should we do with question 29?\nWhat should we do with question 31?"
+    "text": "Cleaning the Data: Q22, 28, 29, 31, 32, 33\n\nDealing with missing values should depend on what “missing” means in the context of each variable"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#cleaning-the-data-q22",
     "href": "slides/24-classification-trees-2.html#cleaning-the-data-q22",
     "title": "MATH 427: Classification Trees",
     "section": "Cleaning the Data: Q22",
-    "text": "Cleaning the Data: Q22\n\nvoter_clean |&gt; \n  count(Q22) |&gt; kable() |&gt; \n  kable_paper() |&gt; \n  scroll_box(width = \"1050px\", height = \"400px\")\n\n\n\n\n\nQ22\nn\n\n\n\n\n-1\n12\n\n\n1\n27\n\n\n2\n107\n\n\n3\n19\n\n\n4\n116\n\n\n5\n19\n\n\n6\n100\n\n\n7\n86\n\n\nNA\n5350"
+    "text": "Cleaning the Data: Q22\n\nvoter_clean |&gt; \n  count(Q22) |&gt; \n  kable() |&gt; \n  kable_paper() |&gt; \n  scroll_box(width = \"1050px\", height = \"400px\")\n\n\n\n\n\nQ22\nn\n\n\n\n\n-1\n12\n\n\n1\n27\n\n\n2\n107\n\n\n3\n19\n\n\n4\n116\n\n\n5\n19\n\n\n6\n100\n\n\n7\n86\n\n\nNA\n5350"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#uh-oh--1s",
@@ -6078,5 +6078,26 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/24-classification-trees-2.html#cleaning-q29",
+    "href": "slides/24-classification-trees-2.html#cleaning-q29",
+    "title": "MATH 427: Classification Trees",
+    "section": "Cleaning Q29",
+    "text": "Cleaning Q29\n\nvoter_clean &lt;- voter_clean |&gt; \n  mutate(across(Q29_1:Q29_10, ~if_else(.x == -1, 0, .x)),\n         across(Q29_1:Q29_10, ~ as_factor(.x)),\n         across(Q29_1:Q29_8, ~if_else(is.na(.x) , \"Not Asked\", .x))\n  )"
+  },
+  {
+    "objectID": "slides/24-classification-trees-2.html#cleaning-q31q33-handling-party",
+    "href": "slides/24-classification-trees-2.html#cleaning-q31q33-handling-party",
+    "title": "MATH 427: Classification Trees",
+    "section": "Cleaning Q31:Q33: Handling Party",
+    "text": "Cleaning Q31:Q33: Handling Party\n\nvoter_clean &lt;- voter_clean |&gt; \nmutate(\n  Party_ID = as_factor(case_when(\n    Q31 == 1 ~ \"Strong Republican\",\n    Q31 == 2 ~ \"Republican\",\n    Q32 == 1  ~ \"Strong Democrat\",\n    Q32 == 2 ~ \"Democrat\",\n    Q33 == 1 ~ \"Lean Republican\",\n    Q33 == 2 ~ \"Lean Democrat\",\n    TRUE ~ \"Other\"\n  )),\n  Party_ID = factor(Party_ID, levels =c(\"Strong Republican\", \"Republican\", \"Lean Republican\",\n                                          \"Other\", \"Lean Democrat\", \"Democrat\", \"Strong Democrat\")))"
+  },
+  {
+    "objectID": "slides/24-classification-trees-2.html#finally-dealing-with--1s",
+    "href": "slides/24-classification-trees-2.html#finally-dealing-with--1s",
+    "title": "MATH 427: Classification Trees",
+    "section": "Finally: Dealing with -1s",
+    "text": "Finally: Dealing with -1s\n\nvoter_clean &lt;- voter_clean |&gt; \n  mutate(across(!ppage, ~as_factor(if_else(.x == -1, NA, .x))))"
   }
 ]
