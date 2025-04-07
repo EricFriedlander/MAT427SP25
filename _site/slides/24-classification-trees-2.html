@@ -22843,7 +22843,7 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <section id="tune-model" class="slide level2">
 <h2>Tune Model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>voter_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>voter_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">1</span>)</span>
 <span id="cb20-2"><a></a>tuning_grid <span class="ot">&lt;-</span> <span class="fu">grid_latin_hypercube</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">1</span>)), </span>
 <span id="cb20-3"><a></a>                                    <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)),</span>
 <span id="cb20-4"><a></a>                                    <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)), <span class="at">size =</span> <span class="dv">50</span>)</span>

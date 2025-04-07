@@ -3038,7 +3038,7 @@
     "href": "slides/24-classification-trees-2.html#tune-model",
     "title": "MATH 427: Classification Trees",
     "section": "Tune Model",
-    "text": "Tune Model\n\nvoter_folds &lt;- vfold_cv(voter_train, v = 5, repeats = 10)\ntuning_grid &lt;- grid_latin_hypercube(cost_complexity(range = c(-10, 1)), \n                                    min_n(range = c(1, 30)),\n                                    tree_depth(range = c(1, 30)), size = 50)\ntuned_model &lt;- tune_grid(tree_wf,\n                         resamples = voter_folds,\n                         grid = tuning_grid,\n                         metrics = metric_set(accuracy))"
+    "text": "Tune Model\n\nvoter_folds &lt;- vfold_cv(voter_train, v = 5, repeats = 1)\ntuning_grid &lt;- grid_latin_hypercube(cost_complexity(range = c(-10, 1)), \n                                    min_n(range = c(1, 30)),\n                                    tree_depth(range = c(1, 30)), size = 50)\ntuned_model &lt;- tune_grid(tree_wf,\n                         resamples = voter_folds,\n                         grid = tuning_grid,\n                         metrics = metric_set(accuracy))"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#select-best-tree",
