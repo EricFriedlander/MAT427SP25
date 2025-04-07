@@ -22843,15 +22843,14 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 <section id="tune-model" class="slide level2">
 <h2>Tune Model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>voter_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">1</span>)</span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>voter_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span>
 <span id="cb20-2"><a></a>tuning_grid <span class="ot">&lt;-</span> <span class="fu">grid_latin_hypercube</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">1</span>)), </span>
 <span id="cb20-3"><a></a>                                    <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)),</span>
 <span id="cb20-4"><a></a>                                    <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)), <span class="at">size =</span> <span class="dv">50</span>)</span>
 <span id="cb20-5"><a></a>tuned_model <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tree_wf,</span>
 <span id="cb20-6"><a></a>                         <span class="at">resamples =</span> voter_folds,</span>
 <span id="cb20-7"><a></a>                         <span class="at">grid =</span> tuning_grid,</span>
-<span id="cb20-8"><a></a>                         <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy),</span>
-<span id="cb20-9"><a></a>                         <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">verbose=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-8"><a></a>                         <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section id="plot-output" class="title-slide slide level1 center">
@@ -22891,10 +22890,10 @@ $ voter_category &lt;chr&gt; "always", "always", "sporadic", "sporadic", "always
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0.0031108</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">Preprocessor1_Model14</td>
+<td style="text-align: right;">0.0035352</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: left;">Preprocessor1_Model17</td>
 </tr>
 </tbody>
 </table>

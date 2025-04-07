@@ -3038,14 +3038,14 @@
     "href": "slides/24-classification-trees-2.html#tune-model",
     "title": "MATH 427: Classification Trees",
     "section": "Tune Model",
-    "text": "Tune Model\n\nvoter_folds &lt;- vfold_cv(voter_train, v = 5, repeats = 1)\ntuning_grid &lt;- grid_latin_hypercube(cost_complexity(range = c(-10, 1)), \n                                    min_n(range = c(1, 30)),\n                                    tree_depth(range = c(1, 30)), size = 50)\ntuned_model &lt;- tune_grid(tree_wf,\n                         resamples = voter_folds,\n                         grid = tuning_grid,\n                         metrics = metric_set(accuracy),\n                         control = control_grid(verbose=TRUE))"
+    "text": "Tune Model\n\nvoter_folds &lt;- vfold_cv(voter_train, v = 5, repeats = 10)\ntuning_grid &lt;- grid_latin_hypercube(cost_complexity(range = c(-10, 1)), \n                                    min_n(range = c(1, 30)),\n                                    tree_depth(range = c(1, 30)), size = 50)\ntuned_model &lt;- tune_grid(tree_wf,\n                         resamples = voter_folds,\n                         grid = tuning_grid,\n                         metrics = metric_set(accuracy))"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#select-best-tree",
     "href": "slides/24-classification-trees-2.html#select-best-tree",
     "title": "MATH 427: Classification Trees",
     "section": "Select Best Tree",
-    "text": "Select Best Tree\n\nbest_combo &lt;- select_best(tuned_model, metric = \"accuracy\")\nbest_tree &lt;-  tree_wf |&gt; \n  finalize_workflow(best_combo) |&gt; \n  fit(voter_train)\n\nbest_combo |&gt; kable()\n\n\n\n\ncost_complexity\ntree_depth\nmin_n\n.config\n\n\n\n\n0.0031108\n18\n10\nPreprocessor1_Model14"
+    "text": "Select Best Tree\n\nbest_combo &lt;- select_best(tuned_model, metric = \"accuracy\")\nbest_tree &lt;-  tree_wf |&gt; \n  finalize_workflow(best_combo) |&gt; \n  fit(voter_train)\n\nbest_combo |&gt; kable()\n\n\n\n\ncost_complexity\ntree_depth\nmin_n\n.config\n\n\n\n\n0.0035352\n15\n20\nPreprocessor1_Model17"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#select-best-tree-1",
