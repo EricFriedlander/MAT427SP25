@@ -27,7 +27,7 @@ knitr:
 ```{r}
 library(tidyverse)
 library(tidymodels)
-library(dsbox) # dcbikeshare data
+library(rpart.plot)
 library(knitr)
 library(kableExtra)
 
@@ -168,9 +168,9 @@ voter_clean |>
 
 ```{r}
 voter_clean <- voter_clean |> 
-  filter(Q22 != 5) |> 
+  filter(Q22 != 5 | is.na(Q22)) |> 
   mutate(Q22 = as_factor(Q22),
-         Q22 = if_else(is.na(Q22), "Not Asked", Q22))
+         Q22 = if_else(is.na(Q22), "Not Asked", Q22)) 
 ```
 
 ## Cleaning Q28
@@ -249,7 +249,9 @@ voter_test <- testing(voter_splits)
 ## Define Model
 
 ```{r}
-tree_model <- decision_tree(cost_complexity = tune()) |> 
+tree_model <- decision_tree(cost_complexity = tune(),
+                            min_n = tune(), 
+                            tree_depth = tune()) |> 
   set_engine("rpart") |> 
   set_mode("classification")
 ```
@@ -259,11 +261,13 @@ tree_model <- decision_tree(cost_complexity = tune()) |>
 ```{r}
 tree_recipe <- recipe(voter_category ~ . , data = voter_train) |> 
   step_indicate_na(all_predictors()) |> 
+  step_zv(all_predictors()) |> 
   step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,
                Q25:Q26) |> 
   step_impute_median(all_numeric_predictors()) |> 
   step_impute_mode(all_nominal_predictors()) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE)
+  
 ```
 
 ## Define Workflow
@@ -277,16 +281,45 @@ tree_wf <- workflow() |>
 ## Tune Model
 
 ```{r}
-voter_folds <- vfold_cv(voter_train, v = 2, repeats = 2)
-cp_grid <- grid_regular(cost_complexity(range = c(-10, 0)), levels = 10)
+voter_folds <- vfold_cv(voter_train, v = 5, repeats = 1)
+tuning_grid <- grid_latin_hypercube(cost_complexity(range = c(-10, 1)), 
+                                    min_n(range = c(1, 30)),
+                                    tree_depth(range = c(1, 30)), size = 50)
 tuned_model <- tune_grid(tree_wf,
                          resamples = voter_folds,
-                         grid = cp_grid)
+                         grid = tuning_grid,
+                         metrics = metric_set(accuracy))
 ```
 
 # Plot output
 
 ```{r}
-autoplot(tune_res)
+autoplot(tuned_model)
 ```
 
+# Plot output
+
+```{r}
+autoplot(tuned_model)
+```
+
+## Select Best Tree
+
+```{r}
+best_combo <- select_best(tuned_model, metric = "accuracy")
+best_tree <-  tree_wf |> 
+  finalize_workflow(best_combo) |> 
+  fit(voter_train)
+
+best_combo |> kable()
+```
+
+## Select Best Tree
+
+```{r}
+best_tree |> extract_fit_engine() |> rpart.plot()
+```
+
+## Interpreting the tree
+
+-   What features seem to be more important?
