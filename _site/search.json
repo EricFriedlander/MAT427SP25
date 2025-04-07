@@ -6232,5 +6232,26 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#computational-set-up",
+    "href": "slides/25-bagging-boosting.html#computational-set-up",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#ensemble-methods",
+    "href": "slides/25-bagging-boosting.html#ensemble-methods",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Ensemble Methods",
+    "text": "Ensemble Methods\n\nSingle regression or classification trees usually have poor predictive performance.\nEnsemble Methods: use a collection of models (in this case, decision trees) to improve the predictive performance\n\nDownside: Interpretability\n\nToday:\n\nBagging\nRandom Forests\nBoosting"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#flexibility-vs.-interpretability",
+    "href": "slides/25-bagging-boosting.html#flexibility-vs.-interpretability",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Flexibility vs. Interpretability",
+    "text": "Flexibility vs. Interpretability\n\n\n\n\n\nAdapted from ISLR, James et al.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]
