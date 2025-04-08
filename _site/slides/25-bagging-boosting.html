@@ -436,44 +436,44 @@ Eric Friedlander
 </section>
 <section id="flexibility-vs.-interpretability" class="slide level2">
 <h2>Flexibility vs.&nbsp;Interpretability</h2>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/25/2_7-1.png" style="width:70.0%"></p>
-<figcaption>Adapted from ISLR, James et al.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<!-- ## Bagging -->
-<!-- * **Bootstrap aggregation** or **bagging** is a general-purpose procedure for reducing the variance of a statistical learning method. -->
-<!-- * **Idea**: Build multiple trees and average their results. -->
-<!-- * **Result**: Given a set of $n$ independent observations (random variables) $Z_1, \ldots, Z_n$, each with variance $\sigma^2$, the variance of the mean/average $\bar{Z} = \displaystyle \dfrac{Z_1 + Z_2 + \cdots + Z_n}{n}$ of the observations is $\sigma^2/n$. -->
-<!-- In other words, **averaging a set of observations reduces variance**. -->
-<!-- * In reality, we do not have multiple training datasets. -->
-<!-- ## Bagging -->
-<!-- **Bootstrapping** -->
-<!-- ```{r , echo=FALSE, fig.cap="Adapted from ISLR, James et al.", fig.align='center', out.width = '70%'} -->
-<!-- knitr::include_graphics("EFT/bootstrapping.PNG") -->
-<!-- ``` -->
-<!-- ## Bagging -->
-<!-- * Take repeated bootstrap samples (say $B$) from the original (single) available dataset. -->
-<!-- * Build a tree on each bootstrap sample and obtain predictions $\hat{f}^{*b}(x), \ b=1, 2, \ldots, B$. -->
-<!-- * Average all the predictions. -->
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
-<!-- knitr::include_graphics("EFT/e8.95b.png") -->
-<!-- ``` -->
-<!-- * Individual trees are grown deep and are not pruned. They have high variance, but low bias. -->
-<!-- * For classification trees, take **majority vote**: the overall prediction is the most commonly occurring class among the $B$ predictions. -->
-<!-- ## Out-of-Bag Error Estimation -->
-<!-- * A straightforward way to estimate the test error of a bagged model, without performing CV. -->
-<!-- * It can be shown that on average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.  -->
-<!-- <!-- (Exercise 2 from Chapter 5) -->
-<p>–&gt;</p>
-<!-- * Remaining one-third observations not used train a bagged tree are referred to as **out-of-bag (OOB)** observations. -->
-<!-- * For $i^{th}$ observation, use the trees in which that observation was OOB. This will yield around $B/3$ predictions for the $i^{th}$ observation. Take their average to obtain a single prediction. -->
-<!-- * Equivalent to LOOCV if $B$ is large. -->
+
+<img data-src="images/25/2_7-1.png" class="r-stretch quarto-figure-center"><p class="caption">dapted from ISLR, James et al.</p></section>
+<section id="bagging" class="slide level2 smaller">
+<h2>Bagging</h2>
+<ul>
+<li><strong>Bootstrap aggregation</strong> or <strong>bagging</strong> is a general-purpose procedure for reducing the variance of a statistical learning method.</li>
+<li><strong>Idea</strong>: Build multiple trees and average their results.</li>
+<li><strong>Result</strong>: Given a set of <span class="math inline">\(n\)</span> independent observations (random variables) <span class="math inline">\(Z_1, \ldots, Z_n\)</span>, each with variance <span class="math inline">\(\sigma^2\)</span>, the variance of the mean/average <span class="math inline">\(\bar{Z} = \displaystyle \dfrac{Z_1 + Z_2 + \cdots + Z_n}{n}\)</span> of the observations is <span class="math inline">\(\sigma^2/n\)</span>.
+<ul>
+<li>In other words, <strong>averaging a set of observations reduces variance</strong>.</li>
+</ul></li>
+<li>In reality, we do not have multiple training datasets.</li>
+</ul>
+</section>
+<section id="bootstrapping" class="slide level2 smaller">
+<h2>Bootstrapping</h2>
+
+<img data-src="images/25/bootstrapping.png" class="r-stretch quarto-figure-center"><p class="caption">Adapted from ISLR, James et al.</p></section>
+<section id="bagging-1" class="slide level2 smaller">
+<h2>Bagging</h2>
+<ul>
+<li>Take repeated bootstrap samples (say <span class="math inline">\(B\)</span>) from the original dataset.</li>
+<li>Build tree on each bootstrap sample and obtain predictions <span class="math inline">\(\hat{f}^{*b}(x), \ b=1, 2, \ldots, B\)</span>.</li>
+<li>Average all the predictions: <span class="math display">\[\hat{f}_{\text{bag}}(x) = \frac{1}{B}\sum_{i=1}^B\hat{f}^{*b}(x)\]</span></li>
+<li>Trees not pruned: They have high variance, but low bias.</li>
+<li>Classification: <strong>majority vote</strong> the overall prediction is the most commonly occurring class among the <span class="math inline">\(B\)</span> predictions</li>
+</ul>
+</section>
+<section id="out-of-bag-error-estimation" class="slide level2 smaller">
+<h2>Out-of-Bag Error Estimation</h2>
+<ul>
+<li>Bagging <span class="math inline">\(\Rightarrow\)</span> fitting lots of models <span class="math inline">\(\Rightarrow\)</span> computationally taxing</li>
+<li>Bagging + Cross-validation <span class="math inline">\(\Rightarrow\)</span> EXTREMELY COMPUTATIONALLY TAXING</li>
+<li>On average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.</li>
+<li>Remaining third observations referred to as <strong>out-of-bag (OOB)</strong> observations</li>
+<li>For <span class="math inline">\(i^{th}\)</span> observation, use the trees in which that observation was OOB. This will yield around <span class="math inline">\(B/3\)</span> predictions for the <span class="math inline">\(i^{th}\)</span> observation. Take their average to obtain a single prediction</li>
+<li>Equivalent to LOOCV if <span class="math inline">\(B\)</span> is large</li>
+</ul>
 <!-- ## Variable Importance Measures -->
 <!-- * Bagging improves prediction accuracy at the expense of interpretability. -->
 <!-- * However, one can still obtain an overall summary of the importance of each predictor. -->

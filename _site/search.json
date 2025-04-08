@@ -6252,6 +6252,34 @@
     "href": "slides/25-bagging-boosting.html#flexibility-vs.-interpretability",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Flexibility vs. Interpretability",
-    "text": "Flexibility vs. Interpretability\n\n\n\n\n\nAdapted from ISLR, James et al.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;\n\n\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Flexibility vs. Interpretability\n\ndapted from ISLR, James et al."
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#bagging",
+    "href": "slides/25-bagging-boosting.html#bagging",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Bagging",
+    "text": "Bagging\n\nBootstrap aggregation or bagging is a general-purpose procedure for reducing the variance of a statistical learning method.\nIdea: Build multiple trees and average their results.\nResult: Given a set of \\(n\\) independent observations (random variables) \\(Z_1, \\ldots, Z_n\\), each with variance \\(\\sigma^2\\), the variance of the mean/average \\(\\bar{Z} = \\displaystyle \\dfrac{Z_1 + Z_2 + \\cdots + Z_n}{n}\\) of the observations is \\(\\sigma^2/n\\).\n\nIn other words, averaging a set of observations reduces variance.\n\nIn reality, we do not have multiple training datasets."
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#bootstrapping",
+    "href": "slides/25-bagging-boosting.html#bootstrapping",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Bootstrapping",
+    "text": "Bootstrapping\n\nAdapted from ISLR, James et al."
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#bagging-1",
+    "href": "slides/25-bagging-boosting.html#bagging-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Bagging",
+    "text": "Bagging\n\nTake repeated bootstrap samples (say \\(B\\)) from the original dataset.\nBuild tree on each bootstrap sample and obtain predictions \\(\\hat{f}^{*b}(x), \\ b=1, 2, \\ldots, B\\).\nAverage all the predictions: \\[\\hat{f}_{\\text{bag}}(x) = \\frac{1}{B}\\sum_{i=1}^B\\hat{f}^{*b}(x)\\]\nTrees not pruned: They have high variance, but low bias.\nClassification: majority vote the overall prediction is the most commonly occurring class among the \\(B\\) predictions"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#out-of-bag-error-estimation",
+    "href": "slides/25-bagging-boosting.html#out-of-bag-error-estimation",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Out-of-Bag Error Estimation",
+    "text": "Out-of-Bag Error Estimation\n\nBagging \\(\\Rightarrow\\) fitting lots of models \\(\\Rightarrow\\) computationally taxing\nBagging + Cross-validation \\(\\Rightarrow\\) EXTREMELY COMPUTATIONALLY TAXING\nOn average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.\nRemaining third observations referred to as out-of-bag (OOB) observations\nFor \\(i^{th}\\) observation, use the trees in which that observation was OOB. This will yield around \\(B/3\\) predictions for the \\(i^{th}\\) observation. Take their average to obtain a single prediction\nEquivalent to LOOCV if \\(B\\) is large\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]

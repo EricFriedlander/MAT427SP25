@@ -59,7 +59,11 @@ set.seed(427)
 -   $\hat{p}_{mk}$: proportion of training observations in the $m^{th}$ region from the $k^{th}$ class
 -   $SSE$ can be replaced by 
     +   **classification error rate**, fraction of the training observations that do not belong to the most common class ($1 - \text{accuracy}) $$E = 1 - \max_k \left(\hat{p}_{mk}\right)$$
-    +   **Gini index**,  measure of node purity— small valuse indicate that a node is predominantly a single class $$G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
+    
+## Alternatives to Classification Error Rate
+
+-   **Gini index**,  measure of node purity— small values indicate that a node is predominantly a single class $$G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
+-   **Entropy**,  measure of node purity— small values indicate that a node is predominantly a single class $$G = \displaystyle -\sum_{k=1}^{K} \hat{p}_{mk}]\log\left(\hat{p}_{mk}\right)$$
     
 ## General Idea
 

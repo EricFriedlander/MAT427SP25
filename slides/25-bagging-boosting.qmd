@@ -49,222 +49,135 @@ set.seed(427)
     
 ## Flexibility vs. Interpretability
 
-```{r , echo=FALSE,  fig.cap="Adapted from ISLR, James et al.", fig.align='center', out.width = '70%'}
-knitr::include_graphics("images/25/2_7-1.png")
+![dapted from ISLR, James et al.](images/25/2_7-1.png)
+
+## Bagging {.smaller}
+
+-   **Bootstrap aggregation** or **bagging** is a general-purpose procedure for reducing the variance of a statistical learning method.
+-   **Idea**: Build multiple trees and average their results.
+-   **Result**: Given a set of $n$ independent observations (random variables) $Z_1, \ldots, Z_n$, each with variance $\sigma^2$, the variance of the mean/average $\bar{Z} = \displaystyle \dfrac{Z_1 + Z_2 + \cdots + Z_n}{n}$ of the observations is $\sigma^2/n$.
+    +   In other words, **averaging a set of observations reduces variance**.
+-   In reality, we do not have multiple training datasets.
+
+
+## Bootstrapping {.smaller}
+
+![Adapted from ISLR, James et al.](images/25/bootstrapping.png)
+
+## Bagging {.smaller}
+
+-   Take repeated bootstrap samples (say $B$) from the original dataset.
+-   Build tree on each bootstrap sample and obtain predictions $\hat{f}^{*b}(x), \ b=1, 2, \ldots, B$.
+-   Average all the predictions: $$\hat{f}_{\text{bag}}(x) = \frac{1}{B}\sum_{i=1}^B\hat{f}^{*b}(x)$$
+-   Trees not pruned: They have high variance, but low bias.
+-   Classification: **majority vote** the overall prediction is the most commonly occurring class among the $B$ predictions
+
+
+## Out-of-Bag Error Estimation {.smaller}
+
+-   Bagging $\Rightarrow$ fitting lots of models $\Rightarrow$ computationally taxing
+-   Bagging + Cross-validation $\Rightarrow$ EXTREMELY COMPUTATIONALLY TAXING
+-   On average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.
+-   Remaining third observations referred to as **out-of-bag (OOB)** observations
+-   For $i^{th}$ observation, use the trees in which that observation was OOB. This will yield around $B/3$ predictions for the $i^{th}$ observation. Take their average to obtain a single prediction
+-   Equivalent to LOOCV if $B$ is large
+
+
+## Variable Importance Measures
+
+-   Bagging improves prediction accuracy at expense of interpretability
+-   Can still obtain overall summary of importance of each predictor
+    -   Reduction in the loss function (e.g., SSE) attributed to each variable at each split is tabulated
+    -   A single variable could be used multiple times in a tree
+    -   Total reduction in the loss function across all splits by a variable are summed up and used as the total feature importance
+    -   A large value indicates an important predictor.
+    
+# Bagging Implementation in R
+
+## Data: Voter Frequency
+
+-   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
+-   Goal: Identify individuals who are unlikely to vote to help organization target "get out the vote" effort.
+
+```{r}
+voter_data <- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv')
+
+voter_clean <- voter_data |> 
+  select(-RespId, -weight, -Q1) |>
+  mutate(
+    educ = factor(educ, levels = c("High school or less", "Some college", "College")),
+    income_cat = factor(income_cat, levels = c("Less than $40k", "$40-75k ",
+                                               "$75-125k", "$125k or more")),
+    voter_category = factor(voter_category, levels = c("rarely/never", "sporadic", "always"))
+  ) |> 
+  filter(Q22 != 5 | is.na(Q22)) |> 
+  mutate(Q22 = as_factor(Q22),
+         Q22 = if_else(is.na(Q22), "Not Asked", Q22),
+         across(Q28_1:Q28_8, ~if_else(.x == -1, 0, .x)),
+         across(Q28_1:Q28_8, ~ as_factor(.x)),
+         across(Q28_1:Q28_8, ~if_else(is.na(.x) , "Not Asked", .x)),
+         across(Q29_1:Q29_10, ~if_else(.x == -1, 0, .x)),
+         across(Q29_1:Q29_10, ~ as_factor(.x)),
+         across(Q29_1:Q29_8, ~if_else(is.na(.x) , "Not Asked", .x)),
+        Party_ID = as_factor(case_when(
+          Q31 == 1 ~ "Strong Republican",
+          Q31 == 2 ~ "Republican",
+          Q32 == 1  ~ "Strong Democrat",
+          Q32 == 2 ~ "Democrat",
+          Q33 == 1 ~ "Lean Republican",
+          Q33 == 2 ~ "Lean Democrat",
+          TRUE ~ "Other"
+        )),
+        Party_ID = factor(Party_ID, levels =c("Strong Republican", "Republican", "Lean Republican",
+                                                "Other", "Lean Democrat", "Democrat", "Strong Democrat")),
+        across(!ppage, ~as_factor(if_else(.x == -1, NA, .x))))
 ```
 
-<!-- ## Bagging -->
-
-<!-- * **Bootstrap aggregation** or **bagging** is a general-purpose procedure for reducing the variance of a statistical learning method. -->
-
-<!-- * **Idea**: Build multiple trees and average their results. -->
-
-<!-- * **Result**: Given a set of $n$ independent observations (random variables) $Z_1, \ldots, Z_n$, each with variance $\sigma^2$, the variance of the mean/average $\bar{Z} = \displaystyle \dfrac{Z_1 + Z_2 + \cdots + Z_n}{n}$ of the observations is $\sigma^2/n$. -->
-
-<!-- In other words, **averaging a set of observations reduces variance**. -->
-
-<!-- * In reality, we do not have multiple training datasets. -->
-
-
-<!-- ## Bagging -->
-
-<!-- **Bootstrapping** -->
-
-<!-- ```{r , echo=FALSE, fig.cap="Adapted from ISLR, James et al.", fig.align='center', out.width = '70%'} -->
-<!-- knitr::include_graphics("EFT/bootstrapping.PNG") -->
-<!-- ``` -->
-
-<!-- ## Bagging -->
-
-<!-- * Take repeated bootstrap samples (say $B$) from the original (single) available dataset. -->
-
-<!-- * Build a tree on each bootstrap sample and obtain predictions $\hat{f}^{*b}(x), \ b=1, 2, \ldots, B$. -->
-
-<!-- * Average all the predictions. -->
-
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
-<!-- knitr::include_graphics("EFT/e8.95b.png") -->
-<!-- ``` -->
-
-<!-- * Individual trees are grown deep and are not pruned. They have high variance, but low bias. -->
-
-<!-- * For classification trees, take **majority vote**: the overall prediction is the most commonly occurring class among the $B$ predictions. -->
-
-
-<!-- ## Out-of-Bag Error Estimation -->
-
-<!-- * A straightforward way to estimate the test error of a bagged model, without performing CV. -->
-
-<!-- * It can be shown that on average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.  -->
-
-<!-- <!-- (Exercise 2 from Chapter 5) --> -->
-
-<!-- * Remaining one-third observations not used train a bagged tree are referred to as **out-of-bag (OOB)** observations. -->
-
-<!-- * For $i^{th}$ observation, use the trees in which that observation was OOB. This will yield around $B/3$ predictions for the $i^{th}$ observation. Take their average to obtain a single prediction. -->
-
-<!-- * Equivalent to LOOCV if $B$ is large. -->
-
-
-<!-- ## Variable Importance Measures -->
-
-<!-- * Bagging improves prediction accuracy at the expense of interpretability. -->
-
-<!-- * However, one can still obtain an overall summary of the importance of each predictor. -->
-
-
-<!-- <!-- ## Variable Importance Measures --> -->
-
-<!-- * To measure feature importance, the reduction in the loss function (e.g., RSS) attributed to each variable at each split is tabulated. In some instances, a single variable could be used multiple times in a tree; consequently, the total reduction in the loss function across all splits by a variable are summed up and used as the total feature importance. -->
-
-<!-- * A large value indicates an important predictor. -->
-
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} --> -->
-<!-- <!-- knitr::include_graphics("EFT/8.9.png") --> -->
-<!-- <!-- ``` --> -->
-
-
-<!-- ## Bagging: Implementation {.smaller} -->
-
-<!-- **Ames Housing Dataset** -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
-
-<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average", -->
-<!--                                                   "Average", "Above_Average", "Good", "Very_Good", -->
-<!--                                                   "Excellent", "Very_Excellent")) -->
-<!-- ``` -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- # split data -->
-
-<!-- set.seed(051424)   # set seed -->
-
-<!-- index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split -->
-
-<!-- ames_train <- ames[index,]   # training data -->
-
-<!-- ames_test <- ames[-index,]   # test data -->
-<!-- ``` -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- # create recipe and blueprint, prepare and apply blueprint -->
-
-<!-- set.seed(051424)   # set seed -->
-
-<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
-
-<!-- blueprint <- ames_recipe %>% -->
-<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors -->
-<!--   step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries -->
-<!--   step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors -->
-<!--   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors -->
-<!--   step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors -->
-<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors -->
-<!--   step_dummy(all_nominal(), one_hot = FALSE)                           # one-hot/dummy encode nominal categorical predictors -->
-
-
-<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
-
-
-<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data -->
-
-<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data -->
-<!-- ``` -->
-
-<!-- Data splitting and feature engineering has been done in the previous slides. -->
-
-<!-- ```{r} -->
-<!-- set.seed(051424)   # set seed -->
-
-<!-- library(ipred)   # for bagging -->
-
-<!-- bag_fit <- bagging(formula = Sale_Price ~ .,  -->
-<!--                    data = baked_train, -->
-<!--                    nbagg = 500,                             # number of trees to grow (bootstrap samples) usually 500 -->
-<!--                    coob = TRUE,                             # yes to computing OOB error estimate -->
-<!--                    control = rpart.control(minsplit = 2,    # split a node if at least 2 observations present -->
-<!--                                            cp = 0,          # no pruning (let the trees grow tall) -->
-<!--                                            xval = 0))       # no CV  -->
-<!-- ```                   -->
-
-<!-- ```{r} -->
-<!-- bag_fit   # results of bagging  -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- bag_fit$err   # OOB RMSE estimate -->
-<!-- ``` -->
-
-
-<!-- ## Bagging: Implementation -->
-
-<!-- **Ames Housing Dataset** -->
-
-<!-- CV with bagging <span style="color:red">(NOT recommended since computationally expensive)</span> -->
-
-<!-- ```{r, eval=FALSE} -->
-<!-- set.seed(051424)   # set seed -->
-
-<!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 1)   # CV specifications -->
-
-<!-- library(ipred) -->
-<!-- library(e1071) -->
-
-<!-- bagging_cv <- train(blueprint, -->
-<!--                     data = ames_train, -->
-<!--                     method = "treebag",   -->
-<!--                     trControl = cv_specs, -->
-<!--                     nbagg = 500,                    -->
-<!--                     control = rpart.control(minsplit = 2, cp = 0),     -->
-<!--                     metric = "RMSE") -->
-<!-- ``` -->
-
-
-<!-- <!-- ```{r, echo=FALSE} --> -->
-<!-- <!-- data("Boston") --> -->
-
-<!-- <!-- train_index <- createDataPartition(Boston$medv, p = 0.8, list = FALSE) --> -->
-<!-- <!-- Boston_train <- Boston[train_index, ] --> -->
-<!-- <!-- Boston_test <- Boston[-train_index, ] --> -->
-
-<!-- <!-- blueprint <- recipe(medv ~ ., data = Boston_train) %>% --> -->
-<!-- <!--   step_normalize(all_numeric_predictors()) --> -->
-
-<!-- <!-- prepare <- prep(blueprint, training = Boston_train) --> -->
-
-<!-- <!-- baked_train <- bake(prepare, new_data = Boston_train) --> -->
-<!-- <!-- baked_test <- bake(prepare, new_data = Boston_test) --> -->
-<!-- <!-- ``` --> -->
-
-<!-- <!-- ```{r} --> -->
-<!-- <!-- bag_fit <- bagging(medv ~ .,  --> -->
-<!-- <!--                   data = baked_train, --> -->
-<!-- <!--                   nbagg = 500,   # number of trees to grow (bootstrap replications) --> -->
-<!-- <!--                   coob = TRUE,   # yes to computing OOB error estimate --> -->
-<!-- <!--                   control = rpart.control(minsplit = 2, cp = 0, xval = 0))  # details of each tree --> -->
-
-
-<!-- <!-- bag_fit --> -->
-<!-- <!-- ``` --> -->
-
-<!-- ## Bagging: Implementation -->
-
-<!-- ```{r} -->
-<!-- # obtain predictions on the test set -->
-
-<!-- final_model_preds <- predict(object = bag_fit, newdata = baked_test)     # use 'type = "class"' for classification trees -->
-
-<!-- sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # test set RMSE -->
-<!-- ``` -->
-
-
-<!-- ```{r, eval=FALSE} -->
-<!-- # variable importance -->
-
-<!-- imp <- varImp(bag_fit)      # look at the object created -->
-<!-- ``` -->
+## Split Data
+
+```{r}
+set.seed(427)
+
+voter_splits <- initial_split(voter_clean, prop = 0.7, strata = voter_category)
+voter_train <- training(voter_splits)
+voter_test <- testing(voter_splits)
+```
+
+## Define Model
+
+-   `trees`: kind of a tuning parameter... want to select value that is large enough but doesn't matter past that
+
+```{r}
+bagged_model <- rand_forest(trees = 500, mtry = .cols()) |> 
+  set_engine("ranger", importance = "impurity") |> 
+  set_mode("classification")
+```
+
+## Define Recipe
+
+```{r}
+bag_recipe <- recipe(voter_category ~ . , data = voter_train) |> 
+  step_indicate_na(all_predictors()) |> 
+  step_zv(all_predictors()) |> 
+  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,
+               Q25:Q26) |> 
+  step_impute_median(all_numeric_predictors()) |> 
+  step_impute_mode(all_nominal_predictors()) |> 
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+  
+```
+
+## Define Workflow and Fit
+
+```{r}
+# need to install ranger
+bag_wf <- workflow() |> 
+  add_model(bagged_model) |> 
+  add_recipe(bag_recipe)
+
+bagged_model <- bag_wf |> 
+  fit(voter_train)
+```
 
 
 <!-- ## Bagging: Disadvantages -->
