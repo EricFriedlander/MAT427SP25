@@ -179,6 +179,17 @@ bagged_model <- bag_wf |>
   fit(voter_train)
 ```
 
+## Evaluate performance
+
+```{r}
+voter_test <- voter_test |> 
+  bind_cols(
+    predict(bagged_model, voter_test, type = "class")
+  )
+
+accuracy(voter_test, truth = voter_category, estimate = .pred_class)
+```
+
 
 <!-- ## Bagging: Disadvantages -->
 
