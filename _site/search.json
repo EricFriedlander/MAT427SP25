@@ -6392,7 +6392,7 @@
     "href": "slides/25-bagging-boosting.html#variable-importance-1",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Variable Importance",
-    "text": "Variable Importance\n\nlibrary(vip)\nvip(rf_fit)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Variable Importance\n\nlibrary(vip)\nvip(rf_fit)"
   },
   {
     "objectID": "slides/25-bagging-boosting.html#upper-limit-for-mtry",
@@ -6421,5 +6421,19 @@
     "title": "MATH 427: Bagging and Boosting",
     "section": "Results",
     "text": "Results\n\nautoplot(tuning_results)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#boosting-1",
+    "href": "slides/25-bagging-boosting.html#boosting-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Boosting",
+    "text": "Boosting\n\nStill an ensemble method in that it creates a bunch of models (trees in this case)\nTrees are created sequentially, and fit to the residuals of the previous trees\nIdea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly\nEach model in the process is a weak model, referred to as the base learner\nlearning slowly: as more trees are fit, the overall ensemble gradually improves"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#boosting-algorithm",
+    "href": "slides/25-bagging-boosting.html#boosting-algorithm",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Boosting Algorithm",
+    "text": "Boosting Algorithm\nLet \\(B\\) be the number of trees you want to fit and \\(d\\) the maximum number of splits\n\nSet \\(\\hat{f}(x) = 0\\) and \\(r_i = y_i\\) for all training set\nFor \\(b = 1,\\ldots, B\\): a. Fit tree \\(\\hat{f}_b\\) with \\(d\\) splits (\\(d+1\\) leaves) using residuals \\(r\\) as response and features \\(X\\) as predictors. b. Update full model \\(\\hat{f}\\): \\(\\hat{f} = \\hat{f} + \\lambda\\hat{f}_b\\) c. Update pseudo-residuals: \\(r_i = r_i - \\lambda\\hat{f}_b(x_i)\\)\nOutput final model: \\[\\hat{f}(x) = \\displaystyle \\sum_{b=1}^{B} \\lambda \\ \\hat{f}_b(x)\\]\n\n\nIt may be hard to see, but this is similar to gradient descent and so is called gradient boosting\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]

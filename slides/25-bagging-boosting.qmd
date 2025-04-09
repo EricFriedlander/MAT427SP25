@@ -308,343 +308,155 @@ library(vip)
 vip(rf_fit)
 ```
 
-
-
-<!-- ## Gradient Boosting -->
-
-<!-- Like bagging and random forests, boosting involves combining a large number of decision trees. However, the main idea of boosting is to add new models to the ensemble **sequentially**.  -->
-
-<!-- Each model in the process is a weak model, referred to as the **base learner**. The idea behind boosting is that each model in the sequence slightly improves upon the performance of the previous one, thereby **learning slowly**. -->
-
-<!-- At each step of the process, we fit a tree to the residuals from the previous model, rather than the outcome $Y$, as the response. The final model is a stagewise additive model of $B$ individual trees. -->
-
-<!-- $$\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}^b(x)$$ -->
-
-<!-- The process is called **gradient boosting** since it uses the **gradient descent** algorithm to minimize the loss function. -->
-
-
-<!-- ## Gradient Boosting -->
-
-
-<!-- ## Gradient Boosting -->
-
-<!-- ```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8} -->
-<!-- # Simulate sine wave data -->
-<!-- set.seed(1112)  # for reproducibility -->
-<!-- df <- tibble::tibble( -->
-<!--   x = seq(from = 0, to = 2 * pi, length = 1000), -->
-<!--   y = sin(x) + rnorm(length(x), sd = 0.5), -->
-<!--   truth = sin(x) -->
-<!-- ) -->
-
-<!-- # Function to boost `rpart::rpart()` trees -->
-<!-- rpartBoost <- function(x, y, data, num_trees = 100, learn_rate = 0.1, tree_depth = 6) { -->
-<!--   x <- data[[deparse(substitute(x))]] -->
-<!--   y <- data[[deparse(substitute(y))]] -->
-<!--   G_b_hat <- matrix(0, nrow = length(y), ncol = num_trees + 1) -->
-<!--   r <- y -->
-<!--   for(tree in seq_len(num_trees)) { -->
-<!--     g_b_tilde <- rpart(r ~ x, control = list(cp = 0, maxdepth = tree_depth)) -->
-<!--     g_b_hat <- learn_rate * predict(g_b_tilde) -->
-<!--     G_b_hat[, tree + 1] <- G_b_hat[, tree] + matrix(g_b_hat) -->
-<!--     r <- r - g_b_hat -->
-<!--     colnames(G_b_hat) <- paste0("tree_", c(0, seq_len(num_trees))) -->
-<!--   } -->
-<!--   cbind(df, as.data.frame(G_b_hat)) %>% -->
-<!--     gather(tree, prediction, starts_with("tree")) %>% -->
-<!--     mutate(tree = stringr::str_extract(tree, "\\d+") %>% as.numeric()) -->
-<!-- } -->
-
-<!-- # Plot boosted tree sequence -->
-<!-- rpartBoost(x, y, data = df, num_trees = 2^10, learn_rate = 0.05, tree_depth = 1) %>% -->
-<!--   filter(tree %in% c(0, 2^c(0:10))) %>% -->
-<!--   ggplot(aes(x, prediction)) + -->
-<!--     ylab("y") + -->
-<!--     geom_point(data = df, aes(x, y), alpha = .1) + -->
-<!--     geom_line(data = df, aes(x, truth), color = "cyan") + -->
-<!--     geom_line(colour = "red", size = 1) + -->
-<!--     facet_wrap(~ tree, nrow = 3) + -->
-<!--     theme_bw() -->
-
-<!-- ``` -->
-
-
-<!-- ## Gradient Boosting  -->
-
-<!-- The hyperparameters (to be tuned by CV) include: -->
-
-<!-- * **Number of trees**: Having too many trees can overfit the training data. -->
-<!-- \ -->
-<!-- \ -->
-
-<!-- * **Shrinkage** ($\lambda$): Determines the contribution of each tree to the final model and controls how quickly the algorithm learns. -->
-<!-- \ -->
-<!-- \ -->
-
-<!-- * **Tree Depth**: Controls the depth of the individual trees.   -->
-<!-- \ -->
-<!-- \ -->
-
-<!-- * **Minimum number of observations in terminal nodes**: Also, controls the complexity of each tree. -->
-
-<!-- ## Gradient Boosting: Implementation  {.smaller} -->
-
-<!-- **Ames Housing Dataset** -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
-<!-- ``` -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- # reorder levels of 'Overall_Qual' -->
-<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average",  -->
-<!--                                                           "Average", "Above_Average", "Good", "Very_Good",  -->
-<!--                                                           "Excellent", "Very_Excellent")) -->
-<!-- ``` -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- # split data -->
-
-<!-- set.seed(051624)   # set seed -->
-
-<!-- index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split -->
-
-<!-- ames_train <- ames[index,]   # training data -->
-
-<!-- ames_test <- ames[-index,]   # test data -->
-<!-- ``` -->
-
-
-<!-- EDA and data splitting has been done in the previous slides. -->
-
-<!-- ```{r} -->
-<!-- # create recipe and blueprint, prepare and apply blueprint -->
-
-<!-- set.seed(051624)   # set seed -->
-
-<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
-
-<!-- blueprint <- ames_recipe %>% -->
-<!--   step_impute_mean(Gr_Liv_Area)                                   # impute missing entries -->
-
-
-<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
-
-
-<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data -->
-
-<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data -->
-<!-- ``` -->
-
-
-<!-- ## Gradient Boosting: Implementation  {.smaller} -->
-
-<!-- **Ames Housing Dataset** -->
-
-<!-- ```{r} -->
-<!-- set.seed(051624)   # set seed -->
-
-<!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 1)   # CV specifications -->
-
-<!-- library(gbm) -->
-
-<!-- out <- capture.output( -->
-<!--   gbm_cv <- train(blueprint, -->
-<!--                   data = ames_train, -->
-<!--                   method = "gbm",   -->
-<!--                   trControl = cv_specs, -->
-<!--                   tuneLength = 10, -->
-<!--                   metric = "RMSE") -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- gbm_cv$bestTune   # optimal tuning parameters -->
-
-<!-- min(gbm_cv$results$RMSE)   # optimal CV RMSE -->
-<!-- ``` -->
-
-
-<!-- ## Gradient Boosting: Implementation -->
-
-<!-- **Ames Housing Dataset** -->
-
-<!-- ```{r} -->
-<!-- # fit final model -->
-
-<!-- final_model <- gbm(formula = Sale_Price ~ ., -->
-<!--                    data = baked_train, -->
-<!--                    n.trees = gbm_cv$bestTune$n.trees, -->
-<!--                    interaction.depth = gbm_cv$bestTune$interaction.depth, -->
-<!--                    n.minobsinnode = gbm_cv$bestTune$n.minobsinnode, -->
-<!--                    shrinkage = gbm_cv$bestTune$shrinkage) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- # obtain predictions on the test set -->
-
-<!-- final_model_preds <- predict(object = final_model, newdata = baked_test, type = "response")  # test set predictions -->
-
-<!-- sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # test set RMSE -->
-<!-- ``` -->
-
-
-<!-- ## Gradient Boosting: Implementation -->
-
-<!-- ```{r, fig.align='center'} -->
-<!-- vip(final_model, num_features = 15) -->
-<!-- ``` -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset  -->
-
-<!-- We will work with the `iris` dataset which contains measurements in centimeters of four variables for 50 flowers from each of 3 species of iris: setosa, versicolor, and virginica. Please load the dataset using the following code.  -->
-
-<!-- ```{r, message=FALSE} -->
-<!-- data(iris)        # load dataset -->
-<!-- ``` -->
-
-<!-- We are interested in predicting `Species` using the rest of the variables in the dataset. Note that this is a **multi-class classification** problem where our response has 3 classes/categories. -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset  -->
-
-<!-- Let's investigate the dataset. -->
-
-<!-- ```{r} -->
-<!-- glimpse(iris)   # all features are numerical -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- summary(iris)   # summary of variables -->
-<!-- ``` -->
-
-
-
-<!-- ## Multi-Class Classification: Iris Dataset  -->
-
-<!-- Let's investigate the dataset. -->
-
-
-<!-- ```{r} -->
-<!-- sum(is.na(iris))  # no missing entries -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- nearZeroVar(iris, saveMetrics = TRUE)  # no zv/nzv features -->
-<!-- ``` -->
-
-<!-- We do not need to write a blueprint for implementing tree-based methods since trees don't require much feature engineering and there are no missing entries in the dataset.  -->
-
-<!-- Note, if you are implementing KNN you would want to scale the features (using `step_center` and `step_scale`) -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset  -->
-
-<!-- Data splitting -->
-
-<!-- ```{r} -->
-<!-- # split the dataset -->
-
-<!-- set.seed(051624)   # set seed -->
-
-<!-- # split the data into training and test sets -->
-
-<!-- index <- createDataPartition(iris$Species, p = 0.8, list = FALSE) -->
-
-<!-- iris_train <- iris[index, ] -->
-
-<!-- iris_test <- iris[-index, ] -->
-<!-- ``` -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset -->
-
-<!-- ```{r} -->
-<!-- cv_specs <- trainControl(method = "repeatedcv", number = 10, repeats = 5)   # CV specifications -->
-<!-- ``` -->
-
-<!-- ```{r, eval = FALSE} -->
-<!-- set.seed(051624)   # set seed -->
-
-<!-- # CV with logistic regression -->
-
-<!-- logistic_cv <- train(Species ~ ., -->
-<!--                      data = iris_train, -->
-<!--                      method = "glm", -->
-<!--                      family = "binomial", -->
-<!--                      trControl = cv_specs, -->
-<!--                      metric = "Accuracy") -->
-<!-- ``` -->
-
-
-<!-- The code above will throw an error since this is a 3-class classification problem and logistic regression (with family = binomial) works for a binary (2-class) problem. -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset -->
-
-<!-- ```{r} -->
-<!-- set.seed(051624)   # set seed -->
-
-<!-- # CV with gradient boosting -->
-
-<!-- library(gbm) -->
-
-<!-- out <- capture.output( -->
-<!--   iris_gbm_cv <- train(Species ~ ., -->
-<!--                        data = iris_train, -->
-<!--                        method = "gbm",   -->
-<!--                        trControl = cv_specs, -->
-<!--                        tuneLength = 5, -->
-<!--                        metric = "Accuracy") -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- iris_gbm_cv$bestTune   # optimal tuning parameters -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- max(iris_gbm_cv$results$Accuracy)   # optimal CV Accuracy -->
-<!-- ``` -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset -->
-
-<!-- ```{r} -->
-<!-- # final model -->
-
-<!-- gbm_fit <- gbm(formula = Species ~ ., -->
-<!--                data = iris_train, -->
-<!--                n.trees = iris_gbm_cv$bestTune$n.trees, -->
-<!--                interaction.depth = iris_gbm_cv$bestTune$interaction.depth, -->
-<!--                n.minobsinnode = iris_gbm_cv$bestTune$n.minobsinnode, -->
-<!--                shrinkage = iris_gbm_cv$bestTune$shrinkage) -->
-<!-- ``` -->
-
-<!-- We will need to write a bit of code to convert the probability predictions into class label predictions. The predicted class is the label with the highest (maximum) probability out of the 3 classes.  -->
-
-<!-- ```{r} -->
-<!-- # probability predictions for each class -->
-
-<!-- final_model_prob_preds <- matrix(predict(object = gbm_fit, newdata = iris_test, type = "response"), -->
-<!--                                  nrow = length(iris_test$Species), -->
-<!--                                  ncol = n_distinct(iris_test$Species)) -->
-
-
-
-<!-- # class label predictions for each class -->
-
-<!-- final_model_class_preds <- factor(levels(iris_test$Species)[apply(final_model_prob_preds, 1, which.max)]) -->
-<!-- ``` -->
-
-
-<!-- ## Multi-Class Classification: Iris Dataset {.smaller} -->
-
-<!-- ```{r} -->
-<!-- # confusion matrix -->
-
-<!-- confusionMatrix(data = final_model_class_preds, reference = iris_test$Species) -->
-<!-- ``` -->
-
+# Boosting
+
+## Boosting {.smaller}
+
+-   Still an ensemble method in that it creates a bunch of models (trees in this case)
+-   Trees are created *sequentially*, and fit to the *residuals* of the previous trees
+-   Idea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly
+-   Each model in the process is a weak model, referred to as the **base learner**
+-   **learning slowly**: as more trees are fit, the overall ensemble gradually improves
+
+## Boosting Algorithm {.smaller}
+
+Let $B$ be the number of trees you want to fit and $d$ the maximum number of splits
+
+1.    Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all training set
+2.    For $b = 1,\ldots, B$:
+    a.    Fit tree $\hat{f}_b$ with $d$ splits ($d+1$ leaves) using residuals $r$ as response and features $X$ as predictors.
+    b.    Update full model $\hat{f}$: $\hat{f} = \hat{f} + \lambda\hat{f}_b$
+    c.    Update pseudo-residuals: $r_i = r_i - \lambda\hat{f}_b(x_i)$
+3. Output final model:
+$$\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}_b(x)$$
+-   It may be hard to see, but this is similar to gradient descent and so is called **gradient boosting**
+
+
+
+## Gradient Boosting
+
+```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8}
+# Simulate sine wave data
+set.seed(1112)  # for reproducibility
+df <- tibble::tibble(
+  x = seq(from = 0, to = 2 * pi, length = 1000),
+  y = sin(x) + rnorm(length(x), sd = 0.5),
+  truth = sin(x)
+)
+
+# Function to boost `rpart::rpart()` trees
+rpartBoost <- function(x, y, data, num_trees = 100, learn_rate = 0.1, tree_depth = 6) {
+  x <- data[[deparse(substitute(x))]]
+  y <- data[[deparse(substitute(y))]]
+  G_b_hat <- matrix(0, nrow = length(y), ncol = num_trees + 1)
+  r <- y
+  for(tree in seq_len(num_trees)) {
+    g_b_tilde <- rpart(r ~ x, control = list(cp = 0, maxdepth = tree_depth))
+    g_b_hat <- learn_rate * predict(g_b_tilde)
+    G_b_hat[, tree + 1] <- G_b_hat[, tree] + matrix(g_b_hat)
+    r <- r - g_b_hat
+    colnames(G_b_hat) <- paste0("tree_", c(0, seq_len(num_trees)))
+  }
+  cbind(df, as.data.frame(G_b_hat)) %>%
+    gather(tree, prediction, starts_with("tree")) %>%
+    mutate(tree = stringr::str_extract(tree, "\\d+") %>% as.numeric())
+}
+
+# Plot boosted tree sequence
+rpartBoost(x, y, data = df, num_trees = 2^10, learn_rate = 0.05, tree_depth = 1) %>%
+  filter(tree %in% c(0, 2^c(0:10))) %>%
+  ggplot(aes(x, prediction)) +
+    ylab("y") +
+    geom_point(data = df, aes(x, y), alpha = .1) +
+    geom_line(data = df, aes(x, truth), color = "cyan") +
+    geom_line(colour = "red", size = 1) +
+    facet_wrap(~ tree, nrow = 3) +
+    theme_bw()
+
+```
+
+## Many Implementations of Boosting
+
+-   Any implementation of boosting you use will like be a tweak of this
+    +   AdaBoost
+    +   Catboost
+    +   LightGBM
+    +   **XGBoost**
+
+## Gradient Boosting Tuning Parameters
+
+-   [Documentation](https://parsnip.tidymodels.org/reference/boost_tree.html)
+
+## Define Model
+
+-   `trees`: kind of a tuning parameter... want to select value that is large enough but doesn't matter past that
+
+```{r}
+gbm_model <- boost_tree(trees = tune(), learn_rate = tune(), tree_depth = tune(),
+                        min_n = tune()) |> 
+  set_engine("xgboost", importance = "impurity") |> 
+  set_mode("classification")
+```
+
+## Define Recipe
+
+```{r}
+gbm_recipe <- recipe(voter_category ~ . , data = voter_train) |> 
+  step_indicate_na(all_predictors()) |> 
+  step_zv(all_predictors()) |> 
+  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,
+               Q25:Q26) |> 
+  step_impute_median(all_numeric_predictors()) |> 
+  step_impute_mode(all_nominal_predictors()) |> 
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+  
+```
+
+## Define Workflow and Fit
+
+```{r}
+# need to install ranger
+gbm_wf <- workflow() |> 
+  add_model(gbm_model) |> 
+  add_recipe(gbm_recipe)
+```
+
+## Tune `mtry`
+
+```{r}
+gbm_grid <- grid_latin_hypercube(trees(range = c(20, 1000)),
+                                  tree_depth(range = c(1, 15)),
+                                  learn_rate(range = c(-10,-1)),
+                                  min_n(range = c(2, 40)), size = 10)
+
+tuning_results <- tune_grid(
+  gbm_wf,
+  resamples= voter_folds,
+  grid = gbm_grid
+)
+```
+
+## Results
+
+```{r}
+autoplot(tuning_results)
+```
+
+## Evaluate performance
+
+```{r}
+gbm_fit <-  gbm_wf |> 
+  finalize_workflow(select_best(tuning_results)) |> 
+  fit(voter_train)
+
+augment(gbm_fit, new_data = voter_test) |> 
+  accuracy(truth = voter_category, estimate = .pred_class)
+```
+
+## Variable Importance
+
+```{r}
+library(vip)
+vip(gbm_fit)
+```
 

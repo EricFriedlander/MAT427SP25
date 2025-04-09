@@ -744,20 +744,35 @@ See `?dials::finalize` or `?dials::update.parameters` for more information.</cod
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">library</span>(vip)</span>
 <span id="cb21-2"><a></a><span class="fu">vip</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
-</figure>
+
 </div>
-</div>
-</div>
-<!-- ## Gradient Boosting -->
-<!-- Like bagging and random forests, boosting involves combining a large number of decision trees. However, the main idea of boosting is to add new models to the ensemble **sequentially**.  -->
-<!-- Each model in the process is a weak model, referred to as the **base learner**. The idea behind boosting is that each model in the sequence slightly improves upon the performance of the previous one, thereby **learning slowly**. -->
-<!-- At each step of the process, we fit a tree to the residuals from the previous model, rather than the outcome $Y$, as the response. The final model is a stagewise additive model of $B$ individual trees. -->
-<!-- $$\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}^b(x)$$ -->
-<!-- The process is called **gradient boosting** since it uses the **gradient descent** algorithm to minimize the loss function. -->
+<img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="boosting" class="title-slide slide level1 center">
+<h1>Boosting</h1>
+
+</section>
+<section id="boosting-1" class="slide level2 smaller">
+<h2>Boosting</h2>
+<ul>
+<li>Still an ensemble method in that it creates a bunch of models (trees in this case)</li>
+<li>Trees are created <em>sequentially</em>, and fit to the <em>residuals</em> of the previous trees</li>
+<li>Idea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly</li>
+<li>Each model in the process is a weak model, referred to as the <strong>base learner</strong></li>
+<li><strong>learning slowly</strong>: as more trees are fit, the overall ensemble gradually improves</li>
+</ul>
+</section>
+<section id="boosting-algorithm" class="slide level2 smaller">
+<h2>Boosting Algorithm</h2>
+<p>Let <span class="math inline">\(B\)</span> be the number of trees you want to fit and <span class="math inline">\(d\)</span> the maximum number of splits</p>
+<ol type="1">
+<li>Set <span class="math inline">\(\hat{f}(x) = 0\)</span> and <span class="math inline">\(r_i = y_i\)</span> for all training set</li>
+<li>For <span class="math inline">\(b = 1,\ldots, B\)</span>: a. Fit tree <span class="math inline">\(\hat{f}_b\)</span> with <span class="math inline">\(d\)</span> splits (<span class="math inline">\(d+1\)</span> leaves) using residuals <span class="math inline">\(r\)</span> as response and features <span class="math inline">\(X\)</span> as predictors. b. Update full model <span class="math inline">\(\hat{f}\)</span>: <span class="math inline">\(\hat{f} = \hat{f} + \lambda\hat{f}_b\)</span> c.&nbsp;Update pseudo-residuals: <span class="math inline">\(r_i = r_i - \lambda\hat{f}_b(x_i)\)</span></li>
+<li>Output final model: <span class="math display">\[\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}_b(x)\]</span></li>
+</ol>
+<ul>
+<li>It may be hard to see, but this is similar to gradient descent and so is called <strong>gradient boosting</strong></li>
+</ul>
 <!-- ## Gradient Boosting -->
 <!-- ## Gradient Boosting -->
 <!-- ```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8} -->
@@ -1190,80 +1205,42 @@ See `?dials::finalize` or `?dials::update.parameters` for more information.</cod
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
