@@ -149,7 +149,7 @@ voter_test <- testing(voter_splits)
 
 ```{r}
 bagged_model <- rand_forest(trees = 500, mtry = .cols()) |> 
-  set_engine("ranger", importance = "impurity") |> 
+  set_engine("ranger") |> 
   set_mode("classification")
 ```
 
@@ -424,11 +424,11 @@ gbm_wf <- workflow() |>
 ## Tune `mtry`
 
 ```{r}
-gbm_grid <- grid_latin_hypercube(trees(range = c(20, 1000)),
+gbm_grid <- grid_latin_hypercube(trees(range = c(20, 100)),
                                   tree_depth(range = c(1, 15)),
                                   learn_rate(range = c(-10,-1)),
                                   min_n(range = c(2, 40)), size = 10)
-
+voter_folds = vfold_cv(voter_train, v = 5, repeats =1, strata = voter_category)
 tuning_results <- tune_grid(
   gbm_wf,
   resamples= voter_folds,
@@ -446,7 +446,7 @@ autoplot(tuning_results)
 
 ```{r}
 gbm_fit <-  gbm_wf |> 
-  finalize_workflow(select_best(tuning_results)) |> 
+  finalize_workflow(select_best(tuning_results, metric = "accuracy")) |> 
   fit(voter_train)
 
 augment(gbm_fit, new_data = voter_test) |> 

@@ -27,3 +27,4 @@ knitr
 kableExtra
 vip
 ranger
+xgboost
