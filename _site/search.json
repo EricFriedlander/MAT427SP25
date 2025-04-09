@@ -6280,6 +6280,146 @@
     "href": "slides/25-bagging-boosting.html#out-of-bag-error-estimation",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Out-of-Bag Error Estimation",
-    "text": "Out-of-Bag Error Estimation\n\nBagging \\(\\Rightarrow\\) fitting lots of models \\(\\Rightarrow\\) computationally taxing\nBagging + Cross-validation \\(\\Rightarrow\\) EXTREMELY COMPUTATIONALLY TAXING\nOn average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.\nRemaining third observations referred to as out-of-bag (OOB) observations\nFor \\(i^{th}\\) observation, use the trees in which that observation was OOB. This will yield around \\(B/3\\) predictions for the \\(i^{th}\\) observation. Take their average to obtain a single prediction\nEquivalent to LOOCV if \\(B\\) is large\n\n\n\n\n\n–&gt;\n\n\n\n–&gt;  –&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n–&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n–&gt;\n\n–&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;  –&gt;  –&gt;  –&gt;  –&gt;\n\n–&gt;  –&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Out-of-Bag Error Estimation\n\nBagging \\(\\Rightarrow\\) fitting lots of models \\(\\Rightarrow\\) computationally taxing\nBagging + Cross-validation \\(\\Rightarrow\\) EXTREMELY COMPUTATIONALLY TAXING\nOn average, each bagged tree (constructed on each bootstrap sample) makes use of around two-thirds of the observations.\nRemaining third observations referred to as out-of-bag (OOB) observations\nFor \\(i^{th}\\) observation, use the trees in which that observation was OOB. This will yield around \\(B/3\\) predictions for the \\(i^{th}\\) observation. Take their average to obtain a single prediction\nEquivalent to LOOCV if \\(B\\) is large"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#variable-importance-measures",
+    "href": "slides/25-bagging-boosting.html#variable-importance-measures",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Variable Importance Measures",
+    "text": "Variable Importance Measures\n\nBagging improves prediction accuracy at expense of interpretability\nCan still obtain overall summary of importance of each predictor\n\nReduction in the loss function (e.g., SSE) attributed to each variable at each split is tabulated\nA single variable could be used multiple times in a tree\nTotal reduction in the loss function across all splits by a variable are summed up and used as the total feature importance\nA large value indicates an important predictor."
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#data-voter-frequency",
+    "href": "slides/25-bagging-boosting.html#data-voter-frequency",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Data: Voter Frequency",
+    "text": "Data: Voter Frequency\n\nInfo about data\nGoal: Identify individuals who are unlikely to vote to help organization target “get out the vote” effort.\n\n\nvoter_data &lt;- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv')\n\nvoter_clean &lt;- voter_data |&gt; \n  select(-RespId, -weight, -Q1) |&gt;\n  mutate(\n    educ = factor(educ, levels = c(\"High school or less\", \"Some college\", \"College\")),\n    income_cat = factor(income_cat, levels = c(\"Less than $40k\", \"$40-75k \",\n                                               \"$75-125k\", \"$125k or more\")),\n    voter_category = factor(voter_category, levels = c(\"rarely/never\", \"sporadic\", \"always\"))\n  ) |&gt; \n  filter(Q22 != 5 | is.na(Q22)) |&gt; \n  mutate(Q22 = as_factor(Q22),\n         Q22 = if_else(is.na(Q22), \"Not Asked\", Q22),\n         across(Q28_1:Q28_8, ~if_else(.x == -1, 0, .x)),\n         across(Q28_1:Q28_8, ~ as_factor(.x)),\n         across(Q28_1:Q28_8, ~if_else(is.na(.x) , \"Not Asked\", .x)),\n         across(Q29_1:Q29_10, ~if_else(.x == -1, 0, .x)),\n         across(Q29_1:Q29_10, ~ as_factor(.x)),\n         across(Q29_1:Q29_8, ~if_else(is.na(.x) , \"Not Asked\", .x)),\n        Party_ID = as_factor(case_when(\n          Q31 == 1 ~ \"Strong Republican\",\n          Q31 == 2 ~ \"Republican\",\n          Q32 == 1  ~ \"Strong Democrat\",\n          Q32 == 2 ~ \"Democrat\",\n          Q33 == 1 ~ \"Lean Republican\",\n          Q33 == 2 ~ \"Lean Democrat\",\n          TRUE ~ \"Other\"\n        )),\n        Party_ID = factor(Party_ID, levels =c(\"Strong Republican\", \"Republican\", \"Lean Republican\",\n                                                \"Other\", \"Lean Democrat\", \"Democrat\", \"Strong Democrat\")),\n        across(!ppage, ~as_factor(if_else(.x == -1, NA, .x))))"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#split-data",
+    "href": "slides/25-bagging-boosting.html#split-data",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Split Data",
+    "text": "Split Data\n\nset.seed(427)\n\nvoter_splits &lt;- initial_split(voter_clean, prop = 0.7, strata = voter_category)\nvoter_train &lt;- training(voter_splits)\nvoter_test &lt;- testing(voter_splits)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#define-model",
+    "href": "slides/25-bagging-boosting.html#define-model",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Define Model",
+    "text": "Define Model\n\ntrees: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that\n\n\nbagged_model &lt;- rand_forest(trees = 500, mtry = .cols()) |&gt; \n  set_engine(\"ranger\", importance = \"impurity\") |&gt; \n  set_mode(\"classification\")"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#define-recipe",
+    "href": "slides/25-bagging-boosting.html#define-recipe",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Define Recipe",
+    "text": "Define Recipe\n\nbag_recipe &lt;- recipe(voter_category ~ . , data = voter_train) |&gt; \n  step_indicate_na(all_predictors()) |&gt; \n  step_zv(all_predictors()) |&gt; \n  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,\n               Q25:Q26) |&gt; \n  step_impute_median(all_numeric_predictors()) |&gt; \n  step_impute_mode(all_nominal_predictors()) |&gt; \n  step_dummy(all_nominal_predictors(), one_hot = TRUE)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#define-workflow-and-fit",
+    "href": "slides/25-bagging-boosting.html#define-workflow-and-fit",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Define Workflow and Fit",
+    "text": "Define Workflow and Fit\n\n# need to install ranger\nbag_wf &lt;- workflow() |&gt; \n  add_model(bagged_model) |&gt; \n  add_recipe(bag_recipe)\n\nbagged_fit &lt;- bag_wf |&gt; \n  fit(voter_train)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#evaluate-performance",
+    "href": "slides/25-bagging-boosting.html#evaluate-performance",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Evaluate performance",
+    "text": "Evaluate performance\n\naugment(bagged_fit, new_data = voter_test) |&gt; \n  accuracy(truth = voter_category, estimate = .pred_class)\n\n# A tibble: 1 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy multiclass     0.648"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#variable-importance",
+    "href": "slides/25-bagging-boosting.html#variable-importance",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Variable Importance",
+    "text": "Variable Importance\n\nlibrary(vip)\nvip(bagged_fit)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#bagging-disadvantages",
+    "href": "slides/25-bagging-boosting.html#bagging-disadvantages",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Bagging: Disadvantages",
+    "text": "Bagging: Disadvantages\n\nimproves prediction performance but reduces interpretability\ntrees in bagging not completely independent of each other since all the original features are considered at every split of every tree\ntree correlation: trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree)\n\nprevents bagging from further reducing the variance of the individual models\n\nRandom forests extend and improve upon bagged decision trees by reducing this correlation and thereby improving the accuracy of the overall ensemble."
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#bagging-disadvantages-1",
+    "href": "slides/25-bagging-boosting.html#bagging-disadvantages-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Bagging: Disadvantages",
+    "text": "Bagging: Disadvantages\n\nAdapted from Hands-On Machine Learning, Boehmke & Greenwell"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#random-forests-1",
+    "href": "slides/25-bagging-boosting.html#random-forests-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Random Forests",
+    "text": "Random Forests\n\nDe-correlates bagged trees \\(\\Rightarrow\\) reducing variance\nAs in bagging, we build a number of decision trees on bootstrapped training samples.\nAlgorithm: do the following to build each tree\n\nGenerate bootstrapped sample of training data\nRandomly select \\(m\\) predictors\nPick best variable/split-oint from these \\(m\\)\nSplit node into two child nodes\nStop when typical stopped criteria is hit (not pruning)\n\nNote: A fresh sample of \\(m\\) predictors is taken at each split\nTypically \\(m = p/3\\) for regression and \\(m = \\sqrt{p}\\) for classification but this should be considered a tuning parameter"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#define-model-1",
+    "href": "slides/25-bagging-boosting.html#define-model-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Define Model",
+    "text": "Define Model\n\ntrees: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that\n\n\nrf_model &lt;- rand_forest(trees = 100, mtry = tune()) |&gt; \n  set_engine(\"ranger\", importance = \"impurity\") |&gt; \n  set_mode(\"classification\")"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#define-recipe-1",
+    "href": "slides/25-bagging-boosting.html#define-recipe-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Define Recipe",
+    "text": "Define Recipe\n\nrf_recipe &lt;- recipe(voter_category ~ . , data = voter_train) |&gt; \n  step_indicate_na(all_predictors()) |&gt; \n  step_zv(all_predictors()) |&gt; \n  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,\n               Q25:Q26) |&gt; \n  step_impute_median(all_numeric_predictors()) |&gt; \n  step_impute_mode(all_nominal_predictors()) |&gt; \n  step_dummy(all_nominal_predictors(), one_hot = TRUE)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#define-workflow-and-fit-1",
+    "href": "slides/25-bagging-boosting.html#define-workflow-and-fit-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Define Workflow and Fit",
+    "text": "Define Workflow and Fit\n\n# need to install ranger\nrf_wf &lt;- workflow() |&gt; \n  add_model(rf_model) |&gt; \n  add_recipe(rf_recipe)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#evaluate-performance-1",
+    "href": "slides/25-bagging-boosting.html#evaluate-performance-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Evaluate performance",
+    "text": "Evaluate performance\n\nrf_fit &lt;-  rf_wf |&gt; \n  finalize_workflow(select_best(tuning_results)) |&gt; \n  fit(voter_train)\n\naugment(rf_fit, new_data = voter_test) |&gt; \n  accuracy(truth = voter_category, estimate = .pred_class)\n\n# A tibble: 1 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy multiclass     0.658"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#variable-importance-1",
+    "href": "slides/25-bagging-boosting.html#variable-importance-1",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Variable Importance",
+    "text": "Variable Importance\n\nlibrary(vip)\nvip(rf_fit)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#upper-limit-for-mtry",
+    "href": "slides/25-bagging-boosting.html#upper-limit-for-mtry",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Upper Limit for mtry",
+    "text": "Upper Limit for mtry\n\nrf_model |&gt; extract_parameter_set_dials()\n\nCollection of 1 parameters for tuning\n\n identifier type    object\n       mtry mtry nparam[?]\n\nModel parameters needing finalization:\n   # Randomly Selected Predictors ('mtry')\n\nSee `?dials::finalize` or `?dials::update.parameters` for more information."
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#extract-number-of-features",
+    "href": "slides/25-bagging-boosting.html#extract-number-of-features",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Extract Number of Features",
+    "text": "Extract Number of Features\n\nrf_param &lt;- rf_model |&gt; extract_parameter_set_dials() |&gt; finalize(voter_train)\nrf_param\n\nCollection of 1 parameters for tuning\n\n identifier type    object\n       mtry mtry nparam[+]"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#tune-mtry",
+    "href": "slides/25-bagging-boosting.html#tune-mtry",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Tune mtry",
+    "text": "Tune mtry\n\nvoter_folds &lt;- vfold_cv(voter_train, v = 5, repeats = 10, strata = voter_category)\n\nmtry_grid &lt;- grid_regular(rf_param, levels = 10)\n\ntuning_results &lt;- tune_grid(\n  rf_wf,\n  resamples= voter_folds,\n  grid = mtry_grid\n)"
+  },
+  {
+    "objectID": "slides/25-bagging-boosting.html#results",
+    "href": "slides/25-bagging-boosting.html#results",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "Results",
+    "text": "Results\n\nautoplot(tuning_results)"
   }
 ]

@@ -25,3 +25,5 @@ rpart
 rpart.plot
 knitr
 kableExtra
+vip
+ranger

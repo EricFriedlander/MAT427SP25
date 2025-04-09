@@ -175,169 +175,138 @@ bag_wf <- workflow() |>
   add_model(bagged_model) |> 
   add_recipe(bag_recipe)
 
-bagged_model <- bag_wf |> 
+bagged_fit <- bag_wf |> 
   fit(voter_train)
 ```
 
 ## Evaluate performance
 
 ```{r}
-voter_test <- voter_test |> 
-  bind_cols(
-    predict(bagged_model, voter_test, type = "class")
-  )
+augment(bagged_fit, new_data = voter_test) |> 
+  accuracy(truth = voter_category, estimate = .pred_class)
+```
 
-accuracy(voter_test, truth = voter_category, estimate = .pred_class)
+## Variable Importance
+
+```{r}
+library(vip)
+vip(bagged_fit)
 ```
 
 
-<!-- ## Bagging: Disadvantages -->
+## Bagging: Disadvantages
 
-<!-- * Bagging improves the prediction accuracy for high variance (and low bias) models at the expense of interpretability and computational speed. -->
-
-<!-- * However, although the model building steps are independent, the trees in bagging are not completely independent of each other since all the original features are considered at every split of every tree. Rather, trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree) due to any underlying strong relationships. -->
-
-<!-- * This characteristic is known as **tree correlation** and prevents bagging from further reducing the variance of the individual models. **Random forests** extend and improve upon bagged decision trees by reducing this correlation and thereby improving the accuracy of the overall ensemble. -->
-
-
-<!-- ## Bagging: Disadvantages -->
-
-<!-- **Tree Correlation in Bagging** -->
-
-<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="Adapted from HMLR, Boehmke & Greenwell", out.width = '100%'} -->
-<!-- knitr::include_graphics("EFT/tcBagging.jpg") -->
-<!-- ``` -->
+-   improves prediction performance but reduces interpretability
+-   trees in bagging not completely independent of each other since all the original features are considered at every split of every tree
+-   **tree correlation**: trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree)
+    -   prevents bagging from further reducing the variance of the individual models 
+-   **Random forests** extend and improve upon bagged decision trees by reducing this correlation and thereby improving the accuracy of the overall ensemble.
 
 
-
-<!-- ## Random Forests -->
-
-<!-- * Provide an improvement over bagged trees by reducing the variance further (by **decorrelating**) when we average the trees. -->
-
-<!-- * As in bagging, we build a number of decision trees on bootstrapped training samples. -->
-
-<!-- * For each tree, each time a split is considered, a **random selection of $m$ predictors** is chosen (split candidates) from the full set of $p$ predictors. The split is allowed to use only one of those $m$ predictors. Note that in bagging, each split for each tree considers all $p$ predictors as split candidates. -->
-
-<!-- * A fresh sample of $m$ predictors is taken at each split. Typical default values are $m = p/3$ (regression) and $m = \sqrt{p}$ (classification) but this should be considered a tuning parameter, to be chosen by CV. -->
+## Bagging: Disadvantages
 
 
-<!-- ## Random Forests: Implementation  {.smaller} -->
+![Adapted from Hands-On Machine Learning, Boehmke & Greenwell](images/25/Boston-6-trees.png)
 
-<!-- **Ames Housing Dataset** -->
+# Random Forests
 
-<!-- ```{r, echo=FALSE} -->
-<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
-<!-- ``` -->
+## Random Forests {.smaller}
 
-<!-- ```{r, echo=FALSE} -->
-<!-- # reorder levels of 'Overall_Qual' -->
-<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average",  -->
-<!--                                                           "Average", "Above_Average", "Good", "Very_Good",  -->
-<!--                                                           "Excellent", "Very_Excellent")) -->
-<!-- ``` -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- # split data -->
-
-<!-- set.seed(051424)   # set seed -->
-
-<!-- index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split -->
-
-<!-- ames_train <- ames[index,]   # training data -->
-
-<!-- ames_test <- ames[-index,]   # test data -->
-<!-- ``` -->
-
-<!-- ```{r, echo=FALSE} -->
-<!-- # create recipe and blueprint, prepare and apply blueprint -->
-
-<!-- set.seed(051424)   # set seed -->
-
-<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
-
-<!-- blueprint <- ames_recipe %>% -->
-<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors -->
-<!--   step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries -->
-<!--   step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors -->
-<!--   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors -->
-<!--   step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors -->
-<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors -->
-<!--   step_dummy(all_nominal(), one_hot = FALSE)                           # one-hot/dummy encode nominal categorical predictors -->
+-   **De-correlates** bagged trees $\Rightarrow$ reducing variance
+-   As in bagging, we build a number of decision trees on bootstrapped training samples.
+-   Algorithm: do the following to build each tree
+    +   Generate bootstrapped sample of training data
+    +   Randomly select $m$ predictors
+    +   Pick best variable/split-oint from these $m$
+    +   Split node into two child nodes
+    +   Stop when typical stopped criteria is hit (not pruning)
+-   Note: A fresh sample of $m$ predictors is taken at each split
+-   Typically $m = p/3$ for regression and $m = \sqrt{p}$ for classification but this should be considered a tuning parameter
 
 
-<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
+## Define Model
 
+-   `trees`: kind of a tuning parameter... want to select value that is large enough but doesn't matter past that
 
-<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data -->
+```{r}
+rf_model <- rand_forest(trees = 100, mtry = tune()) |> 
+  set_engine("ranger", importance = "impurity") |> 
+  set_mode("classification")
+```
 
-<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data -->
-<!-- ``` -->
+## Define Recipe
 
+```{r}
+rf_recipe <- recipe(voter_category ~ . , data = voter_train) |> 
+  step_indicate_na(all_predictors()) |> 
+  step_zv(all_predictors()) |> 
+  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,
+               Q25:Q26) |> 
+  step_impute_median(all_numeric_predictors()) |> 
+  step_impute_mode(all_nominal_predictors()) |> 
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+  
+```
 
-<!-- Data splitting and feature engineering has been done in the previous slides. -->
+## Define Workflow and Fit
 
+```{r}
+# need to install ranger
+rf_wf <- workflow() |> 
+  add_model(rf_model) |> 
+  add_recipe(rf_recipe)
+```
 
-<!-- ```{r} -->
-<!-- set.seed(051424)   # set seed -->
+## Upper Limit for `mtry`
 
-<!-- cv_specs <- trainControl(method = "cv", number = 5)   # CV specifications -->
+```{r}
+rf_model |> extract_parameter_set_dials()
+```
 
+## Extract Number of Features
 
-<!-- library(ranger) -->
-<!-- library(e1071) -->
+```{r}
+rf_param <- rf_model |> extract_parameter_set_dials() |> finalize(voter_train)
+rf_param
+```
 
+## Tune `mtry`
 
-<!-- param_grid <- expand.grid(mtry = seq(1, 30, 1),     # sequence of 1 to at least half the number of predictors -->
-<!--                           splitrule = "variance",   # use "gini" for classification -->
-<!--                           min.node.size = 2)        # for each tree -->
+```{r}
+voter_folds <- vfold_cv(voter_train, v = 5, repeats = 10, strata = voter_category)
 
-<!-- rf_cv <- train(blueprint, -->
-<!--                data = ames_train, -->
-<!--                method = "ranger", -->
-<!--                trControl = cv_specs, -->
-<!--                tuneGrid = param_grid, -->
-<!--                metric = "RMSE") -->
+mtry_grid <- grid_regular(rf_param, levels = 10)
 
-<!-- rf_cv$bestTune$mtry   # optimal tuning parameter -->
+tuning_results <- tune_grid(
+  rf_wf,
+  resamples= voter_folds,
+  grid = mtry_grid
+)
+```
 
-<!-- min(rf_cv$results$RMSE)   # optimal CV RMSE -->
-<!-- ``` -->
+## Results
 
+```{r}
+autoplot(tuning_results)
+```
 
-<!-- ## Random Forests: Implementation -->
+## Evaluate performance
 
-<!-- **Ames Housing Dataset** -->
+```{r}
+rf_fit <-  rf_wf |> 
+  finalize_workflow(select_best(tuning_results)) |> 
+  fit(voter_train)
 
-<!-- ```{r} -->
-<!-- # fit final model -->
+augment(rf_fit, new_data = voter_test) |> 
+  accuracy(truth = voter_category, estimate = .pred_class)
+```
 
-<!-- final_model <- ranger(formula = Sale_Price ~ ., -->
-<!--                       data = baked_train, -->
-<!--                       num.trees = 500, -->
-<!--                       mtry = rf_cv$bestTune$mtry, -->
-<!--                       splitrule = "variance", -->
-<!--                       min.node.size = 2,  -->
-<!--                       importance = "impurity") -->
-<!-- ``` -->
+## Variable Importance
 
-<!-- ```{r} -->
-<!-- # obtain predictions on the test set -->
-
-<!-- final_model_preds <- predict(object = final_model, data = baked_test, type = "response")  # predictions on test set -->
-
-<!-- sqrt(mean((final_model_preds$predictions - baked_test$Sale_Price)^2))  # test set RMSE -->
-<!-- ``` -->
-
-
-<!-- ## Random Forests: Implementation {.smaller} -->
-
-<!-- **Ames Housing Dataset** -->
-
-<!-- ```{r} -->
-<!-- # variable importance -->
-
-<!-- vip(final_model, num_features = 20)      # top 20 most important features -->
-<!-- ``` -->
+```{r}
+library(vip)
+vip(rf_fit)
+```
 
 
 

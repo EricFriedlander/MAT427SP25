@@ -474,193 +474,284 @@ Eric Friedlander
 <li>For <span class="math inline">\(i^{th}\)</span> observation, use the trees in which that observation was OOB. This will yield around <span class="math inline">\(B/3\)</span> predictions for the <span class="math inline">\(i^{th}\)</span> observation. Take their average to obtain a single prediction</li>
 <li>Equivalent to LOOCV if <span class="math inline">\(B\)</span> is large</li>
 </ul>
-<!-- ## Variable Importance Measures -->
-<!-- * Bagging improves prediction accuracy at the expense of interpretability. -->
-<!-- * However, one can still obtain an overall summary of the importance of each predictor. -->
-<!-- <!-- ## Variable Importance Measures -->
-<p>–&gt;</p>
-<!-- * To measure feature importance, the reduction in the loss function (e.g., RSS) attributed to each variable at each split is tabulated. In some instances, a single variable could be used multiple times in a tree; consequently, the total reduction in the loss function across all splits by a variable are summed up and used as the total feature importance. -->
-<!-- * A large value indicates an important predictor. -->
-<!-- <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
-<p>–&gt; <!-- <!-- knitr::include_graphics("EFT/8.9.png") --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- ## Bagging: Implementation {.smaller} -->
-<!-- **Ames Housing Dataset** -->
-<!-- ```{r, echo=FALSE} -->
-<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
-<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average", -->
-<!--                                                   "Average", "Above_Average", "Good", "Very_Good", -->
-<!--                                                   "Excellent", "Very_Excellent")) -->
-<!-- ``` -->
-<!-- ```{r, echo=FALSE} -->
-<!-- # split data -->
-<!-- set.seed(051424)   # set seed -->
-<!-- index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split -->
-<!-- ames_train <- ames[index,]   # training data -->
-<!-- ames_test <- ames[-index,]   # test data -->
-<!-- ``` -->
-<!-- ```{r, echo=FALSE} -->
-<!-- # create recipe and blueprint, prepare and apply blueprint -->
-<!-- set.seed(051424)   # set seed -->
-<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
-<!-- blueprint <- ames_recipe %>% -->
-<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors -->
-<!--   step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries -->
-<!--   step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors -->
-<!--   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors -->
-<!--   step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors -->
-<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors -->
-<!--   step_dummy(all_nominal(), one_hot = FALSE)                           # one-hot/dummy encode nominal categorical predictors -->
-<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
-<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data -->
-<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data -->
-<!-- ``` -->
-<!-- Data splitting and feature engineering has been done in the previous slides. -->
-<!-- ```{r} -->
-<!-- set.seed(051424)   # set seed -->
-<!-- library(ipred)   # for bagging -->
-<!-- bag_fit <- bagging(formula = Sale_Price ~ .,  -->
-<!--                    data = baked_train, -->
-<!--                    nbagg = 500,                             # number of trees to grow (bootstrap samples) usually 500 -->
-<!--                    coob = TRUE,                             # yes to computing OOB error estimate -->
-<!--                    control = rpart.control(minsplit = 2,    # split a node if at least 2 observations present -->
-<!--                                            cp = 0,          # no pruning (let the trees grow tall) -->
-<!--                                            xval = 0))       # no CV  -->
-<!-- ```                   -->
-<!-- ```{r} -->
-<!-- bag_fit   # results of bagging  -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- bag_fit$err   # OOB RMSE estimate -->
-<!-- ``` -->
-<!-- ## Bagging: Implementation -->
-<!-- **Ames Housing Dataset** -->
-<!-- CV with bagging <span style="color:red">(NOT recommended since computationally expensive)</span> -->
-<!-- ```{r, eval=FALSE} -->
-<!-- set.seed(051424)   # set seed -->
-<!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 1)   # CV specifications -->
-<!-- library(ipred) -->
-<!-- library(e1071) -->
-<!-- bagging_cv <- train(blueprint, -->
-<!--                     data = ames_train, -->
-<!--                     method = "treebag",   -->
-<!--                     trControl = cv_specs, -->
-<!--                     nbagg = 500,                    -->
-<!--                     control = rpart.control(minsplit = 2, cp = 0),     -->
-<!--                     metric = "RMSE") -->
-<!-- ``` -->
-<!-- <!-- ```{r, echo=FALSE} -->
-<p>–&gt; <!-- <!-- data("Boston") --> –&gt;</p>
-<!-- <!-- train_index <- createDataPartition(Boston$medv, p = 0.8, list = FALSE) -->
-<p>–&gt; <!-- <!-- Boston_train <- Boston[train_index, ] --> –&gt; <!-- <!-- Boston_test <- Boston[-train_index, ] --> –&gt;</p>
-<!-- <!-- blueprint <- recipe(medv ~ ., data = Boston_train) %>% -->
-<p>–&gt; <!-- <!--   step_normalize(all_numeric_predictors()) --> –&gt;</p>
-<!-- <!-- prepare <- prep(blueprint, training = Boston_train) -->
-<p>–&gt;</p>
-<!-- <!-- baked_train <- bake(prepare, new_data = Boston_train) -->
-<p>–&gt; <!-- <!-- baked_test <- bake(prepare, new_data = Boston_test) --> –&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- bag_fit <- bagging(medv ~ .,  --> –&gt; <!-- <!--                   data = baked_train, --> –&gt; <!-- <!--                   nbagg = 500,   # number of trees to grow (bootstrap replications) --> –&gt; <!-- <!--                   coob = TRUE,   # yes to computing OOB error estimate --> –&gt; <!-- <!--                   control = rpart.control(minsplit = 2, cp = 0, xval = 0))  # details of each tree --> –&gt;</p>
-<!-- <!-- bag_fit -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- ## Bagging: Implementation -->
-<!-- ```{r} -->
-<!-- # obtain predictions on the test set -->
-<!-- final_model_preds <- predict(object = bag_fit, newdata = baked_test)     # use 'type = "class"' for classification trees -->
-<!-- sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # test set RMSE -->
-<!-- ``` -->
-<!-- ```{r, eval=FALSE} -->
-<!-- # variable importance -->
-<!-- imp <- varImp(bag_fit)      # look at the object created -->
-<!-- ``` -->
-<!-- ## Bagging: Disadvantages -->
-<!-- * Bagging improves the prediction accuracy for high variance (and low bias) models at the expense of interpretability and computational speed. -->
-<!-- * However, although the model building steps are independent, the trees in bagging are not completely independent of each other since all the original features are considered at every split of every tree. Rather, trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree) due to any underlying strong relationships. -->
-<!-- * This characteristic is known as **tree correlation** and prevents bagging from further reducing the variance of the individual models. **Random forests** extend and improve upon bagged decision trees by reducing this correlation and thereby improving the accuracy of the overall ensemble. -->
-<!-- ## Bagging: Disadvantages -->
-<!-- **Tree Correlation in Bagging** -->
-<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="Adapted from HMLR, Boehmke & Greenwell", out.width = '100%'} -->
-<!-- knitr::include_graphics("EFT/tcBagging.jpg") -->
-<!-- ``` -->
-<!-- ## Random Forests -->
-<!-- * Provide an improvement over bagged trees by reducing the variance further (by **decorrelating**) when we average the trees. -->
-<!-- * As in bagging, we build a number of decision trees on bootstrapped training samples. -->
-<!-- * For each tree, each time a split is considered, a **random selection of $m$ predictors** is chosen (split candidates) from the full set of $p$ predictors. The split is allowed to use only one of those $m$ predictors. Note that in bagging, each split for each tree considers all $p$ predictors as split candidates. -->
-<!-- * A fresh sample of $m$ predictors is taken at each split. Typical default values are $m = p/3$ (regression) and $m = \sqrt{p}$ (classification) but this should be considered a tuning parameter, to be chosen by CV. -->
-<!-- ## Random Forests: Implementation  {.smaller} -->
-<!-- **Ames Housing Dataset** -->
-<!-- ```{r, echo=FALSE} -->
-<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
-<!-- ``` -->
-<!-- ```{r, echo=FALSE} -->
-<!-- # reorder levels of 'Overall_Qual' -->
-<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average",  -->
-<!--                                                           "Average", "Above_Average", "Good", "Very_Good",  -->
-<!--                                                           "Excellent", "Very_Excellent")) -->
-<!-- ``` -->
-<!-- ```{r, echo=FALSE} -->
-<!-- # split data -->
-<!-- set.seed(051424)   # set seed -->
-<!-- index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split -->
-<!-- ames_train <- ames[index,]   # training data -->
-<!-- ames_test <- ames[-index,]   # test data -->
-<!-- ``` -->
-<!-- ```{r, echo=FALSE} -->
-<!-- # create recipe and blueprint, prepare and apply blueprint -->
-<!-- set.seed(051424)   # set seed -->
-<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
-<!-- blueprint <- ames_recipe %>% -->
-<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors -->
-<!--   step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries -->
-<!--   step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors -->
-<!--   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors -->
-<!--   step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors -->
-<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors -->
-<!--   step_dummy(all_nominal(), one_hot = FALSE)                           # one-hot/dummy encode nominal categorical predictors -->
-<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
-<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data -->
-<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data -->
-<!-- ``` -->
-<!-- Data splitting and feature engineering has been done in the previous slides. -->
-<!-- ```{r} -->
-<!-- set.seed(051424)   # set seed -->
-<!-- cv_specs <- trainControl(method = "cv", number = 5)   # CV specifications -->
-<!-- library(ranger) -->
-<!-- library(e1071) -->
-<!-- param_grid <- expand.grid(mtry = seq(1, 30, 1),     # sequence of 1 to at least half the number of predictors -->
-<!--                           splitrule = "variance",   # use "gini" for classification -->
-<!--                           min.node.size = 2)        # for each tree -->
-<!-- rf_cv <- train(blueprint, -->
-<!--                data = ames_train, -->
-<!--                method = "ranger", -->
-<!--                trControl = cv_specs, -->
-<!--                tuneGrid = param_grid, -->
-<!--                metric = "RMSE") -->
-<!-- rf_cv$bestTune$mtry   # optimal tuning parameter -->
-<!-- min(rf_cv$results$RMSE)   # optimal CV RMSE -->
-<!-- ``` -->
-<!-- ## Random Forests: Implementation -->
-<!-- **Ames Housing Dataset** -->
-<!-- ```{r} -->
-<!-- # fit final model -->
-<!-- final_model <- ranger(formula = Sale_Price ~ ., -->
-<!--                       data = baked_train, -->
-<!--                       num.trees = 500, -->
-<!--                       mtry = rf_cv$bestTune$mtry, -->
-<!--                       splitrule = "variance", -->
-<!--                       min.node.size = 2,  -->
-<!--                       importance = "impurity") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- # obtain predictions on the test set -->
-<!-- final_model_preds <- predict(object = final_model, data = baked_test, type = "response")  # predictions on test set -->
-<!-- sqrt(mean((final_model_preds$predictions - baked_test$Sale_Price)^2))  # test set RMSE -->
-<!-- ``` -->
-<!-- ## Random Forests: Implementation {.smaller} -->
-<!-- **Ames Housing Dataset** -->
-<!-- ```{r} -->
-<!-- # variable importance -->
-<!-- vip(final_model, num_features = 20)      # top 20 most important features -->
-<!-- ``` -->
+</section>
+<section id="variable-importance-measures" class="slide level2">
+<h2>Variable Importance Measures</h2>
+<ul>
+<li>Bagging improves prediction accuracy at expense of interpretability</li>
+<li>Can still obtain overall summary of importance of each predictor
+<ul>
+<li>Reduction in the loss function (e.g., SSE) attributed to each variable at each split is tabulated</li>
+<li>A single variable could be used multiple times in a tree</li>
+<li>Total reduction in the loss function across all splits by a variable are summed up and used as the total feature importance</li>
+<li>A large value indicates an important predictor.</li>
+</ul></li>
+</ul>
+</section>
+<section>
+<section id="bagging-implementation-in-r" class="title-slide slide level1 center">
+<h1>Bagging Implementation in R</h1>
+
+</section>
+<section id="data-voter-frequency" class="slide level2">
+<h2>Data: Voter Frequency</h2>
+<ul>
+<li><a href="https://github.com/fivethirtyeight/data/tree/master/non-voters">Info about data</a></li>
+<li>Goal: Identify individuals who are unlikely to vote to help organization target “get out the vote” effort.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>voter_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'</span>)</span>
+<span id="cb2-2"><a></a></span>
+<span id="cb2-3"><a></a>voter_clean <span class="ot">&lt;-</span> voter_data <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>RespId, <span class="sc">-</span>weight, <span class="sc">-</span>Q1) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-6"><a></a>    <span class="at">educ =</span> <span class="fu">factor</span>(educ, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"High school or less"</span>, <span class="st">"Some college"</span>, <span class="st">"College"</span>)),</span>
+<span id="cb2-7"><a></a>    <span class="at">income_cat =</span> <span class="fu">factor</span>(income_cat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Less than $40k"</span>, <span class="st">"$40-75k "</span>,</span>
+<span id="cb2-8"><a></a>                                               <span class="st">"$75-125k"</span>, <span class="st">"$125k or more"</span>)),</span>
+<span id="cb2-9"><a></a>    <span class="at">voter_category =</span> <span class="fu">factor</span>(voter_category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"rarely/never"</span>, <span class="st">"sporadic"</span>, <span class="st">"always"</span>))</span>
+<span id="cb2-10"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-11"><a></a>  <span class="fu">filter</span>(Q22 <span class="sc">!=</span> <span class="dv">5</span> <span class="sc">|</span> <span class="fu">is.na</span>(Q22)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-12"><a></a>  <span class="fu">mutate</span>(<span class="at">Q22 =</span> <span class="fu">as_factor</span>(Q22),</span>
+<span id="cb2-13"><a></a>         <span class="at">Q22 =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Q22), <span class="st">"Not Asked"</span>, Q22),</span>
+<span id="cb2-14"><a></a>         <span class="fu">across</span>(Q28_1<span class="sc">:</span>Q28_8, <span class="sc">~</span><span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, .x)),</span>
+<span id="cb2-15"><a></a>         <span class="fu">across</span>(Q28_1<span class="sc">:</span>Q28_8, <span class="sc">~</span> <span class="fu">as_factor</span>(.x)),</span>
+<span id="cb2-16"><a></a>         <span class="fu">across</span>(Q28_1<span class="sc">:</span>Q28_8, <span class="sc">~</span><span class="fu">if_else</span>(<span class="fu">is.na</span>(.x) , <span class="st">"Not Asked"</span>, .x)),</span>
+<span id="cb2-17"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_10, <span class="sc">~</span><span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, .x)),</span>
+<span id="cb2-18"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_10, <span class="sc">~</span> <span class="fu">as_factor</span>(.x)),</span>
+<span id="cb2-19"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_8, <span class="sc">~</span><span class="fu">if_else</span>(<span class="fu">is.na</span>(.x) , <span class="st">"Not Asked"</span>, .x)),</span>
+<span id="cb2-20"><a></a>        <span class="at">Party_ID =</span> <span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb2-21"><a></a>          Q31 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Strong Republican"</span>,</span>
+<span id="cb2-22"><a></a>          Q31 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Republican"</span>,</span>
+<span id="cb2-23"><a></a>          Q32 <span class="sc">==</span> <span class="dv">1</span>  <span class="sc">~</span> <span class="st">"Strong Democrat"</span>,</span>
+<span id="cb2-24"><a></a>          Q32 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Democrat"</span>,</span>
+<span id="cb2-25"><a></a>          Q33 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lean Republican"</span>,</span>
+<span id="cb2-26"><a></a>          Q33 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Lean Democrat"</span>,</span>
+<span id="cb2-27"><a></a>          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
+<span id="cb2-28"><a></a>        )),</span>
+<span id="cb2-29"><a></a>        <span class="at">Party_ID =</span> <span class="fu">factor</span>(Party_ID, <span class="at">levels =</span><span class="fu">c</span>(<span class="st">"Strong Republican"</span>, <span class="st">"Republican"</span>, <span class="st">"Lean Republican"</span>,</span>
+<span id="cb2-30"><a></a>                                                <span class="st">"Other"</span>, <span class="st">"Lean Democrat"</span>, <span class="st">"Democrat"</span>, <span class="st">"Strong Democrat"</span>)),</span>
+<span id="cb2-31"><a></a>        <span class="fu">across</span>(<span class="sc">!</span>ppage, <span class="sc">~</span><span class="fu">as_factor</span>(<span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="cn">NA</span>, .x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="split-data" class="slide level2">
+<h2>Split Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a>voter_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(voter_clean, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> voter_category)</span>
+<span id="cb3-4"><a></a>voter_train <span class="ot">&lt;-</span> <span class="fu">training</span>(voter_splits)</span>
+<span id="cb3-5"><a></a>voter_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(voter_splits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-model" class="slide level2">
+<h2>Define Model</h2>
+<ul>
+<li><code>trees</code>: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>bagged_model <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">500</span>, <span class="at">mtry =</span> <span class="fu">.cols</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-recipe" class="slide level2">
+<h2>Define Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>bag_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(voter_category <span class="sc">~</span> . , <span class="at">data =</span> voter_train) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a></a>  <span class="fu">step_indicate_na</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a></a>  <span class="fu">step_integer</span>(educ, income_cat, Party_ID, Q2_2<span class="sc">:</span>Q4_6, Q6, Q8_1<span class="sc">:</span>Q9_4, Q14<span class="sc">:</span>Q17_4,</span>
+<span id="cb5-5"><a></a>               Q25<span class="sc">:</span>Q26) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a></a>  <span class="fu">step_impute_mode</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb5-8"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-workflow-and-fit" class="slide level2">
+<h2>Define Workflow and Fit</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># need to install ranger</span></span>
+<span id="cb6-2"><a></a>bag_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a></a>  <span class="fu">add_model</span>(bagged_model) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a></a>  <span class="fu">add_recipe</span>(bag_recipe)</span>
+<span id="cb6-5"><a></a></span>
+<span id="cb6-6"><a></a>bagged_fit <span class="ot">&lt;-</span> bag_wf <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a></a>  <span class="fu">fit</span>(voter_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluate-performance" class="slide level2">
+<h2>Evaluate performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">augment</span>(bagged_fit, <span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.648</code></pre>
+</div>
+</div>
+</section>
+<section id="variable-importance" class="slide level2">
+<h2>Variable Importance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(vip)</span>
+<span id="cb9-2"><a></a><span class="fu">vip</span>(bagged_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="bagging-disadvantages" class="slide level2">
+<h2>Bagging: Disadvantages</h2>
+<ul>
+<li>improves prediction performance but reduces interpretability</li>
+<li>trees in bagging not completely independent of each other since all the original features are considered at every split of every tree</li>
+<li><strong>tree correlation</strong>: trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree)
+<ul>
+<li>prevents bagging from further reducing the variance of the individual models</li>
+</ul></li>
+<li><strong>Random forests</strong> extend and improve upon bagged decision trees by reducing this correlation and thereby improving the accuracy of the overall ensemble.</li>
+</ul>
+</section>
+<section id="bagging-disadvantages-1" class="slide level2">
+<h2>Bagging: Disadvantages</h2>
+
+<img data-src="images/25/Boston-6-trees.png" class="r-stretch quarto-figure-center"><p class="caption">Adapted from Hands-On Machine Learning, Boehmke &amp; Greenwell</p></section></section>
+<section>
+<section id="random-forests" class="title-slide slide level1 center">
+<h1>Random Forests</h1>
+
+</section>
+<section id="random-forests-1" class="slide level2 smaller">
+<h2>Random Forests</h2>
+<ul>
+<li><strong>De-correlates</strong> bagged trees <span class="math inline">\(\Rightarrow\)</span> reducing variance</li>
+<li>As in bagging, we build a number of decision trees on bootstrapped training samples.</li>
+<li>Algorithm: do the following to build each tree
+<ul>
+<li>Generate bootstrapped sample of training data</li>
+<li>Randomly select <span class="math inline">\(m\)</span> predictors</li>
+<li>Pick best variable/split-oint from these <span class="math inline">\(m\)</span></li>
+<li>Split node into two child nodes</li>
+<li>Stop when typical stopped criteria is hit (not pruning)</li>
+</ul></li>
+<li>Note: A fresh sample of <span class="math inline">\(m\)</span> predictors is taken at each split</li>
+<li>Typically <span class="math inline">\(m = p/3\)</span> for regression and <span class="math inline">\(m = \sqrt{p}\)</span> for classification but this should be considered a tuning parameter</li>
+</ul>
+</section>
+<section id="define-model-1" class="slide level2">
+<h2>Define Model</h2>
+<ul>
+<li><code>trees</code>: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>rf_model <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-recipe-1" class="slide level2">
+<h2>Define Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>rf_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(voter_category <span class="sc">~</span> . , <span class="at">data =</span> voter_train) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a></a>  <span class="fu">step_indicate_na</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a></a>  <span class="fu">step_integer</span>(educ, income_cat, Party_ID, Q2_2<span class="sc">:</span>Q4_6, Q6, Q8_1<span class="sc">:</span>Q9_4, Q14<span class="sc">:</span>Q17_4,</span>
+<span id="cb11-5"><a></a>               Q25<span class="sc">:</span>Q26) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb11-7"><a></a>  <span class="fu">step_impute_mode</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb11-8"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-workflow-and-fit-1" class="slide level2">
+<h2>Define Workflow and Fit</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># need to install ranger</span></span>
+<span id="cb12-2"><a></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a></a>  <span class="fu">add_recipe</span>(rf_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="upper-limit-for-mtry" class="slide level2">
+<h2>Upper Limit for <code>mtry</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>rf_model <span class="sc">|&gt;</span> <span class="fu">extract_parameter_set_dials</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Collection of 1 parameters for tuning
+
+ identifier type    object
+       mtry mtry nparam[?]
+
+Model parameters needing finalization:
+   # Randomly Selected Predictors ('mtry')
+
+See `?dials::finalize` or `?dials::update.parameters` for more information.</code></pre>
+</div>
+</div>
+</section>
+<section id="extract-number-of-features" class="slide level2">
+<h2>Extract Number of Features</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>rf_param <span class="ot">&lt;-</span> rf_model <span class="sc">|&gt;</span> <span class="fu">extract_parameter_set_dials</span>() <span class="sc">|&gt;</span> <span class="fu">finalize</span>(voter_train)</span>
+<span id="cb15-2"><a></a>rf_param</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Collection of 1 parameters for tuning
+
+ identifier type    object
+       mtry mtry nparam[+]</code></pre>
+</div>
+</div>
+</section>
+<section id="tune-mtry" class="slide level2">
+<h2>Tune <code>mtry</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>voter_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>, <span class="at">strata =</span> voter_category)</span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a>mtry_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(rf_param, <span class="at">levels =</span> <span class="dv">10</span>)</span>
+<span id="cb17-4"><a></a></span>
+<span id="cb17-5"><a></a>tuning_results <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb17-6"><a></a>  rf_wf,</span>
+<span id="cb17-7"><a></a>  <span class="at">resamples=</span> voter_folds,</span>
+<span id="cb17-8"><a></a>  <span class="at">grid =</span> mtry_grid</span>
+<span id="cb17-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">autoplot</span>(tuning_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="evaluate-performance-1" class="slide level2">
+<h2>Evaluate performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>rf_fit <span class="ot">&lt;-</span>  rf_wf <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(tuning_results)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a></a>  <span class="fu">fit</span>(voter_train)</span>
+<span id="cb19-4"><a></a></span>
+<span id="cb19-5"><a></a><span class="fu">augment</span>(rf_fit, <span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
+<span id="cb19-6"><a></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.658</code></pre>
+</div>
+</div>
+</section>
+<section id="variable-importance-1" class="slide level2">
+<h2>Variable Importance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">library</span>(vip)</span>
+<span id="cb21-2"><a></a><span class="fu">vip</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 <!-- ## Gradient Boosting -->
 <!-- Like bagging and random forests, boosting involves combining a large number of decision trees. However, the main idea of boosting is to add new models to the ensemble **sequentially**.  -->
 <!-- Each model in the process is a weak model, referred to as the **base learner**. The idea behind boosting is that each model in the sequence slightly improves upon the performance of the previous one, thereby **learning slowly**. -->
@@ -885,7 +976,7 @@ Eric Friedlander
 <p><a href="https://mat427sp25.netlify.app/schedule">🔗 MAT 427 - Spring 2025 - Schedule</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -1099,42 +1190,80 @@ Eric Friedlander
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
