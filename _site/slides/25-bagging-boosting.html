@@ -744,132 +744,147 @@ See `?dials::finalize` or `?dials::update.parameters` for more information.</cod
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">library</span>(vip)</span>
 <span id="cb21-2"><a></a><span class="fu">vip</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="boosting" class="title-slide slide level1 center">
+<h1>Boosting</h1>
+
+</section>
+<section id="boosting-1" class="slide level2 smaller">
+<h2>Boosting</h2>
+<ul>
+<li>Still an ensemble method in that it creates a bunch of models (trees in this case)</li>
+<li>Trees are created <em>sequentially</em>, and fit to the <em>residuals</em> of the previous trees</li>
+<li>Idea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly</li>
+<li>Each model in the process is a weak model, referred to as the <strong>base learner</strong></li>
+<li><strong>learning slowly</strong>: as more trees are fit, the overall ensemble gradually improves</li>
+</ul>
+</section>
+<section id="boosting-algorithm" class="slide level2 smaller">
+<h2>Boosting Algorithm</h2>
+<p>Let <span class="math inline">\(B\)</span> be the number of trees you want to fit and <span class="math inline">\(d\)</span> the maximum number of splits</p>
+<ol type="1">
+<li>Set <span class="math inline">\(\hat{f}(x) = 0\)</span> and <span class="math inline">\(r_i = y_i\)</span> for all training set</li>
+<li>For <span class="math inline">\(b = 1,\ldots, B\)</span>: a. Fit tree <span class="math inline">\(\hat{f}_b\)</span> with <span class="math inline">\(d\)</span> splits (<span class="math inline">\(d+1\)</span> leaves) using residuals <span class="math inline">\(r\)</span> as response and features <span class="math inline">\(X\)</span> as predictors. b. Update full model <span class="math inline">\(\hat{f}\)</span>: <span class="math inline">\(\hat{f} = \hat{f} + \lambda\hat{f}_b\)</span> c.&nbsp;Update pseudo-residuals: <span class="math inline">\(r_i = r_i - \lambda\hat{f}_b(x_i)\)</span></li>
+<li>Output final model: <span class="math display">\[\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}_b(x)\]</span></li>
+</ol>
+<ul>
+<li>It may be hard to see, but this is similar to gradient descent and so is called <strong>gradient boosting</strong></li>
+</ul>
+</section>
+<section id="gradient-boosting" class="slide level2">
+<h2>Gradient Boosting</h2>
+
+<img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<section id="many-implementations-of-boosting" class="slide level2">
+<h2>Many Implementations of Boosting</h2>
+<ul>
+<li>Any implementation of boosting you use will like be a tweak of this
+<ul>
+<li>AdaBoost</li>
+<li>Catboost</li>
+<li>LightGBM</li>
+<li><strong>XGBoost</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="gradient-boosting-tuning-parameters" class="slide level2">
+<h2>Gradient Boosting Tuning Parameters</h2>
+<ul>
+<li><a href="https://parsnip.tidymodels.org/reference/boost_tree.html">Documentation</a></li>
+</ul>
+</section>
+<section id="define-model-2" class="slide level2">
+<h2>Define Model</h2>
+<ul>
+<li><code>trees</code>: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>gbm_model <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(<span class="at">trees =</span> <span class="fu">tune</span>(), <span class="at">learn_rate =</span> <span class="fu">tune</span>(), <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb22-2"><a></a>                        <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-recipe-2" class="slide level2">
+<h2>Define Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>gbm_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(voter_category <span class="sc">~</span> . , <span class="at">data =</span> voter_train) <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a></a>  <span class="fu">step_indicate_na</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a></a>  <span class="fu">step_integer</span>(educ, income_cat, Party_ID, Q2_2<span class="sc">:</span>Q4_6, Q6, Q8_1<span class="sc">:</span>Q9_4, Q14<span class="sc">:</span>Q17_4,</span>
+<span id="cb23-5"><a></a>               Q25<span class="sc">:</span>Q26) <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb23-7"><a></a>  <span class="fu">step_impute_mode</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb23-8"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-workflow-and-fit-2" class="slide level2">
+<h2>Define Workflow and Fit</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="co"># need to install ranger</span></span>
+<span id="cb24-2"><a></a>gbm_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a></a>  <span class="fu">add_model</span>(gbm_model) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a></a>  <span class="fu">add_recipe</span>(gbm_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tuning-hyper-parameters" class="slide level2">
+<h2>Tuning Hyper Parameters</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>gbm_grid <span class="ot">&lt;-</span> <span class="fu">grid_latin_hypercube</span>(<span class="fu">trees</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">100</span>)),</span>
+<span id="cb25-2"><a></a>                                  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">15</span>)),</span>
+<span id="cb25-3"><a></a>                                  <span class="fu">learn_rate</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">1</span>)),</span>
+<span id="cb25-4"><a></a>                                  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">40</span>)), <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb25-5"><a></a>voter_folds <span class="ot">=</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>, <span class="at">strata =</span> voter_category)</span>
+<span id="cb25-6"><a></a>tuning_results <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb25-7"><a></a>  gbm_wf,</span>
+<span id="cb25-8"><a></a>  <span class="at">resamples=</span> voter_folds,</span>
+<span id="cb25-9"><a></a>  <span class="at">grid =</span> gbm_grid</span>
+<span id="cb25-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="results-1" class="slide level2">
+<h2>Results</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">autoplot</span>(tuning_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
+<section id="evaluate-performance-2" class="slide level2">
+<h2>Evaluate performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>gbm_fit <span class="ot">&lt;-</span>  gbm_wf <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(tuning_results, <span class="at">metric =</span> <span class="st">"accuracy"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a></a>  <span class="fu">fit</span>(voter_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[17:33:23] WARNING: src/learner.cc:767: 
+Parameters: { "importance" } are not used.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">augment</span>(gbm_fit, <span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.647</code></pre>
+</div>
+</div>
+</section>
+<section id="variable-importance-2" class="slide level2">
+<h2>Variable Importance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">library</span>(vip)</span>
+<span id="cb31-2"><a></a><span class="fu">vip</span>(gbm_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="25-bagging-boosting_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-<!-- # Boosting -->
-<!-- ## Boosting {.smaller} -->
-<!-- -   Still an ensemble method in that it creates a bunch of models (trees in this case) -->
-<!-- -   Trees are created *sequentially*, and fit to the *residuals* of the previous trees -->
-<!-- -   Idea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly -->
-<!-- -   Each model in the process is a weak model, referred to as the **base learner** -->
-<!-- -   **learning slowly**: as more trees are fit, the overall ensemble gradually improves -->
-<!-- ## Boosting Algorithm {.smaller} -->
-<!-- Let $B$ be the number of trees you want to fit and $d$ the maximum number of splits -->
-<!-- 1.    Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all training set -->
-<!-- 2.    For $b = 1,\ldots, B$: -->
-<!--     a.    Fit tree $\hat{f}_b$ with $d$ splits ($d+1$ leaves) using residuals $r$ as response and features $X$ as predictors. -->
-<!--     b.    Update full model $\hat{f}$: $\hat{f} = \hat{f} + \lambda\hat{f}_b$ -->
-<!--     c.    Update pseudo-residuals: $r_i = r_i - \lambda\hat{f}_b(x_i)$ -->
-<!-- 3. Output final model: -->
-<!-- $$\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}_b(x)$$ -->
-<!-- -   It may be hard to see, but this is similar to gradient descent and so is called **gradient boosting** -->
-<!-- ## Gradient Boosting -->
-<!-- ```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8} -->
-<!-- # Simulate sine wave data -->
-<!-- set.seed(1112)  # for reproducibility -->
-<!-- df <- tibble::tibble( -->
-<!--   x = seq(from = 0, to = 2 * pi, length = 1000), -->
-<!--   y = sin(x) + rnorm(length(x), sd = 0.5), -->
-<!--   truth = sin(x) -->
-<!-- ) -->
-<!-- # Function to boost `rpart::rpart()` trees -->
-<!-- rpartBoost <- function(x, y, data, num_trees = 100, learn_rate = 0.1, tree_depth = 6) { -->
-<!--   x <- data[[deparse(substitute(x))]] -->
-<!--   y <- data[[deparse(substitute(y))]] -->
-<!--   G_b_hat <- matrix(0, nrow = length(y), ncol = num_trees + 1) -->
-<!--   r <- y -->
-<!--   for(tree in seq_len(num_trees)) { -->
-<!--     g_b_tilde <- rpart(r ~ x, control = list(cp = 0, maxdepth = tree_depth)) -->
-<!--     g_b_hat <- learn_rate * predict(g_b_tilde) -->
-<!--     G_b_hat[, tree + 1] <- G_b_hat[, tree] + matrix(g_b_hat) -->
-<!--     r <- r - g_b_hat -->
-<!--     colnames(G_b_hat) <- paste0("tree_", c(0, seq_len(num_trees))) -->
-<!--   } -->
-<!--   cbind(df, as.data.frame(G_b_hat)) %>% -->
-<!--     gather(tree, prediction, starts_with("tree")) %>% -->
-<!--     mutate(tree = stringr::str_extract(tree, "\\d+") %>% as.numeric()) -->
-<!-- } -->
-<!-- # Plot boosted tree sequence -->
-<!-- rpartBoost(x, y, data = df, num_trees = 2^10, learn_rate = 0.05, tree_depth = 1) %>% -->
-<!--   filter(tree %in% c(0, 2^c(0:10))) %>% -->
-<!--   ggplot(aes(x, prediction)) + -->
-<!--     ylab("y") + -->
-<!--     geom_point(data = df, aes(x, y), alpha = .1) + -->
-<!--     geom_line(data = df, aes(x, truth), color = "cyan") + -->
-<!--     geom_line(colour = "red", size = 1) + -->
-<!--     facet_wrap(~ tree, nrow = 3) + -->
-<!--     theme_bw() -->
-<!-- ``` -->
-<!-- ## Many Implementations of Boosting -->
-<!-- -   Any implementation of boosting you use will like be a tweak of this -->
-<!--     +   AdaBoost -->
-<!--     +   Catboost -->
-<!--     +   LightGBM -->
-<!--     +   **XGBoost** -->
-<!-- ## Gradient Boosting Tuning Parameters -->
-<!-- -   [Documentation](https://parsnip.tidymodels.org/reference/boost_tree.html) -->
-<!-- ## Define Model -->
-<!-- -   `trees`: kind of a tuning parameter... want to select value that is large enough but doesn't matter past that -->
-<!-- ```{r} -->
-<!-- gbm_model <- boost_tree(trees = tune(), learn_rate = tune(), tree_depth = tune(), -->
-<!--                         min_n = tune()) |>  -->
-<!--   set_engine("xgboost", importance = "impurity") |>  -->
-<!--   set_mode("classification") -->
-<!-- ``` -->
-<!-- ## Define Recipe -->
-<!-- ```{r} -->
-<!-- gbm_recipe <- recipe(voter_category ~ . , data = voter_train) |>  -->
-<!--   step_indicate_na(all_predictors()) |>  -->
-<!--   step_zv(all_predictors()) |>  -->
-<!--   step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4, -->
-<!--                Q25:Q26) |>  -->
-<!--   step_impute_median(all_numeric_predictors()) |>  -->
-<!--   step_impute_mode(all_nominal_predictors()) |>  -->
-<!--   step_dummy(all_nominal_predictors(), one_hot = TRUE) -->
-<!-- ``` -->
-<!-- ## Define Workflow and Fit -->
-<!-- ```{r} -->
-<!-- # need to install ranger -->
-<!-- gbm_wf <- workflow() |>  -->
-<!--   add_model(gbm_model) |>  -->
-<!--   add_recipe(gbm_recipe) -->
-<!-- ``` -->
-<!-- ## Tuning Hyper Parameters -->
-<!-- ```{r} -->
-<!-- gbm_grid <- grid_latin_hypercube(trees(range = c(20, 100)), -->
-<!--                                   tree_depth(range = c(1, 15)), -->
-<!--                                   learn_rate(range = c(-10,-1)), -->
-<!--                                   min_n(range = c(2, 40)), size = 50) -->
-<!-- voter_folds = vfold_cv(voter_train, v = 5, repeats = 1, strata = voter_category) -->
-<!-- tuning_results <- tune_grid( -->
-<!--   gbm_wf, -->
-<!--   resamples= voter_folds, -->
-<!--   grid = gbm_grid -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ## Results -->
-<!-- ```{r} -->
-<!-- autoplot(tuning_results) -->
-<!-- ``` -->
-<!-- ## Evaluate performance -->
-<!-- ```{r} -->
-<!-- gbm_fit <-  gbm_wf |>  -->
-<!--   finalize_workflow(select_best(tuning_results, metric = "accuracy")) |>  -->
-<!--   fit(voter_train) -->
-<!-- augment(gbm_fit, new_data = voter_test) |>  -->
-<!--   accuracy(truth = voter_category, estimate = .pred_class) -->
-<!-- ``` -->
-<!-- ## Variable Importance -->
-<!-- ```{r} -->
-<!-- library(vip) -->
-<!-- vip(gbm_fit) -->
-<!-- ``` -->
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
