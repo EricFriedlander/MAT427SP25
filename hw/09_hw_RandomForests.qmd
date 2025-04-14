@@ -31,7 +31,7 @@ You are free to use whatever version control strategy you like.
 
 ## Teams & Rules
 
-You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW7**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/yMGSYVjV). Rules:
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW9**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/yMGSYVjV). Rules:
 
 1.  You are all responsible for understanding the work that your team turns in.
 2.  All team members must make roughly equal contributions to the homework.
@@ -88,8 +88,8 @@ Build a classification tree on the training set to predict who will survive. Plo
 
 ## Exercise 5
 
-::: {.callout-tip title="Question"} 
-Apply your model to the test set to predict who will survive. Print the confusion matrix below. What is the accuracy of this tree model? 
+::: {.callout-tip title="Question"}
+Apply your model to the test set to predict who will survive. Print the confusion matrix below. What is the accuracy of this tree model?
 :::
 
 # Random Forest
@@ -151,4 +151,3 @@ In class, Dr. Friedlander described the number of tree grown in a random forest 
 ::: {.callout-tip title="Question"}
 Discuss the `mtry` parameter in the context of the bias-variance trade-off. How should `mtry` impact the flexibility, bias, and variance of the model?
 :::
-

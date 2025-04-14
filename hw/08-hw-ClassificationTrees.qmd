@@ -34,7 +34,7 @@ You are free to use whatever version control strategy you like.
 
 ## Teams & Rules
 
-You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW7**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/bWNhF9hP). Rules:
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW8**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/bWNhF9hP). Rules:
 
 1.  You are all responsible for understanding the work that your team turns in.
 2.  All team members must make roughly equal contributions to the homework.
