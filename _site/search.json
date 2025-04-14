@@ -463,116 +463,123 @@
     "text": "Exercise 13 (Practice interview question)\n\n\n\n\n\n\nQuestion\n\n\n\nDescribe how tree_depth and min_n should impact the flexibility and bias-variance trade off of the resulting tree."
   },
   {
-    "objectID": "hw/04-hw-classification.html",
-    "href": "hw/04-hw-classification.html",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html",
+    "href": "hw/05-hw-preproc-cv.html",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "",
-    "text": "In this homework we will focus on classification. That is when the response variable is categorical. We’ll be on predicting a binary response variable, which is a categorical variable with only two possible outcomes. You will also practice collaborating with teams using GitHub.\n\n\nBy the end of the homework, you will…\n\nBe able to work create and merge branches in GitHub\nFit and interpret logistic regression models\nFit and evaluation binary classification models"
+    "text": "In this homework you will practice pre-processing data and using cross-validation to evaluate regression models.\n\n\nIn this assignment, you will…\n\nUse exploratory data analysis to inform feature engineering steps\nPre-process data and impute missing values\nEvaluate and compare models using cross-validation"
   },
   {
-    "objectID": "hw/04-hw-classification.html#learning-goals",
-    "href": "hw/04-hw-classification.html#learning-goals",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#learning-goals",
+    "href": "hw/05-hw-preproc-cv.html#learning-goals",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "",
-    "text": "By the end of the homework, you will…\n\nBe able to work create and merge branches in GitHub\nFit and interpret logistic regression models\nFit and evaluation binary classification models"
+    "text": "In this assignment, you will…\n\nUse exploratory data analysis to inform feature engineering steps\nPre-process data and impute missing values\nEvaluate and compare models using cross-validation"
   },
   {
-    "objectID": "hw/04-hw-classification.html#teams-rules",
-    "href": "hw/04-hw-classification.html#teams-rules",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#teams-rules",
+    "href": "hw/05-hw-preproc-cv.html#teams-rules",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Teams & Rules",
-    "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW4. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:\n\nAt the start of your homework, you and your team members should be in the same physical room for Exercise 0.1.\nExercise 0.2 will teach your how to create your own branch. Each team member will create their own branch and complete the homework themselves. Note that I’ll be able to see all of your commit so I’ll know if you didn’t do this.\nOnce everyone is finished, you and your team members should get together in the same room again to Complete Exercise 0.3 which will teach you how to merge your branches together and decide on the best version of each question.\n\nAs always:\n\nYou are all responsible for understanding the work that you turn in.\nIf you encounter a merge error that you don’t know how to fix, contact Dr. Friedlander as soon as possible. I recommend starting this assignment early so there is time for Dr. Friedlander to help you resolve any problems before the deadline."
+    "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW5. Your group will consist of 2-3 people and has been randomly generated. You have now been exposed to all of the Git concepts that we will talk about in this class. It is up to you to apply them to complete your homework in any way you see fit. Some rules:\n\nYou are all responsible for understanding the work that you turn in.\nAll team members must make roughly equal contributions to the homework.\nAny work completed by a team member must be committed and pushed to GitHub by that person."
   },
   {
-    "objectID": "hw/04-hw-classification.html#clone-the-repo-create-your-own-branch-merging",
-    "href": "hw/04-hw-classification.html#clone-the-repo-create-your-own-branch-merging",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Clone the repo, create your own branch, & merging",
-    "text": "Clone the repo, create your own branch, & merging\nThe following directions will guide you through the process of setting up your homework to work as a group."
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-0",
+    "href": "hw/05-hw-preproc-cv.html#exercise-0",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 0",
+    "text": "Exercise 0\nAs in your previous homework’s, create your team on GitHub classroom and clone the repository. Here is a link to the homework."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-0.1",
-    "href": "hw/04-hw-classification.html#exercise-0.1",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Exercise 0.1",
-    "text": "Exercise 0.1\n\n\n\n\n\n\nQuestion\n\n\n\nIn your group, decide on a team name. Then have one member of your group:\n\nClick this link to accept the assignment and enter your team name.\nRepeat the directions for creating a project from HW 1 with the HW 4 repository.\n\nOnce this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom."
+    "objectID": "hw/05-hw-preproc-cv.html#data-lego",
+    "href": "hw/05-hw-preproc-cv.html#data-lego",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Data: LEGO",
+    "text": "Data: LEGO\nThe data for this analysis includes information about LEGO sets from themes produced January 1, 2018 and September 11, 2020. The data were originally scraped from Brickset.com, an online LEGO set guide and were obtained for this assignment from Peterson and Zieglar (2021).\nYou will work with data on about 400 randomly selected LEGO sets produced during this time period. The primary variables are interest in this analysis are:\n\nItem_Number: a serial code corresponding to the set.\nSet_Name: The name of the LEGO set.\nTheme: Theme of the LEGO set.\nPieces: Number of pieces in the set from brickset.com.\nAmazon_Price: Amazon price of the set scraped from brickset.com (in U.S. dollars).\nYear : Year the LEGO set was produced.\nAges: Variable stating what aged children the set is appropriate for.\nPages: Number of pages in the instruction booklet.\nMinifigures: Number of minifigures (LEGO people) in the set scraped from brickset.com. LEGO sets with no minifigures have been coded as NA. NA’s also represent missing data. This is due to how brickset.com reports their data.\nPackaging: What type of packaging the set came in.\nWeight: The weight of the set.\nUnique_Pieces: The number of unique pieces in each set.\nAvailability: Where the set can be purchased.\nSize: General size of the interlocking bricks (Large = LEGO Duplo sets - which include large brick pieces safe for children ages 1 to 5, Small = LEGO sets which- include the traditional smaller brick pieces created for age groups 5 and - older, e.g., City, Friends).\n\nYour ultimate goal will be to predict Amazon_Price from the other features."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-0.2",
-    "href": "hw/04-hw-classification.html#exercise-0.2",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Exercise 0.2",
-    "text": "Exercise 0.2\nWe will now learn how to create branches and run git from the command line. Each team member will create their own branch and complete a version of their homework.\n\n\n\n\n\n\nQuestion\n\n\n\n\nClick on the “Terminal” tab right next to the “Console” tab in the bottom left of RStudio. This is a “bash terminal”. You run “bash scripts” here rather than R code.\nCreate your own branch by typing git checkout -b banch_name where branch_name is whatever you want to name your branch. Typing git tells the terminal that you want to run a git command, checkout is a git command that will switch you to a different branch, the -b option will create a new branch for you. If you want to switch between existing branches leave out -b.\nPut your name in one of the slots below and render your document.\nStage your changes by typing git add .. Think of this like clicking the check boxes in the top right screen. If you don’t want to stage ALL of the changes you can type git add filename where filename corresponds to the files you want to stage. . will simply stage all changes.\nCommit your changes by typing git commit -m \"insert commit message\" where you replace insert commit message with your actual commit message. This will commit your changes.\nTo push your changes to GitHub, type git push.\nIf you ever want to pull your changes you can type git pull.\nIf all group members are working different branches you shouldn’t encounter any merge conflicts.\n\n\n\n\nTeam Name: [Insert Name]\nMember 1: [Insert Name]\nMember 2: [Insert Name]\nMember 3: [Insert Name/Delete line if you only have two members]"
-  },
-  {
-    "objectID": "hw/04-hw-classification.html#exercise-0.3",
-    "href": "hw/04-hw-classification.html#exercise-0.3",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Exercise 0.3",
-    "text": "Exercise 0.3\n\n\n\n\n\n\nWarning\n\n\n\nSkip this exercise until everyone has finished the homework. Test 1\n\n\n\n\n\n\n\n\nQuestion\n\n\n\n\nRead the warning above!\n(DO NOT SKIP) Go through all of the questions together, discussing each others solutions to get a good idea of what you want the final submission to look like.\nOn any computer, type git checkout main. This will move you into the main branch.\nType git merge name_of_branch_you_want_to_merge where name_of_branch_you_want_to_merge is the name of the branch you want to merge into main.\nDo this for each team members branch. Each time you will likely get a merge-conflict that you need to resolve. Resolve them in the same way you did for the previous homework.\nGive your document a once-over, ensuring that you have blended all your work into a coherent format.\nRender, commit, and push one last time.\n\nIf you do the following, I will give you a zero until you fix them:\n\nPut multiple answers for the same problem. E.g. (“Eric’s Answer…”, “Adam’s Answer…”). You must discuss and decide on what the best solution is as a group.\nCreate a final document without merging. I must see each team member merge into the main branch even if you don’t plan on keeping any of their changes."
-  },
-  {
-    "objectID": "hw/04-hw-classification.html#exercise-1",
-    "href": "hw/04-hw-classification.html#exercise-1",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-1",
+    "href": "hw/05-hw-preproc-cv.html#exercise-1",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Exercise 1",
-    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\n\nLoad the data set into R using the read_csv function. The haberman.data file does not contain column names so you will need to use the col_names argument to specify them yourself. Choose sensible names based on the information in haberman.names.\nConvert the Survival Status variable into a factor, giving appropriate names (i.e. not numbers) to each category.\nGive a brief summary of the data set containing any information you feel would be important.\nSplit the data into a training and test set. Use a 60-40 split. Once again, please set your seed to 427."
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nThe data are contained in lego-sample.csv. Load the data."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-2",
-    "href": "hw/04-hw-classification.html#exercise-2",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-2",
+    "href": "hw/05-hw-preproc-cv.html#exercise-2",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Exercise 2",
-    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nUsing the data from your training set build a logistic regression model to predict whether or not a patient will survive based only on the number of axillary nodes detected. The same summary and broom functions will work for exploring your logistic model. Does the probability of survival increase or decrease with the number of nodes detected?"
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nTwo of the variables in the data set shouldn’t be useful because they just serve to identify the different LEGO sets. Which two are they? Remove them."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-2-1",
-    "href": "hw/04-hw-classification.html#exercise-2-1",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Exercise 2",
-    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nUse the predict function to evaluate your model on the integers from 0 to 50. Create a plot with the integers from 0 to 50 on the x-axis and the predicted probabilities on the y-axis. Based on this image, estimate the input that would be needed to give an output of 0.75. What does this mean in the context of the model? Note. To use predict the new_data must be a tibble where the columns have the same names as the those in the data frame you used to train your model."
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-3",
+    "href": "hw/05-hw-preproc-cv.html#exercise-3",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that the Weight variable is a bit odd… It seems like it should be numeric but it’s a chr. Why? Write code to extract the true numerical weight in either lbs or Kgs (your choice). You are encouraged to use the internet and generative AI to help you figure out how to do this. However, make sure you are able to explain your code once you are done."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exericse-4",
-    "href": "hw/04-hw-classification.html#exericse-4",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Exericse 4",
-    "text": "Exericse 4\n\n\n\n\n\n\nQuestion\n\n\n\n\nFor the rest of the homework, treat the patient dying as our “Positive” class.\nUsing a threshold value of 0.5, obtain a vector of class predictions for the test data set (the if_else function might be useful here). You need not display it.\nConstruct a confusion matrix.\nUsing the numbers from your confusion matrix (i.e. without using functions from yardstick) compute the following:\n\nAccuracy\nPrecision\nRecall\nSpecificity\nNegative Predictive Value"
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-4",
+    "href": "hw/05-hw-preproc-cv.html#exercise-4",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\n\n\n\n\n\nQuestion\n\n\n\nFor each of the 12 features do the following:\n\n\n\nExercise 4.1\n\n\n\n\n\n\nQuestion\n\n\n\nIdentify if they are the correct data type. Are categorical variables coded as factors? Are the factor levels in the correct order if necessary? Are numerical variables coded as numbers? You will need to read descriptions of the data to make this determination.\n\n\n\n\nExercise 4.2\n\n\n\n\n\n\nQuestion\n\n\n\nIdentify any variables with missing values. Identify and then fix any variables for whom missing values (i.e. NAs) indicate something other than that the data is missing (there is at least one). Fill in this missing values appropriately.\n\n\n\n\nExercise 4.3\n\n\n\n\n\n\nQuestion\n\n\n\nFor all of the categorical variables, identify ones that you think may be problematic because they may have near-zero variance. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate.\n\n\n\n\nExercise 4.4\n\n\n\n\n\n\nQuestion\n\n\n\nFor all of the categorical variables, identify ones that you think may be problematic because they have many categories that don’t have a lot of observations and likely need to be “lumped”. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate."
   },
   {
-    "objectID": "hw/04-hw-classification.html#baseline-model",
-    "href": "hw/04-hw-classification.html#baseline-model",
-    "title": "Homework 4: Intro to Classification",
-    "section": "Baseline Model",
-    "text": "Baseline Model\nNow, we may be asking ourselves, “Is this a good accuracy?” and the answer is, as always, “It depends on your data and the goals of your analysis!”. The question below illustrates some of the nuances of using accuracy as a performance metric."
-  },
-  {
-    "objectID": "hw/04-hw-classification.html#exercise-5",
-    "href": "hw/04-hw-classification.html#exercise-5",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-5",
+    "href": "hw/05-hw-preproc-cv.html#exercise-5",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Exercise 5",
-    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nSuppose you decided to create a super simple model and just predict that everyone survives. What would the accuracy on the training set be? Note that you should not need to use construct a confusion matrix to answer this question.\n\n\nPerhaps we shouldn’t be so excited about the accuracy obtained in question 4! Accuracy is a good metric but it isn’t perfect and suffers in situations where our classes are unbalanced."
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nSplit your data into training and test sets. Use your own judgement to determine training to test split ratio. Make sure to set a seed."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-6",
-    "href": "hw/04-hw-classification.html#exercise-6",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-6",
+    "href": "hw/05-hw-preproc-cv.html#exercise-6",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Exercise 6",
-    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nA threshold of 0.5 isn’t necessarily the best choice for the threshold. Write out a for-loop to test every threshold between 0 and 1 (increase by steps of 0.01). Create a single line-plot with the the threshold on the x-axis and the following on the y-axis: - accuracy - recall - precision You may use any parsnip functions you like. Hint: you should NOT be fitting any models here."
+    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate at least three different recipes designed to be used with linear regression that treat preprocessing differently. Hint: you’ll likely want to try out different missing value imputation or lumping strategies. It’s also a good idea to include step_lincolm."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-7",
-    "href": "hw/04-hw-classification.html#exercise-7",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-7",
+    "href": "hw/05-hw-preproc-cv.html#exercise-7",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Exercise 7",
-    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nProduce an ROC curve and AUC statistic on the test set. Try to add your AUC to your plot. Comment on your results."
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate at least three different recipes designed to be used with \\(K\\)-nearest neighbors that treat preprocessing differently. Hint: you’ll likely want to try out different missing value imputation or lumping strategies."
   },
   {
-    "objectID": "hw/04-hw-classification.html#exercise-8",
-    "href": "hw/04-hw-classification.html#exercise-8",
-    "title": "Homework 4: Intro to Classification",
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-7-1",
+    "href": "hw/05-hw-preproc-cv.html#exercise-7-1",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 7",
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nCreate a workflow_set that contains 12 different workflows:\n\nthree linear regression workflows: one linear regression model with each of the three recipes you created above\nnine different KNN workflows: choose three different \\(K\\)s for you KNN models and create one workflow for each combination of KNN model and preprocessing recipe"
+  },
+  {
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-8",
+    "href": "hw/05-hw-preproc-cv.html#exercise-8",
+    "title": "Homework 05: Preprocessing and Cross Validation",
     "section": "Exercise 8",
-    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nKaggle is a website that runs a variety of data science competitions. Read about the framingham heart study and the associated data set here. Please stop reading at the section entitled “logistic regression” as this will spoil the fun of analyzing this data set. Since you have to create an account to download data off of Kaggle I’ve included a csv in the assignment repository. Create the best model that you can. Best model get’s a high five from Dr. Friedlander. Note, split your data into a train, and test sets using the seed 10520."
+    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nUse 5 fold CV with 5 repeats to compute the RMSE and R-squared for each of the 12 workflows you created above. Note that this step may take a few minutes to execute."
+  },
+  {
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-9",
+    "href": "hw/05-hw-preproc-cv.html#exercise-9",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 9",
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nPlot the results of your cross validation and select your best workflow."
+  },
+  {
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-10",
+    "href": "hw/05-hw-preproc-cv.html#exercise-10",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 10",
+    "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nRe-fit your best model on the whole training set and estimate your error metrics on the test set."
+  },
+  {
+    "objectID": "hw/05-hw-preproc-cv.html#exercise-11-sample-interview-question",
+    "href": "hw/05-hw-preproc-cv.html#exercise-11-sample-interview-question",
+    "title": "Homework 05: Preprocessing and Cross Validation",
+    "section": "Exercise 11 (Sample interview question)",
+    "text": "Exercise 11 (Sample interview question)\n\n\n\n\n\n\nQuestion\n\n\n\nThe time to complete cross-validation can be substantially improved by using parallel processing. Below is the output for the copilot prompt “Generate pseudo-code in R to do cross-validation with repetition and multiple models”. Which parts of this code can be run in parallel and which can’t. Note any changes that you might need to make for this to be parallelizable.\n\n# Define the number of folds (k) and the number of repetitions (r)\nk &lt;- 5\nr &lt;- 3\n\n# Define the list of models to evaluate\nmodels &lt;- list(\n    model1 = train_model1,\n    model2 = train_model2,\n    model3 = train_model3\n)\n\n# Initialize a list to store the performance metrics for each model\nall_performance_metrics &lt;- list()\n\n# Loop through each model\nfor (model_name in names(models)) {\n    # Initialize a list to store the performance metrics for this model\n    model_performance_metrics &lt;- list()\n    \n    # Loop through each repetition\n    for (rep in 1:r) {\n        # Create k-fold cross-validation indices for this repetition\n        folds &lt;- createFolds(dataset$target_variable, k = k)\n        \n        # Initialize a list to store the performance metrics for this repetition\n        performance_metrics &lt;- list()\n        \n        # Loop through each fold\n        for (i in 1:k) {\n            # Use the i-th fold as the validation set\n            validation_indices &lt;- folds[[i]]\n            validation_set &lt;- dataset[validation_indices, ]\n            \n            # Use the remaining folds as the training set\n            training_set &lt;- dataset[-validation_indices, ]\n            \n            # Train the model on the training set\n            model &lt;- models[[model_name]](training_set)\n            \n            # Evaluate the model on the validation set\n            performance &lt;- evaluate_model(model, validation_set)\n            \n            # Store the performance metric\n            performance_metrics[[i]] &lt;- performance\n        }\n        \n        # Store the performance metrics for this repetition\n        model_performance_metrics[[rep]] &lt;- performance_metrics\n    }\n    \n    # Store the performance metrics for this model\n    all_performance_metrics[[model_name]] &lt;- model_performance_metrics\n}\n\n# Calculate the average performance metric for each model across all repetitions\naverage_performance &lt;- sapply(all_performance_metrics, function(metrics) mean(unlist(metrics)))\n\n# Output the average performance for each model\nprint(\"Average Performance for each model:\")\nprint(average_performance)"
   },
   {
     "objectID": "schedule.html",
@@ -5962,249 +5969,242 @@
     ]
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html",
-    "href": "hw/09_hw_RandomForests.html",
+    "objectID": "hw/04-hw-classification.html",
+    "href": "hw/04-hw-classification.html",
+    "title": "Homework 4: Intro to Classification",
+    "section": "",
+    "text": "In this homework we will focus on classification. That is when the response variable is categorical. We’ll be on predicting a binary response variable, which is a categorical variable with only two possible outcomes. You will also practice collaborating with teams using GitHub.\n\n\nBy the end of the homework, you will…\n\nBe able to work create and merge branches in GitHub\nFit and interpret logistic regression models\nFit and evaluation binary classification models"
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#learning-goals",
+    "href": "hw/04-hw-classification.html#learning-goals",
+    "title": "Homework 4: Intro to Classification",
+    "section": "",
+    "text": "By the end of the homework, you will…\n\nBe able to work create and merge branches in GitHub\nFit and interpret logistic regression models\nFit and evaluation binary classification models"
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#teams-rules",
+    "href": "hw/04-hw-classification.html#teams-rules",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Teams & Rules",
+    "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW4. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:\n\nAt the start of your homework, you and your team members should be in the same physical room for Exercise 0.1.\nExercise 0.2 will teach your how to create your own branch. Each team member will create their own branch and complete the homework themselves. Note that I’ll be able to see all of your commit so I’ll know if you didn’t do this.\nOnce everyone is finished, you and your team members should get together in the same room again to Complete Exercise 0.3 which will teach you how to merge your branches together and decide on the best version of each question.\n\nAs always:\n\nYou are all responsible for understanding the work that you turn in.\nIf you encounter a merge error that you don’t know how to fix, contact Dr. Friedlander as soon as possible. I recommend starting this assignment early so there is time for Dr. Friedlander to help you resolve any problems before the deadline."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#clone-the-repo-create-your-own-branch-merging",
+    "href": "hw/04-hw-classification.html#clone-the-repo-create-your-own-branch-merging",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Clone the repo, create your own branch, & merging",
+    "text": "Clone the repo, create your own branch, & merging\nThe following directions will guide you through the process of setting up your homework to work as a group."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-0.1",
+    "href": "hw/04-hw-classification.html#exercise-0.1",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 0.1",
+    "text": "Exercise 0.1\n\n\n\n\n\n\nQuestion\n\n\n\nIn your group, decide on a team name. Then have one member of your group:\n\nClick this link to accept the assignment and enter your team name.\nRepeat the directions for creating a project from HW 1 with the HW 4 repository.\n\nOnce this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-0.2",
+    "href": "hw/04-hw-classification.html#exercise-0.2",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 0.2",
+    "text": "Exercise 0.2\nWe will now learn how to create branches and run git from the command line. Each team member will create their own branch and complete a version of their homework.\n\n\n\n\n\n\nQuestion\n\n\n\n\nClick on the “Terminal” tab right next to the “Console” tab in the bottom left of RStudio. This is a “bash terminal”. You run “bash scripts” here rather than R code.\nCreate your own branch by typing git checkout -b banch_name where branch_name is whatever you want to name your branch. Typing git tells the terminal that you want to run a git command, checkout is a git command that will switch you to a different branch, the -b option will create a new branch for you. If you want to switch between existing branches leave out -b.\nPut your name in one of the slots below and render your document.\nStage your changes by typing git add .. Think of this like clicking the check boxes in the top right screen. If you don’t want to stage ALL of the changes you can type git add filename where filename corresponds to the files you want to stage. . will simply stage all changes.\nCommit your changes by typing git commit -m \"insert commit message\" where you replace insert commit message with your actual commit message. This will commit your changes.\nTo push your changes to GitHub, type git push.\nIf you ever want to pull your changes you can type git pull.\nIf all group members are working different branches you shouldn’t encounter any merge conflicts.\n\n\n\n\nTeam Name: [Insert Name]\nMember 1: [Insert Name]\nMember 2: [Insert Name]\nMember 3: [Insert Name/Delete line if you only have two members]"
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-0.3",
+    "href": "hw/04-hw-classification.html#exercise-0.3",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 0.3",
+    "text": "Exercise 0.3\n\n\n\n\n\n\nWarning\n\n\n\nSkip this exercise until everyone has finished the homework. Test 1\n\n\n\n\n\n\n\n\nQuestion\n\n\n\n\nRead the warning above!\n(DO NOT SKIP) Go through all of the questions together, discussing each others solutions to get a good idea of what you want the final submission to look like.\nOn any computer, type git checkout main. This will move you into the main branch.\nType git merge name_of_branch_you_want_to_merge where name_of_branch_you_want_to_merge is the name of the branch you want to merge into main.\nDo this for each team members branch. Each time you will likely get a merge-conflict that you need to resolve. Resolve them in the same way you did for the previous homework.\nGive your document a once-over, ensuring that you have blended all your work into a coherent format.\nRender, commit, and push one last time.\n\nIf you do the following, I will give you a zero until you fix them:\n\nPut multiple answers for the same problem. E.g. (“Eric’s Answer…”, “Adam’s Answer…”). You must discuss and decide on what the best solution is as a group.\nCreate a final document without merging. I must see each team member merge into the main branch even if you don’t plan on keeping any of their changes."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-1",
+    "href": "hw/04-hw-classification.html#exercise-1",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\n\nLoad the data set into R using the read_csv function. The haberman.data file does not contain column names so you will need to use the col_names argument to specify them yourself. Choose sensible names based on the information in haberman.names.\nConvert the Survival Status variable into a factor, giving appropriate names (i.e. not numbers) to each category.\nGive a brief summary of the data set containing any information you feel would be important.\nSplit the data into a training and test set. Use a 60-40 split. Once again, please set your seed to 427."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-2",
+    "href": "hw/04-hw-classification.html#exercise-2",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nUsing the data from your training set build a logistic regression model to predict whether or not a patient will survive based only on the number of axillary nodes detected. The same summary and broom functions will work for exploring your logistic model. Does the probability of survival increase or decrease with the number of nodes detected?"
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-2-1",
+    "href": "hw/04-hw-classification.html#exercise-2-1",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nUse the predict function to evaluate your model on the integers from 0 to 50. Create a plot with the integers from 0 to 50 on the x-axis and the predicted probabilities on the y-axis. Based on this image, estimate the input that would be needed to give an output of 0.75. What does this mean in the context of the model? Note. To use predict the new_data must be a tibble where the columns have the same names as the those in the data frame you used to train your model."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exericse-4",
+    "href": "hw/04-hw-classification.html#exericse-4",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exericse 4",
+    "text": "Exericse 4\n\n\n\n\n\n\nQuestion\n\n\n\n\nFor the rest of the homework, treat the patient dying as our “Positive” class.\nUsing a threshold value of 0.5, obtain a vector of class predictions for the test data set (the if_else function might be useful here). You need not display it.\nConstruct a confusion matrix.\nUsing the numbers from your confusion matrix (i.e. without using functions from yardstick) compute the following:\n\nAccuracy\nPrecision\nRecall\nSpecificity\nNegative Predictive Value"
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#baseline-model",
+    "href": "hw/04-hw-classification.html#baseline-model",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Baseline Model",
+    "text": "Baseline Model\nNow, we may be asking ourselves, “Is this a good accuracy?” and the answer is, as always, “It depends on your data and the goals of your analysis!”. The question below illustrates some of the nuances of using accuracy as a performance metric."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-5",
+    "href": "hw/04-hw-classification.html#exercise-5",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 5",
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nSuppose you decided to create a super simple model and just predict that everyone survives. What would the accuracy on the training set be? Note that you should not need to use construct a confusion matrix to answer this question.\n\n\nPerhaps we shouldn’t be so excited about the accuracy obtained in question 4! Accuracy is a good metric but it isn’t perfect and suffers in situations where our classes are unbalanced."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-6",
+    "href": "hw/04-hw-classification.html#exercise-6",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 6",
+    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nA threshold of 0.5 isn’t necessarily the best choice for the threshold. Write out a for-loop to test every threshold between 0 and 1 (increase by steps of 0.01). Create a single line-plot with the the threshold on the x-axis and the following on the y-axis: - accuracy - recall - precision You may use any parsnip functions you like. Hint: you should NOT be fitting any models here."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-7",
+    "href": "hw/04-hw-classification.html#exercise-7",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 7",
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nProduce an ROC curve and AUC statistic on the test set. Try to add your AUC to your plot. Comment on your results."
+  },
+  {
+    "objectID": "hw/04-hw-classification.html#exercise-8",
+    "href": "hw/04-hw-classification.html#exercise-8",
+    "title": "Homework 4: Intro to Classification",
+    "section": "Exercise 8",
+    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nKaggle is a website that runs a variety of data science competitions. Read about the framingham heart study and the associated data set here. Please stop reading at the section entitled “logistic regression” as this will spoil the fun of analyzing this data set. Since you have to create an account to download data off of Kaggle I’ve included a csv in the assignment repository. Create the best model that you can. Best model get’s a high five from Dr. Friedlander. Note, split your data into a train, and test sets using the seed 10520."
+  },
+  {
+    "objectID": "hw/09-hw-RandomForests.html",
+    "href": "hw/09-hw-RandomForests.html",
     "title": "Homework 9: Random Forests",
     "section": "",
     "text": "In this homework, we will practice using bagging and random forests to make classifications. In addition, we will talk more about cross validation and parameter tuning.\n\n\nIn this assignment, you will…\n\nFit random forests\nUse variable importance plots to interpret random forests\nUse grid-based techniques to choose tuning parameters"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#learning-goals",
-    "href": "hw/09_hw_RandomForests.html#learning-goals",
+    "objectID": "hw/09-hw-RandomForests.html#learning-goals",
+    "href": "hw/09-hw-RandomForests.html#learning-goals",
     "title": "Homework 9: Random Forests",
     "section": "",
     "text": "In this assignment, you will…\n\nFit random forests\nUse variable importance plots to interpret random forests\nUse grid-based techniques to choose tuning parameters"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#teams-rules",
-    "href": "hw/09_hw_RandomForests.html#teams-rules",
+    "objectID": "hw/09-hw-RandomForests.html#teams-rules",
+    "href": "hw/09-hw-RandomForests.html#teams-rules",
     "title": "Homework 9: Random Forests",
     "section": "Teams & Rules",
     "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW9. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found here. Rules:\n\nYou are all responsible for understanding the work that your team turns in.\nAll team members must make roughly equal contributions to the homework.\nAny work completed by a team member must be committed and pushed to GitHub by that person."
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#data-titanic",
-    "href": "hw/09_hw_RandomForests.html#data-titanic",
+    "objectID": "hw/09-hw-RandomForests.html#data-titanic",
+    "href": "hw/09-hw-RandomForests.html#data-titanic",
     "title": "Homework 9: Random Forests",
     "section": "Data: Titanic",
     "text": "Data: Titanic\nWe will be using the famous Titanic data set which includes data for many passengers on the Titanic, including whether or not they survived. The files have already been cleaned up a bit for you and are split into testing Titanic_test.csv and training sets Titanic_train.csv. If you ever participate in a “hack-a-thon” or Kaggle-type data science competition, you will typically be given a “labeled” training set (i.e. including response variables) and unlabeled test set. You will then be scored on how well your predictions on the test set match the true values that you are unable to see. In this homework, I will be giving you the labels on the test set. The variables in the data represent, in order:\n\nWhether the passenger survived (1) or died (0)\nPassenger Class (1st, 2nd, or 3rd)\nSex\nAge (NA if unknown),\nSiblings/spouses on board\nParents/children on board\nFare paid,\nPort of Embarkation (either Cherbourg, Queenstown, or Southhampton)"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-1",
-    "href": "hw/09_hw_RandomForests.html#exercise-1",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-1",
+    "href": "hw/09-hw-RandomForests.html#exercise-1",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 1",
     "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the two data sets. Take a look at the data (don’t print anything) and take care of any cleaning that is necessary (e.g. removing an ID column or columns or row numbers). Based on the characteristics above, which two or three features do you think are going to be most important for predicting who survives? Give a brief justification for each."
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-2",
-    "href": "hw/09_hw_RandomForests.html#exercise-2",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-2",
+    "href": "hw/09-hw-RandomForests.html#exercise-2",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 2",
     "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nConduct a BRIEF EDA to explore the relationship between survival status and the variables you describe above. Practice making this looks professional. Advice:\n\nUse plots instead of table unless there is something interesting about specific numbers that you’d like to point out.\nMake sure you interpret each plot. Do not simply create the plot and say “Look at this plot that I made!”\nPut your explanations and interpretations directly before and after your plots. I.e. if you’re going to make three plots, display and explain them one at a time."
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-3",
-    "href": "hw/09_hw_RandomForests.html#exercise-3",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-3",
+    "href": "hw/09-hw-RandomForests.html#exercise-3",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 3",
     "text": "Exercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate a recipe that can be used with a random forest and classification tree. You are welcome to create more than one if you feel it’s necessary."
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-4",
-    "href": "hw/09_hw_RandomForests.html#exercise-4",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-4",
+    "href": "hw/09-hw-RandomForests.html#exercise-4",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 4",
     "text": "Exercise 4\n\n\n\n\n\n\nQuestion\n\n\n\nBuild a classification tree on the training set to predict who will survive. Plot your classification tree below. What variables seem most important?"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-5",
-    "href": "hw/09_hw_RandomForests.html#exercise-5",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-5",
+    "href": "hw/09-hw-RandomForests.html#exercise-5",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 5",
     "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nApply your model to the test set to predict who will survive. Print the confusion matrix below. What is the accuracy of this tree model?"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-6",
-    "href": "hw/09_hw_RandomForests.html#exercise-6",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-6",
+    "href": "hw/09-hw-RandomForests.html#exercise-6",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 6",
     "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nBuild a single random forest for the training set. Make sure to\n\nChoose the number of factors to consider at each step (e.g. mtry)\nChoose the number of trees to build by specifying ntree\nMake sure to set importance = \"impurity\" in the engine"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-7",
-    "href": "hw/09_hw_RandomForests.html#exercise-7",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-7",
+    "href": "hw/09-hw-RandomForests.html#exercise-7",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 7",
     "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate a variable importance plot for your forest. How do the variables it identifies as important compare to the classification tree?"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-8",
-    "href": "hw/09_hw_RandomForests.html#exercise-8",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-8",
+    "href": "hw/09-hw-RandomForests.html#exercise-8",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 8",
     "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nHow does your model perform on the test data? How does it’s performance compare to the classification tree?"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#cross-validation-and-parameter-tuning",
-    "href": "hw/09_hw_RandomForests.html#cross-validation-and-parameter-tuning",
+    "objectID": "hw/09-hw-RandomForests.html#cross-validation-and-parameter-tuning",
+    "href": "hw/09-hw-RandomForests.html#cross-validation-and-parameter-tuning",
     "title": "Homework 9: Random Forests",
     "section": "Cross Validation and Parameter Tuning",
     "text": "Cross Validation and Parameter Tuning"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-9",
-    "href": "hw/09_hw_RandomForests.html#exercise-9",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-9",
+    "href": "hw/09-hw-RandomForests.html#exercise-9",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 9",
     "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nFor tuning a random forest model, we are mostly interested in finding the best value of mtry, the number of variables used at each split when building the trees. Conduct a grid search to find the best value of mtry."
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-10",
-    "href": "hw/09_hw_RandomForests.html#exercise-10",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-10",
+    "href": "hw/09-hw-RandomForests.html#exercise-10",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 10",
     "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nWhen you have your best model, use it to predict who will survive in Titanic_test and report the accuracy.\nMost likely, this is greater than the accuracy of your classification tree model from Problem 5. But maybe not. There is still some randomness involved and it is always possible that on a particular data set, one method will outperform another. Still, by tuning parameters and doing cross-validation, we give ourselves the best chance of creating an accurate model."
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-11",
-    "href": "hw/09_hw_RandomForests.html#exercise-11",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-11",
+    "href": "hw/09-hw-RandomForests.html#exercise-11",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 11",
     "text": "Exercise 11\n\n\n\n\n\n\nQuestion\n\n\n\nCompare and contrast the information given by the variable importance plot of the random forest and looking at the actual classification tree. What information is contained in both? What information is only contained in one but not the other? Which is better for interpretability?"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-12",
-    "href": "hw/09_hw_RandomForests.html#exercise-12",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-12",
+    "href": "hw/09-hw-RandomForests.html#exercise-12",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 12",
     "text": "Exercise 12\n\n\n\n\n\n\nQuestion\n\n\n\nIn class, Dr. Friedlander described the number of tree grown in a random forest as being “kind of” a hyper parameter. What did he mean by that?"
   },
   {
-    "objectID": "hw/09_hw_RandomForests.html#exercise-13",
-    "href": "hw/09_hw_RandomForests.html#exercise-13",
+    "objectID": "hw/09-hw-RandomForests.html#exercise-13",
+    "href": "hw/09-hw-RandomForests.html#exercise-13",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 13",
     "text": "Exercise 13\n\n\n\n\n\n\nQuestion\n\n\n\nDiscuss the mtry parameter in the context of the bias-variance trade-off. How should mtry impact the flexibility, bias, and variance of the model?"
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html",
-    "href": "hw/05-hw-preproc-cv.html",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "",
-    "text": "In this homework you will practice pre-processing data and using cross-validation to evaluate regression models.\n\n\nIn this assignment, you will…\n\nUse exploratory data analysis to inform feature engineering steps\nPre-process data and impute missing values\nEvaluate and compare models using cross-validation"
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#learning-goals",
-    "href": "hw/05-hw-preproc-cv.html#learning-goals",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "",
-    "text": "In this assignment, you will…\n\nUse exploratory data analysis to inform feature engineering steps\nPre-process data and impute missing values\nEvaluate and compare models using cross-validation"
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#teams-rules",
-    "href": "hw/05-hw-preproc-cv.html#teams-rules",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Teams & Rules",
-    "text": "Teams & Rules\nYou can find your team for this assignment on Canvas in the People section. The group set is called HW5. Your group will consist of 2-3 people and has been randomly generated. You have now been exposed to all of the Git concepts that we will talk about in this class. It is up to you to apply them to complete your homework in any way you see fit. Some rules:\n\nYou are all responsible for understanding the work that you turn in.\nAll team members must make roughly equal contributions to the homework.\nAny work completed by a team member must be committed and pushed to GitHub by that person."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-0",
-    "href": "hw/05-hw-preproc-cv.html#exercise-0",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 0",
-    "text": "Exercise 0\nAs in your previous homework’s, create your team on GitHub classroom and clone the repository. Here is a link to the homework."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#data-lego",
-    "href": "hw/05-hw-preproc-cv.html#data-lego",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Data: LEGO",
-    "text": "Data: LEGO\nThe data for this analysis includes information about LEGO sets from themes produced January 1, 2018 and September 11, 2020. The data were originally scraped from Brickset.com, an online LEGO set guide and were obtained for this assignment from Peterson and Zieglar (2021).\nYou will work with data on about 400 randomly selected LEGO sets produced during this time period. The primary variables are interest in this analysis are:\n\nItem_Number: a serial code corresponding to the set.\nSet_Name: The name of the LEGO set.\nTheme: Theme of the LEGO set.\nPieces: Number of pieces in the set from brickset.com.\nAmazon_Price: Amazon price of the set scraped from brickset.com (in U.S. dollars).\nYear : Year the LEGO set was produced.\nAges: Variable stating what aged children the set is appropriate for.\nPages: Number of pages in the instruction booklet.\nMinifigures: Number of minifigures (LEGO people) in the set scraped from brickset.com. LEGO sets with no minifigures have been coded as NA. NA’s also represent missing data. This is due to how brickset.com reports their data.\nPackaging: What type of packaging the set came in.\nWeight: The weight of the set.\nUnique_Pieces: The number of unique pieces in each set.\nAvailability: Where the set can be purchased.\nSize: General size of the interlocking bricks (Large = LEGO Duplo sets - which include large brick pieces safe for children ages 1 to 5, Small = LEGO sets which- include the traditional smaller brick pieces created for age groups 5 and - older, e.g., City, Friends).\n\nYour ultimate goal will be to predict Amazon_Price from the other features."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-1",
-    "href": "hw/05-hw-preproc-cv.html#exercise-1",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 1",
-    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nThe data are contained in lego-sample.csv. Load the data."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-2",
-    "href": "hw/05-hw-preproc-cv.html#exercise-2",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 2",
-    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nTwo of the variables in the data set shouldn’t be useful because they just serve to identify the different LEGO sets. Which two are they? Remove them."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-3",
-    "href": "hw/05-hw-preproc-cv.html#exercise-3",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 3",
-    "text": "Exercise 3\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that the Weight variable is a bit odd… It seems like it should be numeric but it’s a chr. Why? Write code to extract the true numerical weight in either lbs or Kgs (your choice). You are encouraged to use the internet and generative AI to help you figure out how to do this. However, make sure you are able to explain your code once you are done."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-4",
-    "href": "hw/05-hw-preproc-cv.html#exercise-4",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 4",
-    "text": "Exercise 4\n\n\n\n\n\n\nQuestion\n\n\n\nFor each of the 12 features do the following:\n\n\n\nExercise 4.1\n\n\n\n\n\n\nQuestion\n\n\n\nIdentify if they are the correct data type. Are categorical variables coded as factors? Are the factor levels in the correct order if necessary? Are numerical variables coded as numbers? You will need to read descriptions of the data to make this determination.\n\n\n\n\nExercise 4.2\n\n\n\n\n\n\nQuestion\n\n\n\nIdentify any variables with missing values. Identify and then fix any variables for whom missing values (i.e. NAs) indicate something other than that the data is missing (there is at least one). Fill in this missing values appropriately.\n\n\n\n\nExercise 4.3\n\n\n\n\n\n\nQuestion\n\n\n\nFor all of the categorical variables, identify ones that you think may be problematic because they may have near-zero variance. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate.\n\n\n\n\nExercise 4.4\n\n\n\n\n\n\nQuestion\n\n\n\nFor all of the categorical variables, identify ones that you think may be problematic because they have many categories that don’t have a lot of observations and likely need to be “lumped”. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-5",
-    "href": "hw/05-hw-preproc-cv.html#exercise-5",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 5",
-    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nSplit your data into training and test sets. Use your own judgement to determine training to test split ratio. Make sure to set a seed."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-6",
-    "href": "hw/05-hw-preproc-cv.html#exercise-6",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 6",
-    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate at least three different recipes designed to be used with linear regression that treat preprocessing differently. Hint: you’ll likely want to try out different missing value imputation or lumping strategies. It’s also a good idea to include step_lincolm."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-7",
-    "href": "hw/05-hw-preproc-cv.html#exercise-7",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 7",
-    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nGenerate at least three different recipes designed to be used with \\(K\\)-nearest neighbors that treat preprocessing differently. Hint: you’ll likely want to try out different missing value imputation or lumping strategies."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-7-1",
-    "href": "hw/05-hw-preproc-cv.html#exercise-7-1",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 7",
-    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nCreate a workflow_set that contains 12 different workflows:\n\nthree linear regression workflows: one linear regression model with each of the three recipes you created above\nnine different KNN workflows: choose three different \\(K\\)s for you KNN models and create one workflow for each combination of KNN model and preprocessing recipe"
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-8",
-    "href": "hw/05-hw-preproc-cv.html#exercise-8",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 8",
-    "text": "Exercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nUse 5 fold CV with 5 repeats to compute the RMSE and R-squared for each of the 12 workflows you created above. Note that this step may take a few minutes to execute."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-9",
-    "href": "hw/05-hw-preproc-cv.html#exercise-9",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 9",
-    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nPlot the results of your cross validation and select your best workflow."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-10",
-    "href": "hw/05-hw-preproc-cv.html#exercise-10",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 10",
-    "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nRe-fit your best model on the whole training set and estimate your error metrics on the test set."
-  },
-  {
-    "objectID": "hw/05-hw-preproc-cv.html#exercise-11-sample-interview-question",
-    "href": "hw/05-hw-preproc-cv.html#exercise-11-sample-interview-question",
-    "title": "Homework 05: Preprocessing and Cross Validation",
-    "section": "Exercise 11 (Sample interview question)",
-    "text": "Exercise 11 (Sample interview question)\n\n\n\n\n\n\nQuestion\n\n\n\nThe time to complete cross-validation can be substantially improved by using parallel processing. Below is the output for the copilot prompt “Generate pseudo-code in R to do cross-validation with repetition and multiple models”. Which parts of this code can be run in parallel and which can’t. Note any changes that you might need to make for this to be parallelizable.\n\n# Define the number of folds (k) and the number of repetitions (r)\nk &lt;- 5\nr &lt;- 3\n\n# Define the list of models to evaluate\nmodels &lt;- list(\n    model1 = train_model1,\n    model2 = train_model2,\n    model3 = train_model3\n)\n\n# Initialize a list to store the performance metrics for each model\nall_performance_metrics &lt;- list()\n\n# Loop through each model\nfor (model_name in names(models)) {\n    # Initialize a list to store the performance metrics for this model\n    model_performance_metrics &lt;- list()\n    \n    # Loop through each repetition\n    for (rep in 1:r) {\n        # Create k-fold cross-validation indices for this repetition\n        folds &lt;- createFolds(dataset$target_variable, k = k)\n        \n        # Initialize a list to store the performance metrics for this repetition\n        performance_metrics &lt;- list()\n        \n        # Loop through each fold\n        for (i in 1:k) {\n            # Use the i-th fold as the validation set\n            validation_indices &lt;- folds[[i]]\n            validation_set &lt;- dataset[validation_indices, ]\n            \n            # Use the remaining folds as the training set\n            training_set &lt;- dataset[-validation_indices, ]\n            \n            # Train the model on the training set\n            model &lt;- models[[model_name]](training_set)\n            \n            # Evaluate the model on the validation set\n            performance &lt;- evaluate_model(model, validation_set)\n            \n            # Store the performance metric\n            performance_metrics[[i]] &lt;- performance\n        }\n        \n        # Store the performance metrics for this repetition\n        model_performance_metrics[[rep]] &lt;- performance_metrics\n    }\n    \n    # Store the performance metrics for this model\n    all_performance_metrics[[model_name]] &lt;- model_performance_metrics\n}\n\n# Calculate the average performance metric for each model across all repetitions\naverage_performance &lt;- sapply(all_performance_metrics, function(metrics) mean(unlist(metrics)))\n\n# Output the average performance for each model\nprint(\"Average Performance for each model:\")\nprint(average_performance)"
   },
   {
     "objectID": "hw/06-feature-selection-regularization.html",
