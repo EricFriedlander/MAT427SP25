@@ -1667,7 +1667,7 @@
     "href": "slides/26-boosting.html#variable-importance",
     "title": "MATH 427: Boosting",
     "section": "Variable Importance",
-    "text": "Variable Importance\n\nlibrary(vip)\nvip(gbm_fit)\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Variable Importance\n\nlibrary(vip)\nvip(gbm_fit)"
   },
   {
     "objectID": "slides/14-CoverLetter-Resume-PeerReview.html#peer-review",
@@ -6715,5 +6715,19 @@
       "Computing",
       "Computing access"
     ]
+  },
+  {
+    "objectID": "slides/26-boosting.html#exploring-bagging-using-app",
+    "href": "slides/26-boosting.html#exploring-bagging-using-app",
+    "title": "MATH 427: Boosting",
+    "section": "Exploring Bagging Using App",
+    "text": "Exploring Bagging Using App\n\nApp"
+  },
+  {
+    "objectID": "slides/26-boosting.html#playing-with-the-app",
+    "href": "slides/26-boosting.html#playing-with-the-app",
+    "title": "MATH 427: Boosting",
+    "section": "Playing with the app",
+    "text": "Playing with the app\n\nGet in four groups\nHave one person connect to the TV\nOpen the app\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]

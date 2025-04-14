@@ -36,6 +36,9 @@ tidymodels_prefer()
 set.seed(427)
 ```
 
+## Exploring Bagging Using App
+
+-   [App](https://efriedlander.shinyapps.io/BVTappRegression/)
 
 ## Ensemble Methods
 
@@ -278,4 +281,12 @@ augment(gbm_fit, new_data = voter_test) |>
 library(vip)
 vip(gbm_fit)
 ```
+
+# Exploring with Apps
+
+## Playing with the app
+
+-   Get in four groups
+-   Have one person connect to the TV
+-   Open [the app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
 
