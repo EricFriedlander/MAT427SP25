@@ -50,7 +50,7 @@ set.seed(427)
     
 ## Flexibility vs. Interpretability
 
-![dapted from ISLR, James et al.](images/25/2_7-1.png)
+![Adapted from ISLR, James et al.](images/25/2_7-1.png)
 
 
 # Boosting
@@ -60,8 +60,12 @@ set.seed(427)
 -   Still an ensemble method in that it creates a bunch of models (trees in this case)
 -   Trees are created *sequentially*, and fit to the *residuals* of the previous trees
 -   Idea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly
--   Each model in the process is a weak model, referred to as the **base learner**
+-   Each model in the process is a weak model, referred to as a **base learner**
 -   **learning slowly**: as more trees are fit, the overall ensemble gradually improves
+
+. . .
+
+-   Remind me: What is a residual?
 
 ## Boosting Algorithm {.smaller}
 
@@ -69,9 +73,9 @@ Let $B$ be the number of trees you want to fit and $d$ the maximum number of spl
 
 1.    Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all training set
 2.    For $b = 1,\ldots, B$:
-    a.    Fit tree $\hat{f}_b$ with $d$ splits ($d+1$ leaves) using residuals $r$ as response and features $X$ as predictors.
-    b.    Update full model $\hat{f}$: $\hat{f} = \hat{f} + \lambda\hat{f}_b$
-    c.    Update pseudo-residuals: $r_i = r_i - \lambda\hat{f}_b(x_i)$
+        a.    Fit tree $\hat{f}_b$ with $d$ splits ($d+1$ leaves) using psuedo-residuals $r$ as response and features $X$ as predictors.
+        b.    Update full model $\hat{f}$: $\hat{f} = \hat{f} + \lambda\hat{f}_b$
+        c.    Update pseudo-residuals: $r_i = r_i - \lambda\hat{f}_b(x_i)$
 3. Output final model:
 $$\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}_b(x)$$
 -   It may be hard to see, but this is similar to gradient descent and so is called **gradient boosting**
@@ -185,7 +189,7 @@ voter_test <- testing(voter_splits)
 
 ## Define Model
 
--   `trees`: kind of a tuning parameter... want to select value that is large enough but doesn't matter past that
+-   `trees`: VERY MUCH A TUNING PARAMETER NOW!
 
 ```{r}
 gbm_model <- boost_tree(trees = tune(), learn_rate = tune(), tree_depth = tune(),
@@ -211,7 +215,6 @@ gbm_recipe <- recipe(voter_category ~ . , data = voter_train) |>
 ## Define Workflow and Fit
 
 ```{r}
-# need to install ranger
 gbm_wf <- workflow() |>
   add_model(gbm_model) |>
   add_recipe(gbm_recipe)
@@ -228,6 +231,8 @@ voter_folds = vfold_cv(voter_train, v = 5, repeats = 10, strata = voter_category
 ```
 
 ## Tuning Hyperparameters in Parallel
+-   Check out [Chapter 10.4 of TMWR](https://www.tmwr.org/resampling#parallel)
+    +   Implementation depends on operating system
 
 ```{r}
 library(doParallel)

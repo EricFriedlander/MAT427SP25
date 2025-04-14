@@ -440,7 +440,7 @@ Eric Friedlander
 <section id="flexibility-vs.-interpretability" class="slide level2">
 <h2>Flexibility vs.&nbsp;Interpretability</h2>
 
-<img data-src="images/25/2_7-1.png" class="r-stretch quarto-figure-center"><p class="caption">dapted from ISLR, James et al.</p></section>
+<img data-src="images/25/2_7-1.png" class="r-stretch quarto-figure-center"><p class="caption">Adapted from ISLR, James et al.</p></section>
 <section>
 <section id="boosting" class="title-slide slide level1 center">
 <h1>Boosting</h1>
@@ -452,16 +452,26 @@ Eric Friedlander
 <li>Still an ensemble method in that it creates a bunch of models (trees in this case)</li>
 <li>Trees are created <em>sequentially</em>, and fit to the <em>residuals</em> of the previous trees</li>
 <li>Idea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly</li>
-<li>Each model in the process is a weak model, referred to as the <strong>base learner</strong></li>
+<li>Each model in the process is a weak model, referred to as a <strong>base learner</strong></li>
 <li><strong>learning slowly</strong>: as more trees are fit, the overall ensemble gradually improves</li>
 </ul>
+<div class="fragment">
+<ul>
+<li>Remind me: What is a residual?</li>
+</ul>
+</div>
 </section>
 <section id="boosting-algorithm" class="slide level2 smaller">
 <h2>Boosting Algorithm</h2>
 <p>Let <span class="math inline">\(B\)</span> be the number of trees you want to fit and <span class="math inline">\(d\)</span> the maximum number of splits</p>
 <ol type="1">
 <li>Set <span class="math inline">\(\hat{f}(x) = 0\)</span> and <span class="math inline">\(r_i = y_i\)</span> for all training set</li>
-<li>For <span class="math inline">\(b = 1,\ldots, B\)</span>: a. Fit tree <span class="math inline">\(\hat{f}_b\)</span> with <span class="math inline">\(d\)</span> splits (<span class="math inline">\(d+1\)</span> leaves) using residuals <span class="math inline">\(r\)</span> as response and features <span class="math inline">\(X\)</span> as predictors. b. Update full model <span class="math inline">\(\hat{f}\)</span>: <span class="math inline">\(\hat{f} = \hat{f} + \lambda\hat{f}_b\)</span> c.&nbsp;Update pseudo-residuals: <span class="math inline">\(r_i = r_i - \lambda\hat{f}_b(x_i)\)</span></li>
+<li>For <span class="math inline">\(b = 1,\ldots, B\)</span>:
+<ol type="a">
+<li>Fit tree <span class="math inline">\(\hat{f}_b\)</span> with <span class="math inline">\(d\)</span> splits (<span class="math inline">\(d+1\)</span> leaves) using psuedo-residuals <span class="math inline">\(r\)</span> as response and features <span class="math inline">\(X\)</span> as predictors.</li>
+<li>Update full model <span class="math inline">\(\hat{f}\)</span>: <span class="math inline">\(\hat{f} = \hat{f} + \lambda\hat{f}_b\)</span></li>
+<li>Update pseudo-residuals: <span class="math inline">\(r_i = r_i - \lambda\hat{f}_b(x_i)\)</span></li>
+</ol></li>
 <li>Output final model: <span class="math display">\[\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \ \hat{f}_b(x)\]</span></li>
 </ol>
 <ul>
@@ -548,7 +558,7 @@ Eric Friedlander
 <section id="define-model" class="slide level2">
 <h2>Define Model</h2>
 <ul>
-<li><code>trees</code>: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that</li>
+<li><code>trees</code>: VERY MUCH A TUNING PARAMETER NOW!</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>gbm_model <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(<span class="at">trees =</span> <span class="fu">tune</span>(), <span class="at">learn_rate =</span> <span class="fu">tune</span>(), <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
@@ -573,10 +583,9 @@ Eric Friedlander
 <section id="define-workflow-and-fit" class="slide level2">
 <h2>Define Workflow and Fit</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># need to install ranger</span></span>
-<span id="cb6-2"><a></a>gbm_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">add_model</span>(gbm_model) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a></a>  <span class="fu">add_recipe</span>(gbm_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>gbm_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a></a>  <span class="fu">add_model</span>(gbm_model) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a></a>  <span class="fu">add_recipe</span>(gbm_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="creating-hyperparameter-grid" class="slide level2">
@@ -591,6 +600,12 @@ Eric Friedlander
 </section>
 <section id="tuning-hyperparameters-in-parallel" class="slide level2">
 <h2>Tuning Hyperparameters in Parallel</h2>
+<ul>
+<li>Check out <a href="https://www.tmwr.org/resampling#parallel">Chapter 10.4 of TMWR</a>
+<ul>
+<li>Implementation depends on operating system</li>
+</ul></li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">library</span>(doParallel)</span>
 <span id="cb8-2"><a></a></span>

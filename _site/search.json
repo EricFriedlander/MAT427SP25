@@ -1555,21 +1555,21 @@
     "href": "slides/26-boosting.html#flexibility-vs.-interpretability",
     "title": "MATH 427: Boosting",
     "section": "Flexibility vs. Interpretability",
-    "text": "Flexibility vs. Interpretability\n\ndapted from ISLR, James et al."
+    "text": "Flexibility vs. Interpretability\n\nAdapted from ISLR, James et al."
   },
   {
     "objectID": "slides/26-boosting.html#boosting-1",
     "href": "slides/26-boosting.html#boosting-1",
     "title": "MATH 427: Boosting",
     "section": "Boosting",
-    "text": "Boosting\n\nStill an ensemble method in that it creates a bunch of models (trees in this case)\nTrees are created sequentially, and fit to the residuals of the previous trees\nIdea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly\nEach model in the process is a weak model, referred to as the base learner\nlearning slowly: as more trees are fit, the overall ensemble gradually improves"
+    "text": "Boosting\n\nStill an ensemble method in that it creates a bunch of models (trees in this case)\nTrees are created sequentially, and fit to the residuals of the previous trees\nIdea: each additional tree to improve upon the previous trees by focusing on places where the previous trees perform poorly\nEach model in the process is a weak model, referred to as a base learner\nlearning slowly: as more trees are fit, the overall ensemble gradually improves\n\n\n\nRemind me: What is a residual?"
   },
   {
     "objectID": "slides/26-boosting.html#boosting-algorithm",
     "href": "slides/26-boosting.html#boosting-algorithm",
     "title": "MATH 427: Boosting",
     "section": "Boosting Algorithm",
-    "text": "Boosting Algorithm\nLet \\(B\\) be the number of trees you want to fit and \\(d\\) the maximum number of splits\n\nSet \\(\\hat{f}(x) = 0\\) and \\(r_i = y_i\\) for all training set\nFor \\(b = 1,\\ldots, B\\): a. Fit tree \\(\\hat{f}_b\\) with \\(d\\) splits (\\(d+1\\) leaves) using residuals \\(r\\) as response and features \\(X\\) as predictors. b. Update full model \\(\\hat{f}\\): \\(\\hat{f} = \\hat{f} + \\lambda\\hat{f}_b\\) c. Update pseudo-residuals: \\(r_i = r_i - \\lambda\\hat{f}_b(x_i)\\)\nOutput final model: \\[\\hat{f}(x) = \\displaystyle \\sum_{b=1}^{B} \\lambda \\ \\hat{f}_b(x)\\]\n\n\nIt may be hard to see, but this is similar to gradient descent and so is called gradient boosting"
+    "text": "Boosting Algorithm\nLet \\(B\\) be the number of trees you want to fit and \\(d\\) the maximum number of splits\n\nSet \\(\\hat{f}(x) = 0\\) and \\(r_i = y_i\\) for all training set\nFor \\(b = 1,\\ldots, B\\):\n\nFit tree \\(\\hat{f}_b\\) with \\(d\\) splits (\\(d+1\\) leaves) using psuedo-residuals \\(r\\) as response and features \\(X\\) as predictors.\nUpdate full model \\(\\hat{f}\\): \\(\\hat{f} = \\hat{f} + \\lambda\\hat{f}_b\\)\nUpdate pseudo-residuals: \\(r_i = r_i - \\lambda\\hat{f}_b(x_i)\\)\n\nOutput final model: \\[\\hat{f}(x) = \\displaystyle \\sum_{b=1}^{B} \\lambda \\ \\hat{f}_b(x)\\]\n\n\nIt may be hard to see, but this is similar to gradient descent and so is called gradient boosting"
   },
   {
     "objectID": "slides/26-boosting.html#gradient-boosting",
@@ -1611,7 +1611,7 @@
     "href": "slides/26-boosting.html#define-model",
     "title": "MATH 427: Boosting",
     "section": "Define Model",
-    "text": "Define Model\n\ntrees: kind of a tuning parameter… want to select value that is large enough but doesn’t matter past that\n\n\ngbm_model &lt;- boost_tree(trees = tune(), learn_rate = tune(), tree_depth = tune(),\n                        min_n = tune()) |&gt;\n  set_engine(\"xgboost\") |&gt; # dont need importance\n  set_mode(\"classification\")"
+    "text": "Define Model\n\ntrees: VERY MUCH A TUNING PARAMETER NOW!\n\n\ngbm_model &lt;- boost_tree(trees = tune(), learn_rate = tune(), tree_depth = tune(),\n                        min_n = tune()) |&gt;\n  set_engine(\"xgboost\") |&gt; # dont need importance\n  set_mode(\"classification\")"
   },
   {
     "objectID": "slides/26-boosting.html#define-recipe",
@@ -1625,7 +1625,7 @@
     "href": "slides/26-boosting.html#define-workflow-and-fit",
     "title": "MATH 427: Boosting",
     "section": "Define Workflow and Fit",
-    "text": "Define Workflow and Fit\n\n# need to install ranger\ngbm_wf &lt;- workflow() |&gt;\n  add_model(gbm_model) |&gt;\n  add_recipe(gbm_recipe)"
+    "text": "Define Workflow and Fit\n\ngbm_wf &lt;- workflow() |&gt;\n  add_model(gbm_model) |&gt;\n  add_recipe(gbm_recipe)"
   },
   {
     "objectID": "slides/26-boosting.html#creating-hyperparameter-grid",
@@ -1639,7 +1639,7 @@
     "href": "slides/26-boosting.html#tuning-hyperparameters-in-parallel",
     "title": "MATH 427: Boosting",
     "section": "Tuning Hyperparameters in Parallel",
-    "text": "Tuning Hyperparameters in Parallel\n\nlibrary(doParallel)\n\ncl &lt;- makePSOCKcluster(9)\nregisterDoParallel(cl)\n\ntuning_results &lt;- tune_grid(\n  gbm_wf,\n  resamples= voter_folds,\n  grid = gbm_grid\n)\n\nstopCluster(cl)"
+    "text": "Tuning Hyperparameters in Parallel\n\nCheck out Chapter 10.4 of TMWR\n\nImplementation depends on operating system\n\n\n\nlibrary(doParallel)\n\ncl &lt;- makePSOCKcluster(9)\nregisterDoParallel(cl)\n\ntuning_results &lt;- tune_grid(\n  gbm_wf,\n  resamples= voter_folds,\n  grid = gbm_grid\n)\n\nstopCluster(cl)"
   },
   {
     "objectID": "slides/26-boosting.html#results",
@@ -1695,7 +1695,7 @@
     "href": "slides/25-bagging.html#flexibility-vs.-interpretability",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Flexibility vs. Interpretability",
-    "text": "Flexibility vs. Interpretability\n\ndapted from ISLR, James et al."
+    "text": "Flexibility vs. Interpretability\n\nAdapted from ISLR, James et al."
   },
   {
     "objectID": "slides/25-bagging.html#bagging",
