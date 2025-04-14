@@ -1,5 +1,5 @@
 ---
-title: 'MATH 427: Bagging and Boosting'
+title: 'MATH 427: Boosting'
 author: Eric Friedlander
 footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
 logo: "../images/logo.png"
@@ -224,7 +224,7 @@ gbm_grid <- grid_latin_hypercube(trees(range = c(20, 200)),
                                   tree_depth(range = c(1, 15)),
                                   learn_rate(range = c(-10,-1)),
                                   min_n(range = c(2, 40)), size = 50)
-voter_folds = vfold_cv(voter_train, v = 5, repeats = 1, strata = voter_category)
+voter_folds = vfold_cv(voter_train, v = 5, repeats = 10, strata = voter_category)
 ```
 
 ## Tuning Hyperparameters in Parallel

@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Eric Friedlander">
-  <title>MAT 427 - Spring 2025 – MATH 427: Bagging and Boosting</title>
+  <title>MAT 427 - Spring 2025 – MATH 427: Boosting</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -393,7 +393,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 427: Bagging and Boosting</h1>
+  <h1 class="title">MATH 427: Boosting</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -586,7 +586,7 @@ Eric Friedlander
 <span id="cb7-2"><a></a>                                  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">15</span>)),</span>
 <span id="cb7-3"><a></a>                                  <span class="fu">learn_rate</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">1</span>)),</span>
 <span id="cb7-4"><a></a>                                  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">40</span>)), <span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb7-5"><a></a>voter_folds <span class="ot">=</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">1</span>, <span class="at">strata =</span> voter_category)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a></a>voter_folds <span class="ot">=</span> <span class="fu">vfold_cv</span>(voter_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>, <span class="at">strata =</span> voter_category)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tuning-hyperparameters-in-parallel" class="slide level2">
