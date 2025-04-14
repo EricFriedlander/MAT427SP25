@@ -93,8 +93,8 @@
     "objectID": "slides/26-boosting.html#computational-set-up",
     "href": "slides/26-boosting.html#computational-set-up",
     "title": "MATH 427: Boosting",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/26-boosting.html#ensemble-methods",
@@ -108,7 +108,7 @@
     "href": "slides/26-boosting.html#flexibility-vs.-interpretability",
     "title": "MATH 427: Boosting",
     "section": "Flexibility vs. Interpretability",
-    "text": "Flexibility vs. Interpretability\n\ndapted from ISLR, James et al."
+    "text": "Flexibility vs. Interpretability\n\n\n\ndapted from ISLR, James et al."
   },
   {
     "objectID": "slides/26-boosting.html#boosting-1",
@@ -220,7 +220,7 @@
     "href": "slides/26-boosting.html#variable-importance",
     "title": "MATH 427: Boosting",
     "section": "Variable Importance",
-    "text": "Variable Importance\n\nlibrary(vip)\nvip(gbm_fit)\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Variable Importance\n\nlibrary(vip)\nvip(gbm_fit)"
   },
   {
     "objectID": "slides/24-classification-trees-2.html#computational-set-up",
@@ -3602,14 +3602,14 @@
     "href": "hw/09_hw_RandomForests.html",
     "title": "Homework 9: Random Forests",
     "section": "",
-    "text": "In this homework, we will practice using the bagging and random forests to perform classification and to make numerical predictions. In addition, we will talk more about cross validation_* and parameter tuning.\n\n\nIn this assignment, you will…\n\nFit and interpret classification trees\nUse grid-based techniques to choose tuning parameters"
+    "text": "In this homework, we will practice using bagging and random forests to make classifications. In addition, we will talk more about cross validation and parameter tuning.\n\n\nIn this assignment, you will…\n\nFit random forests\nUse variable importance plots to interpret random forests\nUse grid-based techniques to choose tuning parameters"
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#learning-goals",
     "href": "hw/09_hw_RandomForests.html#learning-goals",
     "title": "Homework 9: Random Forests",
     "section": "",
-    "text": "In this assignment, you will…\n\nFit and interpret classification trees\nUse grid-based techniques to choose tuning parameters"
+    "text": "In this assignment, you will…\n\nFit random forests\nUse variable importance plots to interpret random forests\nUse grid-based techniques to choose tuning parameters"
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#teams-rules",
@@ -3630,14 +3630,14 @@
     "href": "hw/09_hw_RandomForests.html#exercise-1",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 1",
-    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the two data sets. If any cleaning is necessary, do that now. Based on the characteristics above, which two or three features do you think are going to be most important for predicting who survives? Give a brief justification for each."
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the two data sets. Take a look at the data (don’t print anything) and take care of any cleaning that is necessary (e.g. removing an ID column or columns or row numbers). Based on the characteristics above, which two or three features do you think are going to be most important for predicting who survives? Give a brief justification for each."
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#exercise-2",
     "href": "hw/09_hw_RandomForests.html#exercise-2",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 2",
-    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nConduct a BRIEF EDA to explore the relationship between survival status and the variables you describe above. Advice:\n\nUse plots instead of table unless there is something interesting about specific numbers that you’d like to point out.\nMake sure you interpret each plot. Do not simply create the plot and say “Here look at this plot that I made!”"
+    "text": "Exercise 2\n\n\n\n\n\n\nQuestion\n\n\n\nConduct a BRIEF EDA to explore the relationship between survival status and the variables you describe above. Practice making this looks professional. Advice:\n\nUse plots instead of table unless there is something interesting about specific numbers that you’d like to point out.\nMake sure you interpret each plot. Do not simply create the plot and say “Look at this plot that I made!”\nPut your explanations and interpretations directly before and after your plots. I.e. if you’re going to make three plots, display and explain them one at a time."
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#exercise-3",
@@ -3658,14 +3658,14 @@
     "href": "hw/09_hw_RandomForests.html#exercise-5",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 5",
-    "text": "Exercise 5\n::: {.callout-tip title=“Question”} Apply your model to the test set to predict who will survive. Print the confusion matrix below. What is the accuracy of this tree model? :::"
+    "text": "Exercise 5\n\n\n\n\n\n\nQuestion\n\n\n\nApply your model to the test set to predict who will survive. Print the confusion matrix below. What is the accuracy of this tree model?"
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#exercise-6",
     "href": "hw/09_hw_RandomForests.html#exercise-6",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 6",
-    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nTo build a single random forest for the training set,\n\nChoose the number of factors to consider at each step (e.g. mtry)\nChoose the number of trees to build by specifying ntree\nMake sure to set importance = \"impurity\" in the engine"
+    "text": "Exercise 6\n\n\n\n\n\n\nQuestion\n\n\n\nBuild a single random forest for the training set. Make sure to\n\nChoose the number of factors to consider at each step (e.g. mtry)\nChoose the number of trees to build by specifying ntree\nMake sure to set importance = \"impurity\" in the engine"
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#exercise-7",
@@ -3707,7 +3707,7 @@
     "href": "hw/09_hw_RandomForests.html#exercise-11",
     "title": "Homework 9: Random Forests",
     "section": "Exercise 11",
-    "text": "Exercise 11\n\n\n\n\n\n\nQuestion\n\n\n\nCompare and contrast the information given by the variable importance plot of the random forest and looking at the actual classification tree."
+    "text": "Exercise 11\n\n\n\n\n\n\nQuestion\n\n\n\nCompare and contrast the information given by the variable importance plot of the random forest and looking at the actual classification tree. What information is contained in both? What information is only contained in one but not the other? Which is better for interpretability?"
   },
   {
     "objectID": "hw/09_hw_RandomForests.html#exercise-12",
@@ -6484,8 +6484,8 @@
     "objectID": "slides/25-bagging.html#computational-set-up",
     "href": "slides/25-bagging.html#computational-set-up",
     "title": "MATH 427: Bagging and Boosting",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/25-bagging.html#ensemble-methods",
@@ -6499,7 +6499,7 @@
     "href": "slides/25-bagging.html#flexibility-vs.-interpretability",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Flexibility vs. Interpretability",
-    "text": "Flexibility vs. Interpretability\n\ndapted from ISLR, James et al."
+    "text": "Flexibility vs. Interpretability\n\n\n\ndapted from ISLR, James et al."
   },
   {
     "objectID": "slides/25-bagging.html#bagging",
@@ -6513,7 +6513,7 @@
     "href": "slides/25-bagging.html#bootstrapping",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Bootstrapping",
-    "text": "Bootstrapping\n\nAdapted from ISLR, James et al."
+    "text": "Bootstrapping\n\n\n\nAdapted from ISLR, James et al."
   },
   {
     "objectID": "slides/25-bagging.html#bagging-1",
@@ -6597,7 +6597,7 @@
     "href": "slides/25-bagging.html#bagging-disadvantages-1",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Bagging: Disadvantages",
-    "text": "Bagging: Disadvantages\n\nAdapted from Hands-On Machine Learning, Boehmke & Greenwell"
+    "text": "Bagging: Disadvantages\n\n\n\nAdapted from Hands-On Machine Learning, Boehmke & Greenwell"
   },
   {
     "objectID": "slides/25-bagging.html#random-forests-1",
@@ -6667,7 +6667,7 @@
     "href": "slides/25-bagging.html#variable-importance-1",
     "title": "MATH 427: Bagging and Boosting",
     "section": "Variable Importance",
-    "text": "Variable Importance\n\nlibrary(vip)\nvip(rf_fit)\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Variable Importance\n\nlibrary(vip)\nvip(rf_fit)"
   },
   {
     "objectID": "support.html",
@@ -6708,5 +6708,33 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "slides/26-boosting.html",
+    "href": "slides/26-boosting.html",
+    "title": "MATH 427: Boosting",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/25-bagging.html",
+    "href": "slides/25-bagging.html",
+    "title": "MATH 427: Bagging and Boosting",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "hw/09_hw_RandomForests.html#data-titanic",
+    "href": "hw/09_hw_RandomForests.html#data-titanic",
+    "title": "Homework 9: Random Forests",
+    "section": "Data: Titanic",
+    "text": "Data: Titanic\nWe will be using the famous Titanic data set which includes data for many passengers on the Titanic, including whether or not they survived. The files have already been cleaned up a bit for you and are split into testing Titanic_test.csv and training sets Titanic_train.csv. If you ever participate in a “hack-a-thon” or Kaggle-type data science competition, you will typically be given a “labeled” training set (i.e. including response variables) and unlabeled test set. You will then be scored on how well your predictions on the test set match the true values that you are unable to see. In this homework, I will be giving you the labels on the test set. The variables in the data represent, in order:\n\nWhether the passenger survived (1) or died (0)\nPassenger Class (1st, 2nd, or 3rd)\nSex\nAge (NA if unknown),\nSiblings/spouses on board\nParents/children on board\nFare paid,\nPort of Embarkation (either Cherbourg, Queenstown, or Southhampton)"
+  },
+  {
+    "objectID": "hw/09_hw_RandomForests.html#exercise-13",
+    "href": "hw/09_hw_RandomForests.html#exercise-13",
+    "title": "Homework 9: Random Forests",
+    "section": "Exercise 13",
+    "text": "Exercise 13\n\n\n\n\n\n\nQuestion\n\n\n\nDiscuss the mtry parameter in the context of the bias-variance trade-off. How should mtry impact the flexibility, bias, and variance of the model?"
   }
 ]
