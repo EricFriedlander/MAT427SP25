@@ -6729,5 +6729,138 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "slides/27-more-classification.html#computational-set-up",
+    "href": "slides/27-more-classification.html#computational-set-up",
+    "title": "MATH 427: More on Classification",
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(rpart.plot)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#quick-review-of-classification",
+    "href": "slides/27-more-classification.html#quick-review-of-classification",
+    "title": "MATH 427: More on Classification",
+    "section": "Quick Review of Classification",
+    "text": "Quick Review of Classification\n\nWe’ve covered many different classification methods:\n\nLogistic Regression (potentially with regularization)\nKNN\nDecision Tress\nRandom Forests\nGradient Boosted Trees\n\nFor each of these methods, rank them as (high/medium/low) for each of the following criteria\n\nComputational complexity to fit\nComputational complexity to predict\nAbility to handle non-linearity\nInterpretability\nPrediction accuracy"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#quick-review-of-classification-1",
+    "href": "slides/27-more-classification.html#quick-review-of-classification-1",
+    "title": "MATH 427: More on Classification",
+    "section": "Quick Review of Classification",
+    "text": "Quick Review of Classification\n\n\n\n\n\n\n\n\n\n\n\n\nLogistic Regression\nKNN\nDecision Trees\nRandom Forests\nGradient Boosted Trees\n\n\n\n\nComp. Fit\nLow\nLow\nLow\nMedium\nHigh\n\n\nComp. Pred.\nLow\nDepends\nLow\nMedium\nMedium\n\n\nNon-linearity\nLow\nMedium\nMedium\nHigh\nHigh\n\n\nInterp.\nHigh\nLow\nHigh\nMedium/Low\nMedium/Low\n\n\nAcc.\nLow\nDepends\nLow\nMedium/High\nHigh"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#data-voter-frequency",
+    "href": "slides/27-more-classification.html#data-voter-frequency",
+    "title": "MATH 427: More on Classification",
+    "section": "Data: Voter Frequency",
+    "text": "Data: Voter Frequency\n\nInfo about data\nGoal: Identify individuals who are unlikely to vote to help organization target “get out the vote” effort.\n\n\nvoter_data &lt;- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv')\n\nvoter_clean &lt;- voter_data |&gt;\n  select(-RespId, -weight, -Q1) |&gt;\n  mutate(\n    educ = factor(educ, levels = c(\"High school or less\", \"Some college\", \"College\")),\n    income_cat = factor(income_cat, levels = c(\"Less than $40k\", \"$40-75k \",\n                                               \"$75-125k\", \"$125k or more\")),\n    voter_category = factor(voter_category, levels = c(\"rarely/never\", \"sporadic\", \"always\"))\n  ) |&gt;\n  filter(Q22 != 5 | is.na(Q22)) |&gt;\n  mutate(Q22 = as_factor(Q22),\n         Q22 = if_else(is.na(Q22), \"Not Asked\", Q22),\n         across(Q28_1:Q28_8, ~if_else(.x == -1, 0, .x)),\n         across(Q28_1:Q28_8, ~ as_factor(.x)),\n         across(Q28_1:Q28_8, ~if_else(is.na(.x) , \"Not Asked\", .x)),\n         across(Q29_1:Q29_10, ~if_else(.x == -1, 0, .x)),\n         across(Q29_1:Q29_10, ~ as_factor(.x)),\n         across(Q29_1:Q29_8, ~if_else(is.na(.x) , \"Not Asked\", .x)),\n        Party_ID = as_factor(case_when(\n          Q31 == 1 ~ \"Strong Republican\",\n          Q31 == 2 ~ \"Republican\",\n          Q32 == 1  ~ \"Strong Democrat\",\n          Q32 == 2 ~ \"Democrat\",\n          Q33 == 1 ~ \"Lean Republican\",\n          Q33 == 2 ~ \"Lean Democrat\",\n          TRUE ~ \"Other\"\n        )),\n        Party_ID = factor(Party_ID, levels =c(\"Strong Republican\", \"Republican\", \"Lean Republican\",\n                                                \"Other\", \"Lean Democrat\", \"Democrat\", \"Strong Democrat\")),\n        across(!ppage, ~as_factor(if_else(.x == -1, NA, .x))))"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#split-data",
+    "href": "slides/27-more-classification.html#split-data",
+    "title": "MATH 427: More on Classification",
+    "section": "Split Data",
+    "text": "Split Data\n\nset.seed(427)\n\nvoter_splits &lt;- initial_split(voter_clean, prop = 0.7, strata = voter_category)\nvoter_train &lt;- training(voter_splits)\nvoter_test &lt;- testing(voter_splits)"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#problem-more-than-three-categories",
+    "href": "slides/27-more-classification.html#problem-more-than-three-categories",
+    "title": "MATH 427: More on Classification",
+    "section": "Problem: More than three categories",
+    "text": "Problem: More than three categories\n\nvoter_train |&gt; \n  ggplot(aes(x = voter_category)) +\n  geom_bar()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#problem-more-than-two-categories",
+    "href": "slides/27-more-classification.html#problem-more-than-two-categories",
+    "title": "MATH 427: More on Classification",
+    "section": "Problem: More than two categories",
+    "text": "Problem: More than two categories\n\nvoter_train |&gt; \n  ggplot(aes(x = voter_category)) +\n  geom_bar()"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#define-model-multinomial-regression",
+    "href": "slides/27-more-classification.html#define-model-multinomial-regression",
+    "title": "MATH 427: More on Classification",
+    "section": "Define Model: Multinomial Regression",
+    "text": "Define Model: Multinomial Regression\n\nmn_reg_model &lt;- multinom_reg(mixture = 1, penalty = 0.005) |&gt; # I chose this penalty arbitrarily\n  set_engine(\"glmnet\", family = \"multinomial\") |&gt; \n  set_mode(\"classification\")"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#define-recipe",
+    "href": "slides/27-more-classification.html#define-recipe",
+    "title": "MATH 427: More on Classification",
+    "section": "Define Recipe",
+    "text": "Define Recipe\n\nmr_recipe &lt;- recipe(voter_category ~ . , data = voter_train) |&gt;\n  step_zv(all_predictors()) |&gt;\n  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,\n               Q25:Q26) |&gt;\n  step_impute_median(all_numeric_predictors()) |&gt;\n  step_impute_mode(all_nominal_predictors()) |&gt;\n  step_dummy(all_nominal_predictors(), one_hot = FALSE)"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#define-workflow-and-fit",
+    "href": "slides/27-more-classification.html#define-workflow-and-fit",
+    "title": "MATH 427: More on Classification",
+    "section": "Define Workflow and Fit",
+    "text": "Define Workflow and Fit\n\nmr_fit &lt;- workflow() |&gt;\n  add_model(mn_reg_model) |&gt;\n  add_recipe(mr_recipe) |&gt; \n  fit(voter_train)"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#look-at-predictions",
+    "href": "slides/27-more-classification.html#look-at-predictions",
+    "title": "MATH 427: More on Classification",
+    "section": "Look at Predictions",
+    "text": "Look at Predictions\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; slice_sample(n=10) |&gt; select(1:4) |&gt; head() |&gt;  kable()\n\n\n\n\n.pred_class\n.pred_rarely/never\n.pred_sporadic\n.pred_always\n\n\n\n\nrarely/never\n0.8679901\n0.1158799\n0.0161301\n\n\nalways\n0.0372135\n0.3988558\n0.5639307\n\n\nrarely/never\n0.6103059\n0.2415393\n0.1481548\n\n\nrarely/never\n0.8262311\n0.1033650\n0.0704039\n\n\nsporadic\n0.0317402\n0.5122328\n0.4560270\n\n\nalways\n0.0463059\n0.4464935\n0.5072006"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#confusion-matrix",
+    "href": "slides/27-more-classification.html#confusion-matrix",
+    "title": "MATH 427: More on Classification",
+    "section": "Confusion Matrix",
+    "text": "Confusion Matrix\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  conf_mat(truth = voter_category, estimate = .pred_class) |&gt; autoplot(\"heatmap\")"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#evaluating-multiclass-models",
+    "href": "slides/27-more-classification.html#evaluating-multiclass-models",
+    "title": "MATH 427: More on Classification",
+    "section": "Evaluating Multiclass Models",
+    "text": "Evaluating Multiclass Models\n\nNo “Positive” and “Negative” anymore\nAccuracy: \\[\\frac{\\text{Correct classifications}}{\\text{total observations}} = \\frac{285+559+221}{1746} \\approx 0.61\\]\nMost of our metrics were based on having “Positive” vs. “Negative”\n\nPrecision/PPV\nRecall/Sensitivity\nSpecificity\nNPV\nROC/AUC"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#evaluating-multiclass-models-1",
+    "href": "slides/27-more-classification.html#evaluating-multiclass-models-1",
+    "title": "MATH 427: More on Classification",
+    "section": "Evaluating Multiclass Models",
+    "text": "Evaluating Multiclass Models\n\nSolution 1: Apply binary metrics to each class in turn\n\nE.g. report three different Recall values\n\nRarely: \\(\\frac{285}{285+110+35} = \\approx 0.66\\)\nSporadic: \\(\\frac{559}{47+559+173} = \\approx 0.72\\)\nAlways: \\(\\frac{221}{21+301+221} = \\approx 0.41\\)\n\n\nCompute the Precision for each class:\n\nReminder: Precision = TP/(TP+FP)"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#evaluating-multiclass-models-2",
+    "href": "slides/27-more-classification.html#evaluating-multiclass-models-2",
+    "title": "MATH 427: More on Classification",
+    "section": "Evaluating Multiclass Models",
+    "text": "Evaluating Multiclass Models\n\nSolution 2: Average metrics across labels\n\nMacro-averaging average one-versus-all metrics\n\nRecall: \\(\\frac{0.66+0.72+0.41}{3} \\approx 0.60\\)\n\nMacro-weighted averaging same but weight class size\n\nRecall: \\(\\frac{430\\times 0.66+970\\times 0.72+427\\times 0.41}{1746} \\approx 0.67\\)\n\nMicro-averaging compute contribution for each class, aggregates them, then computes a single metric\n\nRecall: \\(\\frac{285+559+221}{430+779+543} \\approx 0.61\\)"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#solution-1-in-r",
+    "href": "slides/27-more-classification.html#solution-1-in-r",
+    "title": "MATH 427: More on Classification",
+    "section": "Solution 1 in R",
+    "text": "Solution 1 in R\n\nNo automatic implementation in yardstick (can hack together using group_by sometimes)\n\n\n\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  group_by(voter_category) |&gt; \n  recall(truth = voter_category, estimate = .pred_class) |&gt; \n  kable()\n\n\n\n\nvoter_category\n.metric\n.estimator\n.estimate\n\n\n\n\nrarely/never\nrecall\nmacro\n0.6627907\n\n\nsporadic\nrecall\nmacro\n0.7231565\n\n\nalways\nrecall\nmacro\n0.4069982\n\n\n\n\n\n\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  group_by(voter_category) |&gt; \n  recall(truth = voter_category, estimate = .pred_class) |&gt; \n  kable()\n\n\n\n\nvoter_category\n.metric\n.estimator\n.estimate\n\n\n\n\nrarely/never\nrecall\nmacro\n0.6627907\n\n\nsporadic\nrecall\nmacro\n0.7231565\n\n\nalways\nrecall\nmacro\n0.4069982"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#macro-averaging-in-r",
+    "href": "slides/27-more-classification.html#macro-averaging-in-r",
+    "title": "MATH 427: More on Classification",
+    "section": "Macro-Averaging in R",
+    "text": "Macro-Averaging in R\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  recall(truth = voter_category, estimate = .pred_class, estimator = \"macro\") |&gt; \n  kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrecall\nmacro\n0.5976485"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#macro-weighted-averaging-in-r",
+    "href": "slides/27-more-classification.html#macro-weighted-averaging-in-r",
+    "title": "MATH 427: More on Classification",
+    "section": "Macro-Weighted Averaging in R",
+    "text": "Macro-Weighted Averaging in R\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  recall(truth = voter_category, estimate = .pred_class, estimator = \"macro_weighted\") |&gt; \n  kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrecall\nmacro_weighted\n0.6099656"
+  },
+  {
+    "objectID": "slides/27-more-classification.html#micro-averaging-in-r",
+    "href": "slides/27-more-classification.html#micro-averaging-in-r",
+    "title": "MATH 427: More on Classification",
+    "section": "Micro-Averaging in R",
+    "text": "Micro-Averaging in R\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  recall(truth = voter_category, estimate = .pred_class, estimator = \"micro\") |&gt; \n  kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrecall\nmicro\n0.6099656\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
   }
 ]

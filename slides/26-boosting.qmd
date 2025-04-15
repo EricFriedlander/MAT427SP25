@@ -282,11 +282,3 @@ library(vip)
 vip(gbm_fit)
 ```
 
-# Exploring with Apps
-
-## Playing with the app
-
--   Get in four groups
--   Have one person connect to the TV
--   Open [the app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
-
