@@ -6833,7 +6833,7 @@
     "href": "slides/27-more-classification.html#evaluating-multiclass-models-2",
     "title": "MATH 427: More on Classification",
     "section": "Evaluating Multiclass Models",
-    "text": "Evaluating Multiclass Models\n\nSolution 2: Average metrics across labels\n\nMacro-averaging average one-versus-all metrics\n\nRecall: \\(\\frac{0.66+0.72+0.41}{3} \\approx 0.60\\)\n\nMacro-weighted averaging same but weight class size\n\nRecall: \\(\\frac{430\\times 0.66+970\\times 0.72+427\\times 0.41}{1746} \\approx 0.67\\)\n\nMicro-averaging compute contribution for each class, aggregates them, then computes a single metric\n\nRecall: \\(\\frac{285+559+221}{430+779+543} \\approx 0.61\\)"
+    "text": "Evaluating Multiclass Models\n\nSolution 2: Average metrics across labels\n\nMacro-averaging average one-versus-all metrics\n\nRecall: \\(\\frac{0.66+0.72+0.41}{3} \\approx 0.60\\)\n\nMacro-weighted averaging same but weight by class size\n\nRecall: \\(\\frac{430\\times 0.66+773\\times 0.72+543\\times 0.41}{1746} \\approx 0.61\\)\n\nMicro-averaging compute contribution for each class, aggregates them, then computes a single metric\n\nRecall: \\(\\frac{285+559+221}{430+779+543} \\approx 0.61\\)"
   },
   {
     "objectID": "slides/27-more-classification.html#solution-1-in-r",
@@ -6861,6 +6861,6 @@
     "href": "slides/27-more-classification.html#micro-averaging-in-r",
     "title": "MATH 427: More on Classification",
     "section": "Micro-Averaging in R",
-    "text": "Micro-Averaging in R\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  recall(truth = voter_category, estimate = .pred_class, estimator = \"micro\") |&gt; \n  kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrecall\nmicro\n0.6099656\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Micro-Averaging in R\n\nmr_fit |&gt; augment(new_data = voter_test) |&gt; \n  recall(truth = voter_category, estimate = .pred_class, estimator = \"micro\") |&gt; \n  kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nrecall\nmicro\n0.6099656"
   }
 ]

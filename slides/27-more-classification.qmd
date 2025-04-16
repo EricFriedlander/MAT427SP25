@@ -210,8 +210,8 @@ mr_fit |> augment(new_data = voter_test) |>
 -   Solution 2: Average metrics across labels
     +   *Macro-averaging* average one-versus-all metrics
         +   Recall: $\frac{0.66+0.72+0.41}{3} \approx 0.60$
-    +   *Macro-weighted averaging* same but weight class size
-        +   Recall: $\frac{430\times 0.66+970\times 0.72+427\times 0.41}{1746} \approx 0.67$
+    +   *Macro-weighted averaging* same but weight by class size
+        +   Recall: $\frac{430\times 0.66+773\times 0.72+543\times 0.41}{1746} \approx 0.61$
     +   *Micro-averaging* compute contribution for each class, aggregates them, then computes a single metric
         +   Recall: $\frac{285+559+221}{430+779+543} \approx 0.61$
         
@@ -238,6 +238,15 @@ mr_fit |> augment(new_data = voter_test) |>
   recall(truth = voter_category, estimate = .pred_class, estimator = "micro") |> 
   kable()
 ```
+
+## What if output is probability?
+
+-   For binary case we used ROC curve and AUC...
+-   Similar ideas apply here:
+    +   One vs. all
+    +   Macro Averaging
+    +   NO MICRO AVERAGING!
+    +   Hand and Till extension of AUC
 
 <!-- ## Define Model -->
 
