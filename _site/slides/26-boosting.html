@@ -684,21 +684,14 @@ Eric Friedlander
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(vip)</span>
 <span id="cb13-2"><a></a><span class="fu">vip</span>(gbm_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="26-boosting_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+</figure>
 </div>
-<img data-src="26-boosting_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section></section>
-<section>
-<section id="exploring-with-apps" class="title-slide slide level1 center">
-<h1>Exploring with Apps</h1>
-
-</section>
-<section id="playing-with-the-app" class="slide level2">
-<h2>Playing with the app</h2>
-<ul>
-<li>Get in four groups</li>
-<li>Have one person connect to the TV</li>
-<li>Open <a href="https://efriedlander.shinyapps.io/ClassificationMetrics/">the app</a></li>
-</ul>
+</div>
+</div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
@@ -920,80 +913,42 @@ Eric Friedlander
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {

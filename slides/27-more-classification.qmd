@@ -135,7 +135,8 @@ mr_recipe <- recipe(voter_category ~ . , data = voter_train) |>
                Q25:Q26) |>
   step_impute_median(all_numeric_predictors()) |>
   step_impute_mode(all_nominal_predictors()) |>
-  step_dummy(all_nominal_predictors(), one_hot = FALSE)
+  step_dummy(all_nominal_predictors(), one_hot = FALSE) |> 
+  step_normalize(all_numeric_predictors())
 ```
 
 ## Define Workflow and Fit
@@ -248,95 +249,141 @@ mr_fit |> augment(new_data = voter_test) |>
     +   NO MICRO AVERAGING!
     +   Hand and Till extension of AUC
 
-<!-- ## Define Model -->
+## Plotting one-vs.-all
 
-<!-- -   `trees`: VERY MUCH A TUNING PARAMETER NOW! -->
+```{r}
+mr_fit |> augment(new_data = voter_test) |> 
+  roc_curve(truth = voter_category, `.pred_rarely/never`, .pred_sporadic, .pred_always) |> 
+  autoplot()
+```
 
-<!-- ```{r} -->
-<!-- gbm_model <- boost_tree(trees = tune(), learn_rate = tune(), tree_depth = tune(), -->
-<!--                         min_n = tune()) |> -->
-<!--   set_engine("xgboost") |> # dont need importance -->
-<!--   set_mode("classification") -->
-<!-- ``` -->
+## Macro Averaged AUC
 
-<!-- ## Define Recipe -->
+```{r}
+mr_fit |> augment(new_data = voter_test) |> 
+  roc_auc(truth = voter_category, `.pred_rarely/never`, .pred_sporadic, .pred_always, 
+          estimator = "macro") |> 
+  kable()
+```
 
-<!-- ```{r} -->
-<!-- gbm_recipe <- recipe(voter_category ~ . , data = voter_train) |> -->
-<!--   step_indicate_na(all_predictors()) |> -->
-<!--   step_zv(all_predictors()) |> -->
-<!--   step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4, -->
-<!--                Q25:Q26) |> -->
-<!--   step_impute_median(all_numeric_predictors()) |> -->
-<!--   step_impute_mode(all_nominal_predictors()) |> -->
-<!--   step_dummy(all_nominal_predictors(), one_hot = TRUE) -->
+## Macro-Weighted Averaged AUC
 
-<!-- ``` -->
+```{r}
+mr_fit |> augment(new_data = voter_test) |> 
+  roc_auc(truth = voter_category, `.pred_rarely/never`, .pred_sporadic, .pred_always, 
+          estimator = "macro_weighted") |> 
+  kable()
+```
 
-<!-- ## Define Workflow and Fit -->
+## Hand and Till AUC
 
-<!-- ```{r} -->
-<!-- gbm_wf <- workflow() |> -->
-<!--   add_model(gbm_model) |> -->
-<!--   add_recipe(gbm_recipe) -->
-<!-- ``` -->
+-   [Paper](https://link.springer.com/article/10.1023/A:1010920819831)
+    +   Basic Idea: Do pairwise comparison of classes and average
 
-<!-- ## Creating Hyperparameter Grid -->
+```{r}
+mr_fit |> augment(new_data = voter_test) |> 
+  roc_auc(truth = voter_category, `.pred_rarely/never`, .pred_sporadic, .pred_always) |> 
+  kable()
+```
 
-<!-- ```{r} -->
-<!-- gbm_grid <- grid_latin_hypercube(trees(range = c(20, 200)), -->
-<!--                                   tree_depth(range = c(1, 15)), -->
-<!--                                   learn_rate(range = c(-10,-1)), -->
-<!--                                   min_n(range = c(2, 40)), size = 50) -->
-<!-- voter_folds = vfold_cv(voter_train, v = 5, repeats = 10, strata = voter_category) -->
-<!-- ``` -->
+## Discussion
 
-<!-- ## Tuning Hyperparameters in Parallel -->
-<!-- -   Check out [Chapter 10.4 of TMWR](https://www.tmwr.org/resampling#parallel) -->
-<!--     +   Implementation depends on operating system -->
+How would heavily imbalanced classes impact each type of macro vs. micro averaging?
 
-<!-- ```{r} -->
-<!-- library(doParallel) -->
+# Dealing with Class-Imbalance
 
-<!-- cl <- makePSOCKcluster(9) -->
-<!-- registerDoParallel(cl) -->
+##  Class-Imbalance
 
-<!-- tuning_results <- tune_grid( -->
-<!--   gbm_wf, -->
-<!--   resamples= voter_folds, -->
-<!--   grid = gbm_grid -->
-<!-- ) -->
+-   Class-imbalance occurs where your the classes in your response greatly differ in terms of how common they are
+-   Occurs frequently:
+    +   Medicine: survival/death
+    +   Admission: enrollment/non-enrollment
+    +   Finance: repaid loan/defaulted
+    +   Tech: Clicked on ad/Didn't click
+    +   Tech: Churn rate
+    +   Finance: Fraud
 
-<!-- stopCluster(cl) -->
-<!-- ``` -->
+## Data: `haberman`
 
-<!-- ## Results -->
+Study conducted between 1958 and 1970 at the University of Chicago's Billings Hospital on the survival of patients who had undergone surgery for breast cancer.
 
-<!-- ```{r} -->
-<!-- autoplot(tuning_results) -->
-<!-- ``` -->
+Goal: predict whether a patient survived after undergoing surgery for breast cancer.
 
-<!-- ## Which one was best? -->
+```{r}
+haberman <- read_csv("../data/haberman.data",
+                     col_names = c("Age", "OpYear", "AxNodes", "Survival"))
+glimpse(haberman)
+```
 
-<!-- ```{r} -->
-<!-- select_best(tuning_results, metric = "accuracy") |> kable() -->
-<!-- ``` -->
+## Quick Clean
 
-<!-- ## Evaluate performance -->
+Study conducted between 1958 and 1970 at the University of Chicago's Billings Hospital on the survival of patients who had undergone surgery for breast cancer.
 
-<!-- ```{r} -->
-<!-- gbm_fit <-  gbm_wf |> -->
-<!--   finalize_workflow(select_best(tuning_results, metric = "accuracy")) |> -->
-<!--   fit(voter_train) -->
+Goal: predict whether a patient *died* after undergoing surgery for breast cancer.
 
-<!-- augment(gbm_fit, new_data = voter_test) |> -->
-<!--   accuracy(truth = voter_category, estimate = .pred_class) -->
-<!-- ``` -->
+```{r}
+haberman <- haberman |> 
+  mutate(Survival = factor(if_else(Survival == 1, "Survived", "Died"),
+                           levels = c("Died", "Survived")))
+glimpse(haberman)
+```
 
-<!-- ## Variable Importance -->
+## Split Data
 
-<!-- ```{r} -->
-<!-- library(vip) -->
-<!-- vip(gbm_fit) -->
-<!-- ``` -->
+```{r}
+set.seed(427)
+hab_splits <- initial_split(haberman, prop = 0.75, strata = Survival)
+hab_train <- training(hab_splits)
+hab_test <- testing(hab_splits)
+```
+
+## Visualizing Response
+
+```{r}
+hab_train |> 
+  ggplot(aes(y = Survival)) +
+  geom_bar()
+```
+
+## Fitting Model
+
+```{r}
+lr_fit <- logistic_reg() |> 
+  set_engine("glm") |> 
+  fit(Survival ~ . , data = hab_train)
+```
+
+## Confusion Matrix
+
+```{r}
+lr_fit |> augment(new_data = hab_test) |> 
+  conf_mat(truth = Survival, estimate = .pred_class) |> autoplot("heatmap")
+```
+
+## Performance Metrics
+
+```{r}
+hab_metrics <- metric_set(accuracy, precision, recall)
+
+lr_fit |> augment(new_data = hab_test) |> 
+  roc_auc(truth = Survival, .pred_Died) |> kable()
+
+lr_fit |> augment(new_data = hab_test) |> 
+  hab_metrics(truth = Survival, estimate = .pred_class) |> kable()
+```
+
+## Recall is BAD!
+
+-   Since there are so few deaths, model always predicts a low probability of death
+-   Idea: just because you you have a HIGHER probability of death doesn't mean have a HIGH probability of death
+
+## What do we do?
+
+-   Depends on what your goal is...
+-   Ask yourself: What is most important to my problem?
+    +   Accurate probabilities?
+    +   Effective Separation?
+    +   Effective identification of positives?
+    +   Low false-positive rate?
+-   Discussion: Let's think of scenarios where each one of these is the most important.
 
