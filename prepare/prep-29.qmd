@@ -1,6 +1,5 @@
 ---
-title: "Preparation for Imbalanced Classes
-"
+title: "Preparation for Imbalanced Classes"
 ---
 
 ## Assigned readings & videos
