@@ -4144,7 +4144,7 @@
     "href": "slides/28-more-classification-2.html#questions-from-last-time",
     "title": "MATH 427: More More on Classification",
     "section": "Questions From Last Time",
-    "text": "Questions From Last Time\n\nMultinomial Logistic regression:\n\nEach class \\(k\\): \\[\\log \\frac{\\text{Prob. class } k}{\\text{Prob. class } K} = \\beta_{0k} + \\beta_{1k}X_1 + \\cdots + \\beta_{pk}X_p\\]\n\nShuba: Micro-averaged recall is the same as accuracy… CORRECT!\n\nSame is true of precision AND \\(F_1\\)\nNot true for all metrics (e.g. AUC)"
+    "text": "Questions From Last Time\n\nMultinomial Logistic regression:\n\nEach class \\(k\\): \\[\\log \\frac{\\text{Prob. class } k}{\\text{Prob. class } K} = \\beta_{0k} + \\beta_{1k}X_1 + \\cdots + \\beta_{pk}X_p\\]\n\nShuba: Micro-averaged recall is the same as accuracy… CORRECT!\n\nSame is true of precision AND \\(F_1\\)\nUseful if you have a “multi-label” classification problem (not covered in this class)"
   },
   {
     "objectID": "slides/28-more-classification-2.html#rabins-question",
@@ -4165,7 +4165,7 @@
     "href": "slides/28-more-classification-2.html#thinking-about-big-data",
     "title": "MATH 427: More More on Classification",
     "section": "Thinking about big data",
-    "text": "Thinking about big data\n\nPatterns are definitely there but size introduces computational problems\n\nData set can’t fit in memory\n\nSolution 1: Use a high-memory HPC cluster node\nSolution 2: Modify algorithms to use parts of data instead of full data set (e.g. Stochastic gradient descent)\n\nAlgorithm scales with size of data and will take too long to run/fit\n\nSolution 1: Run in parallel if possible using HPC cluster\nSolution 2: Develop faster algorithms\n\nImplement in a compiled language like C\nDevelop (faster) approximate solution\n\n\n\nCurse of dimensionality\n\nIf \\(p\\) is too-big, space becomes too-big and weird stuff happens\n\nNote: big \\(n\\) vs. big \\(p\\) can present different issues"
+    "text": "Thinking about big data\n\nPatterns are definitely there but size introduces computational problems\n\nData set can’t fit in memory\n\nSolution 1: Use a high-memory HPC cluster node\nSolution 2: Modify algorithms to use parts of data instead of full data set (e.g. Stochastic gradient descent)\n\nAlgorithm scales with size of data and will take too long to run/fit\n\nSolution 1: Run in parallel if possible using HPC cluster\nSolution 2: Develop faster algorithms\n\nImplement in a compiled language like C\nDevelop (faster) approximate solution\n\n\n\nCurse of dimensionalality\n\nIf \\(p\\) is too-big \\(\\Rightarrow\\) too much space and things are too far apart \\(\\Rightarrow\\) similar impact to small data but without computational benefit\n\nNote: big \\(n\\) vs. big \\(p\\) can present different issues"
   },
   {
     "objectID": "slides/28-more-classification-2.html#medium-data",
@@ -4173,6 +4173,13 @@
     "title": "MATH 427: More More on Classification",
     "section": "Medium Data",
     "text": "Medium Data\n\nData that’s big enough to have (most) of the information you need but not so big that it presents computational issues\nKNN sweet spot\n\nEnough data the “nearest-neighbors” are actually “near”\nNot so much data that it takes forever to make predictions"
+  },
+  {
+    "objectID": "slides/28-more-classification-2.html#exploring-with-app",
+    "href": "slides/28-more-classification-2.html#exploring-with-app",
+    "title": "MATH 427: More More on Classification",
+    "section": "Exploring with App",
+    "text": "Exploring with App\n\nApp"
   },
   {
     "objectID": "slides/28-more-classification-2.html#macro-averaging-in-r",
@@ -4235,7 +4242,14 @@
     "href": "slides/28-more-classification-2.html#discussion",
     "title": "MATH 427: More More on Classification",
     "section": "Discussion",
-    "text": "Discussion\n\nHow would heavily imbalanced classes impact each type of averaging?\n\nWhich type(s) of averaging weight(s) each class equally regardless of balance?\nWhich type(s) of averaging favor(s) larger classes?\nDoes this imply that one is better than the others?"
+    "text": "Discussion\n\nWhy do you compute averages/means?\n\n\n\nHow would heavily imbalanced classes impact each type of averaging?\n\nWhich type(s) of averaging weight(s) each class equally regardless of balance?\nWhich type(s) of averaging favor(s) larger classes?\nDoes this imply that one is better than the others?"
+  },
+  {
+    "objectID": "slides/28-more-classification-2.html#exploring-with-app-1",
+    "href": "slides/28-more-classification-2.html#exploring-with-app-1",
+    "title": "MATH 427: More More on Classification",
+    "section": "Exploring with App",
+    "text": "Exploring with App\n\nApp\n\nBreak into groups\nInvestigate how your performance metrics change between balanced data and unbalanced data\nAdditional Considerations:\n\nImpact of boundaries/models?\nImpact of sample size?\nImpact of noise level?\n\nPlease write down observations so we can discuss"
   },
   {
     "objectID": "slides/28-more-classification-2.html#class-imbalance",

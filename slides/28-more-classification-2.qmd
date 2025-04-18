@@ -159,7 +159,7 @@ mr_fit |> augment(new_data = voter_test) |>
     +   Each class $k$: $$\log \frac{\text{Prob. class } k}{\text{Prob. class } K} = \beta_{0k} + \beta_{1k}X_1 + \cdots + \beta_{pk}X_p$$
 -   Shuba: Micro-averaged recall is the same as accuracy... CORRECT!
     +   Same is true of precision AND $F_1$
-    +   Not true for all metrics (e.g. AUC)
+    +   Useful if you have a "multi-label" classification problem (not covered in this class)
     
 ## Rabin's Question {.smaller}
 
@@ -191,8 +191,8 @@ mr_fit |> augment(new_data = voter_test) |>
         +   Solution 2: Develop faster algorithms
             +   Implement in a compiled language like C
             +   Develop (faster) approximate solution
--   Curse of dimensionality
-    +   If $p$ is too-big, space becomes too-big and weird stuff happens
+-   Curse of dimensionalality
+    +   If $p$ is too-big $\Rightarrow$ too much space and things are too far apart $\Rightarrow$ similar impact to small data but without computational benefit
 -   Note: big $n$ vs. big $p$ can present different issues
             
 ## Medium Data
@@ -201,6 +201,10 @@ mr_fit |> augment(new_data = voter_test) |>
 -   KNN sweet spot
     +   Enough data the "nearest-neighbors" are actually "near"
     +   Not so much data that it takes forever to make predictions
+    
+## Exploring with App
+
+-   [App](https://efriedlander.shinyapps.io/BVTappClassification/)
         
 ## Macro-Averaging in R
 
@@ -278,11 +282,26 @@ mr_fit |> augment(new_data = voter_test) |>
 
 ## Discussion
 
+-   Why do you compute averages/means?
+
+. . .
+
 -   How would heavily imbalanced classes impact each type of averaging?
     +   Which type(s) of averaging weight(s) each class equally regardless of balance?
     +   Which type(s) of averaging favor(s) larger classes?
     +   Does this imply that one is better than the others?
+    
+## Exploring with App {.smaller}
 
+-   [App](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+    +   Break into groups
+    +   Investigate how your performance metrics change between balanced data and unbalanced data
+    +   Additional Considerations:
+        +   Impact of boundaries/models?
+        +   Impact of sample size?
+        +   Impact of noise level?
+    +   Please write down observations so we can discuss
+    
 # Dealing with Class-Imbalance
 
 ##  Class-Imbalance

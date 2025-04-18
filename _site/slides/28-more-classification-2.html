@@ -608,7 +608,7 @@ Eric Friedlander
 <li>Shuba: Micro-averaged recall is the same as accuracy… CORRECT!
 <ul>
 <li>Same is true of precision AND <span class="math inline">\(F_1\)</span></li>
-<li>Not true for all metrics (e.g.&nbsp;AUC)</li>
+<li>Useful if you have a “multi-label” classification problem (not covered in this class)</li>
 </ul></li>
 </ul>
 </section>
@@ -661,9 +661,9 @@ Eric Friedlander
 </ul></li>
 </ul></li>
 </ul></li>
-<li>Curse of dimensionality
+<li>Curse of dimensionalality
 <ul>
-<li>If <span class="math inline">\(p\)</span> is too-big, space becomes too-big and weird stuff happens</li>
+<li>If <span class="math inline">\(p\)</span> is too-big <span class="math inline">\(\Rightarrow\)</span> too much space and things are too far apart <span class="math inline">\(\Rightarrow\)</span> similar impact to small data but without computational benefit</li>
 </ul></li>
 <li>Note: big <span class="math inline">\(n\)</span> vs.&nbsp;big <span class="math inline">\(p\)</span> can present different issues</li>
 </ul>
@@ -677,6 +677,12 @@ Eric Friedlander
 <li>Enough data the “nearest-neighbors” are actually “near”</li>
 <li>Not so much data that it takes forever to make predictions</li>
 </ul></li>
+</ul>
+</section>
+<section id="exploring-with-app" class="slide level2">
+<h2>Exploring with App</h2>
+<ul>
+<li><a href="https://efriedlander.shinyapps.io/BVTappClassification/">App</a></li>
 </ul>
 </section>
 <section id="macro-averaging-in-r" class="slide level2">
@@ -902,11 +908,33 @@ Eric Friedlander
 <section id="discussion" class="slide level2">
 <h2>Discussion</h2>
 <ul>
+<li>Why do you compute averages/means?</li>
+</ul>
+<div class="fragment">
+<ul>
 <li>How would heavily imbalanced classes impact each type of averaging?
 <ul>
 <li>Which type(s) of averaging weight(s) each class equally regardless of balance?</li>
 <li>Which type(s) of averaging favor(s) larger classes?</li>
 <li>Does this imply that one is better than the others?</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="exploring-with-app-1" class="slide level2 smaller">
+<h2>Exploring with App</h2>
+<ul>
+<li><a href="https://efriedlander.shinyapps.io/ClassificationMetrics/">App</a>
+<ul>
+<li>Break into groups</li>
+<li>Investigate how your performance metrics change between balanced data and unbalanced data</li>
+<li>Additional Considerations:
+<ul>
+<li>Impact of boundaries/models?</li>
+<li>Impact of sample size?</li>
+<li>Impact of noise level?</li>
+</ul></li>
+<li>Please write down observations so we can discuss</li>
 </ul></li>
 </ul>
 </section>
