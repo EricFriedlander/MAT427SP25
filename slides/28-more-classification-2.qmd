@@ -204,7 +204,8 @@ mr_fit |> augment(new_data = voter_test) |>
     
 ## Exploring with App
 
--   [App](https://efriedlander.shinyapps.io/BVTappClassification/)
+-   [App 1](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   [App 2](https://efriedlander.shinyapps.io/BVTappClassification/)
         
 ## Macro-Averaging in R
 
