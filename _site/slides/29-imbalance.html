@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Eric Friedlander">
-  <title>MAT 427 - Spring 2025 – MATH 427: More More on Classification</title>
+  <title>MAT 427 - Spring 2025 – MATH 427: Class Imbalance</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -393,7 +393,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 427: More More on Classification</h1>
+  <h1 class="title">MATH 427: Class Imbalance</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -417,512 +417,7 @@ Eric Friedlander
 <span id="cb1-8"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-voter-frequency" class="slide level2">
-<h2>Data: Voter Frequency</h2>
-<ul>
-<li><a href="https://github.com/fivethirtyeight/data/tree/master/non-voters">Info about data</a></li>
-<li>Goal: Identify individuals who are unlikely to vote to help organization target “get out the vote” effort.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>voter_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'</span>)</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>voter_clean <span class="ot">&lt;-</span> voter_data <span class="sc">|&gt;</span></span>
-<span id="cb2-4"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>RespId, <span class="sc">-</span>weight, <span class="sc">-</span>Q1) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb2-6"><a></a>    <span class="at">educ =</span> <span class="fu">factor</span>(educ, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"High school or less"</span>, <span class="st">"Some college"</span>, <span class="st">"College"</span>)),</span>
-<span id="cb2-7"><a></a>    <span class="at">income_cat =</span> <span class="fu">factor</span>(income_cat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Less than $40k"</span>, <span class="st">"$40-75k "</span>,</span>
-<span id="cb2-8"><a></a>                                               <span class="st">"$75-125k"</span>, <span class="st">"$125k or more"</span>)),</span>
-<span id="cb2-9"><a></a>    <span class="at">voter_category =</span> <span class="fu">factor</span>(voter_category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"rarely/never"</span>, <span class="st">"sporadic"</span>, <span class="st">"always"</span>))</span>
-<span id="cb2-10"><a></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a></a>  <span class="fu">filter</span>(Q22 <span class="sc">!=</span> <span class="dv">5</span> <span class="sc">|</span> <span class="fu">is.na</span>(Q22)) <span class="sc">|&gt;</span></span>
-<span id="cb2-12"><a></a>  <span class="fu">mutate</span>(<span class="at">Q22 =</span> <span class="fu">as_factor</span>(Q22),</span>
-<span id="cb2-13"><a></a>         <span class="at">Q22 =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Q22), <span class="st">"Not Asked"</span>, Q22),</span>
-<span id="cb2-14"><a></a>         <span class="fu">across</span>(Q28_1<span class="sc">:</span>Q28_8, <span class="sc">~</span><span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, .x)),</span>
-<span id="cb2-15"><a></a>         <span class="fu">across</span>(Q28_1<span class="sc">:</span>Q28_8, <span class="sc">~</span> <span class="fu">as_factor</span>(.x)),</span>
-<span id="cb2-16"><a></a>         <span class="fu">across</span>(Q28_1<span class="sc">:</span>Q28_8, <span class="sc">~</span><span class="fu">if_else</span>(<span class="fu">is.na</span>(.x) , <span class="st">"Not Asked"</span>, .x)),</span>
-<span id="cb2-17"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_10, <span class="sc">~</span><span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, .x)),</span>
-<span id="cb2-18"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_10, <span class="sc">~</span> <span class="fu">as_factor</span>(.x)),</span>
-<span id="cb2-19"><a></a>         <span class="fu">across</span>(Q29_1<span class="sc">:</span>Q29_8, <span class="sc">~</span><span class="fu">if_else</span>(<span class="fu">is.na</span>(.x) , <span class="st">"Not Asked"</span>, .x)),</span>
-<span id="cb2-20"><a></a>        <span class="at">Party_ID =</span> <span class="fu">as_factor</span>(<span class="fu">case_when</span>(</span>
-<span id="cb2-21"><a></a>          Q31 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Strong Republican"</span>,</span>
-<span id="cb2-22"><a></a>          Q31 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Republican"</span>,</span>
-<span id="cb2-23"><a></a>          Q32 <span class="sc">==</span> <span class="dv">1</span>  <span class="sc">~</span> <span class="st">"Strong Democrat"</span>,</span>
-<span id="cb2-24"><a></a>          Q32 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Democrat"</span>,</span>
-<span id="cb2-25"><a></a>          Q33 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lean Republican"</span>,</span>
-<span id="cb2-26"><a></a>          Q33 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Lean Democrat"</span>,</span>
-<span id="cb2-27"><a></a>          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
-<span id="cb2-28"><a></a>        )),</span>
-<span id="cb2-29"><a></a>        <span class="at">Party_ID =</span> <span class="fu">factor</span>(Party_ID, <span class="at">levels =</span><span class="fu">c</span>(<span class="st">"Strong Republican"</span>, <span class="st">"Republican"</span>, <span class="st">"Lean Republican"</span>,</span>
-<span id="cb2-30"><a></a>                                                <span class="st">"Other"</span>, <span class="st">"Lean Democrat"</span>, <span class="st">"Democrat"</span>, <span class="st">"Strong Democrat"</span>)),</span>
-<span id="cb2-31"><a></a>        <span class="fu">across</span>(<span class="sc">!</span>ppage, <span class="sc">~</span><span class="fu">as_factor</span>(<span class="fu">if_else</span>(.x <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>, <span class="cn">NA</span>, .x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="split-data" class="slide level2">
-<h2>Split Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a>voter_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(voter_clean, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> voter_category)</span>
-<span id="cb3-4"><a></a>voter_train <span class="ot">&lt;-</span> <span class="fu">training</span>(voter_splits)</span>
-<span id="cb3-5"><a></a>voter_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(voter_splits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="problem-more-than-two-categories" class="slide level2">
-<h2>Problem: More than two categories</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>voter_train <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> voter_category)) <span class="sc">+</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="28-more-classification-2_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="define-model-multinomial-regression" class="slide level2">
-<h2>Define Model: Multinomial Regression</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>mn_reg_model <span class="ot">&lt;-</span> <span class="fu">multinom_reg</span>(<span class="at">mixture =</span> <span class="dv">1</span>, <span class="at">penalty =</span> <span class="fl">0.005</span>) <span class="sc">|&gt;</span> <span class="co"># I chose this penalty arbitrarily</span></span>
-<span id="cb5-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>, <span class="at">family =</span> <span class="st">"multinomial"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-recipe" class="slide level2">
-<h2>Define Recipe</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>mr_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(voter_category <span class="sc">~</span> . , <span class="at">data =</span> voter_train) <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">step_integer</span>(educ, income_cat, Party_ID, Q2_2<span class="sc">:</span>Q4_6, Q6, Q8_1<span class="sc">:</span>Q9_4, Q14<span class="sc">:</span>Q17_4,</span>
-<span id="cb6-4"><a></a>               Q25<span class="sc">:</span>Q26) <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a></a>  <span class="fu">step_impute_median</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb6-6"><a></a>  <span class="fu">step_impute_mode</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>(), <span class="at">one_hot =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-8"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-workflow-and-fit" class="slide level2">
-<h2>Define Workflow and Fit</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>mr_fit <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a></a>  <span class="fu">add_model</span>(mn_reg_model) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a></a>  <span class="fu">add_recipe</span>(mr_recipe) <span class="sc">|&gt;</span> </span>
-<span id="cb7-4"><a></a>  <span class="fu">fit</span>(voter_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="look-at-predictions" class="slide level2">
-<h2>Look at Predictions</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.pred_class</th>
-<th style="text-align: right;">.pred_rarely/never</th>
-<th style="text-align: right;">.pred_sporadic</th>
-<th style="text-align: right;">.pred_always</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">sporadic</td>
-<td style="text-align: right;">0.0317402</td>
-<td style="text-align: right;">0.5122327</td>
-<td style="text-align: right;">0.4560271</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">always</td>
-<td style="text-align: right;">0.0463060</td>
-<td style="text-align: right;">0.4464935</td>
-<td style="text-align: right;">0.5072005</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">sporadic</td>
-<td style="text-align: right;">0.0553279</td>
-<td style="text-align: right;">0.6529393</td>
-<td style="text-align: right;">0.2917328</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">always</td>
-<td style="text-align: right;">0.0388506</td>
-<td style="text-align: right;">0.4351109</td>
-<td style="text-align: right;">0.5260385</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">always</td>
-<td style="text-align: right;">0.0361359</td>
-<td style="text-align: right;">0.4164662</td>
-<td style="text-align: right;">0.5473979</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">always</td>
-<td style="text-align: right;">0.0991499</td>
-<td style="text-align: right;">0.4310622</td>
-<td style="text-align: right;">0.4697879</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="confusion-matrix" class="slide level2">
-<h2>Confusion Matrix</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="28-more-classification-2_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
-<section id="last-time" class="slide level2 smaller">
-<h2>Last Time</h2>
-<ul>
-<li>No “Positive” and “Negative” anymore</li>
-<li>Most of our metrics were based on having “Positive” vs.&nbsp;“Negative”</li>
-<li>Solution 1: 1-vs-all metrics</li>
-</ul>
-</section>
-<section id="evaluating-multiclass-models" class="slide level2">
-<h2>Evaluating Multiclass Models</h2>
-<ul>
-<li>Solution 2: Average metrics across labels
-<ul>
-<li><em>Macro-averaging</em> average one-versus-all metrics
-<ul>
-<li>Recall: <span class="math inline">\(\frac{0.66+0.72+0.41}{3} \approx 0.60\)</span></li>
-</ul></li>
-<li><em>Macro-weighted averaging</em> same but weight by class size
-<ul>
-<li>Recall: <span class="math inline">\(\frac{430\times 0.66+773\times 0.72+543\times 0.41}{1746} \approx 0.61\)</span></li>
-</ul></li>
-<li><em>Micro-averaging</em> compute contribution for each class, aggregates them, then computes a single metric
-<ul>
-<li>Recall: <span class="math inline">\(\frac{285+559+221}{430+779+543} \approx 0.61\)</span></li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="questions-from-last-time" class="slide level2">
-<h2>Questions From Last Time</h2>
-<ul>
-<li>Multinomial Logistic regression:
-<ul>
-<li>Each class <span class="math inline">\(k\)</span>: <span class="math display">\[\log \frac{\text{Prob. class } k}{\text{Prob. class } K} = \beta_{0k} + \beta_{1k}X_1 + \cdots + \beta_{pk}X_p\]</span></li>
-</ul></li>
-<li>Shuba: Micro-averaged recall is the same as accuracy… CORRECT!
-<ul>
-<li>Same is true of precision AND <span class="math inline">\(F_1\)</span></li>
-<li>Useful if you have a “multi-label” classification problem (not covered in this class)</li>
-</ul></li>
-</ul>
-</section>
-<section id="rabins-question" class="slide level2 smaller">
-<h2>Rabin’s Question</h2>
-<ul>
-<li>“What does a medium sized data set mean?”</li>
-<li>Idea behind ML: identify patterns in data and use them to make predictions</li>
-<li>As data gets “bigger”:
-<ul>
-<li>Patterns become clearer</li>
-<li>Computational complexity increases</li>
-</ul></li>
-<li>Informal definitions:
-<ul>
-<li>Small data: not enough data to fully represent patterns</li>
-<li>Big data: all the info is there but special approaches need to be taken to handle all the data</li>
-</ul></li>
-</ul>
-</section>
-<section id="thinking-about-small-data" class="slide level2">
-<h2>Thinking about small data</h2>
-<ul>
-<li>Patterns not fully represented in data <span class="math inline">\(\Rightarrow\)</span> restrict the set of possible patterns and give model less flexibility and freedom
-<ul>
-<li>Logistic regression (probably with regularization)</li>
-<li>Support vector machines (we haven’t talked about these yet)</li>
-<li>To a lesser extent: Decision Trees</li>
-<li>NOT KNN</li>
-</ul></li>
-</ul>
-</section>
-<section id="thinking-about-big-data" class="slide level2 smaller">
-<h2>Thinking about big data</h2>
-<ul>
-<li>Patterns are definitely there but size introduces computational problems
-<ul>
-<li>Data set can’t fit in memory
-<ul>
-<li>Solution 1: Use a high-memory HPC cluster node</li>
-<li>Solution 2: Modify algorithms to use parts of data instead of full data set (e.g.&nbsp;Stochastic gradient descent)</li>
-</ul></li>
-<li>Algorithm scales with size of data and will take too long to run/fit
-<ul>
-<li>Solution 1: Run in parallel if possible using HPC cluster</li>
-<li>Solution 2: Develop faster algorithms
-<ul>
-<li>Implement in a compiled language like C</li>
-<li>Develop (faster) approximate solution</li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>Curse of dimensionalality
-<ul>
-<li>If <span class="math inline">\(p\)</span> is too-big <span class="math inline">\(\Rightarrow\)</span> too much space and things are too far apart <span class="math inline">\(\Rightarrow\)</span> similar impact to small data but without computational benefit</li>
-</ul></li>
-<li>Note: big <span class="math inline">\(n\)</span> vs.&nbsp;big <span class="math inline">\(p\)</span> can present different issues</li>
-</ul>
-</section>
-<section id="medium-data" class="slide level2">
-<h2>Medium Data</h2>
-<ul>
-<li>Data that’s big enough to have (most) of the information you need but not so big that it presents computational issues</li>
-<li>KNN sweet spot
-<ul>
-<li>Enough data the “nearest-neighbors” are actually “near”</li>
-<li>Not so much data that it takes forever to make predictions</li>
-</ul></li>
-</ul>
-</section>
-<section id="exploring-with-app" class="slide level2">
-<h2>Exploring with App</h2>
-<ul>
-<li><a href="https://efriedlander.shinyapps.io/ClassificationMetrics/">App 1</a></li>
-<li><a href="https://efriedlander.shinyapps.io/BVTappClassification/">App 2</a></li>
-</ul>
-</section>
-<section id="macro-averaging-in-r" class="slide level2">
-<h2>Macro-Averaging in R</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>voter_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, precision, recall)</span>
-<span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb10-4"><a></a>  <span class="fu">voter_metrics</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class, <span class="at">estimator =</span> <span class="st">"macro"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">accuracy</td>
-<td style="text-align: left;">multiclass</td>
-<td style="text-align: right;">0.6099656</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">precision</td>
-<td style="text-align: left;">macro</td>
-<td style="text-align: right;">0.6375886</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">recall</td>
-<td style="text-align: left;">macro</td>
-<td style="text-align: right;">0.5976485</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="macro-weighted-averaging-in-r" class="slide level2">
-<h2>Macro-Weighted Averaging in R</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a></a>  <span class="fu">voter_metrics</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class, <span class="at">estimator =</span> <span class="st">"macro_weighted"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">accuracy</td>
-<td style="text-align: left;">multiclass</td>
-<td style="text-align: right;">0.6099656</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">precision</td>
-<td style="text-align: left;">macro_weighted</td>
-<td style="text-align: right;">0.6176222</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">recall</td>
-<td style="text-align: left;">macro_weighted</td>
-<td style="text-align: right;">0.6099656</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="micro-averaging-in-r" class="slide level2">
-<h2>Micro-Averaging in R</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a></a>  <span class="fu">voter_metrics</span>(<span class="at">truth =</span> voter_category, <span class="at">estimate =</span> .pred_class, <span class="at">estimator =</span> <span class="st">"micro"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">accuracy</td>
-<td style="text-align: left;">multiclass</td>
-<td style="text-align: right;">0.6099656</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">precision</td>
-<td style="text-align: left;">micro</td>
-<td style="text-align: right;">0.6099656</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">recall</td>
-<td style="text-align: left;">micro</td>
-<td style="text-align: right;">0.6099656</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="what-if-output-is-probability" class="slide level2">
-<h2>What if output is probability?</h2>
-<ul>
-<li>For binary case we used ROC curve and AUC…</li>
-<li>Similar ideas apply here:
-<ul>
-<li>One vs.&nbsp;all</li>
-<li>Macro Averaging</li>
-<li>NO MICRO AVERAGING!</li>
-<li>Hand and Till extension of AUC</li>
-</ul></li>
-</ul>
-</section>
-<section id="plotting-one-vs.-all" class="slide level2">
-<h2>Plotting one-vs.-all</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> voter_category, <span class="st">`</span><span class="at">.pred_rarely/never</span><span class="st">`</span>, .pred_sporadic, .pred_always) <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="28-more-classification-2_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
-<section id="macro-averaged-auc" class="slide level2">
-<h2>Macro Averaged AUC</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> voter_category, <span class="st">`</span><span class="at">.pred_rarely/never</span><span class="st">`</span>, .pred_sporadic, .pred_always, </span>
-<span id="cb14-3"><a></a>          <span class="at">estimator =</span> <span class="st">"macro"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-4"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">roc_auc</td>
-<td style="text-align: left;">macro</td>
-<td style="text-align: right;">0.7802495</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="macro-weighted-averaged-auc" class="slide level2">
-<h2>Macro-Weighted Averaged AUC</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> voter_category, <span class="st">`</span><span class="at">.pred_rarely/never</span><span class="st">`</span>, .pred_sporadic, .pred_always, </span>
-<span id="cb15-3"><a></a>          <span class="at">estimator =</span> <span class="st">"macro_weighted"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb15-4"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">roc_auc</td>
-<td style="text-align: left;">macro_weighted</td>
-<td style="text-align: right;">0.7636223</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="hand-and-till-auc" class="slide level2 smaller">
-<h2>Hand and Till AUC</h2>
-<ul>
-<li>Idea behind traditional AUC: “How well are my classes being separated?”</li>
-<li>Hand and Till: Extend this idea to multiple-classes</li>
-<li><a href="https://link.springer.com/article/10.1023/A:1010920819831">Paper</a>
-<ul>
-<li>Basic Idea: Do pairwise comparison of classes and average</li>
-</ul></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>mr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> voter_test) <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> voter_category, <span class="st">`</span><span class="at">.pred_rarely/never</span><span class="st">`</span>, .pred_sporadic, .pred_always) <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">.metric</th>
-<th style="text-align: left;">.estimator</th>
-<th style="text-align: right;">.estimate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">roc_auc</td>
-<td style="text-align: left;">hand_till</td>
-<td style="text-align: right;">0.7967478</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="discussion" class="slide level2">
-<h2>Discussion</h2>
-<ul>
-<li>Why do you compute averages/means?</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>How would heavily imbalanced classes impact each type of averaging?
-<ul>
-<li>Which type(s) of averaging weight(s) each class equally regardless of balance?</li>
-<li>Which type(s) of averaging favor(s) larger classes?</li>
-<li>Does this imply that one is better than the others?</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="exploring-with-app-1" class="slide level2 smaller">
+<section id="exploring-with-app" class="slide level2 smaller">
 <h2>Exploring with App</h2>
 <ul>
 <li><a href="https://efriedlander.shinyapps.io/ClassificationMetrics/">App</a>
@@ -938,6 +433,646 @@ Eric Friedlander
 <li>Please write down observations so we can discuss</li>
 </ul></li>
 </ul>
+</section>
+<section>
+<section id="dealing-with-class-imbalance" class="title-slide slide level1 center">
+<h1>Dealing with Class-Imbalance</h1>
+
+</section>
+<section id="class-imbalance" class="slide level2">
+<h2>Class-Imbalance</h2>
+<ul>
+<li>Class-imbalance occurs where your the classes in your response greatly differ in terms of how common they are</li>
+<li>Occurs frequently:
+<ul>
+<li>Medicine: survival/death</li>
+<li>Admissions: enrollment/non-enrollment</li>
+<li>Finance: repaid loan/defaulted</li>
+<li>Tech: Clicked on ad/Didn’t click</li>
+<li>Tech: Churn rate</li>
+<li>Finance: Fraud</li>
+</ul></li>
+</ul>
+</section>
+<section id="data-haberman" class="slide level2 smaller">
+<h2>Data: <code>haberman</code></h2>
+<p>Study conducted between 1958 and 1970 at the University of Chicago’s Billings Hospital on the survival of patients who had undergone surgery for breast cancer.</p>
+<p>Goal: predict whether a patient survived after undergoing surgery for breast cancer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>haberman <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/haberman.data"</span>,</span>
+<span id="cb2-2"><a></a>                     <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"Age"</span>, <span class="st">"OpYear"</span>, <span class="st">"AxNodes"</span>, <span class="st">"Survival"</span>))</span>
+<span id="cb2-3"><a></a>haberman <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">OpYear</th>
+<th style="text-align: right;">AxNodes</th>
+<th style="text-align: right;">Survival</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="quick-clean" class="slide level2">
+<h2>Quick Clean</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>haberman <span class="ot">&lt;-</span> haberman <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Survival =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(Survival <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Survived"</span>, <span class="st">"Died"</span>),</span>
+<span id="cb3-3"><a></a>                           <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Died"</span>, <span class="st">"Survived"</span>)))</span>
+<span id="cb3-4"><a></a>haberman <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">OpYear</th>
+<th style="text-align: right;">AxNodes</th>
+<th style="text-align: left;">Survival</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Survived</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Survived</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Survived</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Survived</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Survived</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">Survived</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="split-data" class="slide level2">
+<h2>Split Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb4-2"><a></a>hab_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(haberman, <span class="at">prop =</span> <span class="fl">0.75</span>, <span class="at">strata =</span> Survival)</span>
+<span id="cb4-3"><a></a>hab_train <span class="ot">&lt;-</span> <span class="fu">training</span>(hab_splits)</span>
+<span id="cb4-4"><a></a>hab_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(hab_splits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-response" class="slide level2">
+<h2>Visualizing Response</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>hab_train <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb5-3"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="fitting-model" class="slide level2">
+<h2>Fitting Model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>lr_model <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>)</span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a>lr_fit <span class="ot">&lt;-</span> lr_model <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a></a>  <span class="fu">fit</span>(Survival <span class="sc">~</span> . , <span class="at">data =</span> hab_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="confusion-matrix" class="slide level2">
+<h2>Confusion Matrix</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>lr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> Survival, <span class="at">estimate =</span> .pred_class) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="performance-metrics" class="slide level2">
+<h2>Performance Metrics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>hab_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, precision, recall)</span>
+<span id="cb8-2"><a></a></span>
+<span id="cb8-3"><a></a>lr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Survival, .pred_Died) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7284879</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>lr_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a></a>  <span class="fu">hab_metrics</span>(<span class="at">truth =</span> Survival, <span class="at">estimate =</span> .pred_class) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7692308</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">precision</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.8000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">recall</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.1904762</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="recall-is-bad" class="slide level2">
+<h2>Recall is BAD!</h2>
+<ul>
+<li>Since there are so few deaths, model always predicts a low probability of death</li>
+<li>Idea: just because you you have a HIGHER probability of death doesn’t mean have a HIGH probability of death</li>
+</ul>
+</section>
+<section id="what-do-we-do" class="slide level2">
+<h2>What do we do?</h2>
+<ul>
+<li>Depends on what your goal is…</li>
+<li>Ask yourself: What is most important to my problem?
+<ul>
+<li>Accurate probabilities?</li>
+<li>Overall accuracy?</li>
+<li>Effective identification of a specific class (e.g.&nbsp;positives)?</li>
+<li>Low false-positive rate?</li>
+</ul></li>
+<li>Discussion: Let’s think of scenarios where each one of these is the most important.</li>
+</ul>
+</section>
+<section id="solutions-to-class-imbalance" class="slide level2">
+<h2>Solutions to Class Imbalance</h2>
+<ul>
+<li>Sampling-based solutions (done during pre-processing)
+<ul>
+<li>Over-sample minority class</li>
+<li>Under-sample majority class</li>
+<li>Combination of both (e.g.&nbsp;SMOTE)</li>
+</ul></li>
+<li>Weight class/objective function</li>
+</ul>
+</section>
+<section id="over-sampling-minority-class" class="slide level2">
+<h2>Over-sampling minority class</h2>
+<ul>
+<li>Upsample: think bootstrapping for final sample is larger than original</li>
+<li>Idea: upsample minority class until it is same size(ish) as majority class</li>
+</ul>
+</section>
+<section id="visualizing-data" class="slide level2">
+<h2>Visualizing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>hab_train <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="upsample-recipe" class="slide level2">
+<h2>Upsample Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(themis)</span>
+<span id="cb11-2"><a></a>upsample_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Survival <span class="sc">~</span> ., <span class="at">data =</span> hab_train) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a></a>  <span class="fu">step_upsample</span>(Survival, <span class="at">over_ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb11-4"><a></a></span>
+<span id="cb11-5"><a></a>hab_upsample <span class="ot">&lt;-</span> upsample_recipe <span class="sc">|&gt;</span> <span class="fu">prep</span>(hab_train) <span class="sc">|&gt;</span> <span class="fu">bake</span>(<span class="at">new_data =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="upsampled-data" class="slide level2">
+<h2>Upsampled Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>hab_upsample <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-upsampled-data" class="slide level2">
+<h2>Visualizing Upsampled Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>hab_upsample <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-upsampled-data-no-jitter" class="slide level2">
+<h2>Visualizing Upsampled Data: No Jitter</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>hab_upsample <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
+<section id="performance-consideration" class="slide level2">
+<h2>Performance consideration</h2>
+<ul>
+<li>Pro:
+<ul>
+<li>Preserves all information in the data set</li>
+</ul></li>
+<li>Con:
+<ul>
+<li>Models will probably over-align to the noise in the minority class</li>
+</ul></li>
+</ul>
+</section>
+<section id="under-sampling-majority-class" class="slide level2">
+<h2>Under-sampling majority class</h2>
+<ul>
+<li>Downsample: collect a random sample smaller than the original sample</li>
+<li>Idea: down sample majority class until it is same size(ish) as minority class</li>
+</ul>
+</section>
+<section id="visualizing-data-1" class="slide level2">
+<h2>Visualizing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>hab_train <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb15-2"><a></a>  <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="downsample-recipe" class="slide level2">
+<h2>Downsample Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>downsample_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Survival <span class="sc">~</span> ., <span class="at">data =</span> hab_train) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a></a>  <span class="fu">step_downsample</span>(Survival, <span class="at">under_ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a>hab_downsample <span class="ot">&lt;-</span> downsample_recipe <span class="sc">|&gt;</span> <span class="fu">prep</span>(hab_train) <span class="sc">|&gt;</span> <span class="fu">bake</span>(<span class="at">new_data =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="downsample-data" class="slide level2">
+<h2>Downsample Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>hab_downsample <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-downsampled-data" class="slide level2">
+<h2>Visualizing Downsampled Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>hab_downsample <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-downsampled-data-no-jitter" class="slide level2">
+<h2>Visualizing Downsampled Data: No Jitter</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>hab_downsample <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
+<section id="performance-considerations" class="slide level2">
+<h2>Performance considerations</h2>
+<ul>
+<li>Pro:
+<ul>
+<li>Model doesn’t over-align to noise in minority class</li>
+</ul></li>
+<li>Con:
+<ul>
+<li>Lose information from majority class</li>
+</ul></li>
+</ul>
+</section>
+<section id="smote" class="slide level2">
+<h2>SMOTE</h2>
+<ul>
+<li>Basic idea:
+<ul>
+<li>Both upsample minority and downsample majority (Tidymodel implementation only upsamples)</li>
+</ul></li>
+<li>Better Upsampling: Instead of just randomly replicating minority observations
+<ul>
+<li>Find (minority) nearest neighbors of each minority observation</li>
+<li>Interpolate line between them</li>
+<li>Upsample by randomly generating points in interpolated lines</li>
+</ul></li>
+</ul>
+</section>
+<section id="visualizing-data-2" class="slide level2">
+<h2>Visualizing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>hab_train <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
+<section id="smote-recipe" class="slide level2">
+<h2>SMOTE Recipe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>smote_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Survival <span class="sc">~</span> ., <span class="at">data =</span> hab_train) <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a></a>  <span class="fu">step_smote</span>(Survival, <span class="at">over_ratio =</span> <span class="dv">1</span>, <span class="at">neighbors =</span> <span class="dv">5</span>)</span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a>hab_smote <span class="ot">&lt;-</span> smote_recipe <span class="sc">|&gt;</span> <span class="fu">prep</span>(hab_train) <span class="sc">|&gt;</span> <span class="fu">bake</span>(<span class="at">new_data =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="smote-data" class="slide level2">
+<h2>SMOTE Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>hab_smote <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb22-2"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-smote-data" class="slide level2">
+<h2>Visualizing SMOTE Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>hab_smote <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb23-2"><a></a>  <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-smote-data-no-jitter" class="slide level2">
+<h2>Visualizing SMOTE Data: No Jitter</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>hab_smote <span class="sc">|&gt;</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OpYear, <span class="at">y =</span> Age, <span class="at">color =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb24-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="29-imbalance_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
+<section id="performance-considerations-1" class="slide level2">
+<h2>Performance considerations</h2>
+<ul>
+<li>Pro:
+<ul>
+<li>Model doesn’t over-align (as much) to noise in minority class</li>
+<li>Don’t lose (as much) information from majority class</li>
+</ul></li>
+<li>Con:
+<ul>
+<li>Creating new information out of nowhere</li>
+</ul></li>
+</ul>
+</section>
+<section id="fitting-models" class="slide level2">
+<h2>Fitting models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>oversamp_fit <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(upsample_recipe) <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a></a>  <span class="fu">add_model</span>(lr_model) <span class="sc">|&gt;</span> <span class="fu">fit</span>(hab_train)</span>
+<span id="cb25-3"><a></a>downsamp_fit <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(downsample_recipe) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a></a>  <span class="fu">add_model</span>(lr_model)  <span class="sc">|&gt;</span> <span class="fu">fit</span>(hab_train)</span>
+<span id="cb25-5"><a></a>smote_fit <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> <span class="fu">add_recipe</span>(smote_recipe) <span class="sc">|&gt;</span> </span>
+<span id="cb25-6"><a></a>  <span class="fu">add_model</span>(lr_model)  <span class="sc">|&gt;</span> <span class="fu">fit</span>(hab_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluate-performance" class="slide level2">
+<h2>Evaluate Performance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>oversamp_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Survival, .pred_Died) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7343358</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>downsamp_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Survival, .pred_Died) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7243108</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>smote_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Survival, .pred_Died) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7251462</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="evaluate-performance-1" class="slide level2 smaller">
+<h2>Evaluate Performance</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>oversamp_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a></a>  <span class="fu">hab_metrics</span>(<span class="at">truth =</span> Survival, <span class="at">estimate =</span> .pred_class) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7692308</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">precision</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5714286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">recall</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5714286</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>downsamp_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a></a>  <span class="fu">hab_metrics</span>(<span class="at">truth =</span> Survival, <span class="at">estimate =</span> .pred_class) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7435897</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">precision</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5217391</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">recall</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5714286</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>smote_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">new_data =</span> hab_test) <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a></a>  <span class="fu">hab_metrics</span>(<span class="at">truth =</span> Survival, <span class="at">estimate =</span> .pred_class) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7435897</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">precision</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5217391</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">recall</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.5714286</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../images/logo.png" class="slide-logo"></p>
@@ -945,7 +1080,7 @@ Eric Friedlander
 <p><a href="https://mat427sp25.netlify.app/schedule">🔗 MAT 427 - Spring 2025 - Schedule</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
