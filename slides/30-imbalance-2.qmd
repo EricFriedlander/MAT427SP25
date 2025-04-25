@@ -351,10 +351,93 @@ smote_fit |> augment(new_data = hab_test) |>
 
 # Weighting Observations/Objective Function
 
-## Creating Case weights
+## Creating Importance Weights
 
 ```{r}
+library(hardhat)
 hab_train <- hab_train |> 
-  mutate
+  mutate(weights = ifelse(Survival == "Died", 4, 1),
+         weights = importance_weights(weights))
 
+hab_train |> head() |> kable()
 ```
+
+## Weighted Workflow
+
+```{r}
+weighted_wf <- workflow() |> 
+  add_model(lr_model) |> 
+  add_recipe(recipe(Survival ~ ., data = hab_train)) |> 
+  add_case_weights(weights)
+
+weighted_fit <- weighted_wf |> 
+  fit(hab_train)
+```
+
+## Model Performance
+
+```{r}
+weighted_fit |> augment(new_data = hab_test) |> 
+  conf_mat(truth = Survival, estimate = .pred_class) |> autoplot("heatmap")
+```
+
+## Model Performance
+
+```{r}
+weighted_fit |> augment(new_data = hab_test) |> 
+  hab_metrics(truth = Survival, estimate = .pred_class) |> kable()
+
+weighted_fit |> augment(new_data = hab_test) |> 
+  roc_auc(truth = Survival, .pred_Died) |> kable()
+```
+
+# Final Note / Alternative Metrics
+
+## Model vs Decisions {.smaller}
+
+-   Helpful framework for thinking about this:
+    -   Divide model predictions from decisions
+    -   Usually, model predicts a probability, then you make a classification based on that probability
+    -   Choosing the best model probably means (1) calibrating your probabilities correctly, then (2) making classifications/decisions to optimze your use-case
+
+## Scoring Rules {.smaller}
+
+-   Scoring rule: metric that evaluates probabilities
+-   Notation:
+    +   $\hat{p}_{ik}$: predicted probability observation $i$ is in class $k$
+    +   $y_{ik}$: 1 if observation $i$ is in class $k$, 0 otherwise
+    +   $K$: number of classes
+    +   $N$: number of observations
+-   Brier Score: think MSE for probabilities 
+    +   Binary: $\frac{1}{N} \sum_{i=1}^{N} (\hat{p}_i - y_i)^2$
+    +   Multiclass: $\frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} (\hat{p}_{ik} - y_{ik})^2$
+-   Logorithmic Score:
+    +   Binary: $-\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{p}_i) + (1 - y_i) \log(1 - \hat{p}_i) \right]$
+    +   Multi-class: $-\frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} y_{ik} \log(\hat{p}_{ik})$
+
+## Scoring our models
+
+```{r}
+hab_scores <- metric_set(brier_class, mn_log_loss, roc_auc)
+all_scores <- lr_fit |> augment(new_data = hab_test) |> hab_scores(truth = Survival, .pred_Died) |> mutate(model = "Logistic") |> 
+  bind_rows(oversamp_fit |> augment(new_data = hab_test) |> hab_scores(truth = Survival, .pred_Died) |> mutate(model = "Oversample")) |> 
+  bind_rows(downsamp_fit |> augment(new_data = hab_test) |> hab_scores(truth = Survival, .pred_Died) |> mutate(model = "Undersample")) |> 
+  bind_rows(smote_fit |> augment(new_data = hab_test) |> hab_scores(truth = Survival, .pred_Died) |> mutate(model = "SMOTE")) |> 
+  bind_rows(weighted_fit |> augment(new_data = hab_test) |> hab_scores(truth = Survival, .pred_Died) |> mutate(model = "Weighted"))
+```
+
+## Scores
+
+```{r}
+all_scores |>
+  select(-.estimator) |> 
+  pivot_wider(names_from = .metric, values_from = .estimate) |> 
+  kable()
+```
+
+## Conclusion
+
+-   Many different approaches and strategies depending on data
+-   First strategy: tresholding
+-   Many times method depends on model algorithm
+-   Make sure to ask "Is imbalance really a problem here?"
