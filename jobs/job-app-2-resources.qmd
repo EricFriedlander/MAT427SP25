@@ -1,0 +1,73 @@
+---
+title: "Job Application 2 Resources + Rubric"
+---
+
+# Overall Grade
+
+This time your overall job application grade will be entirely based on the data analysis. Note that the Data Analysis Rubric is the same as for Job App 1.
+
+## Data Analysis Rubric
+
+Your analysis will be assessed in each of the following four areas on a scale of 0-5. The questions below will be used as a guide to determine the quality of your analysis in each area.
+
+### Writing, Organization, Editing, and Professionalism
+
+-   Is the report well-organized? 
+-   Is the modeling process described in a clear, logical, and engaging manner?
+- 	Are the motivations for different modeling decisions clearly described?
+- 	Is the analysis free of spelling and grammatical errors?
+-   Are there walls of data?
+-   Are there large unbroken walls of code?
+-   Are there warnings and messages that should be suppressed?
+-   Are all plots labeled and displayed professionally?
+-   Are tables displayed neatly?
+-   Is there too much detail and is the report unnecessarily long?
+
+### Data Analysis
+
+-   Are the mathematical and statistical methods used correctly and appropriately?
+-   Are appropriate predictor variables used in the analysis?
+- 	To what extent does the analysis showcase skills described in the job advertisement?
+-   Are the reasons for excluding and/or transforming the data sensible and well-explained?
+-   How was the model chosen and validated?
+-   How were the parameters of the model tuned (if applicable)?
+
+### Curiosity
+
+- 	Is the analysis complex and insightful, showing evidence that the data have been analyzed in multiple different ways?
+-   Is the explanation and presentation creative, going beyond superficial observations and simple graphical summaries?
+-   Are the findings and conclusions supported by sound reasoning and/or additional research?
+-   Are the possible implications of the results discussed in context?
+
+### Skepticism & Interpretation
+
+-   Is the handling of missing data, unusual observations, and outliers described and is there sound rationale for it?
+-   Are multiple explanations given for a particular finding and multiple approaches used to explore surprising results?
+-   Are limitations of the data and of the analysis identified and are the potential impacts on the conclusions discussed?
+-   Are suggestions for future work and additional exploration identified and useful?
+    
+## Sample Analysis Tips
+
+-   While not required, I recommend you start with something you've been working on
+    +   If you have a side project, use may use that.
+    +   If not, I recommend starting with one of your homeworks.
+    +   Note: you MAY use summarize your project or hack-a-thon results. However, be sure not to publish to the admissions data to Github or the internet.
+-   Your data analysis should do the following
+    +   Tell a coherent story and narrative. If you start with a homework, make sure you take out all of my narrative and the exercise headings.
+    +   Include something similar to the following sections:
+        -   Introduction outlining and motivating the problem
+        -   Exploratory data analysis and pre-process/feature engineering
+        -   Modeling or Model Selection
+        -   Performance Analysis
+        -   Conclusion summarizing your results
+    +   Strike a balance between addressing all of the relevant *technical* qualifications listed in the job ad without feeling like you're just doing a bunch of unnecessary a non-relevant work. Keep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data. Imagine that you're being hired to be a construction worker. If you are asked to hammer in a nail, don't take out a sledgehammer.
+    +   Show that you are able to communicate well. Communicating well involves ensuring that you incorporate the appropriate level of detail (not too much/not too little) and that you are able to interpret the results of your analyses. It goes beyond just having perfect grammar and spelling. 
+        +   Pro-tip: Write up a draft of your report and then go through it once taking out anything that isn't absolutely necessary.
+    +   Be professional and be grammatically correct and devoid of typos.
+-   Things to avoid:
+    +   Walls of code without context. You should be explaining what you do every time you write code. However, don't put too much detail. Assume the reader is familiar with machine learning. For example, say "We now fit the logistic regression model to the training data." instead of "A logistic regression model is a machine learning model that blah, blah, blah".
+    +   Walls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don't need to include that in your final report. Make sure that anything you display is done **with purpose** and that you're talking about that purpose.
+    +   Talking about functions rather than what code is doing. For example, say "We now fit the logistic regression model to the training data." instead of "We not use the `fit` function to fit the logistic regression model to the training data."
+    +   Ensure all plots have professional axis labels.
+    +   When talking about your variables, mostly refer to them by what they represent rather than their name. For example say "We will be predicting whether a customer will default on their loan." instead of "We will be using `default` as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.
+    +   Including a bunch of unnecessary analysis steps to prove that you can do them. If the project you've chosen does not call of more advanced analysis steps, choose a different one.

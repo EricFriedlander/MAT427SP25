@@ -48,11 +48,12 @@ website:
           text: R resources
       - section: Job Applications & Interviews
         contents:
-        - jobs/job-app-resources.qmd
+        - jobs/job-app-1-resources.qmd
         - href: https://cofi.instructure.com/courses/17021/assignments/210575
           text: "Job Advertisement 1"
         - jobs/job-app-1-rubric.qmd
         - jobs/job-interview-resources.qmd
+        - jobs/job-app-2-resources.qmd
       - section: Project
         contents:
         - href: project/project-instructions.qmd

@@ -1,5 +1,5 @@
 ---
-title: "Job Application Resources"
+title: "Job Application 1 Resources"
 ---
 
 ## Building a Website

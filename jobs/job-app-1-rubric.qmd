@@ -71,4 +71,4 @@ Your analysis will be assessed in each of the following four areas on a scale of
 -   Is the handling of missing data, unusual observations, and outliers described and is there sound rationale for it?
 -   Are multiple explanations given for a particular finding and multiple approaches used to explore surprising results?
 -   Are limitations of the data and of the analysis identified and are the potential impacts on the conclusions discussed?
--   Are suggestions for future work and additional exploration identified and useful?\
+-   Are suggestions for future work and additional exploration identified and useful?
