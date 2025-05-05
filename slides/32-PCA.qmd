@@ -35,6 +35,64 @@ tidymodels_prefer()
 set.seed(427)
 ```
 
+## Data: `mnist`
+
+-   MNIST Database: Modified National Institute of Standards and Technology Database
+-   Large database of handwritten digits
+    +   60,000 training images
+    +   10,000 test images
+-   Each image:
+    +   28x28 black and white pixels
+    +   $28\times 28\times 1 = 784$
+    
+## Loading data
+
+```{r}
+library(dslabs)
+mnist <- read_mnist()
+mnist_train <- mnist$train$images
+mnist_train |> head() |> kable()
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[1,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[2,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[3,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[4,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
     
 ## Unsupervised Learning & Dimensionality Reduction
 
