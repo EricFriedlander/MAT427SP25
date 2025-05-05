@@ -93,6 +93,17 @@ image(x = 1:28, y = 1:28,
       z = matrix(mnist_train[4,], nrow = 28, byrow=FALSE)[,28:1],
       col=gray((0:255)/255))
 ```
+
+## What if we want to visualize our data?
+
+```{r}
+#| code-fold: TRUE
+
+mnist_train <- as_tibble(mnist_train)
+ggplot(mnist_train, aes(x = V300, y = V301, 
+                        color = as_factor(mnist$train$labels))) + 
+  geom_point()
+```
     
 ## Unsupervised Learning & Dimensionality Reduction
 
@@ -521,14 +532,5 @@ var_exp |> kable()
 
 -   Using R to apply this to bigger data sets
 -   More on interpreting PCA
-
-## What proportion of variance is explained by each of the PC's?
-
-```{r}
-var_exp |> 
-  pivot_longer(everything()) |> 
-  mutate(proportion = value/sum(value)) |> 
-  kable()
-```
 
 
