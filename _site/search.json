@@ -325,7 +325,7 @@
     "href": "slides/32-PCA.html#what-proportion-of-variance-is-explained-by-each-of-the-pcs-1",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "What proportion of variance is explained by each of the PC’s?",
-    "text": "What proportion of variance is explained by each of the PC’s?\n\nvar_exp |&gt; \n  pivot_longer(everything()) |&gt; \n  mutate(proportion = value/sum(value)) |&gt; \n  kable()\n\n\n\n\nname\nvalue\nproportion\n\n\n\n\nvar1\n1.0210354\n0.984639\n\n\nvar2\n0.0159288\n0.015361\n\n\n\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "What proportion of variance is explained by each of the PC’s?\n\nvar_exp |&gt; \n  pivot_longer(everything()) |&gt; \n  mutate(proportion = value/sum(value)) |&gt; \n  kable()\n\n\n\n\nname\nvalue\nproportion\n\n\n\n\nvar1\n1.0210354\n0.984639\n\n\nvar2\n0.0159288\n0.015361"
   },
   {
     "objectID": "slides/30-imbalance-2.html#computational-set-up",
@@ -2509,7 +2509,7 @@
     "href": "slides/09-job-app-intro-roc.html#auc-questions",
     "title": "MATH 427: ROC Curve and AUC",
     "section": "AUC Questions",
-    "text": "AUC Questions\n\nWhat should be the minimum AUC?\nWhat should be that maximum possible AUC?\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "AUC Questions\n\nWhat should be the minimum AUC?\nWhat should be that maximum possible AUC?"
   },
   {
     "objectID": "slides/07-classification-logistic.html#classification-problems",
