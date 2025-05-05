@@ -21,6 +21,67 @@ knitr:
     width: 200
 ---
 
+## Remainder of Semester
+
+-   Project (Due Friday)
+-   Hack-a-thon (Next week + Final Exam Time)
+-   Job Application 2 (Due Next Friday)
+-   Two Technical Interviews...
+
+. . .
+
+-   TOO MUCH!!!
+
+## Lesson's Learned by Dr. F
+
+-   Learning objectives coming in:
+    +   Machine Learning Theory
+    +   Professional Development
+    +   Communication!!!
+
+. . .
+
+-   Do less to do more... don't need multiple assignments for each of these
+-   Prioritize an assessment before Spring Break
+-   Build in better time-management and revision checkpoints
+
+## Next Time {.smaller}
+
+-   First half of semester focused on ML pipeline and professional development
+    +   Assess with written exam before Spring Break
+    +   Resume and Cover Letter due before Spring Break
+-   Second half of semester focus on different models and communication
+    +   Behavioral Interview shortly after Spring Break
+    +   Sample Analysis due last week of class with draft due earlier and opportunities to revise
+    +   Technical interview during final's week
+-   Not sure about Hack-a-thon and Project
+    +   Want to do both but feels like that is too much
+    
+## Proposal For Rest of Semester {.smaller}
+
+-   If you like original syllabus, feel free to stick with it (no penalty)
+-   Project - still due Friday
+    +   One-pager
+    +   Presentation
+-   ~~Job Application 2~~: Hack-a-thon report
+-   Hack-a-thon - still next week
+    +   ~~Presentation~~
+    +   Predictions and report due during final exam period
+-   Hack-a-thon report counts as second Job Application
+-   Technical interviews:
+    +   45 minute technical interview during final exam week will replace your first technical interview grade if you do better... even if you don't do the first interview
+    +   Think of first interview as "practice"
+    
+## New Grade Structure (Proposal)
+
+| Category                   | Percentage |
+|----------------------------|------------|
+| Homework                   | 10%        |
+| Job Application 1          | 15%        |
+| Job Interview 1            | 15%        |
+| Job Interview 2            | 20%        |
+| Hack-a-thon + Report       | 25%        |
+| Project                    | 15%        |
 
 ## Computational Set-Up
 
@@ -48,6 +109,8 @@ set.seed(427)
 ## Loading data
 
 ```{r}
+#| cache: TRUE
+
 library(dslabs)
 mnist <- read_mnist()
 mnist_train <- mnist$train$images

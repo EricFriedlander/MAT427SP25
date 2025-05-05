@@ -90,6 +90,41 @@
     ]
   },
   {
+    "objectID": "slides/32-PCA.html#remainder-of-semester",
+    "href": "slides/32-PCA.html#remainder-of-semester",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "Remainder of Semester",
+    "text": "Remainder of Semester\n\nProject (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n\n\nTOO MUCH!!!"
+  },
+  {
+    "objectID": "slides/32-PCA.html#lessons-learned-by-dr.-f",
+    "href": "slides/32-PCA.html#lessons-learned-by-dr.-f",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "Lesson’s Learned by Dr. F",
+    "text": "Lesson’s Learned by Dr. F\n\nLearning objectives coming in:\n\nMachine Learning Theory\nProfessional Development\nCommunication!!!\n\n\n\n\nDo less to do more… don’t need multiple assignments for each of these\nPrioritize an assessment before Spring Break\nBuild in better time-management and revision checkpoints"
+  },
+  {
+    "objectID": "slides/32-PCA.html#next-time",
+    "href": "slides/32-PCA.html#next-time",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "Next Time",
+    "text": "Next Time\n\nFirst half of semester focused on ML pipeline and professional development\n\nAssess with written exam before Spring Break\nResume and Cover Letter due before Spring Break\n\nSecond half of semester focus on different models and communication\n\nBehavioral Interview shortly after Spring Break\nSample Analysis due last week of class with draft due earlier and opportunities to revise\nTechnical interview during final’s week\n\nNot sure about Hack-a-thon and Project\n\nWant to do both but feels like that is too much"
+  },
+  {
+    "objectID": "slides/32-PCA.html#proposal-for-rest-of-semester",
+    "href": "slides/32-PCA.html#proposal-for-rest-of-semester",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "Proposal For Rest of Semester",
+    "text": "Proposal For Rest of Semester\n\nIf you like original syllabus, feel free to stick with it (no penalty)\nProject - still due Friday\n\nOne-pager\nPresentation\n\nJob Application 2: Hack-a-thon report\nHack-a-thon - still next week\n\nPresentation\nPredictions and report due during final exam period\n\nHack-a-thon report counts as second Job Application\nTechnical interviews:\n\n45 minute technical interview during final exam week will replace your first technical interview grade if you do better… even if you don’t do the first interview\nThink of first interview as “practice”"
+  },
+  {
+    "objectID": "slides/32-PCA.html#new-grade-structure-proposal",
+    "href": "slides/32-PCA.html#new-grade-structure-proposal",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "New Grade Structure (Proposal)",
+    "text": "New Grade Structure (Proposal)\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nJob Application 1\n15%\n\n\nJob Interview 1\n15%\n\n\nJob Interview 2\n20%\n\n\nHack-a-thon + Report\n25%\n\n\nProject\n15%"
+  },
+  {
     "objectID": "slides/32-PCA.html#computational-set-up",
     "href": "slides/32-PCA.html#computational-set-up",
     "title": "MATH 427: Principal Component Analysis (PCA)",
@@ -363,8 +398,8 @@
     "text": "How much variance is explained by each of the PC’s?\n\nvar_exp &lt;- harder_ex |&gt; \n  mutate(PC1 = (x + y)/2,\n         PC2 = (x-y)/2) |&gt; \n  summarize(var1 = var(PC1), \n            var2 = var(PC2))\n\nvar_exp |&gt; kable()\n\n\n\n\nvar1\nvar2\n\n\n\n\n1.021035\n0.0159288"
   },
   {
-    "objectID": "slides/32-PCA.html#next-time",
-    "href": "slides/32-PCA.html#next-time",
+    "objectID": "slides/32-PCA.html#next-time-1",
+    "href": "slides/32-PCA.html#next-time-1",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Next Time",
     "text": "Next Time\n\nUsing R to apply this to bigger data sets\nMore on interpreting PCA"
