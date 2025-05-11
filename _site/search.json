@@ -93,8 +93,8 @@
     "objectID": "slides/33-PCA-2.html#computational-set-up",
     "href": "slides/33-PCA-2.html#computational-set-up",
     "title": "MATH 427: Principal Component Analysis (PCA)",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/33-PCA-2.html#data-mnist",
@@ -178,7 +178,7 @@
     "href": "slides/33-PCA-2.html#idea-behind-pca",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Idea behind PCA",
-    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n\n\nWhat does orthogonal mean?"
+    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n. . .\n\nWhat does orthogonal mean?"
   },
   {
     "objectID": "slides/33-PCA-2.html#easy-example",
@@ -8162,15 +8162,15 @@
     "objectID": "slides/32-PCA.html#remainder-of-semester",
     "href": "slides/32-PCA.html#remainder-of-semester",
     "title": "MATH 427: Principal Component Analysis (PCA)",
-    "section": "Remainder of Semester",
-    "text": "Remainder of Semester\n\nProject (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n\n\nTOO MUCH!!!"
+    "section": "",
+    "text": "Project (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n. . .\n\nTOO MUCH!!!"
   },
   {
     "objectID": "slides/32-PCA.html#lessons-learned-by-dr.-f",
     "href": "slides/32-PCA.html#lessons-learned-by-dr.-f",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Lesson’s Learned by Dr. F",
-    "text": "Lesson’s Learned by Dr. F\n\nLearning objectives coming in:\n\nMachine Learning Theory\nProfessional Development\nCommunication!!!\n\n\n\n\nDo less to do more… don’t need multiple assignments for each of these\nPrioritize an assessment before Spring Break\nBuild in better time-management and revision checkpoints"
+    "text": "Lesson’s Learned by Dr. F\n\nLearning objectives coming in:\n\nMachine Learning Theory\nProfessional Development\nCommunication!!!\n\n\n. . .\n\nDo less to do more… don’t need multiple assignments for each of these\nPrioritize an assessment before Spring Break\nBuild in better time-management and revision checkpoints"
   },
   {
     "objectID": "slides/32-PCA.html#next-time",
@@ -8429,7 +8429,7 @@
     "href": "slides/32-PCA.html#idea-behind-pca",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Idea behind PCA",
-    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n\n\nWhat does orthogonal mean?"
+    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n. . .\n\nWhat does orthogonal mean?"
   },
   {
     "objectID": "slides/32-PCA.html#easy-example",
@@ -8512,5 +8512,61 @@
     "crumbs": [
       "Course support"
     ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html",
+    "href": "hack-a-thon/hack-a-thon-instruction.html",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "The U.S. Constitution requires that a census be conducted every ten years in order to allocate congressional representatives. The first census was conducted in 1790 and the U.S. Census Bureau is still compiling the data from the 2020 census. While the Constitution only requires an “actual enumeration” of citizens, the census has expanded to include a number of demographic questions. As described by the Census Bureau, the results of the 2020 census will,\n\n“…determine congressional representation, inform hundreds of billions in federal funding, and provide data that will impact communities for the next decade.”\n\n\n\nIn this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:\n\ncensus_train.csv contains 35,000 rows representing unique individuals, and 15 columns, representing demographic information about those individuals (including whether their income is above or below $50,000).\ncensus_test.csv contains 13,840 rows, but only 14 columns since the income column has been removed.\n\nA complete description of the variables in the data set is below.\n\n\n\nThere are two deliverables for this project:\n\nAn HTML file outlining your modeling process. This should following the same guidelines for the Job Application 2 Resources.\nA .csv file containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length 13,480 vector of 0s and 1s where 1 indicates an individual makes MORE than $50K and write them to a file using:\n\n\nwrite.csv(prediction_vector, \"my_predictions.csv\", row.names = FALSE)\n\nYour submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well.\n\n\n\nThis data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons NOT TO DO THIS. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible! You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*\n\n\n\nage: continuous.\nworkclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.\nfnlwgt: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.\neducation: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.\neducation-num: continuous. Numerical representation of education level.\nmarital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. (“civ” and “AF” represent “civilian” (not in military) or “Armed Forces” (in military)).\noccupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.\nrelationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.\nrace: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.\nsex: Female, Male.\ncapital-gain: continuous. (Income from the sale of a capital asset, e.g., stocks or property)\ncapital-loss: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)\nhours-per-week: continuous. Number of hours worked per week.\nnative-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.\nincome: whether or not annual income from all sources is above or below $50,000.\n\n\n\nYour submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\n\n\nAre the submitted predictions in the appropriate form?\nAre appropriate modeling techniques employed given the data and the task?\nAre the predictions reasonably accurate given the available data?\nWhere do the predictions rank in terms of the class?\n\n\n\n\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nIs the modeling choices clearly justified?\nIs the report free of spelling and grammatical errors?\nIs the report aimed at the appropriate (technical) audience?\n\n\n\n\n\nAre the mathematical and statistical methods described accurately?\nAre appropriate predictor variables used in the analysis?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?"
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#project-overview",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#project-overview",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "In this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:\n\ncensus_train.csv contains 35,000 rows representing unique individuals, and 15 columns, representing demographic information about those individuals (including whether their income is above or below $50,000).\ncensus_test.csv contains 13,840 rows, but only 14 columns since the income column has been removed.\n\nA complete description of the variables in the data set is below."
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#deliverables",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#deliverables",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "There are two deliverables for this project:\n\nAn HTML file outlining your modeling process. This should following the same guidelines for the Job Application 2 Resources.\nA .csv file containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length 13,480 vector of 0s and 1s where 1 indicates an individual makes MORE than $50K and write them to a file using:\n\n\nwrite.csv(prediction_vector, \"my_predictions.csv\", row.names = FALSE)\n\nYour submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well."
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#notes",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#notes",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "This data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons NOT TO DO THIS. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible! You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*"
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#description-of-variables",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#description-of-variables",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "age: continuous.\nworkclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.\nfnlwgt: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.\neducation: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.\neducation-num: continuous. Numerical representation of education level.\nmarital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. (“civ” and “AF” represent “civilian” (not in military) or “Armed Forces” (in military)).\noccupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.\nrelationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.\nrace: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.\nsex: Female, Male.\ncapital-gain: continuous. (Income from the sale of a capital asset, e.g., stocks or property)\ncapital-loss: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)\nhours-per-week: continuous. Number of hours worked per week.\nnative-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.\nincome: whether or not annual income from all sources is above or below $50,000."
+  },
+  {
+    "objectID": "slides/33-PCA-2.html",
+    "href": "slides/33-PCA-2.html",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+  },
+  {
+    "objectID": "slides/32-PCA.html",
+    "href": "slides/32-PCA.html",
+    "title": "MATH 427: Principal Component Analysis (PCA)",
+    "section": "",
+    "text": "Project (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n. . .\n\nTOO MUCH!!!"
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#evaluation-guidelines",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#evaluation-guidelines",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "Your submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\n\n\nAre the submitted predictions in the appropriate form?\nAre appropriate modeling techniques employed given the data and the task?\nAre the predictions reasonably accurate given the available data?\nWhere do the predictions rank in terms of the class?\n\n\n\n\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nIs the modeling choices clearly justified?\nIs the report free of spelling and grammatical errors?\nIs the report aimed at the appropriate (technical) audience?\n\n\n\n\n\nAre the mathematical and statistical methods described accurately?\nAre appropriate predictor variables used in the analysis?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?"
   }
 ]
