@@ -21,7 +21,7 @@ A complete description of the variables in the data set is below.
 
 There are two deliverables for this project:
 
-1. An HTML file outlining your modeling process. This should following the same guidelines for the [Job Application 2 Resources](jobs/job-app-2-resources.qmd). This should be pushed to the [GitHub classroom assignment](https://classroom.github.com/a/_tSAzgC1). This is also where you can get all of the data.
+1. An HTML file outlining your modeling process. This should following the same guidelines for the [Job Application 2 Resources](/jobs/job-app-2-resources.qmd). This should be pushed to the [GitHub classroom assignment](https://classroom.github.com/a/_tSAzgC1). This is also where you can get all of the data.
 2. A `.csv` file, uploaded to Canvas, containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length **13,480** vector of `0`s and `1`s where `1` indicates an individual makes MORE than \$50K and write them to a file using:
 
 ```{r}
@@ -33,7 +33,7 @@ Your submission will be evaluated for predictive quality (accuracy), writing qua
 
 ## Notes
 
-This data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons **NOT TO DO THIS**. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible!  You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*
+This data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons **NOT TO DO THIS**. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible!  You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.**
 
 ## Description of Variables
 
