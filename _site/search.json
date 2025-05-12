@@ -93,8 +93,8 @@
     "objectID": "slides/33-PCA-2.html#computational-set-up",
     "href": "slides/33-PCA-2.html#computational-set-up",
     "title": "MATH 427: Principal Component Analysis (PCA)",
-    "section": "",
-    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
+    "section": "Computational Set-Up",
+    "text": "Computational Set-Up\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
   },
   {
     "objectID": "slides/33-PCA-2.html#data-mnist",
@@ -178,7 +178,7 @@
     "href": "slides/33-PCA-2.html#idea-behind-pca",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Idea behind PCA",
-    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n. . .\n\nWhat does orthogonal mean?"
+    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n\n\nWhat does orthogonal mean?"
   },
   {
     "objectID": "slides/33-PCA-2.html#easy-example",
@@ -4464,39 +4464,6 @@
     "text": "Graphical Summaries\nGraphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.\n\nTIPS |&gt; \n  ggplot(aes(x = PartySize)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nOr we could explore the question about the percentage of tables that are smokers on different days of the week visually.\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar()\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x = Weekday, fill = Smoker)) +\n    geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nWe might summarize a numerical variable with a histogram. For example, here is a histogram of all of the tips in the data set.\n\nTIPS |&gt; \n  ggplot(aes(x = Tip)) +\n    geom_histogram(bins = 100)\n\n\n\n\n\n\n\n\n\nExercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nNotice that there are a few “spikes” in the histogram above. What do you think is causing this?\n\n\nWe can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the ggforce package.\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_boxplot() +\n  geom_jitter() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_violin() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\nlibrary(ggforce)\nTIPS |&gt; \n  ggplot(aes(x=Weekday, y=Tip)) +\n  geom_sina() +\n  labs(title = \"Tips by Day of the Week\", \n       x = \"Day of the Week\",\n       y = \"Tips\")\n\n\n\n\n\n\n\n\nOr we can visualize the relationship between a lot of our numerical variables at once.\n\n# Using pairs (only numerical allowed)\npairs(~ Bill + TipPercentage + Tip\n    , data = TIPS\n    , main=\"Scatterplot Matrix for TIPS\")\n\n\n\n\n\n\n\n# Using ggpairs from GGally package (preferable even though more syntax)\nlibrary(GGally)\nTIPS |&gt; \n  select(Bill, TipPercentage, Tip, Weekday) |&gt; \n  ggpairs()\n\n\n\n\n\n\n\n\n\n\nExercise 8\n\n\n\n\n\n\nQuestion\n\n\n\nAre there any clear linear relationships in the scatterplots above? What do you think is the explanation for these relationships?\n\n\nThere are lots of other interesting graphical summaries available for interpreting and displaying data. In addition, there are lots of R packages that allow you to draw these graphics and to further customize some of the ones we discussed here. In your projects, you are welcome to use any of these that you think are appropriate.\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 7 - 8”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\nExercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nState a reasonable conjecture about tipping behavior that you would like to explore in the data set. For example, you might think that people on dates tip more or that the waiter gets smaller tips when he has too many tables. Give at least one numerical and one graphical summary to explore this conjecture. Is there any evidence to support your conjecture?\nIt’s okay if your conjecture is not supported or if you are just wrong–that’s often the case in exploratory data analysis.\n\n\n\n\n\n\n\n\nRender-Commit-Push\n\n\n\nThis is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. “Completed exercises 9”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nBefore you’re done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I can’t tell you how often students turn in work and their output doesn’t match their prose or the output definitely doesn’t look the way they wanted it to."
   },
   {
-    "objectID": "computing-access.html",
-    "href": "computing-access.html",
-    "title": "Computing access",
-    "section": "",
-    "text": "Not that we will go through this as a call and on your first homework. Feel free to revisit it here if you need to.",
-    "crumbs": [
-      "Computing",
-      "Computing access"
-    ]
-  },
-  {
-    "objectID": "computing-access.html#r-rstudio",
-    "href": "computing-access.html#r-rstudio",
-    "title": "Computing access",
-    "section": "R & RStudio",
-    "text": "R & RStudio\nIt is highly recommended that you install R and RStudio on your own personal computer. Follow the directions here to install R and RStudio on your computer\nIf, for some reason, you are unable to use R or RStudio on your personal computer, you may use the College of Idaho’s RStudio Server. However, I do not recommend you do this as I want you to practice installing packages in this course and you do not have the permissions to do that on the server. If you must use the RStudio Server, please notify Dr. Friedlander immediately.",
-    "crumbs": [
-      "Computing",
-      "Computing access"
-    ]
-  },
-  {
-    "objectID": "computing-access.html#git-github",
-    "href": "computing-access.html#git-github",
-    "title": "Computing access",
-    "section": "Git & Github",
-    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH. Below are an outline of the authentication steps.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n\nStep 0: Type install.packages(\"credentials\") into your console.\nStep 1: Type credentials::ssh_setup_github() into your console.\nStep 2: R will ask “No SSH key found. Generate one now?” Click 1 for yes.\nStep 3: You will generate a key. It will begin with “ssh-rsa….” R will then ask “Would you like to open a browser now?” Click 1 for yes.\nStep 4: You may be asked to provide your username and password to log into GitHub. This would be the ones associated with your account that you set up. After entering this information, paste the key in and give it a name. You might name it in a way that indicates where the key will be used, e.g., mat427)\n\nYou can find more detailed instructions here if you’re interested.\n\n\nConfigure git\nThere is one more thing we need to do before getting started on the assignment. Specifically, we need to configure your git so that RStudio can communicate with GitHub. This requires two pieces of information: your name and email address.\nTo do so, you will use the use_git_config() function from the usethis package. You will need to install the usethis package in the same way you installed the credentials packages above.\nType the following lines of code in the console in RStudio filling in your name and the email address associated with your GitHub account.\n\nusethis::use_git_config(\n  user.name = \"Your name\", \n  user.email = \"Email associated with your GitHub account\")\n\nFor example, mine would be\n\nusethis::use_git_config(\n  user.name = \"EricFriedlander\",\n  user.email = \"efriedlander@collegeofidaho.edu\")\n\nYou are now ready interact between GitHub and RStudio!",
-    "crumbs": [
-      "Computing",
-      "Computing access"
-    ]
-  },
-  {
     "objectID": "computing-r-resources.html",
     "href": "computing-r-resources.html",
     "title": "Resources for learning R",
@@ -4538,6 +4505,116 @@
     "crumbs": [
       "Computing",
       "R resources"
+    ]
+  },
+  {
+    "objectID": "computing-access.html",
+    "href": "computing-access.html",
+    "title": "Computing access",
+    "section": "",
+    "text": "Not that we will go through this as a call and on your first homework. Feel free to revisit it here if you need to.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "computing-access.html#r-rstudio",
+    "href": "computing-access.html#r-rstudio",
+    "title": "Computing access",
+    "section": "R & RStudio",
+    "text": "R & RStudio\nIt is highly recommended that you install R and RStudio on your own personal computer. Follow the directions here to install R and RStudio on your computer\nIf, for some reason, you are unable to use R or RStudio on your personal computer, you may use the College of Idaho’s RStudio Server. However, I do not recommend you do this as I want you to practice installing packages in this course and you do not have the permissions to do that on the server. If you must use the RStudio Server, please notify Dr. Friedlander immediately.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "computing-access.html#git-github",
+    "href": "computing-access.html#git-github",
+    "title": "Computing access",
+    "section": "Git & Github",
+    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH. Below are an outline of the authentication steps.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n\nStep 0: Type install.packages(\"credentials\") into your console.\nStep 1: Type credentials::ssh_setup_github() into your console.\nStep 2: R will ask “No SSH key found. Generate one now?” Click 1 for yes.\nStep 3: You will generate a key. It will begin with “ssh-rsa….” R will then ask “Would you like to open a browser now?” Click 1 for yes.\nStep 4: You may be asked to provide your username and password to log into GitHub. This would be the ones associated with your account that you set up. After entering this information, paste the key in and give it a name. You might name it in a way that indicates where the key will be used, e.g., mat427)\n\nYou can find more detailed instructions here if you’re interested.\n\n\nConfigure git\nThere is one more thing we need to do before getting started on the assignment. Specifically, we need to configure your git so that RStudio can communicate with GitHub. This requires two pieces of information: your name and email address.\nTo do so, you will use the use_git_config() function from the usethis package. You will need to install the usethis package in the same way you installed the credentials packages above.\nType the following lines of code in the console in RStudio filling in your name and the email address associated with your GitHub account.\n\nusethis::use_git_config(\n  user.name = \"Your name\", \n  user.email = \"Email associated with your GitHub account\")\n\nFor example, mine would be\n\nusethis::use_git_config(\n  user.name = \"EricFriedlander\",\n  user.email = \"efriedlander@collegeofidaho.edu\")\n\nYou are now ready interact between GitHub and RStudio!",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html",
+    "href": "hack-a-thon/hack-a-thon-instruction.html",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "The U.S. Constitution requires that a census be conducted every ten years in order to allocate congressional representatives. The first census was conducted in 1790 and the U.S. Census Bureau is still compiling the data from the 2020 census. While the Constitution only requires an “actual enumeration” of citizens, the census has expanded to include a number of demographic questions. As described by the Census Bureau, the results of the 2020 census will,\n\n“…determine congressional representation, inform hundreds of billions in federal funding, and provide data that will impact communities for the next decade.”\n\n\n\nIn this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:\n\ncensus_train.csv contains 35,000 rows representing unique individuals, and 15 columns, representing demographic information about those individuals (including whether their income is above or below $50,000).\ncensus_test.csv contains 13,840 rows, but only 14 columns since the income column has been removed.\n\nA complete description of the variables in the data set is below.\n\n\n\nThere are two deliverables for this project:\n\nAn HTML file outlining your modeling process. This should following the same guidelines for the Job Application 2 Resources. This should be pushed to the GitHub classroom assignment. This is also where you can get all of the data.\nA .csv file, uploaded to Canvas, containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length 13,480 vector of 0s and 1s where 1 indicates an individual makes MORE than $50K and write them to a file using:\n\n\nwrite.csv(prediction_vector, \"my_predictions.csv\", row.names = FALSE)\n\nYour submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well.\n\n\n\nThis data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons NOT TO DO THIS. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible! You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*\n\n\n\nage: continuous.\nworkclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.\nfnlwgt: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.\neducation: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.\neducation-num: continuous. Numerical representation of education level.\nmarital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. (“civ” and “AF” represent “civilian” (not in military) or “Armed Forces” (in military)).\noccupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.\nrelationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.\nrace: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.\nsex: Female, Male.\ncapital-gain: continuous. (Income from the sale of a capital asset, e.g., stocks or property)\ncapital-loss: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)\nhours-per-week: continuous. Number of hours worked per week.\nnative-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.\nincome: whether or not annual income from all sources is above or below $50,000.\n\n\n\nYour submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\n\n\nAre the submitted predictions in the appropriate form?\nAre appropriate modeling techniques employed given the data and the task?\nAre the predictions reasonably accurate given the available data?\nWhere do the predictions rank in terms of the class?\n\n\n\n\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nIs the modeling choices clearly justified?\nIs the report free of spelling and grammatical errors?\nIs the report aimed at the appropriate (technical) audience?\n\n\n\n\n\nAre the mathematical and statistical methods described accurately?\nAre appropriate predictor variables used in the analysis?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?\n\n\n\n\n\nYou must submit two things:\n\nYour report must be pushed to GitHub.\nThe csv file containing your predictions must be uploaded to Canvas.",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#project-overview",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#project-overview",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "In this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:\n\ncensus_train.csv contains 35,000 rows representing unique individuals, and 15 columns, representing demographic information about those individuals (including whether their income is above or below $50,000).\ncensus_test.csv contains 13,840 rows, but only 14 columns since the income column has been removed.\n\nA complete description of the variables in the data set is below.",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#deliverables",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#deliverables",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "There are two deliverables for this project:\n\nAn HTML file outlining your modeling process. This should following the same guidelines for the Job Application 2 Resources. This should be pushed to the GitHub classroom assignment. This is also where you can get all of the data.\nA .csv file, uploaded to Canvas, containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length 13,480 vector of 0s and 1s where 1 indicates an individual makes MORE than $50K and write them to a file using:\n\n\nwrite.csv(prediction_vector, \"my_predictions.csv\", row.names = FALSE)\n\nYour submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well.",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#notes",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#notes",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "This data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons NOT TO DO THIS. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible! You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#description-of-variables",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#description-of-variables",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "age: continuous.\nworkclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.\nfnlwgt: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.\neducation: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.\neducation-num: continuous. Numerical representation of education level.\nmarital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. (“civ” and “AF” represent “civilian” (not in military) or “Armed Forces” (in military)).\noccupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.\nrelationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.\nrace: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.\nsex: Female, Male.\ncapital-gain: continuous. (Income from the sale of a capital asset, e.g., stocks or property)\ncapital-loss: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)\nhours-per-week: continuous. Number of hours worked per week.\nnative-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.\nincome: whether or not annual income from all sources is above or below $50,000.",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#evaluation-guidelines",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#evaluation-guidelines",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "Your submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\n\n\nAre the submitted predictions in the appropriate form?\nAre appropriate modeling techniques employed given the data and the task?\nAre the predictions reasonably accurate given the available data?\nWhere do the predictions rank in terms of the class?\n\n\n\n\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nIs the modeling choices clearly justified?\nIs the report free of spelling and grammatical errors?\nIs the report aimed at the appropriate (technical) audience?\n\n\n\n\n\nAre the mathematical and statistical methods described accurately?\nAre appropriate predictor variables used in the analysis?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
+    ]
+  },
+  {
+    "objectID": "hack-a-thon/hack-a-thon-instruction.html#submitting-your-work",
+    "href": "hack-a-thon/hack-a-thon-instruction.html#submitting-your-work",
+    "title": "Hack-A-Thon Instructions",
+    "section": "",
+    "text": "You must submit two things:\n\nYour report must be pushed to GitHub.\nThe csv file containing your predictions must be uploaded to Canvas.",
+    "crumbs": [
+      "Hack-A-Thon",
+      "Hack-A-Thon Instructions"
     ]
   },
   {
@@ -5374,7 +5451,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\njob\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 1 Assigned\n\n\n2\nF\nFeb 7\n1\nWhat is Statistical Learning\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3\nM\nFeb 10\n2\nIntro to Linear Regression and Gradient Descent\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4\nW\nFeb 12\n2\nMultiple Linear Regression and Data Splitting\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 1 Due/ HW 2 Assigned\n\n\n5\nF\nFeb 14\n2\nData Splitting and KNN\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\nM\nFeb 17\n3\nKNN + Preprocessing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n7\nW\nFeb 19\n3\nClassification and Logistic Regression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 3 Assigned\n\n\n8\nF\nFeb 21\n3\nClassification Metrics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n9\nM\nFeb 24\n4\nJob Application Intro\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 2 Due / Job Application 1 Assigned\n\n\n10\nW\nFeb 26\n4\nROC and AUC\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n11\nF\nFeb 28\n4\nCross-Validation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n12\nM\nMar 3\n5\nPre-processing, Missing Data, and CV\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 3 Due/ HW 4 Assigned\n\n\n13\nW\nMar 5\n5\nPre-processing, Missing Data, and CV Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n14\nF\nMar 7\n5\nResume/Cover Letter Peer-Review\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCover Letter and Resume Due in Class (Attendance Mandatory)\n\n\n15\nM\nMar 10\n6\nWorkflow Sets and Feature Selection\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 4 Due/ HW 5 Assigned\n\n\n16\nW\nMar 12\n6\nFeature Selection and Regularization\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n17\nF\nMar 14\n6\nRegularization\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n18\nM\nMar 17\n7\nModel Tuning\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 5 Due / HW 6 Assigned\n\n\n19\nW\nMar 19\n7\nRegression Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n20\nF\nMar 21\n7\nRegression Trees Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJob Application 1 Due\n\n\n\nM\n\n\nNA\nSpring Break\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nW\n\n\nNA\nSpring Break\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nF\n\n\nNA\nSpring Break\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n21\nM\nMar 31\n8\nJob Interview Intro, Decision Trees Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 6 Due / HW 7 Assigned / Job Interviews Announced / Project Announced\n\n\n22\nW\nApr 2\n8\nClassification Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n23\nF\nApr 4\n8\nBrian Bava Visit\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestions for Brian Due\n\n\n24\nM\nApr 7\n9\nClassification Trees Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 7 Due/ HW 8 Assigned\n\n\n25\nW\nApr 9\n9\nBagging/Random Forests\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n26\nF\nApr 11\n9\nJob Interview Panel\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n27\nM\nApr 14\n10\nBoosting\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 8 Due/ HW 9 Assigned\n\n\n28\nW\nApr 16\n10\nMore on Classification\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n29\nF\nApr 18\n10\nMore on Classification\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n30\nM\nApr 21\n11\nImbalanced Classes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 9 Due/ HW 10 Assigned\n\n\n31\nW\nApr 23\n11\nHigh Performance Computing (Guest Lecturer Jim Beck)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n32\nF\nApr 25\n11\nImbalanced Classes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n33\nM\nApr 28\n12\nWork Day\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 10 Due\n\n\n34\nW\nApr 30\n12\nWork Day\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n35\nF\nMay 2\n12\nWork Day\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n36\nM\nMay 5\n13\nPCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n37\nW\nMay 7\n13\nPCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n38\nF\nMay 9\n13\nProject Presentations\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n39\nM\nMay 12\n14\nHack-a-thon\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n40\nW\nMay 14\n14\nHack-a-thon\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n41\nF\nMay 16\n14\nHack-a-thon\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJob App 2 Due\n\n\nFinal Presentations\nTH\nMay 22\n15",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlecture\ndow\ndate\nweek\ntopic\nprepare\nslides\nhw\nproject\njob\nhack-a-thon\nnotes\n\n\n\n\n0\nM\nFeb 3\n1\nWelcome\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\nW\nFeb 5\n1\nBig Picture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 1 Assigned\n\n\n2\nF\nFeb 7\n1\nWhat is Statistical Learning\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3\nM\nFeb 10\n2\nIntro to Linear Regression and Gradient Descent\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4\nW\nFeb 12\n2\nMultiple Linear Regression and Data Splitting\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 1 Due/ HW 2 Assigned\n\n\n5\nF\nFeb 14\n2\nData Splitting and KNN\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\nM\nFeb 17\n3\nKNN + Preprocessing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n7\nW\nFeb 19\n3\nClassification and Logistic Regression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 3 Assigned\n\n\n8\nF\nFeb 21\n3\nClassification Metrics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n9\nM\nFeb 24\n4\nJob Application Intro\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 2 Due / Job Application 1 Assigned\n\n\n10\nW\nFeb 26\n4\nROC and AUC\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n11\nF\nFeb 28\n4\nCross-Validation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n12\nM\nMar 3\n5\nPre-processing, Missing Data, and CV\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 3 Due/ HW 4 Assigned\n\n\n13\nW\nMar 5\n5\nPre-processing, Missing Data, and CV Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n14\nF\nMar 7\n5\nResume/Cover Letter Peer-Review\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCover Letter and Resume Due in Class (Attendance Mandatory)\n\n\n15\nM\nMar 10\n6\nWorkflow Sets and Feature Selection\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 4 Due/ HW 5 Assigned\n\n\n16\nW\nMar 12\n6\nFeature Selection and Regularization\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n17\nF\nMar 14\n6\nRegularization\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n18\nM\nMar 17\n7\nModel Tuning\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 5 Due / HW 6 Assigned\n\n\n19\nW\nMar 19\n7\nRegression Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n20\nF\nMar 21\n7\nRegression Trees Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJob Application 1 Due\n\n\n\nM\n\n\nNA\nSpring Break\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nW\n\n\nNA\nSpring Break\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nF\n\n\nNA\nSpring Break\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n21\nM\nMar 31\n8\nJob Interview Intro, Decision Trees Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 6 Due / HW 7 Assigned / Job Interviews Announced / Project Announced\n\n\n22\nW\nApr 2\n8\nClassification Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n23\nF\nApr 4\n8\nBrian Bava Visit\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestions for Brian Due\n\n\n24\nM\nApr 7\n9\nClassification Trees Continued\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 7 Due/ HW 8 Assigned\n\n\n25\nW\nApr 9\n9\nBagging/Random Forests\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n26\nF\nApr 11\n9\nJob Interview Panel\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n27\nM\nApr 14\n10\nBoosting\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 8 Due/ HW 9 Assigned\n\n\n28\nW\nApr 16\n10\nMore on Classification\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n29\nF\nApr 18\n10\nMore on Classification\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n30\nM\nApr 21\n11\nImbalanced Classes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 9 Due/ HW 10 Assigned\n\n\n31\nW\nApr 23\n11\nHigh Performance Computing (Guest Lecturer Jim Beck)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n32\nF\nApr 25\n11\nImbalanced Classes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n33\nM\nApr 28\n12\nWork Day\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHW 10 Due\n\n\n34\nW\nApr 30\n12\nWork Day\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n35\nF\nMay 2\n12\nWork Day\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n36\nM\nMay 5\n13\nPCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n37\nW\nMay 7\n13\nPCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n38\nF\nMay 9\n13\nProject Presentations\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n39\nM\nMay 12\n14\nHack-a-thon\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n40\nW\nMay 14\n14\nHack-a-thon\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n41\nF\nMay 16\n14\nHack-a-thon\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFinal Presentations\nTH\nMay 22\n15\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHack-a-thon CSV and HTML files due: 6:30pm",
     "crumbs": [
       "Schedule"
     ]
@@ -8162,15 +8239,15 @@
     "objectID": "slides/32-PCA.html#remainder-of-semester",
     "href": "slides/32-PCA.html#remainder-of-semester",
     "title": "MATH 427: Principal Component Analysis (PCA)",
-    "section": "",
-    "text": "Project (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n. . .\n\nTOO MUCH!!!"
+    "section": "Remainder of Semester",
+    "text": "Remainder of Semester\n\nProject (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n\n\nTOO MUCH!!!"
   },
   {
     "objectID": "slides/32-PCA.html#lessons-learned-by-dr.-f",
     "href": "slides/32-PCA.html#lessons-learned-by-dr.-f",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Lesson’s Learned by Dr. F",
-    "text": "Lesson’s Learned by Dr. F\n\nLearning objectives coming in:\n\nMachine Learning Theory\nProfessional Development\nCommunication!!!\n\n\n. . .\n\nDo less to do more… don’t need multiple assignments for each of these\nPrioritize an assessment before Spring Break\nBuild in better time-management and revision checkpoints"
+    "text": "Lesson’s Learned by Dr. F\n\nLearning objectives coming in:\n\nMachine Learning Theory\nProfessional Development\nCommunication!!!\n\n\n\n\nDo less to do more… don’t need multiple assignments for each of these\nPrioritize an assessment before Spring Break\nBuild in better time-management and revision checkpoints"
   },
   {
     "objectID": "slides/32-PCA.html#next-time",
@@ -8429,7 +8506,7 @@
     "href": "slides/32-PCA.html#idea-behind-pca",
     "title": "MATH 427: Principal Component Analysis (PCA)",
     "section": "Idea behind PCA",
-    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n. . .\n\nWhat does orthogonal mean?"
+    "text": "Idea behind PCA\n\nSelect first PC so variance of scores is the maximum\nIteratively:\n\nSelect next PC so variance of scores is maximize AND new PC is orthogonal to all other PCs\n\n\n\n\nWhat does orthogonal mean?"
   },
   {
     "objectID": "slides/32-PCA.html#easy-example",
@@ -8512,61 +8589,5 @@
     "crumbs": [
       "Course support"
     ]
-  },
-  {
-    "objectID": "hack-a-thon/hack-a-thon-instruction.html",
-    "href": "hack-a-thon/hack-a-thon-instruction.html",
-    "title": "Hack-A-Thon Instructions",
-    "section": "",
-    "text": "The U.S. Constitution requires that a census be conducted every ten years in order to allocate congressional representatives. The first census was conducted in 1790 and the U.S. Census Bureau is still compiling the data from the 2020 census. While the Constitution only requires an “actual enumeration” of citizens, the census has expanded to include a number of demographic questions. As described by the Census Bureau, the results of the 2020 census will,\n\n“…determine congressional representation, inform hundreds of billions in federal funding, and provide data that will impact communities for the next decade.”\n\n\n\nIn this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:\n\ncensus_train.csv contains 35,000 rows representing unique individuals, and 15 columns, representing demographic information about those individuals (including whether their income is above or below $50,000).\ncensus_test.csv contains 13,840 rows, but only 14 columns since the income column has been removed.\n\nA complete description of the variables in the data set is below.\n\n\n\nThere are two deliverables for this project:\n\nAn HTML file outlining your modeling process. This should following the same guidelines for the Job Application 2 Resources.\nA .csv file containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length 13,480 vector of 0s and 1s where 1 indicates an individual makes MORE than $50K and write them to a file using:\n\n\nwrite.csv(prediction_vector, \"my_predictions.csv\", row.names = FALSE)\n\nYour submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well.\n\n\n\nThis data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons NOT TO DO THIS. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible! You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*\n\n\n\nage: continuous.\nworkclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.\nfnlwgt: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.\neducation: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.\neducation-num: continuous. Numerical representation of education level.\nmarital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. (“civ” and “AF” represent “civilian” (not in military) or “Armed Forces” (in military)).\noccupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.\nrelationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.\nrace: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.\nsex: Female, Male.\ncapital-gain: continuous. (Income from the sale of a capital asset, e.g., stocks or property)\ncapital-loss: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)\nhours-per-week: continuous. Number of hours worked per week.\nnative-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.\nincome: whether or not annual income from all sources is above or below $50,000.\n\n\n\nYour submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\n\n\nAre the submitted predictions in the appropriate form?\nAre appropriate modeling techniques employed given the data and the task?\nAre the predictions reasonably accurate given the available data?\nWhere do the predictions rank in terms of the class?\n\n\n\n\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nIs the modeling choices clearly justified?\nIs the report free of spelling and grammatical errors?\nIs the report aimed at the appropriate (technical) audience?\n\n\n\n\n\nAre the mathematical and statistical methods described accurately?\nAre appropriate predictor variables used in the analysis?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?"
-  },
-  {
-    "objectID": "hack-a-thon/hack-a-thon-instruction.html#project-overview",
-    "href": "hack-a-thon/hack-a-thon-instruction.html#project-overview",
-    "title": "Hack-A-Thon Instructions",
-    "section": "",
-    "text": "In this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:\n\ncensus_train.csv contains 35,000 rows representing unique individuals, and 15 columns, representing demographic information about those individuals (including whether their income is above or below $50,000).\ncensus_test.csv contains 13,840 rows, but only 14 columns since the income column has been removed.\n\nA complete description of the variables in the data set is below."
-  },
-  {
-    "objectID": "hack-a-thon/hack-a-thon-instruction.html#deliverables",
-    "href": "hack-a-thon/hack-a-thon-instruction.html#deliverables",
-    "title": "Hack-A-Thon Instructions",
-    "section": "",
-    "text": "There are two deliverables for this project:\n\nAn HTML file outlining your modeling process. This should following the same guidelines for the Job Application 2 Resources.\nA .csv file containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length 13,480 vector of 0s and 1s where 1 indicates an individual makes MORE than $50K and write them to a file using:\n\n\nwrite.csv(prediction_vector, \"my_predictions.csv\", row.names = FALSE)\n\nYour submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well."
-  },
-  {
-    "objectID": "hack-a-thon/hack-a-thon-instruction.html#notes",
-    "href": "hack-a-thon/hack-a-thon-instruction.html#notes",
-    "title": "Hack-A-Thon Instructions",
-    "section": "",
-    "text": "This data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons NOT TO DO THIS. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible! You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.*"
-  },
-  {
-    "objectID": "hack-a-thon/hack-a-thon-instruction.html#description-of-variables",
-    "href": "hack-a-thon/hack-a-thon-instruction.html#description-of-variables",
-    "title": "Hack-A-Thon Instructions",
-    "section": "",
-    "text": "age: continuous.\nworkclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.\nfnlwgt: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.\neducation: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.\neducation-num: continuous. Numerical representation of education level.\nmarital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. (“civ” and “AF” represent “civilian” (not in military) or “Armed Forces” (in military)).\noccupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.\nrelationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.\nrace: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.\nsex: Female, Male.\ncapital-gain: continuous. (Income from the sale of a capital asset, e.g., stocks or property)\ncapital-loss: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)\nhours-per-week: continuous. Number of hours worked per week.\nnative-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.\nincome: whether or not annual income from all sources is above or below $50,000."
-  },
-  {
-    "objectID": "slides/33-PCA-2.html",
-    "href": "slides/33-PCA-2.html",
-    "title": "MATH 427: Principal Component Analysis (PCA)",
-    "section": "",
-    "text": "library(tidyverse)\nlibrary(tidymodels)\nlibrary(knitr)\nlibrary(kableExtra)\n\ntidymodels_prefer()\n\nset.seed(427)"
-  },
-  {
-    "objectID": "slides/32-PCA.html",
-    "href": "slides/32-PCA.html",
-    "title": "MATH 427: Principal Component Analysis (PCA)",
-    "section": "",
-    "text": "Project (Due Friday)\nHack-a-thon (Next week + Final Exam Time)\nJob Application 2 (Due Next Friday)\nTwo Technical Interviews…\n\n. . .\n\nTOO MUCH!!!"
-  },
-  {
-    "objectID": "hack-a-thon/hack-a-thon-instruction.html#evaluation-guidelines",
-    "href": "hack-a-thon/hack-a-thon-instruction.html#evaluation-guidelines",
-    "title": "Hack-A-Thon Instructions",
-    "section": "",
-    "text": "Your submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\n\n\nAre the submitted predictions in the appropriate form?\nAre appropriate modeling techniques employed given the data and the task?\nAre the predictions reasonably accurate given the available data?\nWhere do the predictions rank in terms of the class?\n\n\n\n\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nIs the modeling choices clearly justified?\nIs the report free of spelling and grammatical errors?\nIs the report aimed at the appropriate (technical) audience?\n\n\n\n\n\nAre the mathematical and statistical methods described accurately?\nAre appropriate predictor variables used in the analysis?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?"
   }
 ]

@@ -21,8 +21,8 @@ A complete description of the variables in the data set is below.
 
 There are two deliverables for this project:
 
-1. An HTML file outlining your modeling process. This should following the same guidelines for the [Job Application 2 Resources](jobs/job-app-2-resources.qmd).
-2. A `.csv` file containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length **13,480** vector of `0`s and `1`s where `1` indicates an individual makes MORE than \$50K and write them to a file using:
+1. An HTML file outlining your modeling process. This should following the same guidelines for the [Job Application 2 Resources](jobs/job-app-2-resources.qmd). This should be pushed to the [GitHub classroom assignment](https://classroom.github.com/a/_tSAzgC1). This is also where you can get all of the data.
+2. A `.csv` file, uploaded to Canvas, containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length **13,480** vector of `0`s and `1`s where `1` indicates an individual makes MORE than \$50K and write them to a file using:
 
 ```{r}
 #| eval: FALSE
@@ -96,6 +96,11 @@ Your submission will be assessed in each of the following areas as either Outsta
 -   How were the parameters of the model tuned (if applicable)?
 
 ## Submitting Your Work
+
+You must submit two things:
+
+1. Your report must be pushed to GitHub.
+2. The csv file containing your predictions must be uploaded to [Canvas](https://cofi.instructure.com/courses/17021/assignments/213175).
 
 
 

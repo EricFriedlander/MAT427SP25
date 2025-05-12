@@ -88,11 +88,18 @@ d |>
       )
     }
   ) |>
+  text_transform(cells_body(columns = c(`hack-a-thon`)),
+    fn = function(x) {
+      ifelse(is.na(x), fontawesome::fa("space-shuttle", fill_opacity = 0.1),
+        glue::glue("<a href = {x}>{fontawesome::fa('space-shuttle')}</a>")
+      )
+    }
+  ) |>
   fmt_date(columns = date, date_style = 30) |>
   sub_missing(columns = c(date, topic, notes), missing_text = "") |>
   cols_align(
     align = "center", 
-    columns = c(lecture, dow, week, prepare, slides, hw, project, job)
+    columns = c(lecture, dow, week, prepare, slides, hw, project, job, `hack-a-thon`)
     ) |>
   cols_align(
     align = "left", 
@@ -105,7 +112,7 @@ d |>
       style = "solid"
     ),
     locations = cells_body(
-      columns = c(week, topic, slides, job)
+      columns = c(week, topic, slides, `hack-a-thon`)
     )
   )
 ```
