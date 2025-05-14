@@ -124,11 +124,11 @@ The final course grade will be calculated as follows:
 |----------------------------|------------|
 | Homework                   | 10%        |
 | Job Application 1          | 15%        |
-| Job Application 2          | 15%        |
 | Job Interview 1            | 15%        |
-| Job Interview 2            | 15%        |
-| Hack-a-thon & Presentation | 15%        |
-| Final Project              | 15%        |
+| Job Interview 2            | 20%        |
+| Hack-a-thon + Report       | 25%        |
+| Project                    | 15%        |
+
 
 </center>
 
